@@ -24,7 +24,7 @@ micromamba activate rse_lecture
 Or manually:
 ```bash
 micromamba env create -f environment.yml
-micromamba install -n rse_lecture -f lecture_01/environment.yml
+micromamba install -n rse_lecture -c conda-forge matplotlib>=3.5.0
 micromamba activate rse_lecture
 ```
 

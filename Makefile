@@ -22,7 +22,7 @@ install:
 
 install-lecture1:
 	micromamba env create -f environment.yml -y
-	micromamba install -n rse_lecture -f lecture_01/environment.yml -y
+	micromamba install -n rse_lecture -c conda-forge matplotlib>=3.5.0 -y
 	@echo "Environment created with lecture 1 dependencies. Activate with: micromamba activate rse_lecture"
 
 install-lecture2: install
