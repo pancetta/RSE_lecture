@@ -18,7 +18,7 @@ ignore =
     F841,
     # E226: missing whitespace around operator (style preference)
     E226,
-    # F541: f-string without placeholders
+    # F541: f-string without placeholders (style preference)
     F541
 exclude =
     .git,
