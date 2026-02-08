@@ -35,7 +35,7 @@ jobs:
 
       - name: Install additional dependencies
         run: |
-          micromamba install -n rse_lecture -c conda-forge matplotlib>=3.5.0 nbconvert -y
+          micromamba install -c conda-forge matplotlib>=3.5.0 nbconvert -y
         shell: bash -el {0}
 
       - name: Convert lectures to notebooks
