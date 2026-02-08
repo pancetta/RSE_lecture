@@ -1,40 +1,35 @@
-.PHONY: help install install-micromamba install-lecture1 install-lecture2 install-lecture3 convert clean notebooks build-website serve-website clean-website
+.PHONY: help install install-lecture1 install-lecture2 install-lecture3 convert clean notebooks build-website serve-website clean-website
 
 help:
 	@echo "Research Software Engineering Lectures - Makefile"
 	@echo ""
 	@echo "Available targets:"
-	@echo "  install              - Install required dependencies using pip"
-	@echo "  install-micromamba   - Create micromamba environment for all lectures"
-	@echo "  install-lecture1     - Create micromamba environment for lecture 1"
-	@echo "  install-lecture2     - Create micromamba environment for lecture 2"
-	@echo "  install-lecture3     - Create micromamba environment for lecture 3"
-	@echo "  convert              - Convert all Python lectures to Jupyter notebooks"
-	@echo "  notebooks            - Alias for convert"
-	@echo "  build-website        - Build the Jupyter Book website"
-	@echo "  serve-website        - Build and serve the website locally"
-	@echo "  clean                - Remove generated notebook files"
-	@echo "  clean-website        - Remove generated website files"
-	@echo "  help                 - Show this help message"
+	@echo "  install          - Create base micromamba environment for all lectures"
+	@echo "  install-lecture1 - Create environment with lecture 1 additional dependencies"
+	@echo "  install-lecture2 - Alias for install (lecture 2 uses base environment)"
+	@echo "  install-lecture3 - Alias for install (lecture 3 uses base environment)"
+	@echo "  convert          - Convert all Python lectures to Jupyter notebooks"
+	@echo "  notebooks        - Alias for convert"
+	@echo "  build-website    - Build the Jupyter Book website"
+	@echo "  serve-website    - Build and serve the website locally"
+	@echo "  clean            - Remove generated notebook files"
+	@echo "  clean-website    - Remove generated website files"
+	@echo "  help             - Show this help message"
 
 install:
-	pip install -r requirements.txt
-
-install-micromamba:
 	micromamba env create -f environment.yml -y
-	@echo "Environment created. Activate with: micromamba activate rse_lecture"
+	@echo "Base environment created. Activate with: micromamba activate rse_lecture"
 
 install-lecture1:
-	micromamba env create -f lecture_01/environment.yml -y
-	@echo "Environment created. Activate with: micromamba activate rse_lecture_01"
+	micromamba env create -f environment.yml -y
+	micromamba install -n rse_lecture -f lecture_01/environment.yml -y
+	@echo "Environment created with lecture 1 dependencies. Activate with: micromamba activate rse_lecture"
 
-install-lecture2:
-	micromamba env create -f lecture_02/environment.yml -y
-	@echo "Environment created. Activate with: micromamba activate rse_lecture_02"
+install-lecture2: install
+	@echo "Lecture 2 uses the base environment. Activate with: micromamba activate rse_lecture"
 
-install-lecture3:
-	micromamba env create -f lecture_03/environment.yml -y
-	@echo "Environment created. Activate with: micromamba activate rse_lecture_03"
+install-lecture3: install
+	@echo "Lecture 3 uses the base environment. Activate with: micromamba activate rse_lecture"
 
 convert: notebooks
 

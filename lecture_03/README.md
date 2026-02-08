@@ -14,32 +14,24 @@ This lecture focuses on writing good documentation, maintaining code quality, an
 
 ## Running the Lecture
 
-### Using micromamba (Recommended)
-
-1. Create and activate the environment for this lecture:
+1. Create and activate the base environment:
 ```bash
 cd /path/to/RSE_lecture
-micromamba env create -f lecture_03/environment.yml
-micromamba activate rse_lecture_03
+make install
+micromamba activate rse_lecture
 ```
 
-Or use the Makefile:
+Or manually:
 ```bash
-make install-lecture3
-micromamba activate rse_lecture_03
+micromamba env create -f environment.yml
+micromamba activate rse_lecture
 ```
+
+**Note:** Lecture 3 uses only the base environment with no additional dependencies.
 
 2. Convert to notebook and run:
 ```bash
 cd lecture_03
-jupytext --to notebook lecture_03.py
-jupyter notebook lecture_03.ipynb
-```
-
-### Using pip
-
-Convert to notebook:
-```bash
 jupytext --to notebook lecture_03.py
 jupyter notebook lecture_03.ipynb
 ```
