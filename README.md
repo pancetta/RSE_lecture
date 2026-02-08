@@ -38,6 +38,43 @@ pip install -r requirements.txt
 
 ## Usage
 
+### Building the Website
+
+This repository can generate a beautiful static website from the lectures using [Jupyter Book](https://jupyterbook.org/).
+
+#### Build the website:
+```bash
+make build-website
+```
+
+This will:
+1. Convert all Python lecture files to Jupyter notebooks
+2. Build a static website in the `_build/html` directory
+
+#### Serve the website locally:
+```bash
+make serve-website
+```
+
+This will build the website and start a local web server at `http://localhost:8000`.
+
+You can then view the website in your browser to see all lectures rendered with:
+- Interactive navigation
+- Formatted code cells
+- Rendered plots and outputs
+- Cross-references between lectures
+- Responsive design for mobile and desktop
+
+#### Deploy to GitHub Pages:
+
+The repository includes a GitHub Actions workflow that automatically builds and deploys the website to GitHub Pages whenever changes are pushed to the main branch.
+
+To enable GitHub Pages:
+1. Go to your repository's Settings
+2. Navigate to Pages
+3. Under "Build and deployment", select "GitHub Actions" as the source
+4. The website will be automatically deployed on every push to main
+
 ### Converting Python Files to Jupyter Notebooks
 
 This repository uses [Jupytext](https://jupytext.readthedocs.io/) to maintain lectures as Python files that can be easily version-controlled and converted to Jupyter notebooks.

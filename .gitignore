@@ -7,6 +7,10 @@ __pycache__/
 .ipynb_checkpoints
 *.ipynb
 
+# Jupyter Book
+_build/
+.jupyter_cache/
+
 # Virtual environments
 venv/
 env/
