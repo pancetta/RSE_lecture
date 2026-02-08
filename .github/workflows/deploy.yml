@@ -26,20 +26,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - name: Setup Micromamba
+        uses: mamba-org/setup-micromamba@v1
         with:
-          python-version: '3.11'
-          cache: 'pip'
+          micromamba-version: 'latest'
+          environment-file: environment.yml
+          cache-environment: true
 
-      - name: Install dependencies
+      - name: Install additional dependencies
         run: |
-          pip install -r requirements.txt
-          pip install nbconvert
+          micromamba install -n rse_lecture -c conda-forge matplotlib>=3.5.0 nbconvert -y
+        shell: bash -el {0}
 
       - name: Convert lectures to notebooks
         run: |
           python convert_to_notebooks.py
+        shell: bash -el {0}
 
       - name: Execute notebooks to generate plots
         run: |
@@ -47,12 +49,14 @@ jobs:
             echo "Executing $notebook..."
             jupyter nbconvert --to notebook --execute --inplace "$notebook"
           done
+        shell: bash -el {0}
 
       - name: Build static HTML for GitHub Pages
         env:
           BASE_URL: /RSE_lecture
         run: |
           jupyter-book build --html
+        shell: bash -el {0}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

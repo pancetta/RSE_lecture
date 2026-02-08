@@ -16,16 +16,17 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
     
-    - name: Set up Python
-      uses: actions/setup-python@v5
+    - name: Setup Micromamba
+      uses: mamba-org/setup-micromamba@v1
       with:
-        python-version: '3.x'
+        micromamba-version: 'latest'
+        environment-file: environment.yml
+        cache-environment: true
     
-    - name: Install dependencies
+    - name: Install additional dependencies
       run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-        pip install flake8 nbconvert
+        micromamba install -n rse_lecture -c conda-forge matplotlib>=3.5.0 flake8 nbconvert -y
+      shell: bash -el {0}
     
     - name: Lint with flake8
       run: |
@@ -33,6 +34,7 @@ jobs:
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         # Check all other issues with project configuration
         flake8 . --count --statistics
+      shell: bash -el {0}
     
     - name: Check Python syntax
       run: |
@@ -41,10 +43,12 @@ jobs:
           echo "Checking syntax: $lecture_file"
           python -m py_compile "$lecture_file"
         done
+      shell: bash -el {0}
     
     - name: Convert lectures to notebooks
       run: |
         python convert_to_notebooks.py
+      shell: bash -el {0}
     
     - name: Verify notebooks were created
       run: |
@@ -54,6 +58,7 @@ jobs:
           test -f "$notebook_file"
         done
         echo "All notebooks created successfully"
+      shell: bash -el {0}
     
     - name: Execute notebooks to verify they run
       run: |
@@ -63,7 +68,9 @@ jobs:
           jupyter nbconvert --to notebook --execute --inplace "$notebook_file"
         done
         echo "All notebooks executed successfully"
+      shell: bash -el {0}
     
     - name: Clean up generated files
       run: |
         make clean
+      shell: bash -el {0}
