@@ -35,12 +35,24 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
+          pip install nbconvert
+
+      - name: Convert lectures to notebooks
+        run: |
+          python convert_to_notebooks.py
+
+      - name: Execute notebooks to generate plots
+        run: |
+          for notebook in lecture_*/*.ipynb; do
+            echo "Executing $notebook..."
+            jupyter nbconvert --to notebook --execute --inplace "$notebook"
+          done
 
       - name: Build static HTML for GitHub Pages
         env:
           BASE_URL: /RSE_lecture
         run: |
-          make build-website
+          jupyter-book build --html
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
