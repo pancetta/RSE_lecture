@@ -38,6 +38,46 @@ pip install -r requirements.txt
 
 ## Usage
 
+### Building and Serving the Website
+
+This repository uses [Jupyter Book v2](https://jupyterbook.org/) (powered by MyST) to generate an interactive website from the lectures.
+
+**Note:** Jupyter Book v2 creates a dynamic web application rather than static HTML. For local development, use the built-in server:
+
+#### Serve the website locally (recommended):
+```bash
+make serve-website
+```
+
+This will:
+1. Convert all Python lecture files to Jupyter notebooks
+2. Build the MyST website
+3. Start a local development server at `http://localhost:8000`
+
+The website features:
+- **Interactive navigation** with sidebar and search
+- **Formatted code cells** with syntax highlighting  
+- **Live content updates** during development
+- **Modern MyST theme** with responsive design
+- **Document outline** for easy navigation
+- **GitHub integration** with edit and download buttons
+
+#### Build the website:
+```bash
+make build-website
+```
+
+This builds the site content in the `_build/site/` directory.
+
+### Deployment
+
+**GitHub Pages Deployment:** Jupyter Book v2 is designed primarily as a dynamic web application. For GitHub Pages deployment (static HTML), the GitHub Actions workflow includes a conversion step. For production deployments, consider using:
+- [Curvenote](https://curvenote.com) for MyST-native hosting
+- [Vercel](https://vercel.com) or [Netlify](https://netlify.com) for static exports
+- The built-in `jupyter-book start` server for self-hosted solutions
+
+The repository includes a GitHub Actions workflow configured for GitHub Pages deployment.
+
 ### Converting Python Files to Jupyter Notebooks
 
 This repository uses [Jupytext](https://jupytext.readthedocs.io/) to maintain lectures as Python files that can be easily version-controlled and converted to Jupyter notebooks.

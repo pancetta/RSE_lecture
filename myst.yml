@@ -1,0 +1,32 @@
+version: 1
+project:
+  title: Research Software Engineering Lectures
+  authors:
+    - name: RSE Lecture Team
+  copyright: '2024'
+  github: pancetta/RSE_lecture
+  exclude:
+    - .github/**
+    - _build/**
+    - .jupyter_cache/**
+    - '*.py'
+    - convert_to_notebooks.py
+  bibliography:
+    - references.bib
+  exports:
+    - format: pdf
+      template: plain_latex_book
+      output: exports/book.pdf
+  toc:
+    - file: README.md
+    - file: lecture_01/lecture_01.ipynb
+      title: 'Lecture 1: Introduction to RSE'
+    - file: lecture_02/lecture_02.ipynb
+      title: 'Lecture 2: Testing and CI'
+    - file: lecture_03/lecture_03.ipynb
+      title: 'Lecture 3: Documentation and Code Quality'
+site:
+  options:
+    logo: ''
+    folders: true
+  template: book-theme
