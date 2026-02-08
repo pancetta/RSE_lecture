@@ -22,7 +22,7 @@ notebooks:
 	python convert_to_notebooks.py
 
 build-website: notebooks
-	jupyter-book build .
+	jupyter-book build --html .
 
 serve-website: build-website
 	@echo "Opening website in browser..."
