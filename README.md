@@ -25,6 +25,11 @@ Each lecture is organized in its own directory and consists of:
 - Python 3.7 or higher
 - micromamba or conda/mamba
 
+**Platform Support:**
+- ✅ Linux (Ubuntu and other distributions)
+- ✅ macOS (including macOS Tahoe and later versions)
+- Note: All installation commands and scripts are compatible with both Linux and macOS
+
 ### Installation
 
 1. Clone this repository:
@@ -166,6 +171,7 @@ The repository includes a continuous integration (CI) pipeline that automaticall
 - Lints code with flake8 to maintain code quality
 - Converts all lectures to notebooks to verify the conversion process
 - Executes all notebooks to ensure they run without errors
+- Runs on both Linux (Ubuntu) and macOS to ensure cross-platform compatibility
 
 All pull requests must pass the CI checks before merging.
 
