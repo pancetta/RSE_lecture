@@ -23,7 +23,7 @@ Each lecture is organized in its own directory and consists of:
 ### Prerequisites
 
 - Python 3.7 or higher
-- pip (Python package manager)
+- micromamba or conda/mamba
 
 ### Installation
 
@@ -33,10 +33,45 @@ git clone https://github.com/pancetta/RSE_lecture.git
 cd RSE_lecture
 ```
 
-2. Install the required dependencies:
+2. Install [micromamba](https://mamba.readthedocs.io/en/latest/installation/micromamba-installation.html) if you haven't already.
+
+3. Create and activate the environment:
+
+**For all lectures:**
 ```bash
-pip install -r requirements.txt
+micromamba env create -f environment.yml
+micromamba activate rse_lecture
 ```
+
+Or using the Makefile:
+```bash
+make install
+micromamba activate rse_lecture
+```
+
+**For lecture 1 (requires additional matplotlib dependency):**
+```bash
+micromamba env create -f environment.yml
+micromamba install -n rse_lecture -c conda-forge matplotlib>=3.5.0
+micromamba activate rse_lecture
+```
+
+Or using the Makefile:
+```bash
+make install-lecture1
+micromamba activate rse_lecture
+```
+
+**For lectures 2 and 3 (use base environment):**
+```bash
+make install
+micromamba activate rse_lecture
+```
+
+**Note:** 
+- The main `environment.yml` contains all common dependencies (Python, Jupyter, NumPy, etc.). 
+- Lecture 1 requires an additional dependency (matplotlib), which can be installed using `make install-lecture1`.
+- Lectures 2 and 3 have no additional dependencies and use only the base environment.
 
 ## Usage
 
