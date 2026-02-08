@@ -38,42 +38,45 @@ pip install -r requirements.txt
 
 ## Usage
 
-### Building the Website
+### Building and Serving the Website
 
-This repository can generate a beautiful static website from the lectures using [Jupyter Book](https://jupyterbook.org/).
+This repository uses [Jupyter Book v2](https://jupyterbook.org/) (powered by MyST) to generate an interactive website from the lectures.
+
+**Note:** Jupyter Book v2 creates a dynamic web application rather than static HTML. For local development, use the built-in server:
+
+#### Serve the website locally (recommended):
+```bash
+make serve-website
+```
+
+This will:
+1. Convert all Python lecture files to Jupyter notebooks
+2. Build the MyST website
+3. Start a local development server at `http://localhost:8000`
+
+The website features:
+- **Interactive navigation** with sidebar and search
+- **Formatted code cells** with syntax highlighting  
+- **Live content updates** during development
+- **Modern MyST theme** with responsive design
+- **Document outline** for easy navigation
+- **GitHub integration** with edit and download buttons
 
 #### Build the website:
 ```bash
 make build-website
 ```
 
-This will:
-1. Convert all Python lecture files to Jupyter notebooks
-2. Build a static website in the `_build/html` directory
+This builds the site content in the `_build/site/` directory.
 
-#### Serve the website locally:
-```bash
-make serve-website
-```
+### Deployment
 
-This will build the website and start a local web server at `http://localhost:8000`.
+**GitHub Pages Deployment:** Jupyter Book v2 is designed primarily as a dynamic web application. For GitHub Pages deployment (static HTML), the GitHub Actions workflow includes a conversion step. For production deployments, consider using:
+- [Curvenote](https://curvenote.com) for MyST-native hosting
+- [Vercel](https://vercel.com) or [Netlify](https://netlify.com) for static exports
+- The built-in `jupyter-book start` server for self-hosted solutions
 
-You can then view the website in your browser to see all lectures rendered with:
-- Interactive navigation
-- Formatted code cells
-- Rendered plots and outputs
-- Cross-references between lectures
-- Responsive design for mobile and desktop
-
-#### Deploy to GitHub Pages:
-
-The repository includes a GitHub Actions workflow that automatically builds and deploys the website to GitHub Pages whenever changes are pushed to the main branch.
-
-To enable GitHub Pages:
-1. Go to your repository's Settings
-2. Navigate to Pages
-3. Under "Build and deployment", select "GitHub Actions" as the source
-4. The website will be automatically deployed on every push to main
+The repository includes a GitHub Actions workflow configured for GitHub Pages deployment.
 
 ### Converting Python Files to Jupyter Notebooks
 

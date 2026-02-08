@@ -22,12 +22,14 @@ notebooks:
 	python convert_to_notebooks.py
 
 build-website: notebooks
-	jupyter-book build --html .
+	@echo "Building Jupyter Book v2 site..."
+	@jupyter-book build --site .
+	@echo "✅ Site built in _build/site/"
 
-serve-website: build-website
-	@echo "Opening website in browser..."
-	@echo "Website built at: _build/html/index.html"
-	@python -m http.server --directory _build/html 8000
+serve-website: notebooks
+	@echo "Starting Jupyter Book development server..."
+	@echo "Press Ctrl+C to stop the server"
+	@jupyter-book start --port 8000
 
 clean:
 	find . -name "*.ipynb" -not -path "./.git/*" -not -path "./_build/*" -delete

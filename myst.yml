@@ -5,6 +5,12 @@ project:
     - name: RSE Lecture Team
   copyright: '2024'
   github: pancetta/RSE_lecture
+  exclude:
+    - .github/**
+    - _build/**
+    - .jupyter_cache/**
+    - '*.py'
+    - convert_to_notebooks.py
   bibliography:
     - references.bib
   exports:

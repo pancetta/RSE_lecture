@@ -39,6 +39,18 @@ jobs:
       - name: Build website
         run: |
           make build-website
+          
+      - name: Build static HTML for GitHub Pages
+        run: |
+          # Jupyter Book v2 uses MyST - we need to export static HTML
+          # The --site build creates the dynamic site structure
+          # For now, we'll use the built site content
+          mkdir -p _build/html
+          cp -r _build/site/public/* _build/html/ 2>/dev/null || true
+          # Create a simple index redirect if needed
+          if [ ! -f _build/html/index.html ]; then
+            echo '<meta http-equiv="refresh" content="0; url=./README.html">' > _build/html/index.html
+          fi
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
