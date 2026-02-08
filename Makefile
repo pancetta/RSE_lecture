@@ -22,9 +22,9 @@ notebooks:
 	python convert_to_notebooks.py
 
 build-website: notebooks
-	@echo "Building Jupyter Book v2 site..."
-	@jupyter-book build --site .
-	@echo "✅ Site built in _build/site/"
+	@echo "Building Jupyter Book v2 static HTML site..."
+	@jupyter-book build --html
+	@echo "✅ Static HTML site built in _build/html/"
 
 serve-website: notebooks
 	@echo "Starting Jupyter Book development server..."
