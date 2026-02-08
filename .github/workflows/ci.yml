@@ -37,9 +37,10 @@ jobs:
     - name: Check Python syntax
       run: |
         python -m py_compile convert_to_notebooks.py
-        python -m py_compile lecture_01/lecture_01.py
-        python -m py_compile lecture_02/lecture_02.py
-        python -m py_compile lecture_03/lecture_03.py
+        for lecture_file in lecture_*/lecture_*.py; do
+          echo "Checking syntax: $lecture_file"
+          python -m py_compile "$lecture_file"
+        done
     
     - name: Convert lectures to notebooks
       run: |
@@ -47,16 +48,20 @@ jobs:
     
     - name: Verify notebooks were created
       run: |
-        test -f lecture_01/lecture_01.ipynb
-        test -f lecture_02/lecture_02.ipynb
-        test -f lecture_03/lecture_03.ipynb
+        for lecture_file in lecture_*/lecture_*.py; do
+          notebook_file="${lecture_file%.py}.ipynb"
+          echo "Verifying: $notebook_file"
+          test -f "$notebook_file"
+        done
         echo "All notebooks created successfully"
     
     - name: Execute notebooks to verify they run
       run: |
-        jupyter nbconvert --to notebook --execute --inplace lecture_01/lecture_01.ipynb
-        jupyter nbconvert --to notebook --execute --inplace lecture_02/lecture_02.ipynb
-        jupyter nbconvert --to notebook --execute --inplace lecture_03/lecture_03.ipynb
+        for lecture_file in lecture_*/lecture_*.py; do
+          notebook_file="${lecture_file%.py}.ipynb"
+          echo "Executing: $notebook_file"
+          jupyter nbconvert --to notebook --execute --inplace "$notebook_file"
+        done
         echo "All notebooks executed successfully"
     
     - name: Clean up generated files
