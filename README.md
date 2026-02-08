@@ -23,9 +23,45 @@ Each lecture is organized in its own directory and consists of:
 ### Prerequisites
 
 - Python 3.7 or higher
-- pip (Python package manager)
+- micromamba (recommended) or conda/mamba
+- Alternatively: pip (Python package manager)
 
 ### Installation
+
+#### Option 1: Using micromamba (Recommended)
+
+1. Clone this repository:
+```bash
+git clone https://github.com/pancetta/RSE_lecture.git
+cd RSE_lecture
+```
+
+2. Install [micromamba](https://mamba.readthedocs.io/en/latest/installation/micromamba-installation.html) if you haven't already.
+
+3. Create and activate the environment:
+
+**For all lectures (includes all dependencies):**
+```bash
+micromamba env create -f environment.yml
+micromamba activate rse_lecture
+```
+
+**For a specific lecture (minimal dependencies):**
+```bash
+# For lecture 1
+micromamba env create -f lecture_01/environment.yml
+micromamba activate rse_lecture_01
+
+# For lecture 2
+micromamba env create -f lecture_02/environment.yml
+micromamba activate rse_lecture_02
+
+# For lecture 3
+micromamba env create -f lecture_03/environment.yml
+micromamba activate rse_lecture_03
+```
+
+#### Option 2: Using pip
 
 1. Clone this repository:
 ```bash

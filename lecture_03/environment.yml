@@ -1,0 +1,10 @@
+name: rse_lecture_03
+channels:
+  - conda-forge
+dependencies:
+  - python>=3.7
+  - jupytext>=1.14.0
+  - jupyter>=1.0.0
+  - notebook>=6.5.0
+  - numpy>=1.21.0
+  - pip
