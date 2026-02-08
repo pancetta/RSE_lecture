@@ -64,13 +64,13 @@ micromamba activate rse_lecture
 
 **For lectures 2 and 3 (use base environment):**
 ```bash
-make install  # Same as install-lecture2 or install-lecture3
+make install
 micromamba activate rse_lecture
 ```
 
 **Note:** 
 - The main `environment.yml` contains all common dependencies (Python, Jupyter, NumPy, etc.). 
-- Lecture 1 has an additional `environment.yml` file that documents its extra dependency (matplotlib), but this file is for reference only and should not be used with `micromamba env create`. 
+- Lecture 1 requires an additional dependency (matplotlib), which can be installed using `make install-lecture1`.
 - Lectures 2 and 3 have no additional dependencies and use only the base environment.
 
 ## Usage

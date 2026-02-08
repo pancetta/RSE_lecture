@@ -12,6 +12,10 @@ This lecture introduces the fundamental concepts of Research Software Engineerin
 ## Files
 - `lecture_01.py` - Main lecture content in Jupytext format
 
+## Additional Dependencies
+This lecture requires matplotlib in addition to the base dependencies:
+- matplotlib>=3.5.0
+
 ## Running the Lecture
 
 1. Create and activate the environment:
