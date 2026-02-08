@@ -21,13 +21,13 @@ def convert_lecture(lecture_file):
             check=True
         )
         notebook_file = lecture_file.with_suffix('.ipynb')
-        print(f"  ✓ Created {notebook_file}")
+        print(f"  [OK] Created {notebook_file}")
         return True
     except subprocess.CalledProcessError as e:
-        print(f"  ✗ Error converting {lecture_file}: {e}")
+        print(f"  [ERROR] Error converting {lecture_file}: {e}")
         return False
     except FileNotFoundError:
-        print("  ✗ Error: jupytext not found. Please install it with: pip install jupytext")
+        print("  [ERROR] Error: jupytext not found. Please install it with: pip install jupytext")
         return False
 
 
