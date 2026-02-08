@@ -1,10 +1,16 @@
 # Additional dependencies for Lecture 1
-# These are added on top of the base environment.yml
-# Install with: micromamba install -n rse_lecture -c conda-forge matplotlib>=3.5.0
-# Or use: make install-lecture1
+# 
+# NOTE: This file is for DOCUMENTATION ONLY and cannot be used standalone.
+# Do NOT use: micromamba env create -f lecture_01/environment.yml
+# 
+# To install lecture 1 dependencies:
+# 1. First install the base environment: micromamba env create -f environment.yml
+# 2. Then add matplotlib: micromamba install -n rse_lecture -c conda-forge matplotlib>=3.5.0
+# 
+# Or simply use: make install-lecture1
+#
+# The following lists ONLY the additional dependencies for lecture 1
+# (on top of the base environment.yml):
 
-name: rse_lecture
-channels:
-  - conda-forge
 dependencies:
   - matplotlib>=3.5.0
