@@ -1,5 +1,7 @@
 # Research Software Engineering Lectures
 
+[![CI - Lecture Scripts](https://github.com/pancetta/RSE_lecture/workflows/CI%20-%20Lecture%20Scripts/badge.svg)](https://github.com/pancetta/RSE_lecture/actions)
+
 Welcome to the Research Software Engineering (RSE) lecture series! This repository contains materials for learning best practices in developing high-quality research software.
 
 ## Overview
@@ -83,6 +85,14 @@ Contributions are welcome! When adding or modifying lectures:
 2. Use the Jupytext percent format for cells
 3. Follow the existing structure and style
 4. Test that your lecture converts properly to a notebook
+
+The repository includes a continuous integration (CI) pipeline that automatically:
+- Checks Python syntax for all lecture files
+- Lints code with flake8 to maintain code quality
+- Converts all lectures to notebooks to verify the conversion process
+- Executes all notebooks to ensure they run without errors
+
+All pull requests must pass the CI checks before merging.
 
 ## License
 
