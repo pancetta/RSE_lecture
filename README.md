@@ -29,7 +29,8 @@ Each lecture is organized in its own directory and consists of:
 - ✅ Linux (Ubuntu and other distributions)
 - ✅ macOS 15 (Sequoia) and later
 - ✅ macOS 26 (Tahoe)
-- Note: All installation commands and scripts are compatible with both Linux and macOS
+- ✅ Windows 10/11 (with Git Bash)
+- Note: All installation commands and scripts are compatible with Linux, macOS, and Windows
 
 ### Installation
 
@@ -172,7 +173,7 @@ The repository includes a continuous integration (CI) pipeline that automaticall
 - Lints code with flake8 to maintain code quality
 - Converts all lectures to notebooks to verify the conversion process
 - Executes all notebooks to ensure they run without errors
-- Runs on Linux (Ubuntu), macOS 15 (Sequoia), and macOS 26 (Tahoe) to ensure cross-platform compatibility
+- Runs on Linux (Ubuntu), macOS 15 (Sequoia), macOS 26 (Tahoe), and Windows to ensure cross-platform compatibility
 
 All pull requests must pass the CI checks before merging.
 
