@@ -972,6 +972,78 @@ print("\n🎉 All tests passed! Code is fully tested and bug-free!")
 # 5. **Run tests often**: Before committing, after changes, in CI
 # 6. **Don't skip testing**: Even "simple" functions can have bugs
 # 
+# ### Testing in Other Programming Languages
+# 
+# While this lecture focused on Python and pytest, **every modern programming language has testing frameworks**. Here's what to look for in other languages you might use for research:
+# 
+# **C/C++**
+# - **Popular frameworks**: Google Test (gtest), Catch2, CppUnit, Boost.Test
+# - **What to look for**: Unit testing with assertions, test fixtures, mocking
+# - **Example**: `ASSERT_EQ(celsius_to_fahrenheit(0), 32);`
+# - **Note**: More manual setup than Python, but same concepts apply
+# 
+# **Java**
+# - **Popular frameworks**: JUnit (most common), TestNG, AssertJ
+# - **What to look for**: Annotations like `@Test`, assertions, test runners
+# - **Example**: `@Test public void testCelsiusToFahrenheit() { assertEquals(32, celsiusToFahrenheit(0)); }`
+# - **Note**: Integrated into most Java IDEs
+# 
+# **Julia**
+# - **Built-in testing**: `Test` standard library (no external install needed)
+# - **What to look for**: `@test` macro, `@testset` for grouping
+# - **Example**: `@test celsius_to_fahrenheit(0) ≈ 32`
+# - **Note**: Very Pythonic feel, easy to get started
+# 
+# **R**
+# - **Popular frameworks**: testthat (most popular), RUnit, tinytest
+# - **What to look for**: `test_that()` function, expectations like `expect_equal()`
+# - **Example**: `test_that("conversion works", { expect_equal(celsius_to_fahrenheit(0), 32) })`
+# - **Note**: Well integrated with RStudio and package development
+# 
+# **JavaScript/TypeScript**
+# - **Popular frameworks**: Jest, Mocha, Jasmine, Vitest
+# - **What to look for**: `describe()` and `it()` blocks, assertions with `expect()`
+# - **Example**: `expect(celsiusToFahrenheit(0)).toBe(32);`
+# - **Note**: Essential for web-based research tools
+# 
+# **Fortran**
+# - **Popular frameworks**: pFUnit, FRUIT, Funit
+# - **What to look for**: Test suites, assertions, fixtures
+# - **Example**: `@assertEqual(32.0, celsius_to_fahrenheit(0.0))`
+# - **Note**: Yes, even Fortran has modern testing frameworks!
+# 
+# **MATLAB**
+# - **Built-in testing**: Unit Testing Framework (no toolbox required in modern versions)
+# - **What to look for**: `matlab.unittest.TestCase`, `verifyEqual()`
+# - **Example**: `testCase.verifyEqual(celsiusToFahrenheit(0), 32)`
+# - **Note**: Integrated with MATLAB IDE
+# 
+# **Rust**
+# - **Built-in testing**: Part of the language itself
+# - **What to look for**: `#[test]` attribute, `assert_eq!()` macro
+# - **Example**: `#[test] fn test_conversion() { assert_eq!(celsius_to_fahrenheit(0.0), 32.0); }`
+# - **Note**: Testing is a first-class citizen in Rust
+# 
+# **Common Patterns Across All Languages**
+# 
+# No matter what language you use, look for these features:
+# 
+# 1. **Assertion functions**: Check expected vs. actual values
+# 2. **Test organization**: Group related tests together
+# 3. **Test discovery**: Automatic finding and running of tests
+# 4. **Setup/teardown**: Code that runs before/after tests
+# 5. **Mocking**: Replace real objects with test doubles
+# 6. **Coverage tools**: Measure which code is tested
+# 7. **CI integration**: Run tests automatically in pipelines
+# 
+# **Key Takeaway**: The language changes, but **the principles remain the same**:
+# - Write tests for your code
+# - Test edge cases and scientific correctness
+# - Run tests frequently
+# - Automate testing in CI
+# 
+# Don't let an unfamiliar language stop you from testing. Every language has tools—find them, learn them, use them!
+# 
 # ### Next Steps
 # 
 # In **Lecture 6**, we'll learn how to:
