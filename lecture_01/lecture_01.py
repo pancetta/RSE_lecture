@@ -398,5 +398,8 @@ def find_outliers(values, threshold=2.0):
     list
         List of outlier values
     """
-    # Your code here
+    # TODO: Implement outlier detection logic
+    # Hint: Use the functions we've defined (calculate_mean, calculate_std)
+    # to identify values that are more than 'threshold' standard deviations
+    # from the mean
     pass

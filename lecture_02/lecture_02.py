@@ -263,8 +263,8 @@ def count_words(text):
         
     Returns
     -------
-    Counter
-        Word frequency counter
+    collections.Counter
+        Word frequency counter object that maps words to their counts
     """
     # Split into words and clean
     words = text.split()
