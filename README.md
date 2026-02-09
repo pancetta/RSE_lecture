@@ -45,7 +45,7 @@ cd RSE_lecture
 
 3. Create and activate the environment:
 
-**For all lectures:**
+**For base environment (Lectures 1, 3, 4):**
 ```bash
 micromamba env create -f environment.yml
 micromamba activate rse_lecture
@@ -57,11 +57,38 @@ make install
 micromamba activate rse_lecture
 ```
 
+**For Lecture 2 (includes matplotlib):**
+```bash
+micromamba env create -f lecture_02/environment.yml
+micromamba activate rse_lecture
+```
+
+Or using the Makefile:
+```bash
+make install-lecture2
+micromamba activate rse_lecture
+```
+
+**For development (includes all dependencies plus dev tools):**
+```bash
+micromamba env create -f environment-dev.yml
+micromamba activate rse_lecture
+```
+
+Or using the Makefile:
+```bash
+make install-dev
+micromamba activate rse_lecture
+```
+
 **Note:** 
-- The main `environment.yml` contains all common dependencies (Python, Jupyter, NumPy, etc.). 
+- The base `environment.yml` contains common dependencies (Python, Jupyter, NumPy, Jupyter Book).
+- Lecture-specific `environment.yml` files in lecture directories contain additional dependencies.
+- The `environment-dev.yml` includes all dependencies plus development tools (flake8, nbconvert).
 - Lecture 1 introduces the course and essential tools (shell, git, GitHub).
-- Lectures 2 and 3 focus on basic and advanced Python, using primarily the standard library and NumPy.
-- Lecture 4 covers documentation and code quality tools.
+- Lecture 2 introduces Python basics and visualization with matplotlib.
+- Lecture 3 focuses on advanced Python using the standard library.
+- Lecture 4 covers NumPy, matplotlib, and project structure.
 
 ## Usage
 
@@ -141,6 +168,31 @@ Jupytext allows us to:
 - **Code review**: Easier to review changes in pull requests
 - **Collaboration**: Multiple people can work on lectures without merge conflicts
 - **Flexibility**: Edit lectures in your favorite Python IDE or as notebooks
+
+## Dependency Management
+
+This repository uses a multi-environment approach for clean dependency separation:
+
+### Environment Files
+
+- **`environment.yml`**: Base environment with core dependencies (Python, Jupyter, NumPy, Jupyter Book)
+  - Used by Lectures 1, 3, and 4
+  
+- **`lecture_XX/environment.yml`**: Lecture-specific environments with additional dependencies
+  - Example: `lecture_02/environment.yml` includes matplotlib for visualization examples
+  
+- **`environment-dev.yml`**: Development environment with all dependencies plus dev tools
+  - Includes flake8 for linting, nbconvert for notebook execution
+  - Used by CI/CD pipeline
+  - Recommended for contributors
+
+### Benefits
+
+- **Clear separation**: Each lecture's dependencies are explicit and documented
+- **No duplication**: Environments only specify their actual requirements
+- **Dependabot compatible**: All `environment.yml` files are automatically tracked for security updates
+- **Scalable**: Easy to add new lectures with different dependency requirements
+- **Educational**: Students see exactly what each lecture needs
 
 ## Contributing
 
