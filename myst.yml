@@ -20,11 +20,11 @@ project:
   toc:
     - file: README.md
     - file: lecture_01/lecture_01.ipynb
-      title: 'Lecture 1: Introduction to RSE'
+      title: 'Lecture 1: Python Basics'
     - file: lecture_02/lecture_02.ipynb
-      title: 'Lecture 2: Testing and CI'
+      title: 'Lecture 2: Advanced Python'
     - file: lecture_03/lecture_03.ipynb
-      title: 'Lecture 3: Documentation and Code Quality'
+      title: 'Lecture 3: Testing and CI'
 site:
   options:
     logo: ''
