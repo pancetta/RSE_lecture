@@ -35,7 +35,7 @@ micromamba env create -f environment.yml
 micromamba activate rse_lecture
 ```
 
-**Note:** Lecture 2 uses only the base environment with no additional dependencies.
+**Note:** Lecture 3 uses only the base environment with no additional dependencies.
 
 2. Convert to notebook and run:
 ```bash
