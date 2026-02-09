@@ -73,11 +73,85 @@ print(f"Standard Deviation: {stats['std']:.2f}")
 # %% [markdown]
 # ## Version Control with Git
 # 
-# Version control is essential for:
-# - Tracking changes over time
-# - Collaborating with others
-# - Managing different versions of your code
-# - Recovering from mistakes
+# Version control is a tool for **managing changes** to a set of files.
+# 
+# ### Why use version control?
+# 
+# - **Better kind of backup**: Never lose your work
+# - **Review history**: "When did I introduce this bug?"
+# - **Restore older code versions**: Undo mistakes easily
+# - **Ability to undo mistakes**: Safe experimentation
+# - **Maintain several versions**: Work on features independently
+# - **Collaboration**: Share code and merge changes from multiple contributors
+# 
+# ### Git vs GitHub
+# 
+# - **Git**: Version control system tool to manage source code history
+# - **GitHub**: Hosting service for Git repositories (alternatives: GitLab, Bitbucket)
+# 
+# ### Essential Git Commands
+# 
+# ```bash
+# # Initialize a new repository
+# git init
+# 
+# # Check status of your repository
+# git status
+# 
+# # Stage changes for commit
+# git add filename.py        # Add specific file
+# git add .                  # Add all changes
+# 
+# # Commit changes with a message
+# git commit -m "Description of changes"
+# 
+# # View commit history
+# git log
+# 
+# # Connect to remote repository
+# git remote add origin https://github.com/username/repo.git
+# 
+# # Push changes to remote
+# git push origin main
+# 
+# # Pull changes from remote
+# git pull origin main
+# ```
+# 
+# ### Collaboration Workflow
+# 
+# When working with others:
+# 1. **Clone** the repository: `git clone <url>`
+# 2. **Pull** latest changes before starting work: `git pull`
+# 3. Make your changes and **commit** them locally
+# 4. **Pull** again to get any new changes from collaborators
+# 5. Resolve any **merge conflicts** if they arise
+# 6. **Push** your changes: `git push`
+# 
+# ### Handling Merge Conflicts
+# 
+# When two people edit the same lines of code, Git can't automatically merge:
+# - Git marks the conflicted areas in the file with `<<<<<<<`, `=======`, and `>>>>>>>`
+# - Manually edit the file to resolve the conflict
+# - Stage and commit the resolved file
+# 
+# ### Branching Basics
+# 
+# Branches allow you to work on features independently:
+# ```bash
+# # Create a new branch
+# git branch feature-name
+# 
+# # Switch to the branch
+# git checkout feature-name
+# 
+# # Or do both at once
+# git checkout -b feature-name
+# 
+# # Merge branch back to main
+# git checkout main
+# git merge feature-name
+# ```
 
 # %%
 # Visualize our sample data

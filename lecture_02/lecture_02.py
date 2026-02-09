@@ -32,6 +32,23 @@
 # - **Confidence**: Making changes without fear of breaking things
 # - **Documentation**: Tests serve as examples of how to use your code
 # - **Reproducibility**: Validated code produces reliable results
+# 
+# ### Tests at Different Scales
+# 
+# | Level of Test | Area Covered | Notes |
+# |--------------|--------------|-------|
+# | **Unit testing** | Smallest logical block (often < 10 lines) | Should run fast (~1/100th sec), no network/disk access |
+# | **Component testing** | Several logical blocks together | Useful for testing integration with 3rd party libraries |
+# | **Integration testing** | All components / whole program | Can take longer, run less frequently |
+# 
+# ### Testing Vocabulary
+# 
+# - **Fixture**: Input data for tests
+# - **Action**: Function being tested
+# - **Expected result**: The output that should be obtained
+# - **Actual result**: The output that is obtained
+# - **Coverage**: Proportion of code paths that tests execute
+# - **Regression test**: Test ensuring code behaves the same way after changes
 
 # %%
 import numpy as np
@@ -147,11 +164,115 @@ plt.show()
 # - Aim for high coverage (>80%) in critical code
 # - 100% coverage doesn't mean bug-free code
 # - Focus on testing important functionality and edge cases
+# 
+# ### Branch Coverage
+# 
+# Ensure you test all conditional paths:
+# ```python
+# if energy > 0:
+#     # Do this - needs a test
+# else:
+#     # Do that - also needs a test
+# ```
+# 
+# ## Mocking in Tests
+# 
+# **Mocking** means replacing real objects with pretend ones that record how they're called.
+# This is useful when testing code that interacts with:
+# - External APIs or web services
+# - Databases
+# - File systems
+# - Slow or unreliable resources
+# 
+# ### Example: Mocking with unittest.mock
+# 
+# ```python
+# from unittest.mock import Mock, patch
+# 
+# # Create a mock object
+# mock_function = Mock(return_value=42)
+# result = mock_function(1, 2, 3)  # Returns 42
+# 
+# # Check how it was called
+# mock_function.assert_called_with(1, 2, 3)
+# 
+# # Patch a function temporarily
+# with patch('requests.get') as mock_get:
+#     mock_get.return_value.status_code = 200
+#     # Your test code here
+#     mock_get.assert_called_once()
+# ```
+# 
+# ## Regression Testing
+# 
+# Regression tests ensure code behavior doesn't change unexpectedly:
+# - Run program as a "black box"
+# - Compare output against known reference output
+# - Doesn't test correctness, but consistency
+# - Particularly useful for legacy code
+# 
+# ### Regression Test Workflow
+# 1. Set up input data
+# 2. Run the program
+# 3. Capture the output
+# 4. Compare against expected/reference output
+# 
+# ## Debugging Techniques
+# 
+# When tests fail, use these debugging approaches:
+# - **Print statements**: Quick but temporary
+# - **Debugger (pdb)**: Step through code line by line
+# - **Logging**: Better than print for production code
+# - **Git bisect**: Find which commit introduced a bug
 
 # %% [markdown]
 # ## Continuous Integration (CI)
 # 
 # CI automatically runs your tests whenever you push code:
-# - Catches bugs early
-# - Ensures code works across different environments
-# - Common tools: GitHub Actions, Travis CI, GitLab CI
+# - **Catches bugs early**: Before they reach production
+# - **Ensures code works across different environments**: Multiple OS, Python versions
+# - **Provides fast feedback**: Know immediately if changes break anything
+# - **Common tools**: GitHub Actions, Travis CI, GitLab CI, CircleCI
+# 
+# ### Example: GitHub Actions Workflow
+# 
+# ```yaml
+# name: Tests
+# 
+# on: [push, pull_request]
+# 
+# jobs:
+#   test:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v2
+#       - name: Set up Python
+#         uses: actions/setup-python@v2
+#         with:
+#           python-version: '3.9'
+#       - name: Install dependencies
+#         run: |
+#           pip install -r requirements.txt
+#           pip install pytest pytest-cov
+#       - name: Run tests
+#         run: pytest --cov=.
+# ```
+# 
+# ### CI Best Practices
+# 
+# 1. **Keep tests fast**: Slow tests discourage frequent commits
+# 2. **Test on multiple platforms**: Linux, macOS, Windows
+# 3. **Test multiple Python versions**: Ensure compatibility
+# 4. **Fail fast**: Stop on first failure to save time
+# 5. **Monitor coverage**: Track if coverage decreases over time
+# 
+# ## Summary: Testing Checklist
+# 
+# When developing research software:
+# - ✅ Write unit tests for all functions
+# - ✅ Test edge cases (empty input, zeros, negative numbers, etc.)
+# - ✅ Use mocks for external dependencies
+# - ✅ Aim for >80% test coverage on critical code
+# - ✅ Set up CI to run tests automatically
+# - ✅ Write regression tests for bug fixes
+# - ✅ Use a debugger when tests fail
