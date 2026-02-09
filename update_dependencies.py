@@ -110,13 +110,47 @@ def test_environment(env_file, name="test-env"):
         print(f"\nCleaning up test environment '{name}'...")
         try:
             run_command(["micromamba", "env", "remove", "-n", name, "-y"], check=False)
-        except:
+        except Exception:
             pass
         
         # Clean up generated notebooks
         print("Cleaning up generated notebooks...")
         for notebook in Path(".").glob("lecture_*/*.ipynb"):
             notebook.unlink()
+
+
+def _create_lock_for_env(env_file, lock_file, platform):
+    """Helper function to create a single lock file."""
+    try:
+        run_command([
+            "conda-lock", "lock",
+            "--file", env_file,
+            "--platform", platform,
+            "--lockfile", lock_file
+        ])
+        print(f"  ✅ Created {lock_file}")
+        return True
+    except subprocess.CalledProcessError:
+        print(f"  ❌ Failed to create {lock_file}")
+        return False
+
+
+def _create_lock_for_lecture(lecture_dir, platform):
+    """Helper function to create lock file for a lecture."""
+    lock_file = f"{lecture_dir}/environment-{platform}.lock"
+    try:
+        run_command([
+            "conda-lock", "lock",
+            "--file", "environment.yml",
+            "--file", f"{lecture_dir}/environment.yml",
+            "--platform", platform,
+            "--lockfile", lock_file
+        ])
+        print(f"  ✅ Created {lock_file}")
+        return True
+    except subprocess.CalledProcessError:
+        print(f"  ❌ Failed to create {lock_file}")
+        return False
 
 
 def create_lock_files(platforms=None):
@@ -143,59 +177,30 @@ def create_lock_files(platforms=None):
         print("Install it with: micromamba install -c conda-forge conda-lock")
         return False
     
-    lock_files_created = []
+    lock_count = 0
     
     # Create lock for base environment
     print("Creating lock files for base environment...")
     for platform in platforms:
         lock_file = f"environment-{platform}.lock"
-        try:
-            run_command([
-                "conda-lock", "lock",
-                "--file", "environment.yml",
-                "--platform", platform,
-                "--lockfile", lock_file
-            ])
-            lock_files_created.append(lock_file)
-            print(f"  ✅ Created {lock_file}")
-        except subprocess.CalledProcessError:
-            print(f"  ❌ Failed to create {lock_file}")
+        if _create_lock_for_env("environment.yml", lock_file, platform):
+            lock_count += 1
     
     # Create lock for dev environment
     print("\nCreating lock files for development environment...")
     for platform in platforms:
         lock_file = f"environment-dev-{platform}.lock"
-        try:
-            run_command([
-                "conda-lock", "lock",
-                "--file", "environment-dev.yml",
-                "--platform", platform,
-                "--lockfile", lock_file
-            ])
-            lock_files_created.append(lock_file)
-            print(f"  ✅ Created {lock_file}")
-        except subprocess.CalledProcessError:
-            print(f"  ❌ Failed to create {lock_file}")
+        if _create_lock_for_env("environment-dev.yml", lock_file, platform):
+            lock_count += 1
     
     # Create locks for lecture-specific environments
     for lecture_dir in ["lecture_01", "lecture_02", "lecture_03", "lecture_04"]:
         print(f"\nCreating lock files for {lecture_dir}...")
         for platform in platforms:
-            lock_file = f"{lecture_dir}/environment-{platform}.lock"
-            try:
-                run_command([
-                    "conda-lock", "lock",
-                    "--file", "environment.yml",
-                    "--file", f"{lecture_dir}/environment.yml",
-                    "--platform", platform,
-                    "--lockfile", lock_file
-                ])
-                lock_files_created.append(lock_file)
-                print(f"  ✅ Created {lock_file}")
-            except subprocess.CalledProcessError:
-                print(f"  ❌ Failed to create {lock_file}")
+            if _create_lock_for_lecture(lecture_dir, platform):
+                lock_count += 1
     
-    print(f"\n✅ Created {len(lock_files_created)} lock files")
+    print(f"\n✅ Created {lock_count} lock files")
     return True
 
 

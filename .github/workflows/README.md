@@ -71,7 +71,7 @@ Automated dependency testing and update system.
 - ❌ Tests fail → No PR, maintainers need to pin problematic versions
 - ℹ️ No updates → No PR, no action needed
 
-For more details, see [DEPENDENCY_MANAGEMENT.md](../../DEPENDENCY_MANAGEMENT.md)
+For more details, see [dependency management documentation](../../docs/)
 
 ---
 
