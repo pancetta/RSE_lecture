@@ -1,4 +1,4 @@
-.PHONY: help install install-dev install-lecture1 install-lecture2 install-lecture3 install-lecture4 convert clean notebooks build-website serve-website clean-website sync-requirements
+.PHONY: help install install-dev install-lecture1 install-lecture2 install-lecture3 install-lecture4 convert clean notebooks build-website serve-website clean-website
 
 help:
 	@echo "Research Software Engineering Lectures - Makefile"
@@ -14,7 +14,6 @@ help:
 	@echo "  notebooks           - Alias for convert"
 	@echo "  build-website       - Build the Jupyter Book website"
 	@echo "  serve-website       - Build and serve the website locally"
-	@echo "  sync-requirements   - Sync requirements.txt from environment.yml files"
 	@echo "  clean               - Remove generated notebook files"
 	@echo "  clean-website       - Remove generated website files"
 	@echo "  help                - Show this help message"
@@ -82,7 +81,3 @@ clean:
 clean-website:
 	jupyter-book clean .
 	@echo "Cleaned website build files"
-
-sync-requirements:
-	python sync_requirements.py
-	@echo "Requirements files synced from environment.yml files"

@@ -1,4 +1,2 @@
 # Mark auto-generated files
-requirements.txt linguist-generated=true
-requirements-dev.txt linguist-generated=true
-lecture_*/requirements.txt linguist-generated=true
+*.ipynb linguist-generated=true

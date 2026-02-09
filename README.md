@@ -181,7 +181,7 @@ Jupytext allows us to:
 
 ## Dependency Management
 
-This repository uses a multi-environment approach for clean dependency separation with automated dependency tracking.
+This repository uses a **conda-only** multi-environment approach for clean dependency separation with automated dependency tracking.
 
 **📖 For detailed dependency management instructions, see [DEPENDENCY_MANAGEMENT.md](DEPENDENCY_MANAGEMENT.md)**
 
@@ -204,41 +204,41 @@ This repository uses a multi-environment approach for clean dependency separatio
 
 ### Automated Dependency Tracking
 
-The repository uses a combination of **Dependabot** and **GitHub Actions** to track and update dependencies:
+The repository uses **Dependabot** and **GitHub Actions** to track and update dependencies:
 
 #### 1. GitHub Actions Workflows
 - **Tracked by Dependabot**: Automatically monitors and updates GitHub Actions versions weekly
+- **Auto-created PRs**: Dependabot creates pull requests for GitHub Actions updates
 - **Schedule**: Every Monday at 09:00 UTC
 
-#### 2. Python/Conda Dependencies  
+#### 2. Conda Dependencies  
 - **Weekly automated checks**: GitHub Actions workflow runs every Monday to review conda environments
-- **Creates issues**: When the workflow runs, it creates/updates an issue with current dependency status
-- **Manual updates required**: Conda dependencies must be manually updated in `environment.yml` files
+- **Creates issues**: Workflow creates/updates an issue with current dependency status for manual review
+- **Manual updates**: Conda dependencies must be manually updated in `environment.yml` files and tested via CI
   
-**Why not automated Python dependency updates?**
-Dependabot doesn't natively support conda `environment.yml` files. While we maintain `requirements.txt` files for reference, conda environments are the source of truth and must be updated manually to ensure compatibility.
+**Why manual conda updates?**
+Dependabot doesn't natively support conda `environment.yml` files. The weekly GitHub Actions workflow reminds maintainers to check for conda package updates, which are then manually applied and tested through CI to ensure compatibility.
 
 ### Updating Dependencies
 
-When you need to update dependencies:
+When you need to update conda dependencies:
 
 1. **Edit the appropriate `environment.yml` file** with new version requirements
-2. **Sync requirements files**: Run `make sync-requirements` to update `requirements.txt` files
-3. **Test the changes**: 
+2. **Test the changes**: 
    ```bash
    make install-dev
    micromamba activate rse_lecture
    # Run tests and verify notebooks execute
    ```
-4. **Commit both files**: Always commit both `environment.yml` and `requirements.txt` together
+3. **Commit changes**: Commit the updated `environment.yml` file after CI validation
 
 ### Version Pinning Strategy
 
 To ensure a stable, reproducible environment:
 - **Minimum versions**: Use `>=` for minimum required versions (e.g., `numpy>=1.21.0`)
-- **Specific versions**: Pin to specific versions when needed for stability
+- **Specific versions**: Pin to specific versions when needed for stability (e.g., `numpy==1.24.3`)
 - **Weekly reviews**: GitHub Actions reminds us to check for updates weekly
-- **CI validation**: All changes are tested across multiple platforms before merge
+- **CI validation**: All changes are tested across multiple platforms (Ubuntu, macOS, Windows) before merge
 
 ### Benefits
 
@@ -246,8 +246,9 @@ To ensure a stable, reproducible environment:
 - **Clear separation**: Each lecture's dependencies are explicit and documented
 - **True inheritance**: Lecture-specific files only contain additional dependencies, avoiding duplication
 - **No duplication**: Base dependencies defined once in `environment.yml`
-- **Automated tracking**: GitHub Actions monitors conda dependencies, Dependabot tracks Actions
+- **Automated tracking**: Dependabot for GitHub Actions, weekly workflow for conda dependencies
 - **Known working versions**: Dependencies are frozen and tested in CI before deployment
+- **Pure conda**: Single package manager for consistency and reproducibility
 - **Scalable**: Easy to add new lectures with different dependency requirements
 - **Educational**: Students see exactly what each lecture adds beyond the base
 - **Simplified Makefile**: All `install-lectureX` targets follow identical pattern

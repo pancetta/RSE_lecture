@@ -3,12 +3,9 @@
 # and creating PRs to update dependencies in a controlled manner.
 #
 # NOTE: Dependabot does not natively support conda environment.yml files.
-# This configuration tracks:
-# 1. GitHub Actions workflows (native support)
-# 2. Python dependencies via requirements.txt files (pip ecosystem)
-#    - requirements.txt files mirror the environment.yml dependencies
-#    - Use 'make sync-requirements' to update requirements.txt from environment.yml
-#    - Both file formats are maintained in the repository
+# This configuration only tracks GitHub Actions workflows.
+# Python/conda dependencies are monitored via the weekly dependency-check.yml workflow,
+# which creates issues for manual review and updating.
 
 version: 2
 updates:

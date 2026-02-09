@@ -4,35 +4,24 @@ This document describes how dependencies are managed in the RSE Lecture reposito
 
 ## Overview
 
-The repository uses a **hybrid dependency tracking approach**:
+The repository uses a **conda-only dependency management approach**:
 
 1. **GitHub Actions**: Automatically tracked and updated by Dependabot
-2. **Conda/Python packages**: Monitored by a custom GitHub Actions workflow, manually updated
+2. **Conda packages**: Monitored by a custom GitHub Actions workflow, manually updated
 
 ## Dependency Files
 
-### Conda Environment Files (Source of Truth)
+### Conda Environment Files (Single Source of Truth)
 
-These are the authoritative dependency specifications:
+These are the **only** dependency specifications in the repository:
 
 - **`environment.yml`** - Base dependencies for all lectures
 - **`environment-dev.yml`** - Development environment (includes testing tools)
 - **`lecture_0X/environment.yml`** - Lecture-specific additional dependencies
 
 **Format**: Conda environment YAML format
-**Usage**: Primary source for creating conda/micromamba environments
-
-### Requirements Files (Auto-Generated)
-
-These files are automatically generated from environment.yml files:
-
-- **`requirements.txt`** - Mirrors base environment.yml
-- **`requirements-dev.txt`** - Mirrors dev environment.yml  
-- **`lecture_0X/requirements.txt`** - Mirrors lecture-specific environment.yml
-
-**Format**: pip requirements format
-**Usage**: Reference only; may be used by Dependabot in the future
-**Maintenance**: Run `make sync-requirements` after editing any environment.yml file
+**Package Manager**: micromamba or conda/mamba
+**Usage**: Single source of truth for all Python and system dependencies
 
 ## Automated Dependency Tracking
 
@@ -84,12 +73,7 @@ When you need to update a Python package dependency:
    # To:     numpy>=1.24.0
    ```
 
-2. **Sync the requirements.txt files:**
-   ```bash
-   make sync-requirements
-   ```
-
-3. **Test the changes locally:**
+2. **Test the changes locally:**
    ```bash
    # Remove old environment
    micromamba env remove -n rse_lecture
@@ -106,13 +90,13 @@ When you need to update a Python package dependency:
    make install-lecture4
    ```
 
-4. **Run CI checks locally (recommended):**
+3. **Run CI checks locally (recommended):**
    ```bash
    # Lint
    flake8 . --count --statistics
    
    # Syntax check
-   python -m py_compile convert_to_notebooks.py sync_requirements.py
+   python -m py_compile convert_to_notebooks.py
    
    # Test notebooks execute
    for notebook in lecture_*/*.ipynb; do
@@ -120,17 +104,17 @@ When you need to update a Python package dependency:
    done
    ```
 
-5. **Commit both environment.yml and requirements.txt:**
+4. **Commit environment.yml:**
    ```bash
-   git add environment.yml requirements.txt
+   git add environment.yml
    # Or for lecture-specific:
-   git add lecture_04/environment.yml lecture_04/requirements.txt
+   git add lecture_04/environment.yml
    
    git commit -m "deps: update numpy to 1.24.0"
    git push
    ```
 
-6. **Wait for CI to validate:**
+5. **Wait for CI to validate:**
    - CI runs on: Ubuntu, macOS 15, macOS 26, Windows
    - Must pass on all platforms before merge
 
@@ -160,9 +144,10 @@ Dependabot automatically creates PRs for GitHub Actions updates. Simply:
 - Example: `numpy~=1.24.0` (allows 1.24.x but not 1.25.0)
 
 ### Current strategy:
-- **Development**: Use `>=` for flexibility
-- **Known working versions**: Tested in CI, versions are recorded
+- **Development**: Use `>=` for flexibility and forward compatibility
+- **Known working versions**: Tested in CI, versions are recorded in git history
 - **Security updates**: Applied promptly when vulnerabilities found
+- **Conda-only**: Single package manager ensures consistent resolution across platforms
 
 ## Troubleshooting
 
@@ -199,34 +184,17 @@ If CI fails after updating dependencies:
    git revert <commit-hash>
    ```
 
-### Sync script errors
-
-If `make sync-requirements` fails:
-
-1. **Check environment.yml syntax:**
-   ```bash
-   python -c "import yaml; yaml.safe_load(open('environment.yml'))"
-   ```
-
-2. **Check for special conda syntax:**
-   - The script only handles simple dependencies
-   - Complex conda-specific features may not translate to pip
-
 ## Best Practices
 
 1. **Test before merging**: Always run CI tests on all platforms
 2. **Update regularly**: Review dependencies weekly via automated issues
-3. **Document changes**: Note why specific versions were chosen
+3. **Document changes**: Note why specific versions were chosen in commit messages
 4. **Security first**: Apply security updates promptly
-5. **Keep in sync**: Always run `make sync-requirements` after editing environment.yml
-6. **Commit together**: environment.yml and requirements.txt should be committed together
+5. **Conda-only**: Keep all dependencies in environment.yml files for consistency
 
 ## Useful Commands
 
 ```bash
-# Sync requirements from environments
-make sync-requirements
-
 # Check dependency versions in current environment
 micromamba list
 
@@ -236,17 +204,19 @@ micromamba search numpy
 # Show package info
 micromamba info numpy
 
-# Export exact current environment
+# Export exact current environment (with all resolved versions)
 micromamba env export > environment-frozen.yml
+
+# Compare environment files
+diff environment.yml environment-frozen.yml
 ```
 
 ## Related Files
 
-- `.github/dependabot.yml` - Dependabot configuration
-- `.github/workflows/dependency-check.yml` - Conda dependency checker
+- `.github/dependabot.yml` - Dependabot configuration (GitHub Actions only)
+- `.github/workflows/dependency-check.yml` - Weekly conda dependency checker
 - `.github/workflows/ci.yml` - CI pipeline that tests dependencies
-- `sync_requirements.py` - Script to sync requirements.txt files
-- `Makefile` - Build targets including `sync-requirements`
+- `Makefile` - Build targets for installing environments
 
 ## Getting Help
 
