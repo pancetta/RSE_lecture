@@ -9,7 +9,7 @@ Welcome to the Research Software Engineering (RSE) lecture series! This reposito
 This lecture series covers fundamental concepts and practices in Research Software Engineering, including:
 
 - **Lecture 1**: Introduction to RSE, Shell Basics, and Git Fundamentals (~90 minutes)
-- **Lecture 2**: Advanced Git, GitHub Collaboration, and Python Basics (~90 minutes)
+- **Lecture 2**: Advanced Git, GitHub & GitLab Collaboration, and Python Basics (~90 minutes)
 - **Lecture 3**: Python Fundamentals and Advanced Concepts (including Error Handling) (~90 minutes)
 - **Lecture 4**: Python Project Structure and Working with Libraries (NumPy, Matplotlib) (~90 minutes)
 

@@ -13,10 +13,10 @@
 # ---
 
 # %% [markdown]
-# # Lecture 2: Advanced Git, GitHub, and Python Basics
+# # Lecture 2: Advanced Git, GitHub, GitLab, and Python Basics
 # 
 # ## Overview
-# This lecture builds on Git fundamentals from Lecture 1, introduces collaboration with GitHub,
+# This lecture builds on Git fundamentals from Lecture 1, introduces collaboration with GitHub and GitLab,
 # and begins our journey into Python programming. We'll learn advanced version control workflows
 # and start writing our first Python code.
 # 
@@ -25,7 +25,8 @@
 # ## Learning Objectives
 # - Master Git branching and merging workflows
 # - Understand .gitignore patterns and file management
-# - Collaborate effectively using GitHub
+# - Collaborate effectively using GitHub and GitLab
+# - Understand differences between GitHub and GitLab workflows
 # - Learn fundamental Python syntax and concepts
 # - Write basic Python programs
 
@@ -269,6 +270,163 @@
 # 3. **Respond to reviews**: Address feedback promptly
 # 4. **Use Issues**: Track bugs and feature requests
 # 5. **Document in README**: Help others understand your project
+
+# %% [markdown]
+# ## Part 2b: GitLab Collaboration
+# 
+# GitLab is another popular platform for Git repository hosting and collaboration.
+# While similar to GitHub, GitLab has some unique features and terminology.
+# 
+# ### GitLab vs GitHub: Key Differences
+# 
+# - **Merge Requests** (GitLab) vs **Pull Requests** (GitHub)
+# - GitLab can be self-hosted or used on GitLab.com
+# - Integrated CI/CD pipelines built into GitLab
+# - Different interface and feature set
+# 
+# ### Forking in GitLab
+# 
+# Forking in GitLab works similarly to GitHub:
+# 
+# 1. **Navigate** to the project you want to fork
+# 2. **Click "Fork"** in the upper-right corner
+# 3. **Choose namespace**: Select where to create your fork (personal namespace or group)
+# 4. **Configure fork options**:
+#    - Edit project name and slug (URL)
+#    - Choose which branches to include (all branches or only default)
+#    - Set visibility level (public, internal, or private)
+# 5. **Create fork**: GitLab creates your personal copy
+# 
+# #### Keeping Your Fork Updated
+# 
+# ```bash
+# # Add the upstream repository
+# git remote add upstream https://gitlab.com/original-owner/project.git
+# 
+# # View your remotes
+# git remote -v
+# # origin    https://gitlab.com/your-username/project.git (fetch)
+# # origin    https://gitlab.com/your-username/project.git (push)
+# # upstream  https://gitlab.com/original-owner/project.git (fetch)
+# # upstream  https://gitlab.com/original-owner/project.git (push)
+# 
+# # Fetch changes from upstream
+# git fetch upstream
+# 
+# # Merge upstream changes into your main branch
+# git checkout main
+# git merge upstream/main
+# 
+# # Push updates to your fork
+# git push origin main
+# ```
+# 
+# GitLab also provides a UI button to update your fork directly from the web interface.
+
+# %% [markdown]
+# ### Merge Requests in GitLab
+# 
+# Merge Requests (MRs) are GitLab's equivalent to GitHub's Pull Requests.
+# 
+# #### Creating a Merge Request
+# 
+# ```bash
+# # Create a new branch in your fork
+# git checkout -b feature-improvement
+# 
+# # Make your changes
+# # ... edit files ...
+# 
+# # Commit and push to your fork
+# git add .
+# git commit -m "Add feature improvement"
+# git push origin feature-improvement
+# ```
+# 
+# Then on GitLab:
+# 
+# 1. **Navigate** to your fork on GitLab
+# 2. **Click "Create merge request"** (appears after pushing a branch)
+# 3. **Configure the merge request**:
+#    - Choose source branch (your feature branch)
+#    - Choose target branch (usually `main` in upstream)
+#    - Select target project (upstream repository)
+# 4. **Write description**: Explain your changes
+#    - Use merge request templates if available
+#    - Reference related issues with `#issue-number`
+#    - Use closing patterns like `Closes #123` to auto-close issues
+# 5. **Assign reviewers and assignees**
+# 6. **Create merge request**
+# 
+# #### Merge Request Features
+# 
+# GitLab Merge Requests include:
+# 
+# - **Inline code reviews**: Comment on specific lines
+# - **Threaded discussions**: Track conversations
+# - **Approval rules**: Require approvals before merging (Premium/Ultimate)
+# - **CI/CD pipelines**: Automatic testing
+# - **Auto-merge**: Merge automatically when conditions are met
+# - **Draft status**: Mark MRs as work-in-progress
+# 
+# #### Working with Remotes in GitLab
+# 
+# ```bash
+# # Clone your fork
+# git clone https://gitlab.com/your-username/project.git
+# cd project
+# 
+# # Add upstream remote
+# git remote add upstream https://gitlab.com/original-owner/project.git
+# 
+# # Create a feature branch
+# git checkout -b fix-bug
+# 
+# # Make changes and commit
+# # ... edit files ...
+# git add .
+# git commit -m "Fix critical bug"
+# 
+# # Before pushing, sync with upstream
+# git fetch upstream
+# git rebase upstream/main
+# 
+# # Push to your fork
+# git push origin fix-bug
+# 
+# # Create merge request on GitLab
+# ```
+
+# %% [markdown]
+# ### GitLab Best Practices
+# 
+# 1. **Use descriptive MR titles**: Summarize the change clearly
+# 2. **Link to issues**: Connect MRs to related issues for context
+# 3. **Keep MRs focused**: One feature or fix per merge request
+# 4. **Use draft MRs**: Mark work-in-progress with "Draft:" prefix
+# 5. **Respond to feedback**: Address reviewer comments promptly
+# 6. **Use CI/CD**: Ensure pipelines pass before merging
+# 7. **Squash commits**: Keep history clean (when appropriate)
+# 8. **Update documentation**: Include docs in your changes
+
+# %% [markdown]
+# ### Comparison: GitHub vs GitLab Workflows
+# 
+# | Feature | GitHub | GitLab |
+# |---------|--------|--------|
+# | Contribution model | Pull Request | Merge Request |
+# | Fork update | Manual or sync fork button | Manual or update fork button |
+# | Review process | Code review, comments | Code review, threaded discussions |
+# | CI/CD | GitHub Actions | GitLab CI/CD (built-in) |
+# | Project hosting | GitHub.com only | GitLab.com or self-hosted |
+# | Issue tracking | GitHub Issues | GitLab Issues |
+# | Draft/WIP | Draft Pull Request | Draft Merge Request |
+# 
+# Both platforms support similar workflows - the choice often depends on:
+# - Your organization's preference
+# - Self-hosting requirements
+# - Specific features needed
+# - Existing infrastructure
 
 # %% [markdown]
 # ## Part 3: Introduction to Python
@@ -633,9 +791,15 @@ print(f"  Range: {results['min']:.2f} - {results['max']:.2f}")
 # - **Best practices**: Workflow tips for effective version control
 # 
 # ### GitHub Collaboration
-# - **Forking and Pull Requests**: Contributing to projects
+# - **Forking and Pull Requests**: Contributing to projects on GitHub
 # - **Remote repositories**: Working with GitHub
-# - **Collaboration best practices**: Effective teamwork
+# - **Collaboration best practices**: Effective teamwork on GitHub
+# 
+# ### GitLab Collaboration
+# - **Forking in GitLab**: Creating personal copies of projects
+# - **Merge Requests**: GitLab's contribution workflow
+# - **Remote management**: Syncing with upstream repositories
+# - **Platform comparison**: Understanding GitHub vs GitLab differences
 # 
 # ### Python Basics
 # - **Variables and types**: Strings, numbers, booleans
