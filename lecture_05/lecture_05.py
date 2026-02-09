@@ -974,7 +974,8 @@ print("\n🎉 All tests passed! Code is fully tested and bug-free!")
 # 
 # ### Testing in Other Programming Languages
 # 
-# While this lecture focused on Python and pytest, **every modern programming language has testing frameworks**. Here's what to look for in other languages you might use for research:
+# While this lecture focused on Python and pytest, **every modern programming language has
+# testing frameworks**. Here's what to look for in other languages you might use for research:
 # 
 # **C/C++**
 # - **Popular frameworks**: Google Test (gtest), Catch2, CppUnit, Boost.Test
