@@ -100,11 +100,3 @@ plt.show()
 # 3. **Use version control**: Git for tracking changes
 # 4. **Test your code**: Write unit tests
 # 5. **Make it reproducible**: Document dependencies and environment
-
-# %% [markdown]
-# ## Exercise
-# 
-# Try modifying the `calculate_statistics` function to also return the minimum and maximum values.
-
-# %%
-# Your solution here

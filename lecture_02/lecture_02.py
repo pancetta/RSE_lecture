@@ -155,10 +155,3 @@ plt.show()
 # - Catches bugs early
 # - Ensures code works across different environments
 # - Common tools: GitHub Actions, Travis CI, GitLab CI
-
-# %% [markdown]
-# ## Exercise
-# 
-# 1. What edge cases should we test for the `normalize_data` function?
-# 2. Write a test for the case when all values in the data are the same
-# 3. How would you test that the min-max normalization produces values in [0, 1]?
