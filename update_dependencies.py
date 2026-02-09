@@ -153,6 +153,27 @@ def _create_lock_for_lecture(lecture_dir, platform):
         return False
 
 
+def _create_locks_for_platforms(env_file, prefix, platforms):
+    """Create lock files for an environment across multiple platforms."""
+    count = 0
+    for platform in platforms:
+        lock_file = f"{prefix}-{platform}.lock"
+        if _create_lock_for_env(env_file, lock_file, platform):
+            count += 1
+    return count
+
+
+def _create_lecture_locks(lecture_dirs, platforms):
+    """Create lock files for lecture environments."""
+    count = 0
+    for lecture_dir in lecture_dirs:
+        print(f"\nCreating lock files for {lecture_dir}...")
+        for platform in platforms:
+            if _create_lock_for_lecture(lecture_dir, platform):
+                count += 1
+    return count
+
+
 def create_lock_files(platforms=None):
     """
     Create conda-lock files for all environments.
@@ -181,24 +202,15 @@ def create_lock_files(platforms=None):
     
     # Create lock for base environment
     print("Creating lock files for base environment...")
-    for platform in platforms:
-        lock_file = f"environment-{platform}.lock"
-        if _create_lock_for_env("environment.yml", lock_file, platform):
-            lock_count += 1
+    lock_count += _create_locks_for_platforms("environment.yml", "environment", platforms)
     
     # Create lock for dev environment
     print("\nCreating lock files for development environment...")
-    for platform in platforms:
-        lock_file = f"environment-dev-{platform}.lock"
-        if _create_lock_for_env("environment-dev.yml", lock_file, platform):
-            lock_count += 1
+    lock_count += _create_locks_for_platforms("environment-dev.yml", "environment-dev", platforms)
     
     # Create locks for lecture-specific environments
-    for lecture_dir in ["lecture_01", "lecture_02", "lecture_03", "lecture_04"]:
-        print(f"\nCreating lock files for {lecture_dir}...")
-        for platform in platforms:
-            if _create_lock_for_lecture(lecture_dir, platform):
-                lock_count += 1
+    lecture_dirs = ["lecture_01", "lecture_02", "lecture_03", "lecture_04"]
+    lock_count += _create_lecture_locks(lecture_dirs, platforms)
     
     print(f"\n✅ Created {lock_count} lock files")
     return True
