@@ -13,393 +13,354 @@
 # ---
 
 # %% [markdown]
-# # Lecture 1: Python Basics - Command Line & Introduction to Python
+# # Lecture 1: Introduction to Research Software Engineering
 # 
 # ## Overview
-# This lecture provides a foundation for Research Software Engineering by introducing 
-# basic command line usage and fundamental Python programming concepts. This is not a 
-# comprehensive Python course, but rather focuses on the essential skills needed for 
-# writing research software.
+# Welcome to the Research Software Engineering (RSE) lecture series! This introductory 
+# lecture provides an overview of what RSE is, why it matters for modern research, and 
+# how to get started with the tools and practices we'll cover throughout this course.
 # 
 # **Duration**: ~90 minutes
 # 
 # ## Learning Objectives
-# - Understand basic command line navigation
-# - Learn fundamental Python syntax and concepts
-# - Create simple Python scripts for research tasks
-# - Apply best practices in research software development
+# - Understand what Research Software Engineering is and why it matters
+# - Learn about the structure and content of this course
+# - Get familiar with accessing and using the course materials
+# - Gain a basic introduction to essential development tools:
+#   - Shell/command line
+#   - Git version control
+#   - GitHub collaboration
 
 # %% [markdown]
-# ## Part 1: Working with the Command Line
+# ## Part 1: What is Research Software Engineering?
 # 
-# Research software often needs to be run from the command line, especially when:
-# - Processing large datasets
-# - Running on remote servers or clusters
-# - Automating workflows
-# - Integrating with other tools
+# ### The Role of Software in Research
 # 
-# ### Essential Command Line Commands
+# Modern research increasingly relies on software:
+# - **Data Analysis**: Processing and analyzing experimental or observational data
+# - **Simulations**: Modeling complex systems (climate, molecular dynamics, economics)
+# - **Automation**: Automating repetitive tasks and workflows
+# - **Reproducibility**: Ensuring research results can be verified and replicated
+# 
+# ### What is a Research Software Engineer?
+# 
+# A Research Software Engineer (RSE) combines:
+# - **Domain Knowledge**: Understanding of the research field
+# - **Software Development Skills**: Professional programming practices
+# - **Collaborative Mindset**: Working with researchers to build better tools
+# 
+# ### Why RSE Matters
+# 
+# Research software engineering is important because:
+# 
+# 1. **Quality**: Well-engineered software produces more reliable results
+# 2. **Efficiency**: Good practices save time in the long run
+# 3. **Reproducibility**: Proper version control and documentation enable others to verify your work
+# 4. **Impact**: Reusable, well-documented software increases research impact
+# 5. **Career**: RSE skills are valuable in both academia and industry
+# 
+# ### The Research Software Engineering Community
+# 
+# - [Society of Research Software Engineering](https://society-rse.org/)
+# - RSE conferences and meetups worldwide
+# - Growing recognition of RSE as a career path
+# - Best practices developed by and for researchers
+
+# %% [markdown]
+# ## Part 2: Course Structure and Content
+# 
+# ### Course Overview
+# 
+# This course covers essential Research Software Engineering practices through hands-on lectures:
+# 
+# **[PLACEHOLDER - Course Structure]**
+# 
+# The following lectures will be added as we build out the curriculum:
+# 
+# - **Lecture 2**: Python Basics - Command Line & Introduction to Python
+# - **Lecture 3**: Advanced Python & Working with Libraries
+# - **Lecture 4**: Documentation and Code Quality
+# - **Future lectures**: Testing, Continuous Integration, Deployment, and more
+# 
+# ### Learning Approach
+# 
+# Each lecture includes:
+# - Conceptual explanations
+# - Practical examples
+# - Hands-on exercises
+# - Best practices specific to research software
+# 
+# ### Prerequisites
+# 
+# - Basic computer literacy
+# - Willingness to learn programming
+# - No prior programming experience required for this course
+
+# %% [markdown]
+# ## Part 3: Accessing and Installing Course Materials
+# 
+# ### How to Access This Course
+# 
+# The course materials are available on GitHub:
+# - **Repository**: https://github.com/pancetta/RSE_lecture
+# - **Website**: Rendered as an interactive website using Jupyter Book
+# - **Format**: Python files (using Jupytext) that convert to Jupyter notebooks
+# 
+# ### Installation Steps
+# 
+# #### 1. Clone the Repository
+# 
+# First, you need Git installed on your system. Then:
 # 
 # ```bash
-# # Navigate directories
-# pwd              # Print working directory
-# ls               # List files
-# cd directory     # Change directory
+# git clone https://github.com/pancetta/RSE_lecture.git
+# cd RSE_lecture
+# ```
 # 
-# # File operations
-# cat file.txt     # Display file contents
-# head -n 5 file   # Show first 5 lines
-# tail -n 5 file   # Show last 5 lines
+# #### 2. Install Micromamba (or Conda/Mamba)
 # 
-# # Running Python scripts
-# python script.py           # Run a Python script
-# python script.py arg1 arg2 # Run with arguments
-# python script.py > out.txt # Redirect output to file
+# We use micromamba for managing Python environments:
+# - **Linux/macOS**: Follow instructions at https://mamba.readthedocs.io/en/latest/installation/micromamba-installation.html
+# - **Windows**: Use Git Bash or WSL (Windows Subsystem for Linux)
+# 
+# #### 3. Create the Environment
+# 
+# ```bash
+# micromamba env create -f environment.yml
+# micromamba activate rse_lecture
+# ```
+# 
+# Or using the Makefile:
+# 
+# ```bash
+# make install
+# micromamba activate rse_lecture
+# ```
+# 
+# #### 4. View the Course Website
+# 
+# Build and serve the website locally:
+# 
+# ```bash
+# make serve-website
+# ```
+# 
+# Then open your browser to http://localhost:8000
+# 
+# ### Working with Jupyter Notebooks
+# 
+# Convert Python lecture files to notebooks:
+# 
+# ```bash
+# python convert_to_notebooks.py
+# ```
+# 
+# Then start Jupyter:
+# 
+# ```bash
+# jupyter notebook
 # ```
 
 # %% [markdown]
-# ## Part 2: Python Fundamentals
+# ## Part 4: Introduction to Essential Tools
 # 
-# ### Variables and Data Types
+# ### The Command Line / Shell
 # 
-# Python is dynamically typed - you don't need to declare variable types explicitly.
-
-# %%
-# Basic data types
-name = "Research Project"  # String
-count = 42                 # Integer
-temperature = 98.6         # Float
-is_valid = True           # Boolean
-
-print(f"Project: {name}")
-print(f"Sample count: {count}")
-print(f"Temperature: {temperature}°F")
-print(f"Data is valid: {is_valid}")
+# The command line (also called terminal, shell, or console) is essential for:
+# - Running research software
+# - Automating tasks
+# - Working on remote servers
+# - Version control with Git
+# 
+# #### Basic Shell Commands
+# 
+# Here are the most important commands you'll use:
+# 
+# ```bash
+# # Navigation
+# pwd              # Print working directory - shows where you are
+# ls               # List files and directories
+# ls -la           # List with details (size, permissions, hidden files)
+# cd directory     # Change directory
+# cd ..            # Go up one directory
+# cd ~             # Go to home directory
+# 
+# # File operations
+# cat file.txt     # Display file contents
+# less file.txt    # View file with scrolling (press 'q' to quit)
+# head file.txt    # Show first 10 lines
+# tail file.txt    # Show last 10 lines
+# 
+# # Creating and modifying
+# mkdir dirname    # Create a directory
+# touch file.txt   # Create an empty file
+# cp src dest      # Copy file
+# mv src dest      # Move/rename file
+# rm file.txt      # Remove file (careful!)
+# rm -r directory  # Remove directory and contents (very careful!)
+# 
+# # Getting help
+# man command      # Show manual for a command
+# command --help   # Show help for a command
+# ```
+# 
+# #### Shell Tips
+# 
+# - **Tab completion**: Press Tab to auto-complete file and directory names
+# - **Command history**: Use Up/Down arrow keys to recall previous commands
+# - **Copy/Paste**: Ctrl+Shift+C / Ctrl+Shift+V in most terminals
+# - **Clear screen**: Type `clear` or press Ctrl+L
 
 # %% [markdown]
-# ### Collections: Lists and Dictionaries
+# ### Introduction to Git
 # 
-# Lists and dictionaries are fundamental data structures in Python.
-
-# %%
-# Lists - ordered, mutable sequences
-measurements = [23.5, 24.1, 23.8, 24.3, 23.9]
-print("Measurements:", measurements)
-print("First measurement:", measurements[0])
-print("Last measurement:", measurements[-1])
-
-# Add a new measurement
-measurements.append(24.0)
-print("After adding:", measurements)
-
-# %%
-# Dictionaries - key-value pairs
-experiment = {
-    'name': 'Temperature Study',
-    'duration': 30,
-    'samples': 150,
-    'temperature': 25.0
-}
-
-print("Experiment:", experiment['name'])
-print("Duration:", experiment['duration'], "days")
-
-# Add new information
-experiment['location'] = 'Lab A'
-print("Updated experiment:", experiment)
+# Git is a version control system that tracks changes to your code:
+# 
+# #### Why Use Git?
+# 
+# - **History**: Track every change you make
+# - **Safety**: Easy to revert mistakes
+# - **Collaboration**: Work with others without conflicts
+# - **Backup**: Your code is safely stored
+# 
+# #### Basic Git Workflow
+# 
+# ```bash
+# # Configure Git (first time only)
+# git config --global user.name "Your Name"
+# git config --global user.email "your.email@example.com"
+# 
+# # Create a new repository
+# git init
+# 
+# # Check status of your repository
+# git status
+# 
+# # Add files to staging area
+# git add filename.py      # Add specific file
+# git add .                # Add all changed files
+# 
+# # Commit changes with a message
+# git commit -m "Description of what you changed"
+# 
+# # View commit history
+# git log
+# git log --oneline        # Compact view
+# 
+# # See what changed
+# git diff                 # Changes not yet staged
+# git diff --staged        # Changes staged for commit
+# ```
+# 
+# #### Git Best Practices
+# 
+# - Make small, focused commits
+# - Write clear commit messages
+# - Commit often
+# - Don't commit sensitive data (passwords, API keys)
 
 # %% [markdown]
-# ### Control Flow
+# ### Introduction to GitHub
 # 
-# Control structures allow you to make decisions and repeat operations.
-
-# %%
-# If statements
-threshold = 24.0
-
-for measurement in measurements:
-    if measurement > threshold:
-        print(f"{measurement} is above threshold")
-    elif measurement < threshold:
-        print(f"{measurement} is below threshold")
-    else:
-        print(f"{measurement} equals threshold")
-
-# %%
-# For loops - iterate over sequences
-data_files = ['exp1.csv', 'exp2.csv', 'exp3.csv']
-
-print("Processing files:")
-for filename in data_files:
-    print(f"  - {filename}")
-
-# %%
-# While loops - repeat while condition is true
-count = 0
-total = 0
-
-while count < 5:
-    total += measurements[count]
-    count += 1
-
-average = total / count
-print(f"Average of first {count} measurements: {average:.2f}")
+# GitHub is a platform for hosting Git repositories and collaborating with others:
+# 
+# #### Why Use GitHub?
+# 
+# - **Remote backup**: Your code is stored in the cloud
+# - **Collaboration**: Share code with colleagues
+# - **Open source**: Share your research software with the world
+# - **Discovery**: Find and use software from other researchers
+# - **Documentation**: README, wiki, and GitHub Pages
+# 
+# #### Basic GitHub Workflow
+# 
+# ```bash
+# # Clone an existing repository
+# git clone https://github.com/username/repository.git
+# cd repository
+# 
+# # After making changes and committing locally:
+# 
+# # Push your changes to GitHub
+# git push
+# 
+# # Get latest changes from GitHub
+# git pull
+# 
+# # Create a new branch for a feature
+# git checkout -b feature-name
+# 
+# # Switch back to main branch
+# git checkout main
+# ```
+# 
+# #### GitHub Features
+# 
+# - **Issues**: Track bugs and feature requests
+# - **Pull Requests**: Propose and review changes
+# - **Actions**: Automate testing and deployment
+# - **Pages**: Host documentation websites
+# - **Releases**: Package and distribute your software
+# 
+# #### Forking and Contributing
+# 
+# To contribute to someone else's project:
+# 
+# 1. Fork the repository on GitHub
+# 2. Clone your fork locally
+# 3. Create a new branch for your changes
+# 4. Make changes and commit
+# 5. Push to your fork
+# 6. Create a Pull Request
 
 # %% [markdown]
-# ### Functions
+# ## Part 5: Getting Started with This Course
 # 
-# Functions help organize code into reusable pieces. In research software, 
-# functions make analysis reproducible and easier to test.
+# ### Your First Steps
+# 
+# Now that you have an overview, here's what to do next:
+# 
+# 1. **Install the course environment** (if you haven't already)
+# 2. **Explore the repository structure**
+# 3. **Try converting a lecture to a notebook**
+# 4. **Practice basic shell commands**
+# 5. **Make a test commit to a practice repository**
+# 
+# ### Tips for Success
+# 
+# - **Practice regularly**: Programming is a skill that improves with practice
+# - **Don't be afraid to make mistakes**: Version control makes it easy to undo
+# - **Ask questions**: Use GitHub Issues or discussions
+# - **Start small**: Begin with simple scripts and gradually build complexity
+# - **Read other people's code**: Learn from well-written research software
+# 
+# ### Resources
+# 
+# - [Software Carpentry](https://software-carpentry.org/): Free workshops on scientific computing
+# - [The Turing Way](https://the-turing-way.netlify.app/): Handbook for reproducible research
+# - [Git Book](https://git-scm.com/book/en/v2): Comprehensive Git documentation
+# - [GitHub Skills](https://skills.github.com/): Interactive GitHub tutorials
+
+# %% [markdown]
+# ## Summary
+# 
+# In this introductory lecture, we covered:
+# 
+# - **What RSE is**: Combining research domain knowledge with software engineering practices
+# - **Why it matters**: Quality, efficiency, reproducibility, impact, and career development
+# - **Course structure**: Hands-on lectures covering essential RSE skills
+# - **Getting started**: How to access, install, and use the course materials
+# - **Essential tools**:
+#   - Shell/command line for running software and automation
+#   - Git for version control and tracking changes
+#   - GitHub for collaboration and sharing code
+# 
+# ### Next Steps
+# 
+# In the next lecture, we'll dive into Python basics, building on the command line skills 
+# you've learned here. We'll cover fundamental programming concepts and start writing 
+# simple research scripts.
+# 
+# **Ready to continue? Move on to Lecture 2: Python Basics!**
 
 # %%
-def calculate_mean(values):
-    """
-    Calculate the arithmetic mean of a list of values.
-    
-    Parameters
-    ----------
-    values : list
-        A list of numeric values
-        
-    Returns
-    -------
-    float
-        The mean of the values
-    """
-    if len(values) == 0:
-        return 0
-    return sum(values) / len(values)
-
-
-def calculate_std(values, mean=None):
-    """
-    Calculate the standard deviation of values.
-    
-    Parameters
-    ----------
-    values : list
-        A list of numeric values
-    mean : float, optional
-        Pre-calculated mean (computed if not provided)
-        
-    Returns
-    -------
-    float
-        The standard deviation
-    """
-    if len(values) == 0:
-        return 0
-    
-    if mean is None:
-        mean = calculate_mean(values)
-    
-    variance = sum((x - mean) ** 2 for x in values) / len(values)
-    return variance ** 0.5
-
-
-# Use our functions
-mean = calculate_mean(measurements)
-std = calculate_std(measurements, mean)
-
-print(f"Mean: {mean:.2f}")
-print(f"Standard Deviation: {std:.2f}")
-
-# %% [markdown]
-# ## Part 3: Creating Command-Line Scripts
-# 
-# ### Programs and Modules
-# 
-# To create a Python program that runs from the command line, we use a special pattern:
-
-# %%
-def main():
-    """Main function for our program."""
-    print("Hello from a command-line program!")
-
-
-# This block only runs when the script is executed directly
-if __name__ == '__main__':
-    main()
-
-# %% [markdown]
-# The `if __name__ == '__main__'` check is crucial:
-# - When you run a Python file directly: `__name__` equals `"__main__"`
-# - When you import a Python file as a module: `__name__` equals the module name
-# 
-# This pattern allows the same file to be used both as:
-# 1. A standalone program
-# 2. A module that other programs can import
-
-# %% [markdown]
-# ### Handling Command-Line Arguments
-# 
-# The `argparse` library helps create professional command-line interfaces.
-
-# %%
-import argparse
-
-def process_data(input_file, output_file, verbose=False):
-    """
-    Process data from input file and write to output file.
-    
-    Parameters
-    ----------
-    input_file : str
-        Path to input file
-    output_file : str
-        Path to output file
-    verbose : bool
-        Whether to print progress messages
-    """
-    if verbose:
-        print(f"Reading from: {input_file}")
-        print(f"Writing to: {output_file}")
-    
-    # In a real program, we would process the data here
-    return f"Processed {input_file} -> {output_file}"
-
-
-# Example of how argparse would be used in a script:
-# (This is just for demonstration - it won't work in a notebook)
-"""
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser(
-        description='Process research data files.'
-    )
-    parser.add_argument('input', help='Input data file')
-    parser.add_argument('output', help='Output file')
-    parser.add_argument('-v', '--verbose', action='store_true',
-                       help='Print progress messages')
-    
-    args = parser.parse_args()
-    process_data(args.input, args.output, args.verbose)
-"""
-
-# Simulate what happens when we call the function
-result = process_data("data.csv", "results.csv", verbose=True)
-print(result)
-
-# %% [markdown]
-# ### Documentation Strings (Docstrings)
-# 
-# Good documentation is essential for research software. Docstrings serve as:
-# - Inline documentation for users
-# - Reference material for collaborators
-# - Foundation for automated documentation tools
-
-# %%
-def analyze_experiment(data, control_group=None):
-    """
-    Analyze experimental data against a control group.
-    
-    This function performs basic statistical analysis comparing
-    experimental data to a control group. It calculates means,
-    standard deviations, and the difference between groups.
-    
-    Parameters
-    ----------
-    data : list of float
-        Experimental measurements
-    control_group : list of float, optional
-        Control group measurements for comparison
-        
-    Returns
-    -------
-    dict
-        Dictionary containing:
-        - 'mean': mean of data
-        - 'std': standard deviation of data
-        - 'control_mean': mean of control (if provided)
-        - 'difference': difference from control (if provided)
-        
-    Examples
-    --------
-    >>> data = [10.2, 10.5, 10.3, 10.4]
-    >>> result = analyze_experiment(data)
-    >>> print(result['mean'])
-    10.35
-    """
-    result = {
-        'mean': calculate_mean(data),
-        'std': calculate_std(data)
-    }
-    
-    if control_group:
-        control_mean = calculate_mean(control_group)
-        result['control_mean'] = control_mean
-        result['difference'] = result['mean'] - control_mean
-    
-    return result
-
-
-# Test the function
-experimental_data = [10.2, 10.5, 10.3, 10.4, 10.6]
-control_data = [9.8, 9.9, 9.7, 10.0, 9.9]
-
-results = analyze_experiment(experimental_data, control_data)
-print("Analysis Results:")
-for key, value in results.items():
-    print(f"  {key}: {value:.3f}")
-
-# Access the docstring
-print("\nFunction documentation:")
-print(analyze_experiment.__doc__)
-
-# %% [markdown]
-# ## Best Practices for Research Software
-# 
-# 1. **Write clear, self-documenting code**
-#    - Use meaningful variable names
-#    - Add docstrings to functions
-#    - Comment complex logic
-# 
-# 2. **Keep functions focused**
-#    - Each function should do one thing well
-#    - Avoid functions that are too long (>50 lines often indicates a problem)
-# 
-# 3. **Handle errors gracefully**
-#    - Check for invalid inputs
-#    - Provide helpful error messages
-# 
-# 4. **Make code reusable**
-#    - Write functions instead of copying code
-#    - Organize related functions into modules
-# 
-# 5. **Follow Python conventions**
-#    - PEP 8 style guide for formatting
-#    - Use snake_case for functions and variables
-#    - Use descriptive names
-
-# %% [markdown]
-# ## Exercise
-# 
-# Write a command-line script that:
-# 1. Takes a list of numbers as input
-# 2. Calculates and prints the mean and standard deviation
-# 3. Identifies any outliers (values more than 2 standard deviations from the mean)
-# 
-# Try to use the functions we've defined and follow the patterns shown above.
-
-# %%
-# Your solution here
-def find_outliers(values, threshold=2.0):
-    """
-    Find outliers in a dataset.
-    
-    Parameters
-    ----------
-    values : list
-        Numeric values to analyze
-    threshold : float
-        Number of standard deviations to use as threshold
-        
-    Returns
-    -------
-    list
-        List of outlier values
-    """
-    # TODO: Implement outlier detection logic
-    # Hint: Use the functions we've defined (calculate_mean, calculate_std)
-    # to identify values that are more than 'threshold' standard deviations
-    # from the mean
-    pass
