@@ -1304,7 +1304,74 @@ print(common_issues)
 # **Your research deserves better than to become a cautionary tale.**
 # 
 # **Test your code. Automate your testing. Publish with confidence.**
+
+# %% [markdown]
+# ## Acknowledgements and References
 # 
+# This lecture synthesizes best practices from CI/CD documentation and research software engineering:
+# 
+# ### Primary Sources
+# 
+# - **Research Software Engineering with Python** by The Alan Turing Institute  
+#   <https://alan-turing-institute.github.io/rse-course/html/>  
+#   Continuous integration concepts, workflow patterns, and automation strategies adapted from this course.
+# 
+# - **Research Software Engineering with Python** by Damien Irving, Kate Hertweck, Luke Johnston, Joel Ostblom, Charlotte Wickham, and Greg Wilson (2022)  
+#   <https://third-bit.com/py-rse/>  
+#   Chapter on "Continuous Integration" provided foundational CI/CD concepts for research workflows.
+# 
+# ### Platform Documentation
+# 
+# - **GitHub Actions Documentation**  
+#   <https://docs.github.com/en/actions>  
+#   Official GitHub Actions reference for workflow syntax and features.
+#   - Workflow Syntax: <https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions>
+#   - Events that trigger workflows: <https://docs.github.com/en/actions/reference/events-that-trigger-workflows>
+#   - GitHub Actions Marketplace: <https://github.com/marketplace?type=actions>
+# 
+# - **GitLab CI/CD Documentation**  
+#   <https://docs.gitlab.com/ee/ci/>  
+#   Official GitLab CI/CD reference for pipeline configuration.
+#   - CI/CD YAML syntax: <https://docs.gitlab.com/ee/ci/yaml/>
+#   - GitLab CI/CD examples: <https://docs.gitlab.com/ee/ci/examples/>
+#   - Auto DevOps: <https://docs.gitlab.com/ee/topics/autodevops/>
+# 
+# ### Testing Integration
+# 
+# - **pytest Documentation**  
+#   <https://docs.pytest.org/>  
+#   For running tests in CI environments.
+# 
+# - **pytest-cov Plugin**  
+#   <https://pytest-cov.readthedocs.io/>  
+#   For coverage reporting in CI pipelines.
+# 
+# ### Additional CI/CD Resources
+# 
+# - **Travis CI Documentation**  
+#   <https://docs.travis-ci.com/>  
+#   Alternative CI platform (referenced for comparison).
+# 
+# - **CircleCI Documentation**  
+#   <https://circleci.com/docs/>  
+#   Alternative CI platform (referenced for comparison).
+# 
+# ### Best Practices Sources
+# 
+# - **The Twelve-Factor App**  
+#   <https://12factor.net/>  
+#   Methodology for building software-as-a-service, influencing CI/CD best practices.
+# 
+# - **Software Carpentry**  
+#   Automation principles for scientific computing.
+# 
+# ### Notes
+# 
+# All workflow examples and configurations are original creations for this course, following official
+# documentation and community best practices. The lecture builds on the testing concepts from Lecture 5,
+# showing how to automate them through CI/CD pipelines on GitHub and GitLab platforms.
+
+# %% [markdown]
 # ### Next Steps in Your RSE Journey
 # 
 # You now have the foundation to:

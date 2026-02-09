@@ -1361,6 +1361,51 @@ print(f"\nOptimal pH: {max(mean_activities, key=mean_activities.get)}")
 # - [NumPy Tutorial on SciPy Lectures](http://scipy-lectures.org/intro/numpy/)
 # - [Matplotlib Tutorial](https://matplotlib.org/stable/tutorials/index.html)
 # - [Real Python: NumPy](https://realpython.com/numpy-tutorial/)
+
+# %% [markdown]
+# ## Acknowledgements and References
 # 
+# This lecture draws from established best practices in scientific Python computing:
+# 
+# ### Primary Sources
+# 
+# - **Research Software Engineering with Python** by The Alan Turing Institute  
+#   <https://alan-turing-institute.github.io/rse-course/html/>  
+#   Project structure patterns, NumPy usage examples, and visualization best practices adapted from this course.
+# 
+# - **Research Software Engineering with Python** by Damien Irving, Kate Hertweck, Luke Johnston, Joel Ostblom, Charlotte Wickham, and Greg Wilson (2022)  
+#   <https://third-bit.com/py-rse/>  
+#   Chapter on "Creating Packages" and "Programming Style" informed our project structure guidance.
+# 
+# ### Library Documentation
+# 
+# - **NumPy Documentation**  
+#   <https://numpy.org/doc/>  
+#   Official NumPy reference for array operations, mathematical functions, and performance tips.
+#   - NumPy Quickstart: <https://numpy.org/doc/stable/user/quickstart.html>
+#   - Array Creation: <https://numpy.org/doc/stable/user/basics.creation.html>
+# 
+# - **Matplotlib Documentation**  
+#   <https://matplotlib.org/stable/>  
+#   Official Matplotlib reference for plotting functions and customization.
+#   - Tutorials: <https://matplotlib.org/stable/tutorials/index.html>
+#   - Gallery: <https://matplotlib.org/stable/gallery/index.html>
+# 
+# - **Python Packaging Guide**  
+#   <https://packaging.python.org/>  
+#   Official Python packaging documentation for project structure and distribution.
+# 
+# ### Additional References
+# 
+# - **NumPy Paper**: Harris, C.R., Millman, K.J., van der Walt, S.J. et al. (2020). "Array programming with NumPy". Nature 585, 357–362.
+# - **Matplotlib Paper**: Hunter, J. D. (2007). "Matplotlib: A 2D graphics environment". Computing in Science & Engineering, 9(3), 90-95.
+# 
+# ### Notes
+# 
+# All examples and exercises have been developed specifically for research software engineering education.
+# NumPy and Matplotlib code follows official documentation and community best practices. Project structure
+# recommendations synthesize patterns from multiple sources in the scientific Python ecosystem.
+
+# %% [markdown]
 # **Great work completing Lecture 4! You now have the tools to organize professional 
 # research code and perform numerical computing with visualization. Keep practicing!** 🎉

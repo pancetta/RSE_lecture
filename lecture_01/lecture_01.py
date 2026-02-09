@@ -352,7 +352,51 @@
 #   - Shell/command line for running software and automation
 #   - Git for version control and tracking changes
 #   - GitHub for collaboration and sharing code
+
+# %% [markdown]
+# ## Acknowledgements and References
 # 
+# This lecture draws inspiration and content from several excellent resources:
+# 
+# ### Primary Sources
+# 
+# - **Research Software Engineering with Python** by The Alan Turing Institute  
+#   <https://alan-turing-institute.github.io/rse-course/html/>  
+#   The structure and pedagogical approach of this course is heavily influenced by this comprehensive RSE course.
+# 
+# - **Research Software Engineering with Python** by Damien Irving, Kate Hertweck, Luke Johnston, Joel Ostblom, Charlotte Wickham, and Greg Wilson (2022)  
+#   <https://third-bit.com/py-rse/>  
+#   An excellent book that informed our approach to teaching research software engineering principles.
+# 
+# ### Documentation and Learning Resources
+# 
+# - **Git Documentation and Pro Git Book** by Scott Chacon and Ben Straub  
+#   <https://git-scm.com/book/en/v2>  
+#   For Git fundamentals and version control concepts.
+# 
+# - **GitHub Documentation**  
+#   <https://docs.github.com/>  
+#   For GitHub-specific features and collaboration workflows.
+# 
+# - **Software Carpentry: The Unix Shell**  
+#   <https://swcarpentry.github.io/shell-novice/>  
+#   For shell/command line basics and best practices.
+# 
+# - **Software Carpentry: Version Control with Git**  
+#   <https://swcarpentry.github.io/git-novice/>  
+#   For introductory Git concepts and exercises.
+# 
+# - **Society of Research Software Engineering**  
+#   <https://society-rse.org/>  
+#   For information about the RSE community and career paths.
+# 
+# ### Notes
+# 
+# While this lecture incorporates ideas and approaches from these sources, all content has been 
+# adapted and restructured for this specific course context. Examples and exercises have been 
+# developed independently for educational purposes.
+
+# %% [markdown]
 # ### Next Steps
 # 
 # In the next lecture, we'll explore advanced Git topics like branching and merging,

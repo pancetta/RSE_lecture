@@ -919,7 +919,42 @@ print(f"Same result with comprehension: {high_temps_f_comp}")
 # - **Dictionary comprehensions**: Creating dictionaries elegantly
 # - **Command-line arguments**: Using argparse for CLI tools
 # - **Functional programming**: Map, filter, and lambda functions
+
+# %% [markdown]
+# ## Acknowledgements and References
 # 
+# This lecture synthesizes best practices from established Python education resources:
+# 
+# ### Primary Sources
+# 
+# - **Research Software Engineering with Python** by The Alan Turing Institute  
+#   <https://alan-turing-institute.github.io/rse-course/html/>  
+#   Advanced Python concepts, error handling patterns, and functional programming approaches adapted from this course.
+# 
+# - **Research Software Engineering with Python** by Damien Irving, Kate Hertweck, Luke Johnston, Joel Ostblom, Charlotte Wickham, and Greg Wilson (2022)  
+#   <https://third-bit.com/py-rse/>  
+#   Defensive programming practices, error handling strategies, and file I/O patterns informed by this textbook.
+# 
+# ### Documentation
+# 
+# - **Python Documentation**  
+#   <https://docs.python.org/3/>  
+#   - Built-in Exceptions: <https://docs.python.org/3/library/exceptions.html>
+#   - File I/O: <https://docs.python.org/3/tutorial/inputoutput.html>
+#   - argparse: <https://docs.python.org/3/library/argparse.html>
+#   - Functional Programming: <https://docs.python.org/3/howto/functional.html>
+# 
+# - **NumPy Docstring Style Guide**  
+#   <https://numpydoc.readthedocs.io/en/latest/format.html>  
+#   Documentation standards used in function docstrings throughout this lecture.
+# 
+# ### Notes
+# 
+# All code examples and exercises have been developed specifically for this course to illustrate
+# key concepts in research software contexts. The pedagogical approach draws on best practices
+# from the sources cited above.
+
+# %% [markdown]
 # ### Next Steps
 # 
 # In Lecture 4, we'll learn how to structure Python projects properly and work with
