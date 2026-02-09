@@ -1373,9 +1373,11 @@ print(f"\nOptimal pH: {max(mean_activities, key=mean_activities.get)}")
 #   <https://alan-turing-institute.github.io/rse-course/html/>  
 #   Project structure patterns, NumPy usage examples, and visualization best practices adapted from this course.
 # 
-# - **Research Software Engineering with Python** by Damien Irving, Kate Hertweck, Luke Johnston, Joel Ostblom, Charlotte Wickham, and Greg Wilson (2022)  
-#   <https://third-bit.com/py-rse/>  
-#   Chapter on "Creating Packages" and "Programming Style" informed our project structure guidance.
+# - **Research Software Engineering with Python** by Damien Irving, Kate Hertweck,
+#   Luke Johnston, Joel Ostblom, Charlotte Wickham, and Greg Wilson (2022)
+#   <https://third-bit.com/py-rse/>
+#   Chapter on "Creating Packages" and "Programming Style" informed our project
+#   structure guidance.
 # 
 # ### Library Documentation
 # 
@@ -1397,8 +1399,10 @@ print(f"\nOptimal pH: {max(mean_activities, key=mean_activities.get)}")
 # 
 # ### Additional References
 # 
-# - **NumPy Paper**: Harris, C.R., Millman, K.J., van der Walt, S.J. et al. (2020). "Array programming with NumPy". Nature 585, 357–362.
-# - **Matplotlib Paper**: Hunter, J. D. (2007). "Matplotlib: A 2D graphics environment". Computing in Science & Engineering, 9(3), 90-95.
+# - **NumPy Paper**: Harris, C.R., Millman, K.J., van der Walt, S.J. et al.
+#   (2020). "Array programming with NumPy". Nature 585, 357–362.
+# - **Matplotlib Paper**: Hunter, J. D. (2007). "Matplotlib: A 2D graphics
+#   environment". Computing in Science & Engineering, 9(3), 90-95.
 # 
 # ### Notes
 # 

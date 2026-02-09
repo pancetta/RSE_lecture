@@ -931,9 +931,11 @@ print(f"Same result with comprehension: {high_temps_f_comp}")
 #   <https://alan-turing-institute.github.io/rse-course/html/>  
 #   Advanced Python concepts, error handling patterns, and functional programming approaches adapted from this course.
 # 
-# - **Research Software Engineering with Python** by Damien Irving, Kate Hertweck, Luke Johnston, Joel Ostblom, Charlotte Wickham, and Greg Wilson (2022)  
-#   <https://third-bit.com/py-rse/>  
-#   Defensive programming practices, error handling strategies, and file I/O patterns informed by this textbook.
+# - **Research Software Engineering with Python** by Damien Irving, Kate Hertweck,
+#   Luke Johnston, Joel Ostblom, Charlotte Wickham, and Greg Wilson (2022)
+#   <https://third-bit.com/py-rse/>
+#   Defensive programming practices, error handling strategies, and file I/O
+#   patterns informed by this textbook.
 # 
 # ### Documentation
 # 

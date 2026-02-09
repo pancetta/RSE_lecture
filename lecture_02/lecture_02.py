@@ -818,9 +818,11 @@ print(f"  Range: {results['min']:.2f} - {results['max']:.2f}")
 #   <https://alan-turing-institute.github.io/rse-course/html/>  
 #   Git branching workflows, collaboration patterns, and Python introduction content adapted from this course.
 # 
-# - **Research Software Engineering with Python** by Damien Irving, Kate Hertweck, Luke Johnston, Joel Ostblom, Charlotte Wickham, and Greg Wilson (2022)  
-#   <https://third-bit.com/py-rse/>  
-#   Python fundamentals and best practices informed by this comprehensive textbook.
+# - **Research Software Engineering with Python** by Damien Irving, Kate Hertweck,
+#   Luke Johnston, Joel Ostblom, Charlotte Wickham, and Greg Wilson (2022)
+#   <https://third-bit.com/py-rse/>
+#   Python fundamentals and best practices informed by this comprehensive
+#   textbook.
 # 
 # ### Platform Documentation
 # 
@@ -828,7 +830,8 @@ print(f"  Range: {results['min']:.2f} - {results['max']:.2f}")
 #   <https://docs.github.com/>  
 #   - Pull Requests: <https://docs.github.com/en/pull-requests>
 #   - Forking Workflow: <https://docs.github.com/en/get-started/quickstart/fork-a-repo>
-#   - Branch Protection: <https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches>
+#   - Branch Protection:
+#     <https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches>
 #   - GitHub Flow: <https://docs.github.com/en/get-started/quickstart/github-flow>
 # 
 # - **GitLab Documentation**  

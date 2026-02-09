@@ -1316,9 +1316,11 @@ print(common_issues)
 #   <https://alan-turing-institute.github.io/rse-course/html/>  
 #   Continuous integration concepts, workflow patterns, and automation strategies adapted from this course.
 # 
-# - **Research Software Engineering with Python** by Damien Irving, Kate Hertweck, Luke Johnston, Joel Ostblom, Charlotte Wickham, and Greg Wilson (2022)  
-#   <https://third-bit.com/py-rse/>  
-#   Chapter on "Continuous Integration" provided foundational CI/CD concepts for research workflows.
+# - **Research Software Engineering with Python** by Damien Irving, Kate Hertweck,
+#   Luke Johnston, Joel Ostblom, Charlotte Wickham, and Greg Wilson (2022)
+#   <https://third-bit.com/py-rse/>
+#   Chapter on "Continuous Integration" provided foundational CI/CD concepts for
+#   research workflows.
 # 
 # ### Platform Documentation
 # 

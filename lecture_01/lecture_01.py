@@ -364,9 +364,11 @@
 #   <https://alan-turing-institute.github.io/rse-course/html/>  
 #   The structure and pedagogical approach of this course is heavily influenced by this comprehensive RSE course.
 # 
-# - **Research Software Engineering with Python** by Damien Irving, Kate Hertweck, Luke Johnston, Joel Ostblom, Charlotte Wickham, and Greg Wilson (2022)  
-#   <https://third-bit.com/py-rse/>  
-#   An excellent book that informed our approach to teaching research software engineering principles.
+# - **Research Software Engineering with Python** by Damien Irving, Kate Hertweck,
+#   Luke Johnston, Joel Ostblom, Charlotte Wickham, and Greg Wilson (2022)
+#   <https://third-bit.com/py-rse/>
+#   An excellent book that informed our approach to teaching research software
+#   engineering principles.
 # 
 # ### Documentation and Learning Resources
 # 

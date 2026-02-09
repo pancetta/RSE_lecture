@@ -1056,9 +1056,11 @@ print("\n🎉 All tests passed! Code is fully tested and bug-free!")
 #   <https://alan-turing-institute.github.io/rse-course/html/>  
 #   Testing philosophy, pytest examples, and test-driven development approaches adapted from this course.
 # 
-# - **Research Software Engineering with Python** by Damien Irving, Kate Hertweck, Luke Johnston, Joel Ostblom, Charlotte Wickham, and Greg Wilson (2022)  
-#   <https://third-bit.com/py-rse/>  
-#   Chapter on "Testing Software" provided foundational concepts for defensive programming and test organization.
+# - **Research Software Engineering with Python** by Damien Irving, Kate Hertweck,
+#   Luke Johnston, Joel Ostblom, Charlotte Wickham, and Greg Wilson (2022)
+#   <https://third-bit.com/py-rse/>
+#   Chapter on "Testing Software" provided foundational concepts for defensive
+#   programming and test organization.
 # 
 # ### Testing Framework Documentation
 # 
