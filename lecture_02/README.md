@@ -1,13 +1,21 @@
-# Lecture 2: Testing and Continuous Integration
+# Lecture 2: Advanced Python & Working with Libraries
 
 ## Overview
-This lecture covers testing strategies for research software, including unit testing, integration testing, and setting up continuous integration pipelines.
+This lecture continues building on Python fundamentals, covering more advanced concepts and how to 
+work effectively with third-party libraries. We focus on tools commonly used in research software 
+engineering: NumPy for numerical computing, file I/O for data processing, and creating reusable, 
+well-structured code.
+
+**Duration**: ~90 minutes
 
 ## Topics Covered
-- Why testing matters in research
-- Writing unit tests with pytest
-- Test coverage
-- Continuous integration concepts
+- Working with third-party libraries (NumPy)
+- Numerical computing with NumPy arrays
+- File input/output (reading and writing data)
+- List comprehensions and functional programming
+- Building data processing pipelines
+- Creating reusable modules and classes
+- Best practices for using libraries
 
 ## Files
 - `lecture_02.py` - Main lecture content in Jupytext format

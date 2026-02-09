@@ -8,9 +8,10 @@ Welcome to the Research Software Engineering (RSE) lecture series! This reposito
 
 This lecture series covers fundamental concepts and practices in Research Software Engineering, including:
 
-- **Lecture 1**: Introduction to Research Software Engineering
-- **Lecture 2**: Testing and Continuous Integration
-- **Lecture 3**: Documentation and Code Quality
+- **Lecture 1**: Python Basics - Command Line & Introduction to Python (~90 minutes)
+- **Lecture 2**: Advanced Python & Working with Libraries (~90 minutes)
+- **Lecture 3**: Testing and Continuous Integration
+- **Lecture 4**: Documentation and Code Quality
 
 ## Structure
 
@@ -56,29 +57,11 @@ make install
 micromamba activate rse_lecture
 ```
 
-**For lecture 1 (requires additional matplotlib dependency):**
-```bash
-micromamba env create -f environment.yml
-micromamba install -n rse_lecture -c conda-forge matplotlib>=3.5.0
-micromamba activate rse_lecture
-```
-
-Or using the Makefile:
-```bash
-make install-lecture1
-micromamba activate rse_lecture
-```
-
-**For lectures 2 and 3 (use base environment):**
-```bash
-make install
-micromamba activate rse_lecture
-```
-
 **Note:** 
 - The main `environment.yml` contains all common dependencies (Python, Jupyter, NumPy, etc.). 
-- Lecture 1 requires an additional dependency (matplotlib), which can be installed using `make install-lecture1`.
-- Lectures 2 and 3 have no additional dependencies and use only the base environment.
+- Lectures 1 and 2 focus on basic and advanced Python, using primarily the standard library and NumPy.
+- Lecture 3 may have additional dependencies if needed.
+- Lecture 4 covers documentation tools.
 
 ## Usage
 

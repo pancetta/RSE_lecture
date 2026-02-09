@@ -1,20 +1,26 @@
-# Lecture 1: Introduction to Research Software Engineering
+# Lecture 1: Python Basics - Command Line & Introduction to Python
 
 ## Overview
-This lecture introduces the fundamental concepts of Research Software Engineering (RSE), including best practices, tools, and methodologies for developing high-quality research software.
+This lecture provides a foundation for Research Software Engineering by introducing basic command 
+line usage and fundamental Python programming concepts. This is not a comprehensive Python course, 
+but rather focuses on the essential skills needed for writing research software.
+
+**Duration**: ~90 minutes
 
 ## Topics Covered
-- What is Research Software Engineering?
-- Version control with Git
-- Best practices for research code
-- Writing clear, documented code
+- Working with the command line
+- Python fundamentals (variables, data types, collections)
+- Control flow (if statements, loops)
+- Functions and documentation
+- Creating command-line scripts
+- Using argparse for command-line arguments
+- Best practices for research software
 
 ## Files
 - `lecture_01.py` - Main lecture content in Jupytext format
 
 ## Additional Dependencies
-This lecture requires matplotlib in addition to the base dependencies:
-- matplotlib>=3.5.0
+This lecture uses only the base dependencies (no additional packages required beyond Python standard library)
 
 ## Running the Lecture
 
