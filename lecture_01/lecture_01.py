@@ -73,14 +73,12 @@
 # 
 # This course covers essential Research Software Engineering practices through hands-on lectures:
 # 
-# **[PLACEHOLDER - Course Structure]**
+# - **Lecture 1** (90 mins): Introduction to RSE, Shell Basics, and Git Fundamentals
+# - **Lecture 2** (90 mins): Advanced Git, GitHub Collaboration, and Python Basics
+# - **Lecture 3** (90 mins): Python Fundamentals and Advanced Concepts (including Error Handling)
+# - **Lecture 4** (90 mins): Python Project Structure and Working with Libraries (NumPy, Matplotlib)
 # 
-# The following lectures will be added as we build out the curriculum:
-# 
-# - **Lecture 2**: Python Basics - Command Line & Introduction to Python
-# - **Lecture 3**: Advanced Python & Working with Libraries
-# - **Lecture 4**: Documentation and Code Quality
-# - **Future lectures**: Testing, Continuous Integration, Deployment, and more
+# Each lecture is designed to be hands-on and practical, building on concepts from previous sessions
 # 
 # ### Learning Approach
 # 
@@ -357,10 +355,10 @@
 # 
 # ### Next Steps
 # 
-# In the next lecture, we'll dive into Python basics, building on the command line skills 
-# you've learned here. We'll cover fundamental programming concepts and start writing 
-# simple research scripts.
+# In the next lecture, we'll explore advanced Git topics like branching and merging,
+# learn about GitHub collaboration, and begin our journey into Python programming
+# with fundamental concepts and syntax.
 # 
-# **Ready to continue? Move on to Lecture 2: Python Basics!**
+# **Ready to continue? Move on to Lecture 2: Advanced Git, GitHub, and Python Basics!**
 
 # %%

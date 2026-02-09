@@ -1,20 +1,21 @@
-# Lecture 2: Python Basics - Command Line & Introduction to Python
+# Lecture 2: Advanced Git, GitHub, and Python Basics
 
 ## Overview
-This lecture provides a foundation for Research Software Engineering by introducing basic command 
-line usage and fundamental Python programming concepts. This is not a comprehensive Python course, 
-but rather focuses on the essential skills needed for writing research software.
+This lecture builds on Git fundamentals from Lecture 1, introduces collaboration with GitHub,
+and begins our journey into Python programming. We'll learn advanced version control workflows
+and start writing our first Python code.
 
 **Duration**: ~90 minutes
 
 ## Topics Covered
-- Working with the command line
-- Python fundamentals (variables, data types, collections)
-- Control flow (if statements, loops)
-- Functions and documentation
-- Creating command-line scripts
-- Using argparse for command-line arguments
-- Best practices for research software
+- Advanced Git: branching, merging, and conflict resolution
+- .gitignore patterns and file management
+- GitHub collaboration: forking, pull requests, and remotes
+- Python fundamentals (variables, data types, strings)
+- Python collections (lists, dictionaries)
+- Control flow (if statements, for loops, while loops)
+- Basic functions and documentation
+- Practical examples combining Git and Python
 
 ## Files
 - `lecture_02.py` - Main lecture content in Jupytext format

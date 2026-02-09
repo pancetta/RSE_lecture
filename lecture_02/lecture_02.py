@@ -13,143 +13,503 @@
 # ---
 
 # %% [markdown]
-# # Lecture 2: Python Basics - Command Line & Introduction to Python
+# # Lecture 2: Advanced Git, GitHub, and Python Basics
 # 
 # ## Overview
-# This lecture provides a foundation for Research Software Engineering by introducing 
-# basic command line usage and fundamental Python programming concepts. This is not a 
-# comprehensive Python course, but rather focuses on the essential skills needed for 
-# writing research software.
+# This lecture builds on Git fundamentals from Lecture 1, introduces collaboration with GitHub,
+# and begins our journey into Python programming. We'll learn advanced version control workflows
+# and start writing our first Python code.
 # 
 # **Duration**: ~90 minutes
 # 
 # ## Learning Objectives
-# - Understand basic command line navigation
+# - Master Git branching and merging workflows
+# - Understand .gitignore patterns and file management
+# - Collaborate effectively using GitHub
 # - Learn fundamental Python syntax and concepts
-# - Create simple Python scripts for research tasks
-# - Apply best practices in research software development
+# - Write basic Python programs
 
 # %% [markdown]
-# ## Part 1: Working with the Command Line
+# ## Part 1: Advanced Git Concepts
 # 
-# Research software often needs to be run from the command line, especially when:
-# - Processing large datasets
-# - Running on remote servers or clusters
-# - Automating workflows
-# - Integrating with other tools
+# ### Git Branching
 # 
-# ### Essential Command Line Commands
+# Branches allow you to work on different features or experiments without affecting the main codebase.
+# 
+# #### Why Use Branches?
+# 
+# - **Isolation**: Work on new features without breaking the main code
+# - **Collaboration**: Multiple people can work simultaneously
+# - **Experimentation**: Try new ideas safely
+# - **Organization**: Separate development, testing, and production code
+# 
+# #### Basic Branch Commands
 # 
 # ```bash
-# # Navigate directories
-# pwd              # Print working directory
-# ls               # List files
-# cd directory     # Change directory
+# # Create a new branch
+# git branch feature-analysis
 # 
-# # File operations
-# cat file.txt     # Display file contents
-# head -n 5 file   # Show first 5 lines
-# tail -n 5 file   # Show last 5 lines
+# # List all branches (* marks current branch)
+# git branch
 # 
-# # Running Python scripts
-# python script.py           # Run a Python script
-# python script.py arg1 arg2 # Run with arguments
-# python script.py > out.txt # Redirect output to file
+# # Switch to a branch
+# git checkout feature-analysis
+# 
+# # Create and switch in one command
+# git checkout -b new-feature
+# 
+# # Modern alternative (Git 2.23+)
+# git switch feature-analysis
+# git switch -c new-feature
 # ```
 
 # %% [markdown]
-# ## Part 2: Python Fundamentals
+# ### Branching Workflow Example
 # 
-# ### Variables and Data Types
+# Let's walk through a typical workflow:
 # 
-# Python is dynamically typed - you don't need to declare variable types explicitly.
+# ```bash
+# # Start on main branch
+# git checkout main
+# 
+# # Create a new feature branch
+# git checkout -b add-statistics
+# 
+# # Make changes to your code
+# # ... edit files ...
+# 
+# # Stage and commit changes
+# git add analysis.py
+# git commit -m "Add mean and median calculations"
+# 
+# # More changes
+# # ... edit files ...
+# git add analysis.py
+# git commit -m "Add standard deviation calculation"
+# 
+# # View your branch history
+# git log --oneline --graph
+# ```
+
+# %% [markdown]
+# ### Merging Branches
+# 
+# Once your feature is complete, merge it back into the main branch.
+# 
+# #### Fast-Forward Merge
+# 
+# When main hasn't changed since you branched:
+# 
+# ```bash
+# # Switch to main
+# git checkout main
+# 
+# # Merge feature branch
+# git merge add-statistics
+# 
+# # Delete the feature branch (optional)
+# git branch -d add-statistics
+# ```
+# 
+# #### Three-Way Merge
+# 
+# When both branches have new commits:
+# 
+# ```bash
+# # Git creates a merge commit
+# git checkout main
+# git merge add-statistics
+# 
+# # Git will open an editor for merge commit message
+# # Save and close to complete the merge
+# ```
+
+# %% [markdown]
+# ### Handling Merge Conflicts
+# 
+# Conflicts occur when the same lines are changed in both branches.
+# 
+# ```bash
+# # When a conflict occurs
+# git merge feature-branch
+# # Auto-merging file.py
+# # CONFLICT (content): Merge conflict in file.py
+# # Automatic merge failed; fix conflicts and then commit the result.
+# 
+# # Check which files have conflicts
+# git status
+# 
+# # Open conflicted files - you'll see markers like:
+# # <<<<<<< HEAD
+# # Your changes
+# # =======
+# # Their changes
+# # >>>>>>> feature-branch
+# 
+# # Edit files to resolve conflicts
+# # Remove conflict markers
+# # Keep the code you want
+# 
+# # Stage resolved files
+# git add file.py
+# 
+# # Complete the merge
+# git commit -m "Merge feature-branch, resolved conflicts"
+# ```
+
+# %% [markdown]
+# ### The .gitignore File
+# 
+# Not all files should be tracked by Git. Use `.gitignore` to exclude:
+# - Build artifacts and compiled code
+# - Dependencies (like `node_modules/`, `venv/`)
+# - Temporary files
+# - Sensitive data (passwords, API keys)
+# - Large data files
+# 
+# #### Common .gitignore Patterns
+# 
+# ```gitignore
+# # Python
+# __pycache__/
+# *.pyc
+# *.pyo
+# *.pyd
+# .Python
+# venv/
+# env/
+# *.egg-info/
+# dist/
+# build/
+# 
+# # Jupyter
+# .ipynb_checkpoints/
+# *.ipynb_checkpoints
+# 
+# # Data files (be careful with research data!)
+# *.csv
+# *.dat
+# data/*.txt
+# 
+# # OS files
+# .DS_Store
+# Thumbs.db
+# 
+# # IDE
+# .vscode/
+# .idea/
+# *.swp
+# 
+# # Specific files
+# secrets.txt
+# config_local.py
+# ```
+# 
+# Create a `.gitignore` file in your repository root and Git will automatically ignore matching files.
+
+# %% [markdown]
+# ### Best Practices for Branching
+# 
+# 1. **Keep branches focused**: One feature or fix per branch
+# 2. **Use descriptive names**: `fix-data-loading` not `temp` or `test`
+# 3. **Merge or delete completed branches**: Don't let them pile up
+# 4. **Pull before you push**: Get latest changes from remote
+# 5. **Commit often on branches**: Makes it easier to track progress
+
+# %% [markdown]
+# ## Part 2: GitHub Collaboration
+# 
+# ### GitHub Workflow Basics
+# 
+# GitHub extends Git with collaboration features:
+# 
+# #### Forking a Repository
+# 
+# - Click "Fork" on GitHub to create your own copy
+# - Clone your fork locally
+# - Make changes on a branch
+# - Push to your fork
+# - Create a Pull Request to propose changes
+# 
+# #### Pull Requests (PRs)
+# 
+# A Pull Request is a request to merge your changes into another repository:
+# 
+# 1. **Create**: After pushing a branch to GitHub, click "New Pull Request"
+# 2. **Describe**: Explain what changes you made and why
+# 3. **Review**: Others can comment on your code
+# 4. **Update**: Push new commits to address feedback
+# 5. **Merge**: Maintainer merges when ready
+# 
+# #### Working with Remotes
+# 
+# ```bash
+# # View remote repositories
+# git remote -v
+# 
+# # Add a remote (e.g., upstream original)
+# git remote add upstream https://github.com/original/repo.git
+# 
+# # Fetch changes from remote
+# git fetch origin
+# git fetch upstream
+# 
+# # Pull changes (fetch + merge)
+# git pull origin main
+# 
+# # Push your changes
+# git push origin my-branch
+# ```
+
+# %% [markdown]
+# ### GitHub Best Practices
+# 
+# 1. **Write clear PR descriptions**: Explain the problem and solution
+# 2. **Keep PRs focused**: Small, reviewable changes
+# 3. **Respond to reviews**: Address feedback promptly
+# 4. **Use Issues**: Track bugs and feature requests
+# 5. **Document in README**: Help others understand your project
+
+# %% [markdown]
+# ## Part 3: Introduction to Python
+# 
+# Python is a versatile, beginner-friendly programming language widely used in research.
+# 
+# ### Why Python for Research?
+# 
+# - **Easy to learn**: Clear, readable syntax
+# - **Powerful libraries**: NumPy, pandas, matplotlib, scikit-learn
+# - **Interactive**: Jupyter notebooks for exploration
+# - **Community**: Large, helpful community
+# - **Cross-platform**: Works on Windows, macOS, Linux
+
+# %% [markdown]
+# ### Python Basics: Variables and Data Types
+# 
+# Variables store data. Python is dynamically typed - you don't declare types.
 
 # %%
 # Basic data types
-name = "Research Project"  # String
-count = 42                 # Integer
-temperature = 98.6         # Float
-is_valid = True           # Boolean
+project_name = "RNA Analysis"  # String
+sample_count = 42              # Integer
+temperature = 37.5             # Float
+is_complete = True             # Boolean
+nothing = None                 # None type
 
-print(f"Project: {name}")
-print(f"Sample count: {count}")
-print(f"Temperature: {temperature}°F")
-print(f"Data is valid: {is_valid}")
+print(f"Project: {project_name}")
+print(f"Samples: {sample_count}")
+print(f"Temperature: {temperature}°C")
+print(f"Complete: {is_complete}")
+print(f"Placeholder: {nothing}")
+
+# %%
+# Type checking
+print(f"Type of project_name: {type(project_name)}")
+print(f"Type of sample_count: {type(sample_count)}")
+print(f"Type of temperature: {type(temperature)}")
+print(f"Type of is_complete: {type(is_complete)}")
 
 # %% [markdown]
-# ### Collections: Lists and Dictionaries
+# ### Working with Strings
+
+# %%
+# String operations
+sequence = "ATCGATCG"
+print(f"Sequence: {sequence}")
+print(f"Length: {len(sequence)}")
+print(f"First base: {sequence[0]}")
+print(f"Last base: {sequence[-1]}")
+print(f"First three: {sequence[0:3]}")
+print(f"Reversed: {sequence[::-1]}")
+
+# String methods
+print(f"Lowercase: {sequence.lower()}")
+print(f"Count of A: {sequence.count('A')}")
+print(f"Replace A with N: {sequence.replace('A', 'N')}")
+
+# %% [markdown]
+# ### Lists: Ordered Collections
 # 
-# Lists and dictionaries are fundamental data structures in Python.
+# Lists store multiple values in order. They are mutable (can be changed).
 
 # %%
-# Lists - ordered, mutable sequences
+# Creating and using lists
 measurements = [23.5, 24.1, 23.8, 24.3, 23.9]
-print("Measurements:", measurements)
-print("First measurement:", measurements[0])
-print("Last measurement:", measurements[-1])
+print(f"Measurements: {measurements}")
+print(f"First measurement: {measurements[0]}")
+print(f"Last measurement: {measurements[-1]}")
+print(f"Number of measurements: {len(measurements)}")
 
-# Add a new measurement
+# Modifying lists
 measurements.append(24.0)
-print("After adding:", measurements)
+print(f"After appending: {measurements}")
+
+measurements[0] = 23.6
+print(f"After modification: {measurements}")
 
 # %%
-# Dictionaries - key-value pairs
+# List operations
+genes = ['BRCA1', 'TP53', 'EGFR']
+print(f"Genes: {genes}")
+
+# Adding elements
+genes.append('MYC')
+genes.insert(1, 'KRAS')
+print(f"After adding: {genes}")
+
+# Removing elements
+genes.remove('TP53')
+print(f"After removing TP53: {genes}")
+
+last_gene = genes.pop()
+print(f"Popped: {last_gene}, Remaining: {genes}")
+
+# %%
+# List slicing
+data = [10, 20, 30, 40, 50, 60, 70, 80, 90]
+print(f"Original: {data}")
+print(f"First three: {data[0:3]}")
+print(f"Middle elements: {data[3:7]}")
+print(f"Every other element: {data[::2]}")
+print(f"Reversed: {data[::-1]}")
+
+# %% [markdown]
+# ### Dictionaries: Key-Value Pairs
+# 
+# Dictionaries store data as key-value pairs. Keys must be unique.
+
+# %%
+# Creating dictionaries
 experiment = {
     'name': 'Temperature Study',
-    'duration': 30,
-    'samples': 150,
-    'temperature': 25.0
+    'duration_days': 30,
+    'sample_size': 150,
+    'temperature': 25.0,
+    'completed': True
 }
 
-print("Experiment:", experiment['name'])
-print("Duration:", experiment['duration'], "days")
+print("Experiment details:")
+for key, value in experiment.items():
+    print(f"  {key}: {value}")
 
-# Add new information
+# %%
+# Accessing dictionary values
+print(f"\nExperiment name: {experiment['name']}")
+print(f"Duration: {experiment['duration_days']} days")
+
+# Adding new keys
 experiment['location'] = 'Lab A'
-print("Updated experiment:", experiment)
+experiment['researcher'] = 'Dr. Smith'
+
+# Modifying values
+experiment['completed'] = False
+
+print(f"\nUpdated experiment: {experiment}")
+
+# %%
+# Dictionary methods
+print(f"Keys: {list(experiment.keys())}")
+print(f"Values: {list(experiment.values())}")
+
+# Safe access with get()
+funding = experiment.get('funding', 'Not specified')
+print(f"Funding: {funding}")
+
+# Check if key exists
+if 'location' in experiment:
+    print(f"Location found: {experiment['location']}")
 
 # %% [markdown]
-# ### Control Flow
+# ### Control Flow: Making Decisions
 # 
-# Control structures allow you to make decisions and repeat operations.
+# Control structures let programs make decisions and repeat actions.
 
 # %%
 # If statements
-threshold = 24.0
+temperature = 26.5
+threshold = 25.0
 
-for measurement in measurements:
-    if measurement > threshold:
-        print(f"{measurement} is above threshold")
-    elif measurement < threshold:
-        print(f"{measurement} is below threshold")
-    else:
-        print(f"{measurement} equals threshold")
+if temperature > threshold:
+    print(f"{temperature}°C is above threshold")
+elif temperature < threshold:
+    print(f"{temperature}°C is below threshold")
+else:
+    print(f"{temperature}°C equals threshold")
 
 # %%
-# For loops - iterate over sequences
+# Combining conditions
+temp = 24.5
+humidity = 65
+
+if temp >= 20 and temp <= 30:
+    print("Temperature in optimal range")
+    
+if humidity < 70 or temp < 22:
+    print("At least one parameter is outside ideal range")
+
+# %% [markdown]
+# ### Loops: Repeating Actions
+# 
+# #### For Loops
+# 
+# Iterate over sequences (lists, strings, ranges).
+
+# %%
+# For loop with list
+samples = ['S1', 'S2', 'S3', 'S4']
+
+print("Processing samples:")
+for sample in samples:
+    print(f"  Analyzing {sample}")
+
+# %%
+# For loop with range
+print("\nCounting:")
+for i in range(5):
+    print(f"  Count: {i}")
+
+print("\nCounting from 10 to 15:")
+for i in range(10, 16):
+    print(f"  Count: {i}")
+
+# %%
+# Enumerate for index and value
 data_files = ['exp1.csv', 'exp2.csv', 'exp3.csv']
 
-print("Processing files:")
-for filename in data_files:
-    print(f"  - {filename}")
+for index, filename in enumerate(data_files):
+    print(f"File {index + 1}: {filename}")
+
+# %% [markdown]
+# #### While Loops
+# 
+# Repeat while a condition is true.
 
 # %%
-# While loops - repeat while condition is true
+# While loop example
 count = 0
 total = 0
+measurements = [23.5, 24.1, 23.8, 24.3, 23.9]
 
-while count < 5:
+while count < len(measurements):
     total += measurements[count]
     count += 1
 
-average = total / count
-print(f"Average of first {count} measurements: {average:.2f}")
+average = total / len(measurements)
+print(f"Average of {len(measurements)} measurements: {average:.2f}")
 
 # %% [markdown]
-# ### Functions
+# ### Basic Functions
 # 
-# Functions help organize code into reusable pieces. In research software, 
-# functions make analysis reproducible and easier to test.
+# Functions organize code into reusable blocks.
+
+# %%
+def greet(name):
+    """Greet a person by name."""
+    return f"Hello, {name}!"
+
+# Call the function
+message = greet("Researcher")
+print(message)
 
 # %%
 def calculate_mean(values):
@@ -170,236 +530,127 @@ def calculate_mean(values):
         return 0
     return sum(values) / len(values)
 
-
-def calculate_std(values, mean=None):
-    """
-    Calculate the standard deviation of values.
-    
-    Parameters
-    ----------
-    values : list
-        A list of numeric values
-    mean : float, optional
-        Pre-calculated mean (computed if not provided)
-        
-    Returns
-    -------
-    float
-        The standard deviation
-    """
-    if len(values) == 0:
-        return 0
-    
-    if mean is None:
-        mean = calculate_mean(values)
-    
-    variance = sum((x - mean) ** 2 for x in values) / len(values)
-    return variance ** 0.5
-
-
-# Use our functions
-mean = calculate_mean(measurements)
-std = calculate_std(measurements, mean)
-
+# Test the function
+data = [10.2, 10.5, 10.3, 10.4, 10.6]
+mean = calculate_mean(data)
 print(f"Mean: {mean:.2f}")
-print(f"Standard Deviation: {std:.2f}")
-
-# %% [markdown]
-# ## Part 3: Creating Command-Line Scripts
-# 
-# ### Programs and Modules
-# 
-# To create a Python program that runs from the command line, we use a special pattern:
 
 # %%
-def main():
-    """Main function for our program."""
-    print("Hello from a command-line program!")
-
-
-# This block only runs when the script is executed directly
-if __name__ == '__main__':
-    main()
-
-# %% [markdown]
-# The `if __name__ == '__main__'` check is crucial:
-# - When you run a Python file directly: `__name__` equals `"__main__"`
-# - When you import a Python file as a module: `__name__` equals the module name
-# 
-# This pattern allows the same file to be used both as:
-# 1. A standalone program
-# 2. A module that other programs can import
-
-# %% [markdown]
-# ### Handling Command-Line Arguments
-# 
-# The `argparse` library helps create professional command-line interfaces.
-
-# %%
-import argparse
-
-def process_data(input_file, output_file, verbose=False):
+def analyze_sequence(sequence):
     """
-    Process data from input file and write to output file.
+    Analyze a DNA sequence.
     
     Parameters
     ----------
-    input_file : str
-        Path to input file
-    output_file : str
-        Path to output file
-    verbose : bool
-        Whether to print progress messages
-    """
-    if verbose:
-        print(f"Reading from: {input_file}")
-        print(f"Writing to: {output_file}")
-    
-    # In a real program, we would process the data here
-    return f"Processed {input_file} -> {output_file}"
-
-
-# Example of how argparse would be used in a script:
-# (This is just for demonstration - it won't work in a notebook)
-"""
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser(
-        description='Process research data files.'
-    )
-    parser.add_argument('input', help='Input data file')
-    parser.add_argument('output', help='Output file')
-    parser.add_argument('-v', '--verbose', action='store_true',
-                       help='Print progress messages')
-    
-    args = parser.parse_args()
-    process_data(args.input, args.output, args.verbose)
-"""
-
-# Simulate what happens when we call the function
-result = process_data("data.csv", "results.csv", verbose=True)
-print(result)
-
-# %% [markdown]
-# ### Documentation Strings (Docstrings)
-# 
-# Good documentation is essential for research software. Docstrings serve as:
-# - Inline documentation for users
-# - Reference material for collaborators
-# - Foundation for automated documentation tools
-
-# %%
-def analyze_experiment(data, control_group=None):
-    """
-    Analyze experimental data against a control group.
-    
-    This function performs basic statistical analysis comparing
-    experimental data to a control group. It calculates means,
-    standard deviations, and the difference between groups.
-    
-    Parameters
-    ----------
-    data : list of float
-        Experimental measurements
-    control_group : list of float, optional
-        Control group measurements for comparison
+    sequence : str
+        DNA sequence string
         
     Returns
     -------
     dict
-        Dictionary containing:
-        - 'mean': mean of data
-        - 'std': standard deviation of data
-        - 'control_mean': mean of control (if provided)
-        - 'difference': difference from control (if provided)
-        
-    Examples
-    --------
-    >>> data = [10.2, 10.5, 10.3, 10.4]
-    >>> result = analyze_experiment(data)
-    >>> print(result['mean'])
-    10.35
+        Dictionary with sequence statistics
     """
-    result = {
-        'mean': calculate_mean(data),
-        'std': calculate_std(data)
+    return {
+        'length': len(sequence),
+        'gc_content': (sequence.count('G') + sequence.count('C')) / len(sequence) * 100,
+        'a_count': sequence.count('A'),
+        't_count': sequence.count('T'),
+        'g_count': sequence.count('G'),
+        'c_count': sequence.count('C')
     }
-    
-    if control_group:
-        control_mean = calculate_mean(control_group)
-        result['control_mean'] = control_mean
-        result['difference'] = result['mean'] - control_mean
-    
-    return result
 
-
-# Test the function
-experimental_data = [10.2, 10.5, 10.3, 10.4, 10.6]
-control_data = [9.8, 9.9, 9.7, 10.0, 9.9]
-
-results = analyze_experiment(experimental_data, control_data)
-print("Analysis Results:")
-for key, value in results.items():
-    print(f"  {key}: {value:.3f}")
-
-# Access the docstring
-print("\nFunction documentation:")
-print(analyze_experiment.__doc__)
+# Analyze a sequence
+dna = "ATCGATCGTAGCTAGC"
+stats = analyze_sequence(dna)
+print(f"Sequence analysis for {dna}:")
+for key, value in stats.items():
+    if key == 'gc_content':
+        print(f"  {key}: {value:.1f}%")
+    else:
+        print(f"  {key}: {value}")
 
 # %% [markdown]
-# ## Best Practices for Research Software
+# ## Putting It Together: A Small Project
 # 
-# 1. **Write clear, self-documenting code**
-#    - Use meaningful variable names
-#    - Add docstrings to functions
-#    - Comment complex logic
-# 
-# 2. **Keep functions focused**
-#    - Each function should do one thing well
-#    - Avoid functions that are too long (>50 lines often indicates a problem)
-# 
-# 3. **Handle errors gracefully**
-#    - Check for invalid inputs
-#    - Provide helpful error messages
-# 
-# 4. **Make code reusable**
-#    - Write functions instead of copying code
-#    - Organize related functions into modules
-# 
-# 5. **Follow Python conventions**
-#    - PEP 8 style guide for formatting
-#    - Use snake_case for functions and variables
-#    - Use descriptive names
-
-# %% [markdown]
-# ## Exercise
-# 
-# Write a command-line script that:
-# 1. Takes a list of numbers as input
-# 2. Calculates and prints the mean and standard deviation
-# 3. Identifies any outliers (values more than 2 standard deviations from the mean)
-# 
-# Try to use the functions we've defined and follow the patterns shown above.
+# Let's combine Git, GitHub knowledge, and Python skills.
 
 # %%
-# Your solution here
-def find_outliers(values, threshold=2.0):
+def process_experimental_data(data_points, threshold=25.0):
     """
-    Find outliers in a dataset.
+    Process experimental data and filter by threshold.
     
     Parameters
     ----------
-    values : list
-        Numeric values to analyze
+    data_points : list
+        List of measurements
     threshold : float
-        Number of standard deviations to use as threshold
+        Minimum value to include
         
     Returns
     -------
-    list
-        List of outlier values
+    dict
+        Processing results
     """
-    # TODO: Implement outlier detection logic
-    # Hint: Use the functions we've defined (calculate_mean, calculate_std)
-    # to identify values that are more than 'threshold' standard deviations
-    # from the mean
-    pass
+    # Filter data
+    filtered = [x for x in data_points if x >= threshold]
+    
+    # Calculate statistics
+    if len(filtered) > 0:
+        mean = sum(filtered) / len(filtered)
+        min_val = min(filtered)
+        max_val = max(filtered)
+    else:
+        mean = min_val = max_val = 0
+    
+    return {
+        'original_count': len(data_points),
+        'filtered_count': len(filtered),
+        'mean': mean,
+        'min': min_val,
+        'max': max_val,
+        'filtered_data': filtered
+    }
+
+# Example usage
+experimental_data = [23.5, 24.1, 26.8, 24.3, 27.1, 23.9, 25.5]
+results = process_experimental_data(experimental_data, threshold=25.0)
+
+print("Processing Results:")
+print(f"  Original samples: {results['original_count']}")
+print(f"  Samples above threshold: {results['filtered_count']}")
+print(f"  Mean of filtered data: {results['mean']:.2f}")
+print(f"  Range: {results['min']:.2f} - {results['max']:.2f}")
+
+# %% [markdown]
+# ## Summary
+# 
+# In this lecture, we covered:
+# 
+# ### Advanced Git
+# - **Branching**: Creating isolated development environments
+# - **Merging**: Combining branches and resolving conflicts
+# - **.gitignore**: Managing which files Git tracks
+# - **Best practices**: Workflow tips for effective version control
+# 
+# ### GitHub Collaboration
+# - **Forking and Pull Requests**: Contributing to projects
+# - **Remote repositories**: Working with GitHub
+# - **Collaboration best practices**: Effective teamwork
+# 
+# ### Python Basics
+# - **Variables and types**: Strings, numbers, booleans
+# - **Collections**: Lists and dictionaries
+# - **Control flow**: If statements and loops
+# - **Functions**: Creating reusable code
+# 
+# ### Next Steps
+# 
+# In Lecture 3, we'll dive deeper into Python with:
+# - Advanced function concepts
+# - Error handling with try/except
+# - File input/output
+# - List comprehensions and functional programming
+# 
+# **Ready to continue? Move on to Lecture 3: Python Fundamentals and Advanced Concepts!**
+
+# %%
