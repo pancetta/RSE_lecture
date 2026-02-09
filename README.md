@@ -211,6 +211,57 @@ This repository uses a multi-environment approach for clean dependency separatio
 - **Educational**: Students see exactly what each lecture adds beyond the base
 - **Simplified Makefile**: All `install-lectureX` targets follow identical pattern
 
+### Automated Dependency Updates
+
+This repository includes an automated system for testing and updating conda dependencies:
+
+**How it works:**
+- A GitHub Actions workflow runs weekly (every Monday at 9:00 UTC)
+- Tests all dependencies with the current lecture materials
+- Creates conda-lock files for reproducible environments
+- Automatically creates a PR if updates are available and tests pass
+- If tests fail, maintains the current working versions
+
+**Manual dependency testing:**
+```bash
+# Test current dependencies (without creating lock files)
+make test-deps
+
+# Test dependencies and create lock files
+make update-deps
+
+# Just create lock files (no testing)
+make create-locks
+```
+
+**Using lock files for reproducible environments:**
+```bash
+# Install from lock file (exact versions)
+micromamba create -n rse_lecture --file environment-dev-linux-64.lock
+
+# Platform-specific lock files available:
+# - linux-64
+# - osx-64 (macOS Intel)
+# - osx-arm64 (macOS Apple Silicon)
+# - win-64
+```
+
+**When dependency updates fail:**
+The automated system will NOT create a PR if tests fail. Instead:
+1. The workflow logs will show which package caused the failure
+2. Maintainers can pin the problematic version in `environment.yml` or `environment-dev.yml`
+3. Example pinning:
+   ```yaml
+   dependencies:
+     - matplotlib>=3.5.0,<3.9.0  # Exclude breaking version
+     - numpy==1.24.0  # Pin to specific working version
+   ```
+4. The next weekly run will test with the pinned versions
+
+This ensures the repository always contains executable versions of the lectures with compatible dependencies.
+
+**For more details, see the [dependency management documentation](docs/).**
+
 ## Contributing
 
 Contributions are welcome! When adding or modifying lectures:
