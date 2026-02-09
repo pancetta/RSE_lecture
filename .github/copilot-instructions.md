@@ -18,7 +18,7 @@ This repository contains lecture materials for a Research Software Engineering (
 **Each lecture MUST be exactly 90 minutes - not more, not less.**
 
 When creating or modifying lectures:
-- Plan content to fit precisely within 90 minutes
+- Plan content to fit within 90 minutes
 - Include timing estimates in lecture sections
 - Consider time for:
   - Introduction and overview (~5 minutes)
@@ -28,7 +28,7 @@ When creating or modifying lectures:
 - If a lecture exceeds 90 minutes, content must be removed or moved to another lecture
 - If a lecture is under 90 minutes, add more exercises, examples, or depth
 
-### 2. Always Run CI Pipeline Before Finishing
+### 2. Always Run CI Pipeline locally Before Finishing
 **Before marking any task as complete, ALWAYS run the CI pipeline.**
 
 Required steps:
@@ -174,8 +174,9 @@ The repository uses GitHub Actions with workflows:
 2. Test locally: syntax, lint, convert, execute
 3. **Verify lecture duration remains 90 minutes**
 4. Update related documentation if needed
-5. Run CI pipeline
-6. Clean up generated files: `make clean`
+5. Update `myst.yml` if using Jupyter Book
+6. Run CI pipeline
+7. Clean up generated files: `make clean`
 
 ### Adding Dependencies
 
