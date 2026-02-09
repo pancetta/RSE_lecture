@@ -1,21 +1,22 @@
-# Lecture 3: Advanced Python & Working with Libraries
+# Lecture 3: Python Fundamentals and Advanced Concepts
 
 ## Overview
-This lecture continues building on Python fundamentals, covering more advanced concepts and how to 
-work effectively with third-party libraries. We focus on tools commonly used in research software 
-engineering: NumPy for numerical computing, file I/O for data processing, and creating reusable, 
-well-structured code.
+This lecture deepens your Python knowledge by covering advanced function concepts,
+error handling, file I/O, and functional programming techniques. These skills are
+essential for writing robust, maintainable research software.
 
 **Duration**: ~90 minutes
 
 ## Topics Covered
-- Working with third-party libraries (NumPy)
-- Numerical computing with NumPy arrays
-- File input/output (reading and writing data)
-- List comprehensions and functional programming
-- Building data processing pipelines
-- Creating reusable modules and classes
-- Best practices for using libraries
+- Advanced function concepts (default parameters, keyword arguments, lambda functions)
+- Comprehensive function documentation (NumPy docstring style)
+- Error handling with try/except blocks
+- Raising and catching different exception types
+- File input/output (text files, CSV data)
+- List comprehensions and dictionary comprehensions
+- Command-line scripts with argparse
+- Functional programming concepts (map, filter, lambda)
+- Practical examples for research software
 
 ## Files
 - `lecture_03.py` - Main lecture content in Jupytext format

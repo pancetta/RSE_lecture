@@ -13,491 +13,918 @@
 # ---
 
 # %% [markdown]
-# # Lecture 3: Advanced Python & Working with Libraries
+# # Lecture 3: Python Fundamentals and Advanced Concepts
 # 
 # ## Overview
-# This lecture continues building on Python fundamentals, covering more advanced concepts 
-# and how to work effectively with third-party libraries. We focus on tools commonly used 
-# in research software engineering: NumPy for numerical computing, file I/O for data 
-# processing, and creating reusable, well-structured code.
+# This lecture deepens your Python knowledge by covering advanced function concepts,
+# error handling, file I/O, and functional programming techniques. These skills are
+# essential for writing robust, maintainable research software.
 # 
 # **Duration**: ~90 minutes
 # 
 # ## Learning Objectives
-# - Work with NumPy for efficient numerical computing
-# - Read and write data files in various formats
-# - Understand list comprehensions and functional programming
-# - Create well-structured, modular programs
-# - Process and analyze real research data
+# - Master advanced function concepts and documentation
+# - Handle errors gracefully with try/except blocks
+# - Read and write data files
+# - Use list comprehensions for elegant code
+# - Create command-line scripts with argparse
+# - Apply functional programming concepts
 
 # %% [markdown]
-# ## Working with Third-Party Libraries
+# ## Part 1: Advanced Functions
 # 
-# Research software rarely operates in isolation. Third-party libraries provide:
-# - **Efficiency**: Optimized implementations of common operations
-# - **Reliability**: Well-tested code used by thousands of researchers
-# - **Productivity**: Focus on your research, not reinventing the wheel
-# 
-# ### Installing Libraries
-# 
-# ```bash
-# # Using pip
-# pip install numpy pandas matplotlib
-# 
-# # Using conda/mamba
-# conda install numpy pandas matplotlib
-# 
-# # From requirements.txt
-# pip install -r requirements.txt
-# ```
-
-# %% [markdown]
-# ## NumPy: Numerical Computing in Python
-# 
-# NumPy is the foundation of scientific Python. It provides:
-# - Multi-dimensional arrays (much faster than Python lists)
-# - Mathematical functions optimized for arrays
-# - Tools for linear algebra, random numbers, and more
+# ### Function Parameters and Arguments
 
 # %%
-import numpy as np
+def analyze_data(data, method='mean', remove_outliers=False):
+    """
+    Analyze numerical data with different methods.
+    
+    Parameters
+    ----------
+    data : list
+        List of numerical values
+    method : str, optional
+        Analysis method: 'mean', 'median', or 'mode' (default: 'mean')
+    remove_outliers : bool, optional
+        Whether to remove outliers before analysis (default: False)
+        
+    Returns
+    -------
+    float
+        Calculated result
+        
+    Examples
+    --------
+    >>> analyze_data([1, 2, 3, 4, 5])
+    3.0
+    >>> analyze_data([1, 2, 3, 4, 100], remove_outliers=True)
+    2.5
+    """
+    # Copy data to avoid modifying original
+    working_data = data.copy()
+    
+    # Remove outliers if requested
+    if remove_outliers:
+        # Simple outlier removal: values more than 2 std devs from mean
+        mean = sum(working_data) / len(working_data)
+        variance = sum((x - mean) ** 2 for x in working_data) / len(working_data)
+        std = variance ** 0.5
+        working_data = [x for x in working_data if abs(x - mean) <= 2 * std]
+    
+    # Calculate based on method
+    if method == 'mean':
+        return sum(working_data) / len(working_data)
+    elif method == 'median':
+        sorted_data = sorted(working_data)
+        n = len(sorted_data)
+        mid = n // 2
+        if n % 2 == 0:
+            return (sorted_data[mid - 1] + sorted_data[mid]) / 2
+        else:
+            return sorted_data[mid]
+    else:
+        raise ValueError(f"Unknown method: {method}")
 
-# Create arrays different ways
-arr1 = np.array([1, 2, 3, 4, 5])
-arr2 = np.arange(0, 10, 2)  # Start, stop, step
-arr3 = np.linspace(0, 1, 5)  # Start, stop, num_points
-arr4 = np.zeros(5)
-arr5 = np.ones((3, 3))
-
-print("Array from list:", arr1)
-print("Array with arange:", arr2)
-print("Array with linspace:", arr3)
-print("Array of zeros:", arr4)
-print("2D array of ones:\n", arr5)
+# Test with different parameters
+data = [10, 12, 13, 11, 50, 12, 13]
+print(f"Data: {data}")
+print(f"Mean: {analyze_data(data, method='mean'):.2f}")
+print(f"Median: {analyze_data(data, method='median'):.2f}")
+print(f"Mean (outliers removed): {analyze_data(data, method='mean', remove_outliers=True):.2f}")
 
 # %% [markdown]
-# ### Array Operations
+# ### Default Arguments and Keyword Arguments
+
+# %%
+def create_experiment(name, duration=7, temperature=25.0, samples=100, **kwargs):
+    """
+    Create an experiment configuration.
+    
+    Parameters
+    ----------
+    name : str
+        Experiment name
+    duration : int, optional
+        Duration in days (default: 7)
+    temperature : float, optional
+        Temperature in Celsius (default: 25.0)
+    samples : int, optional
+        Number of samples (default: 100)
+    **kwargs : dict
+        Additional experiment parameters
+        
+    Returns
+    -------
+    dict
+        Experiment configuration
+    """
+    config = {
+        'name': name,
+        'duration': duration,
+        'temperature': temperature,
+        'samples': samples
+    }
+    
+    # Add any additional parameters
+    config.update(kwargs)
+    
+    return config
+
+# Different ways to call the function
+exp1 = create_experiment("Quick Test")
+exp2 = create_experiment("Long Study", duration=30, samples=500)
+exp3 = create_experiment("Custom", humidity=65, location="Lab B", researcher="Dr. Smith")
+
+print("Experiment 1:", exp1)
+print("Experiment 2:", exp2)
+print("Experiment 3:", exp3)
+
+# %% [markdown]
+# ### Lambda Functions
 # 
-# NumPy operations are vectorized - they work on entire arrays at once.
+# Lambda functions are small, anonymous functions useful for simple operations.
 
 # %%
-# Generate some experimental data
-np.random.seed(42)
-temperatures = np.random.normal(25.0, 2.0, 100)  # Mean=25°C, std=2°C
+# Regular function
+def square(x):
+    return x ** 2
 
-# Array arithmetic (vectorized - much faster than loops!)
-temps_fahrenheit = temperatures * 9/5 + 32
 
-# Statistical operations
-print(f"Mean temperature: {np.mean(temperatures):.2f}°C")
-print(f"Std deviation: {np.std(temperatures):.2f}°C")
-print(f"Min temperature: {np.min(temperatures):.2f}°C")
-print(f"Max temperature: {np.max(temperatures):.2f}°C")
-print(f"Median temperature: {np.median(temperatures):.2f}°C")
+# Equivalent lambda function
+def square_lambda(x):
+    return x ** 2
+
+
+print(f"Regular function: {square(5)}")
+print(f"Lambda function: {square_lambda(5)}")
 
 # %%
-# Boolean indexing - filter data based on conditions
-high_temps = temperatures[temperatures > 27]
-low_temps = temperatures[temperatures < 23]
+# Lambda functions with sorting
+experiments = [
+    {'name': 'Exp A', 'score': 85},
+    {'name': 'Exp B', 'score': 92},
+    {'name': 'Exp C', 'score': 78}
+]
 
-print(f"Number of high readings (>27°C): {len(high_temps)}")
-print(f"Number of low readings (<23°C): {len(low_temps)}")
-print(f"Normal range readings: {100 - len(high_temps) - len(low_temps)}")
+# Sort by score
+sorted_by_score = sorted(experiments, key=lambda x: x['score'])
+print("Sorted by score:")
+for exp in sorted_by_score:
+    print(f"  {exp['name']}: {exp['score']}")
+
+# Sort by name
+sorted_by_name = sorted(experiments, key=lambda x: x['name'])
+print("\nSorted by name:")
+for exp in sorted_by_name:
+    print(f"  {exp['name']}: {exp['score']}")
 
 # %% [markdown]
-# ### Multi-dimensional Arrays
+# ### Documentation Best Practices
 # 
-# Research data often comes in matrices or higher dimensions.
+# Good docstrings follow standard formats like NumPy style.
 
 # %%
-# Create a 2D array representing a grid of measurements
-# (e.g., temperature at different locations and times)
-measurements = np.random.normal(25, 2, (10, 5))  # 10 time points, 5 locations
+def calculate_statistics(values, precision=2):
+    """
+    Calculate comprehensive statistics for a dataset.
+    
+    This function computes mean, standard deviation, minimum, maximum,
+    and range for a list of numerical values.
+    
+    Parameters
+    ----------
+    values : list of float
+        Numerical data to analyze
+    precision : int, optional
+        Number of decimal places for rounding (default: 2)
+        
+    Returns
+    -------
+    dict
+        Dictionary containing:
+        - mean : float
+            Arithmetic mean
+        - std : float
+            Standard deviation
+        - min : float
+            Minimum value
+        - max : float
+            Maximum value
+        - range : float
+            Difference between max and min
+            
+    Raises
+    ------
+    ValueError
+        If values list is empty
+        
+    Examples
+    --------
+    >>> calculate_statistics([1, 2, 3, 4, 5])
+    {'mean': 3.0, 'std': 1.41, 'min': 1, 'max': 5, 'range': 4}
+    
+    Notes
+    -----
+    Standard deviation uses the population formula (divide by n).
+    For sample standard deviation, divide by (n-1).
+    """
+    if len(values) == 0:
+        raise ValueError("Cannot calculate statistics for empty list")
+    
+    mean = sum(values) / len(values)
+    variance = sum((x - mean) ** 2 for x in values) / len(values)
+    std = variance ** 0.5
+    
+    return {
+        'mean': round(mean, precision),
+        'std': round(std, precision),
+        'min': min(values),
+        'max': max(values),
+        'range': max(values) - min(values)
+    }
 
-print("Shape of data:", measurements.shape)
-print(f"Total measurements: {measurements.size}")
-print("\nFirst 3 time points, all locations:")
-print(measurements[:3, :])
+# Test the function
+data = [23.5, 24.1, 23.8, 24.3, 23.9, 24.0]
+stats = calculate_statistics(data)
+print("Statistics:", stats)
 
-# Operations along axes
-time_averages = np.mean(measurements, axis=0)  # Average over time
-location_averages = np.mean(measurements, axis=1)  # Average over locations
-
-print(f"\nAverage per location: {time_averages}")
-print(f"Average per time point: {location_averages}")
+# Access the docstring
+print("\nDocstring:")
+print(calculate_statistics.__doc__)
 
 # %% [markdown]
-# ## File Input/Output
+# ## Part 2: Error Handling
 # 
-# Reading and writing data files is essential for research software.
-
-# %% [markdown]
-# ### Working with Text Files
+# Errors are inevitable. Good programs handle them gracefully.
+# 
+# ### Common Error Types
 
 # %%
-# Writing data to a file
-data_to_save = """# Experimental Results
-# Date: 2024-01-15
-# Experiment: Temperature Monitoring
-Sample,Temperature,Humidity
-1,25.3,65.2
-2,24.8,64.1
-3,26.1,63.8
-4,25.5,65.5
-5,24.9,64.7
+# Examples of common errors (commented to prevent execution)
+
+# TypeError: wrong type
+# result = "10" + 5
+
+# ValueError: invalid value
+# number = int("not a number")
+
+# KeyError: missing dictionary key
+# data = {'name': 'test'}
+# value = data['missing_key']
+
+# IndexError: list index out of range
+# items = [1, 2, 3]
+# value = items[10]
+
+# FileNotFoundError: file doesn't exist
+# with open('nonexistent.txt', 'r') as f:
+#     content = f.read()
+
+print("Error examples shown as comments to prevent execution")
+
+# %% [markdown]
+# ### Try-Except Blocks
+# 
+# Use try-except to catch and handle errors.
+
+# %%
+def safe_divide(a, b):
+    """
+    Safely divide two numbers.
+    
+    Parameters
+    ----------
+    a : float
+        Numerator
+    b : float
+        Denominator
+        
+    Returns
+    -------
+    float or None
+        Result of division, or None if division by zero
+    """
+    try:
+        result = a / b
+        return result
+    except ZeroDivisionError:
+        print(f"Error: Cannot divide {a} by zero")
+        return None
+
+# Test the function
+print(f"10 / 2 = {safe_divide(10, 2)}")
+print(f"10 / 0 = {safe_divide(10, 0)}")
+print(f"15 / 3 = {safe_divide(15, 3)}")
+
+# %%
+def read_number_from_user(prompt):
+    """
+    Safely read a number from user input.
+    
+    Parameters
+    ----------
+    prompt : str
+        Prompt to display to user
+        
+    Returns
+    -------
+    float or None
+        Converted number, or None if conversion fails
+    """
+    # For demonstration, we'll simulate user input
+    user_input = "42.5"  # In real code: input(prompt)
+    
+    try:
+        number = float(user_input)
+        return number
+    except ValueError:
+        print(f"Error: '{user_input}' is not a valid number")
+        return None
+
+# Simulated test
+result = read_number_from_user("Enter a number: ")
+print(f"Result: {result}")
+
+# %% [markdown]
+# ### Multiple Exception Types
+
+# %%
+def process_data_file(filename, column_index):
+    """
+    Process a data file and extract a column.
+    
+    Parameters
+    ----------
+    filename : str
+        Path to data file
+    column_index : int
+        Index of column to extract
+        
+    Returns
+    -------
+    list
+        Extracted column values
+    """
+    try:
+        # Simulate file reading (in reality, we'd read an actual file)
+        # For demo, create fake data
+        data = [
+            ['Sample', 'Value', 'Units'],
+            ['A', '10.5', 'mg'],
+            ['B', '12.3', 'mg'],
+            ['C', '9.8', 'mg']
+        ]
+        
+        # Extract column
+        column = [row[column_index] for row in data]
+        return column
+        
+    except IndexError:
+        print(f"Error: Column index {column_index} is out of range")
+        return []
+    except FileNotFoundError:
+        print(f"Error: File '{filename}' not found")
+        return []
+    except PermissionError:
+        print(f"Error: No permission to read '{filename}'")
+        return []
+    except Exception as e:
+        print(f"Unexpected error: {e}")
+        return []
+
+# Test with different indices
+print("Column 0:", process_data_file("data.csv", 0))
+print("Column 1:", process_data_file("data.csv", 1))
+print("Column 5:", process_data_file("data.csv", 5))  # Out of range
+
+# %% [markdown]
+# ### Try-Except-Else-Finally
+
+# %%
+def analyze_file_safely(filename):
+    """
+    Analyze a file with comprehensive error handling.
+    
+    Parameters
+    ----------
+    filename : str
+        Path to file
+        
+    Returns
+    -------
+    dict
+        Analysis results
+    """
+    result = {'status': 'unknown', 'lines': 0, 'words': 0}
+    
+    try:
+        # Simulate file reading
+        content = "This is sample content\nWith multiple lines\nFor testing"
+        
+        # Process content
+        lines = content.split('\n')
+        words = content.split()
+        
+        result['lines'] = len(lines)
+        result['words'] = len(words)
+        
+    except FileNotFoundError:
+        result['status'] = 'error: file not found'
+        print(f"Could not find file: {filename}")
+        
+    except Exception as e:
+        result['status'] = f'error: {str(e)}'
+        print(f"Error processing file: {e}")
+        
+    else:
+        # Executes if try block succeeds
+        result['status'] = 'success'
+        print(f"Successfully processed {filename}")
+        
+    finally:
+        # Always executes, regardless of errors
+        print(f"Finished processing attempt for {filename}")
+    
+    return result
+
+# Test the function
+analysis = analyze_file_safely("test.txt")
+print(f"Analysis result: {analysis}")
+
+# %% [markdown]
+# ### Raising Exceptions
+# 
+# You can raise your own exceptions for error conditions.
+
+# %%
+def validate_temperature(temp, min_temp=-273.15, max_temp=100):
+    """
+    Validate a temperature reading.
+    
+    Parameters
+    ----------
+    temp : float
+        Temperature in Celsius
+    min_temp : float
+        Minimum valid temperature (default: -273.15, absolute zero)
+    max_temp : float
+        Maximum valid temperature (default: 100)
+        
+    Returns
+    -------
+    bool
+        True if temperature is valid
+        
+    Raises
+    ------
+    ValueError
+        If temperature is outside valid range
+    """
+    if temp < min_temp:
+        raise ValueError(f"Temperature {temp}°C is below absolute zero!")
+    if temp > max_temp:
+        raise ValueError(f"Temperature {temp}°C exceeds maximum of {max_temp}°C")
+    return True
+
+# Test with valid and invalid temperatures
+try:
+    validate_temperature(25)
+    print("25°C is valid")
+    
+    validate_temperature(150)
+    print("150°C is valid")  # Won't reach here
+    
+except ValueError as e:
+    print(f"Validation error: {e}")
+
+# %% [markdown]
+# ## Part 3: File Input/Output
+# 
+# Reading and writing files is essential for research data processing.
+
+# %% [markdown]
+# ### Reading Text Files
+
+# %%
+# Writing data to demonstrate reading
+sample_data = """# Sample Data File
+# Temperature measurements in Celsius
+23.5
+24.1
+23.8
+24.3
+23.9
+24.0
 """
 
-# Note: In a real scenario, you would write to an actual file
-# with open('experiment_data.csv', 'w') as f:
-#     f.write(data_to_save)
+# In real code, you would write to a file:
+# with open('temperatures.txt', 'w') as f:
+#     f.write(sample_data)
 
-print("Data that would be written to file:")
-print(data_to_save)
+# Simulate reading
+def read_temperature_file(content):
+    """Read temperatures from file content."""
+    temperatures = []
+    
+    for line in content.split('\n'):
+        line = line.strip()
+        
+        # Skip empty lines and comments
+        if not line or line.startswith('#'):
+            continue
+            
+        try:
+            temp = float(line)
+            temperatures.append(temp)
+        except ValueError:
+            print(f"Warning: Skipping invalid line: {line}")
+    
+    return temperatures
+
+# Process the data
+temps = read_temperature_file(sample_data)
+print(f"Read {len(temps)} temperature values")
+print(f"Temperatures: {temps}")
+print(f"Average: {sum(temps) / len(temps):.2f}°C")
 
 # %% [markdown]
-# ### Reading CSV Files with Python's csv Module
+# ### Writing Files
+
+# %%
+def save_results(filename, data, metadata=None):
+    """
+    Save analysis results to a file.
+    
+    Parameters
+    ----------
+    filename : str
+        Output file path
+    data : dict
+        Results to save
+    metadata : dict, optional
+        Additional metadata to include
+        
+    Returns
+    -------
+    bool
+        True if save successful
+    """
+    try:
+        # In real code, open actual file
+        # with open(filename, 'w') as f:
+        
+        # Simulate file writing
+        output = []
+        
+        # Write metadata
+        if metadata:
+            output.append("# Metadata")
+            for key, value in metadata.items():
+                output.append(f"# {key}: {value}")
+            output.append("")
+        
+        # Write results
+        output.append("# Results")
+        for key, value in data.items():
+            output.append(f"{key}: {value}")
+        
+        content = '\n'.join(output)
+        print(f"Would write to {filename}:")
+        print(content)
+        
+        return True
+        
+    except Exception as e:
+        print(f"Error saving to {filename}: {e}")
+        return False
+
+# Test
+results = {
+    'mean': 23.93,
+    'std': 0.24,
+    'count': 6
+}
+metadata = {
+    'experiment': 'Temperature Study',
+    'date': '2024-01-15'
+}
+
+save_results('results.txt', results, metadata)
+
+# %% [markdown]
+# ### Working with CSV Data
 
 # %%
 import csv
 from io import StringIO
 
-# Simulate reading from a file using StringIO
-csv_data = StringIO(data_to_save)
-
-# Skip comment lines and read CSV
-rows = []
-for line in csv_data:
-    if not line.startswith('#'):
-        rows.append(line.strip())
-
-# Parse CSV data
-csv_content = StringIO('\n'.join(rows))
-reader = csv.DictReader(csv_content)
-
-data_dict = {'Sample': [], 'Temperature': [], 'Humidity': []}
-for row in reader:
-    data_dict['Sample'].append(row['Sample'])
-    data_dict['Temperature'].append(float(row['Temperature']))
-    data_dict['Humidity'].append(float(row['Humidity']))
-
-print("Parsed data:")
-print(f"Samples: {data_dict['Sample']}")
-print(f"Temperatures: {data_dict['Temperature']}")
-print(f"Humidities: {data_dict['Humidity']}")
-
-# %% [markdown]
-# ### NumPy File I/O
-# 
-# NumPy provides convenient functions for saving and loading arrays.
-
-# %%
-# Save array to text file (CSV-like)
-sample_data = np.random.rand(5, 3)
-print("Data to save:")
-print(sample_data)
-
-# In practice, you would use:
-# np.savetxt('data.csv', sample_data, delimiter=',', 
-#            header='col1,col2,col3', comments='')
-
-# Load from text file:
-# loaded_data = np.loadtxt('data.csv', delimiter=',', skiprows=1)
-
-# For binary format (faster, preserves precision):
-# np.save('data.npy', sample_data)      # Save
-# loaded_data = np.load('data.npy')     # Load
-
-# %% [markdown]
-# ## List Comprehensions and Functional Programming
-# 
-# Python provides elegant ways to transform and filter data.
-
-# %%
-# Traditional loop approach
-measurements_c = [23.5, 24.1, 25.6, 22.8, 26.3]
-measurements_f = []
-for temp in measurements_c:
-    measurements_f.append(temp * 9/5 + 32)
-
-print("Traditional loop:", measurements_f)
-
-# List comprehension (more Pythonic)
-measurements_f = [temp * 9/5 + 32 for temp in measurements_c]
-print("List comprehension:", measurements_f)
-
-# %%
-# Filter with list comprehension
-valid_temps = [temp for temp in measurements_c if 23 <= temp <= 26]
-print("Valid temperatures:", valid_temps)
-
-# Conditional transformation
-adjusted = [temp if temp >= 24 else 24 for temp in measurements_c]
-print("Adjusted (min 24°C):", adjusted)
-
-# %%
-# Dictionary comprehension
-temp_dict = {f"sample_{i}": temp for i, temp in enumerate(measurements_c, 1)}
-print("Temperature dictionary:", temp_dict)
-
-# Invert dictionary
-inverted = {v: k for k, v in temp_dict.items()}
-print("Inverted:", inverted)
-
-# %% [markdown]
-# ## Building a Data Processing Pipeline
-# 
-# Let's create a complete example that processes research data.
-
-# %%
-import string
-from collections import Counter
-
-def count_words(text):
-    """
-    Count word frequencies in text.
-    
-    Parameters
-    ----------
-    text : str
-        Input text to analyze
-        
-    Returns
-    -------
-    collections.Counter
-        Word frequency counter object that maps words to their counts
-    """
-    # Split into words and clean
-    words = text.split()
-    # Remove punctuation and convert to lowercase
-    cleaned = [word.strip(string.punctuation).lower() 
-               for word in words if word]
-    # Filter out empty strings
-    cleaned = [word for word in cleaned if word]
-    return Counter(cleaned)
-
-
-def filter_common_words(word_counts, min_count=2):
-    """
-    Filter words that appear less than min_count times.
-    
-    Parameters
-    ----------
-    word_counts : Counter
-        Word frequency counter
-    min_count : int
-        Minimum number of occurrences
-        
-    Returns
-    -------
-    dict
-        Filtered word counts
-    """
-    return {word: count for word, count in word_counts.items() 
-            if count >= min_count}
-
-
-# Example text (simulating a research abstract)
-sample_text = """
-Research software engineering combines software engineering practices 
-with domain research. Software quality and reproducibility are essential 
-for research. Good software practices enable better research outcomes.
-Testing and documentation improve software reliability.
+# Sample CSV data
+csv_data = """Sample,Temperature,Humidity,Valid
+A,23.5,65.2,True
+B,24.1,64.8,True
+C,23.8,66.1,True
+D,25.2,63.5,False
+E,23.9,65.8,True
 """
 
-# Process the text
-word_counts = count_words(sample_text)
-filtered_counts = filter_common_words(word_counts, min_count=2)
-
-print("All word counts:")
-for word, count in word_counts.most_common(10):
-    print(f"  {word}: {count}")
-
-print("\nWords appearing 2+ times:")
-for word, count in sorted(filtered_counts.items(), 
-                          key=lambda x: x[1], reverse=True):
-    print(f"  {word}: {count}")
-
-# %% [markdown]
-# ## Creating Reusable Modules
-# 
-# Organize related functions into modules for better code organization.
-
-# %%
-class DataProcessor:
+def read_csv_data(csv_content):
     """
-    A class for processing experimental data.
-    
-    This demonstrates object-oriented programming for organizing
-    related functionality.
-    """
-    
-    def __init__(self, data, name="Experiment"):
-        """
-        Initialize the processor.
-        
-        Parameters
-        ----------
-        data : array-like
-            Experimental data
-        name : str
-            Name of the experiment
-        """
-        self.data = np.array(data)
-        self.name = name
-    
-    def get_statistics(self):
-        """Calculate and return basic statistics."""
-        return {
-            'mean': np.mean(self.data),
-            'std': np.std(self.data),
-            'min': np.min(self.data),
-            'max': np.max(self.data),
-            'median': np.median(self.data)
-        }
-    
-    def normalize(self, method='zscore'):
-        """
-        Normalize the data.
-        
-        Parameters
-        ----------
-        method : str
-            'zscore' or 'minmax'
-            
-        Returns
-        -------
-        array
-            Normalized data
-        """
-        if method == 'zscore':
-            mean = np.mean(self.data)
-            std = np.std(self.data)
-            if std == 0:
-                return np.zeros_like(self.data)
-            return (self.data - mean) / std
-        elif method == 'minmax':
-            min_val = np.min(self.data)
-            max_val = np.max(self.data)
-            if max_val == min_val:
-                return np.zeros_like(self.data)
-            return (self.data - min_val) / (max_val - min_val)
-        else:
-            raise ValueError(f"Unknown method: {method}")
-    
-    def find_outliers(self, threshold=2.0):
-        """
-        Find outliers using z-score method.
-        
-        Parameters
-        ----------
-        threshold : float
-            Number of standard deviations from mean
-            
-        Returns
-        -------
-        array
-            Boolean array indicating outliers
-        """
-        z_scores = np.abs(self.normalize('zscore'))
-        return z_scores > threshold
-
-
-# Use the class
-processor = DataProcessor(temperatures, name="Temperature Study")
-
-stats = processor.get_statistics()
-print(f"Statistics for {processor.name}:")
-for key, value in stats.items():
-    print(f"  {key}: {value:.2f}")
-
-outliers = processor.find_outliers(threshold=2.0)
-print(f"\nNumber of outliers (>2σ): {np.sum(outliers)}")
-print(f"Outlier values: {temperatures[outliers][:5]}...")  # Show first 5
-
-# %% [markdown]
-# ## Putting It All Together: A Complete Script
-# 
-# Here's how you might structure a complete research data processing script:
-
-# %%
-def load_and_process_data(filename=None, data=None):
-    """
-    Load data from file or use provided data, then process it.
+    Read CSV data and return as list of dictionaries.
     
     Parameters
     ----------
-    filename : str, optional
-        Path to data file
-    data : array-like, optional
-        Data array (if not loading from file)
+    csv_content : str
+        CSV content to parse
+        
+    Returns
+    -------
+    list of dict
+        Parsed data
+    """
+    data = []
+    csv_file = StringIO(csv_content)
+    reader = csv.DictReader(csv_file)
+    
+    for row in reader:
+        # Convert numeric fields
+        try:
+            row['Temperature'] = float(row['Temperature'])
+            row['Humidity'] = float(row['Humidity'])
+            row['Valid'] = row['Valid'] == 'True'
+        except (ValueError, KeyError) as e:
+            print(f"Warning: Error processing row: {e}")
+            continue
+            
+        data.append(row)
+    
+    return data
+
+# Parse the data
+measurements = read_csv_data(csv_data)
+print(f"Read {len(measurements)} measurements")
+
+# Filter valid measurements
+valid_temps = [m['Temperature'] for m in measurements if m['Valid']]
+print(f"\nValid temperatures: {valid_temps}")
+print(f"Average valid temperature: {sum(valid_temps) / len(valid_temps):.2f}°C")
+
+# %% [markdown]
+# ## Part 4: List Comprehensions
+# 
+# List comprehensions provide elegant, concise ways to create lists.
+
+# %%
+# Traditional approach
+squares = []
+for i in range(10):
+    squares.append(i ** 2)
+print(f"Traditional: {squares}")
+
+# List comprehension
+squares_comp = [i ** 2 for i in range(10)]
+print(f"Comprehension: {squares_comp}")
+
+# %%
+# Filtering with list comprehensions
+temperatures = [23.5, 24.1, 26.8, 24.3, 27.1, 23.9, 25.5]
+
+# Only temperatures above 25°C
+high_temps = [t for t in temperatures if t > 25]
+print(f"High temperatures: {high_temps}")
+
+# Convert to Fahrenheit
+temps_f = [t * 9/5 + 32 for t in temperatures]
+print(f"Fahrenheit: {temps_f}")
+
+# Combined: convert high temps to Fahrenheit
+high_temps_f = [t * 9/5 + 32 for t in temperatures if t > 25]
+print(f"High temps in Fahrenheit: {high_temps_f}")
+
+# %%
+# Nested list comprehensions
+matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+
+# Flatten matrix
+flattened = [num for row in matrix for num in row]
+print(f"Flattened: {flattened}")
+
+# Get diagonal
+diagonal = [matrix[i][i] for i in range(len(matrix))]
+print(f"Diagonal: {diagonal}")
+
+# %%
+# Dictionary comprehensions
+samples = ['A', 'B', 'C', 'D', 'E']
+temperatures = [23.5, 24.1, 23.8, 24.3, 23.9]
+
+# Create dictionary
+temp_dict = {sample: temp for sample, temp in zip(samples, temperatures)}
+print(f"Temperature dictionary: {temp_dict}")
+
+# Filter dictionary
+high_temp_dict = {s: t for s, t in temp_dict.items() if t > 24.0}
+print(f"High temperatures: {high_temp_dict}")
+
+# %% [markdown]
+# ## Part 5: Command-Line Scripts with argparse
+# 
+# Create professional command-line tools with argument parsing.
+
+# %%
+import argparse
+
+def create_parser():
+    """Create command-line argument parser."""
+    parser = argparse.ArgumentParser(
+        description='Analyze experimental data from a file.',
+        epilog='Example: python analyze.py data.txt -o results.txt --threshold 25'
+    )
+    
+    # Positional arguments
+    parser.add_argument('input_file',
+                        help='Input data file path')
+    
+    # Optional arguments
+    parser.add_argument('-o', '--output',
+                        help='Output file path (default: results.txt)',
+                        default='results.txt')
+    
+    parser.add_argument('-t', '--threshold',
+                        type=float,
+                        help='Temperature threshold in Celsius (default: 25.0)',
+                        default=25.0)
+    
+    parser.add_argument('-v', '--verbose',
+                        action='store_true',
+                        help='Print verbose output')
+    
+    parser.add_argument('--method',
+                        choices=['mean', 'median'],
+                        default='mean',
+                        help='Analysis method (default: mean)')
+    
+    return parser
+
+# Simulate command-line arguments (in real script, argparse reads from sys.argv)
+# Example: python script.py data.txt -o output.txt -t 24.5 -v
+print("Example argument parser created")
+print("\nParser help:")
+parser = create_parser()
+parser.print_help()
+
+# %% [markdown]
+# ### Complete Command-Line Script Example
+
+# %%
+def analyze_temperature_data(
+        input_file, output_file='results.txt',
+        threshold=25.0, method='mean',
+        verbose=False):
+    """
+    Analyze temperature data from a file.
+    
+    Parameters
+    ----------
+    input_file : str
+        Path to input file
+    output_file : str
+        Path to output file
+    threshold : float
+        Temperature threshold for filtering
+    method : str
+        Analysis method ('mean' or 'median')
+    verbose : bool
+        Whether to print detailed output
         
     Returns
     -------
     dict
-        Processing results
+        Analysis results
     """
-    # Load data (simulated here)
-    if data is None:
-        # In real code: data = np.loadtxt(filename)
-        data = np.random.normal(25, 2, 100)
+    if verbose:
+        print(f"Reading data from {input_file}")
     
-    # Process
-    processor = DataProcessor(data, name="Loaded Data")
-    stats = processor.get_statistics()
-    normalized = processor.normalize('zscore')
-    outliers = processor.find_outliers()
+    # Simulate reading data
+    temperatures = [23.5, 24.1, 26.8, 24.3, 27.1, 23.9, 25.5]
     
-    return {
-        'stats': stats,
-        'normalized': normalized,
-        'outlier_count': np.sum(outliers),
-        'outlier_indices': np.where(outliers)[0]
+    if verbose:
+        print(f"Loaded {len(temperatures)} temperature readings")
+    
+    # Filter by threshold
+    filtered = [t for t in temperatures if t >= threshold]
+    
+    if verbose:
+        print(f"After filtering (>= {threshold}°C): {len(filtered)} readings")
+    
+    # Calculate statistic
+    if method == 'mean':
+        result = sum(filtered) / len(filtered) if filtered else 0
+    else:  # median
+        sorted_temps = sorted(filtered)
+        n = len(sorted_temps)
+        if n == 0:
+            result = 0
+        elif n % 2 == 0:
+            result = (sorted_temps[n//2 - 1] + sorted_temps[n//2]) / 2
+        else:
+            result = sorted_temps[n//2]
+    
+    # Prepare results
+    results = {
+        'method': method,
+        'threshold': threshold,
+        'total_readings': len(temperatures),
+        'filtered_readings': len(filtered),
+        'result': result
     }
+    
+    if verbose:
+        print(f"Analysis complete: {method} = {result:.2f}°C")
+        print(f"Saving results to {output_file}")
+    
+    return results
 
+# Simulated script execution
+results = analyze_temperature_data(
+    'temperatures.txt',
+    output_file='analysis_results.txt',
+    threshold=24.5,
+    method='mean',
+    verbose=True
+)
 
-# Run the pipeline
-results = load_and_process_data(data=temperatures)
-
-print("Processing Results:")
-print(f"  Mean: {results['stats']['mean']:.2f}")
-print(f"  Std: {results['stats']['std']:.2f}")
-print(f"  Outliers: {results['outlier_count']}")
-
-# %% [markdown]
-# ## Best Practices for Using Libraries
-# 
-# 1. **Read the documentation**
-#    - Understand what a library does before using it
-#    - Check version compatibility
-# 
-# 2. **Pin your dependencies**
-#    - Specify exact versions in `requirements.txt` or `environment.yml`
-#    - Ensures reproducibility across systems
-# 
-# 3. **Don't reinvent the wheel**
-#    - Use established libraries for common tasks
-#    - But understand what they're doing
-# 
-# 4. **Handle errors from libraries**
-#    - Wrap library calls in try-except when appropriate
-#    - Provide context-specific error messages
-# 
-# 5. **Keep dependencies minimal**
-#    - Only include libraries you actually use
-#    - Fewer dependencies = easier maintenance
+print(f"\nFinal results: {results}")
 
 # %% [markdown]
-# ## Exercise
-# 
-# Create a complete data analysis script that:
-# 
-# 1. Generates or loads a dataset (e.g., measurement data)
-# 2. Calculates summary statistics
-# 3. Identifies and removes outliers
-# 4. Saves the cleaned data to a file
-# 5. Includes proper documentation and error handling
-# 
-# Use the patterns and functions we've learned in this lecture.
+# ## Part 6: Functional Programming Concepts
 
 # %%
-# Your solution here
+# Map: apply function to all items
+temperatures_c = [20, 25, 30, 35, 40]
+
+
+# Convert to Fahrenheit using map
+def to_fahrenheit(c):
+    return c * 9/5 + 32
+
+
+temperatures_f = list(map(to_fahrenheit, temperatures_c))
+
+print(f"Celsius: {temperatures_c}")
+print(f"Fahrenheit: {temperatures_f}")
+
+# %%
+# Filter: select items matching condition
+measurements = [23.5, 24.1, 26.8, 24.3, 27.1, 23.9, 25.5]
+
+# Filter values above 25
+above_25 = list(filter(lambda x: x > 25, measurements))
+print(f"All measurements: {measurements}")
+print(f"Above 25°C: {above_25}")
+
+# %%
+# Combining map and filter
+# Get Fahrenheit values for temperatures above 25°C
+high_temps_f = list(map(to_fahrenheit, filter(lambda x: x > 25, measurements)))
+print(f"High temps in Fahrenheit: {high_temps_f}")
+
+# Equivalent list comprehension (often more Pythonic)
+high_temps_f_comp = [t * 9/5 + 32 for t in measurements if t > 25]
+print(f"Same result with comprehension: {high_temps_f_comp}")
+
+# %% [markdown]
+# ## Summary
+# 
+# In this lecture, we covered:
+# 
+# ### Advanced Functions
+# - **Parameters**: Default values, keyword arguments, *args and **kwargs
+# - **Lambda functions**: Anonymous functions for simple operations
+# - **Documentation**: Writing comprehensive docstrings
+# 
+# ### Error Handling
+# - **Exception types**: Common errors in Python
+# - **Try-except blocks**: Catching and handling errors
+# - **Error recovery**: Graceful degradation
+# - **Raising exceptions**: Signaling error conditions
+# 
+# ### File I/O
+# - **Reading files**: Text files and CSV data
+# - **Writing files**: Saving results and reports
+# - **Error handling**: Safe file operations
+# 
+# ### Advanced Python Techniques
+# - **List comprehensions**: Concise list creation and filtering
+# - **Dictionary comprehensions**: Creating dictionaries elegantly
+# - **Command-line arguments**: Using argparse for CLI tools
+# - **Functional programming**: Map, filter, and lambda functions
+# 
+# ### Next Steps
+# 
+# In Lecture 4, we'll learn how to structure Python projects properly and work with
+# powerful libraries like NumPy and Matplotlib for scientific computing and visualization.
+# 
+# **Ready to continue? Move on to Lecture 4: Python Project Structure and Libraries!**
+
+# %%
