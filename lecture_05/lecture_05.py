@@ -545,14 +545,14 @@ except (AssertionError, NameError) as e:
 def test_temperature_statistics_std():
     """Test standard deviation calculation."""
     temps = [0, 10, 20, 30, 40]
-    stats = temperature_statistics(temps)
+    stats = temperature_statistics_extended(temps)
     # Expected std ≈ 14.14
     assert abs(stats['std'] - 14.14) < 0.1
 
 
 # STEP 2 (GREEN): Extend function to calculate std
 
-def temperature_statistics_v2(temperatures):
+def temperature_statistics_extended(temperatures):
     """Calculate statistics for a list of temperatures."""
     n = len(temperatures)
     mean = sum(temperatures) / n
@@ -566,10 +566,11 @@ def temperature_statistics_v2(temperatures):
 
 
 # Verify tests pass
-temperature_statistics = temperature_statistics_v2  # Update reference
-
 try:
-    test_temperature_statistics_mean()
+    # Update to use extended version
+    temps = [0, 10, 20, 30, 40]
+    stats = temperature_statistics_extended(temps)
+    assert abs(stats['mean'] - 20) < 0.01
     print("✓ Mean temperature test passed")
 except (AssertionError, NameError) as e:
     print(f"✗ Mean temperature test failed: {e}")
