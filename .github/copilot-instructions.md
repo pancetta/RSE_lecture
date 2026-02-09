@@ -50,8 +50,9 @@ Required steps:
      jupyter nbconvert --to notebook --execute --inplace "$notebook"
    done
    ```
-4. Verify all checks pass
-5. Only then mark the task as complete
+4. Make sure notebooks are executed without failure
+5. Verify all checks pass
+6. Only then mark the task as complete
 
 ## 3. Keep Makefile Up-to-Date
 **The Makefile is a critical component - always keep it synchronized with any changes.**
