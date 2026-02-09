@@ -1,0 +1,22 @@
+# Conda Dependency Ignore List
+#
+# This file tracks conda package versions that are known to be incompatible
+# with the RSE lecture repository. The automated-dependency-updates.yml workflow
+# will skip these versions when checking for updates.
+#
+# Format:
+# package_name:
+#   - version: "x.y.z"
+#     reason: "Brief explanation of why this version is ignored"
+#     date: "YYYY-MM-DD"
+#
+# Example:
+# numpy:
+#   - version: "2.0.0"
+#     reason: "Breaking API changes incompatible with lecture examples"
+#     date: "2024-01-15"
+#
+# When a version is proven to work after code updates, remove it from this list.
+
+ignored_versions: {}
+  # Add entries here as needed when automated updates fail

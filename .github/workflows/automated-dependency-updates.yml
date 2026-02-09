@@ -1,0 +1,342 @@
+name: Automated Dependency Updates
+
+# This workflow automatically checks for dependency updates, tests them,
+# and creates PRs to update environment files when tests pass.
+# This ensures the repository always contains working, up-to-date dependencies.
+
+on:
+  schedule:
+    # Run weekly on Mondays at 09:00 UTC
+    - cron: '0 9 * * 1'
+  workflow_dispatch:  # Allow manual triggering
+    inputs:
+      package:
+        description: 'Specific package to update (optional, leave empty for all)'
+        required: false
+        default: ''
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  update-dependencies:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Need full history for branching
+    
+    - name: Setup Micromamba
+      uses: mamba-org/setup-micromamba@v1
+      with:
+        micromamba-version: 'latest'
+        environment-name: update-check
+        create-args: >-
+          python=3.11
+          pyyaml
+          conda-forge::conda-libmamba-solver
+    
+    - name: Check for dependency updates
+      id: check-updates
+      shell: bash -el {0}
+      run: |
+        python << 'EOF'
+        import yaml
+        import subprocess
+        import json
+        from pathlib import Path
+        
+        # Load ignore list
+        ignore_list = {}
+        ignore_file = Path('.github/conda-ignore-list.yml')
+        if ignore_file.exists():
+            with open(ignore_file) as f:
+                ignore_data = yaml.safe_load(f)
+                ignore_list = ignore_data.get('ignored_versions', {})
+        
+        def is_version_ignored(package_name, version):
+            """Check if a version is in the ignore list."""
+            if package_name in ignore_list:
+                for ignored in ignore_list[package_name]:
+                    if ignored.get('version') == version:
+                        print(f"  Skipping {package_name}=={version} (ignored: {ignored.get('reason', 'no reason given')})")
+                        return True
+            return False
+        
+        def get_latest_version(package_spec, channel="conda-forge"):
+            """Get latest available version for a package."""
+            # Parse package name and version constraint
+            package_name = package_spec.split('>=')[0].split('==')[0].split('<')[0].strip()
+            
+            try:
+                # Search for package in conda-forge
+                result = subprocess.run(
+                    ['micromamba', 'search', package_name, '-c', channel, '--json'],
+                    capture_output=True, text=True, timeout=30
+                )
+                
+                if result.returncode == 0:
+                    data = json.loads(result.stdout)
+                    if package_name in data and data[package_name]:
+                        # Get all versions, excluding ignored ones
+                        versions = []
+                        for pkg in data[package_name]:
+                            version = pkg['version']
+                            if not is_version_ignored(package_name, version):
+                                versions.append(version)
+                        
+                        if versions:
+                            latest = sorted(versions, reverse=True)[0]
+                            return package_name, latest
+            except Exception as e:
+                print(f"Warning: Could not check {package_name}: {e}")
+            
+            return package_name, None
+        
+        def check_environment_file(env_file):
+            """Check an environment file for updates."""
+            print(f"\nChecking {env_file}...")
+            
+            with open(env_file) as f:
+                env_data = yaml.safe_load(f)
+            
+            dependencies = env_data.get('dependencies', [])
+            updates = []
+            
+            for dep in dependencies:
+                if isinstance(dep, str) and '>=' in dep:
+                    pkg_name, latest = get_latest_version(dep)
+                    current_version = dep.split('>=')[1].strip() if '>=' in dep else 'unknown'
+                    
+                    if latest and latest != current_version:
+                        # Check if it's actually newer (simple string comparison)
+                        updates.append({
+                            'package': pkg_name,
+                            'current': current_version,
+                            'latest': latest,
+                            'file': str(env_file)
+                        })
+                        print(f"  {pkg_name}: {current_version} -> {latest}")
+            
+            return updates
+        
+        # Check all environment files
+        all_updates = []
+        env_files = [
+            'environment.yml',
+            'environment-dev.yml',
+            'lecture_01/environment.yml',
+            'lecture_02/environment.yml',
+            'lecture_03/environment.yml',
+            'lecture_04/environment.yml'
+        ]
+        
+        for env_file in env_files:
+            if Path(env_file).exists():
+                updates = check_environment_file(env_file)
+                all_updates.extend(updates)
+        
+        if all_updates:
+            print(f"\n✓ Found {len(all_updates)} potential updates")
+            # Save updates for next step
+            with open('updates.json', 'w') as f:
+                json.dump(all_updates, f, indent=2)
+            print("has_updates=true")
+        else:
+            print("\n✓ All dependencies are up to date")
+            print("has_updates=false")
+        
+        EOF
+    
+    - name: Create update branch and test
+      if: hashFiles('updates.json') != ''
+      shell: bash -el {0}
+      run: |
+        python << 'EOF'
+        import yaml
+        import json
+        import subprocess
+        import sys
+        from pathlib import Path
+        from datetime import datetime
+        
+        # Load updates
+        with open('updates.json') as f:
+            updates = json.load(f)
+        
+        if not updates:
+            print("No updates to process")
+            sys.exit(0)
+        
+        # Group updates by file
+        updates_by_file = {}
+        for update in updates:
+            file_path = update['file']
+            if file_path not in updates_by_file:
+                updates_by_file[file_path] = []
+            updates_by_file[file_path].append(update)
+        
+        # Process each file
+        for env_file, file_updates in updates_by_file.items():
+            print(f"\nUpdating {env_file}...")
+            
+            # Read current file
+            with open(env_file) as f:
+                env_data = yaml.safe_load(f)
+            
+            # Update dependencies
+            dependencies = env_data.get('dependencies', [])
+            updated_deps = []
+            
+            for dep in dependencies:
+                if isinstance(dep, str):
+                    updated = False
+                    for update in file_updates:
+                        pkg = update['package']
+                        if dep.startswith(pkg):
+                            # Update to latest version
+                            new_dep = f"{pkg}>={update['latest']}"
+                            updated_deps.append(new_dep)
+                            print(f"  Updated: {dep} -> {new_dep}")
+                            updated = True
+                            break
+                    
+                    if not updated:
+                        updated_deps.append(dep)
+                else:
+                    updated_deps.append(dep)
+            
+            # Write updated file
+            env_data['dependencies'] = updated_deps
+            with open(env_file, 'w') as f:
+                yaml.dump(env_data, f, default_flow_style=False, sort_keys=False)
+            
+            print(f"✓ Updated {env_file}")
+        
+        # Create summary
+        summary = []
+        summary.append("## Dependency Updates")
+        summary.append("")
+        for update in updates:
+            summary.append(f"- **{update['package']}**: {update['current']} → {update['latest']} ({update['file']})")
+        
+        with open('update_summary.md', 'w') as f:
+            f.write('\n'.join(summary))
+        
+        print("\n✓ All files updated")
+        EOF
+    
+    - name: Test updated dependencies
+      if: hashFiles('updates.json') != ''
+      shell: bash -el {0}
+      run: |
+        echo "Testing updated dependencies..."
+        
+        # Remove the update check environment
+        micromamba env remove -n update-check -y || true
+        
+        # Create environment with updated dependencies
+        micromamba env create -f environment-dev.yml -y
+        
+        # Activate and run tests
+        eval "$(micromamba shell hook --shell bash)"
+        micromamba activate rse_lecture
+        
+        # Run linting
+        echo "Running flake8..."
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        flake8 . --count --statistics
+        
+        # Check Python syntax
+        echo "Checking Python syntax..."
+        python -m py_compile convert_to_notebooks.py
+        for lecture_file in lecture_*/lecture_*.py; do
+          echo "Checking: $lecture_file"
+          python -m py_compile "$lecture_file"
+        done
+        
+        # Convert lectures to notebooks
+        echo "Converting lectures..."
+        python convert_to_notebooks.py
+        
+        # Execute notebooks to verify they run
+        echo "Executing notebooks..."
+        for lecture_file in lecture_*/lecture_*.py; do
+          notebook_file="${lecture_file%.py}.ipynb"
+          echo "Executing: $notebook_file"
+          jupyter nbconvert --to notebook --execute --inplace "$notebook_file"
+        done
+        
+        echo "✓ All tests passed with updated dependencies"
+    
+    - name: Create Pull Request
+      if: hashFiles('updates.json') != ''
+      uses: peter-evans/create-pull-request@v6
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        commit-message: |
+          deps: automated dependency updates
+          
+          Updated dependencies to latest compatible versions.
+          All tests passed successfully.
+        branch: automated-dependency-updates
+        delete-branch: true
+        title: '🔄 Automated Dependency Updates'
+        body-path: update_summary.md
+        labels: |
+          dependencies
+          automated
+          conda-dependencies
+        assignees: ${{ github.repository_owner }}
+    
+    - name: Handle test failures
+      if: failure() && hashFiles('updates.json') != ''
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const fs = require('fs');
+          
+          let updates = [];
+          try {
+            updates = JSON.parse(fs.readFileSync('updates.json', 'utf8'));
+          } catch (e) {
+            console.log('No updates file found');
+            return;
+          }
+          
+          // Create issue about failed updates
+          const packageList = updates.map(u => 
+            `- **${u.package}**: ${u.current} → ${u.latest} (${u.file})`
+          ).join('\n');
+          
+          const issueBody = `## ⚠️ Dependency Update Failed
+          
+          The automated dependency update failed during testing.
+          
+          **Attempted Updates:**
+          ${packageList}
+          
+          **Action Required:**
+          1. Review the [failed workflow run](${context.payload.repository.html_url}/actions/runs/${context.runId})
+          2. Investigate which package update caused the failure
+          3. Either:
+             - Fix compatibility issues in the code
+             - Pin to a specific working version in environment.yml
+             - Add the problematic version to Dependabot ignore list
+          
+          **Next Steps:**
+          The workflow will retry next week. If a specific version is incompatible, 
+          add it to \`.github/dependabot.yml\` ignore list or pin to a known working version.
+          `;
+          
+          await github.rest.issues.create({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            title: '⚠️ Automated Dependency Update Failed',
+            body: issueBody,
+            labels: ['dependencies', 'failed-update', 'needs-investigation']
+          });

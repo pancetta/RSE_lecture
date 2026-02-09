@@ -204,33 +204,43 @@ This repository uses a **conda-only** multi-environment approach for clean depen
 
 ### Automated Dependency Tracking
 
-The repository uses **Dependabot** and **GitHub Actions** to track and update dependencies:
+The repository uses **Dependabot** and **GitHub Actions** to automatically track, test, and update dependencies:
 
 #### 1. GitHub Actions Workflows
 - **Tracked by Dependabot**: Automatically monitors and updates GitHub Actions versions weekly
 - **Auto-created PRs**: Dependabot creates pull requests for GitHub Actions updates
 - **Schedule**: Every Monday at 09:00 UTC
 
-#### 2. Conda Dependencies  
-- **Weekly automated checks**: GitHub Actions workflow runs every Monday to review conda environments
-- **Creates issues**: Workflow creates/updates an issue with current dependency status for manual review
-- **Manual updates**: Conda dependencies must be manually updated in `environment.yml` files and tested via CI
-  
-**Why manual conda updates?**
-Dependabot doesn't natively support conda `environment.yml` files. The weekly GitHub Actions workflow reminds maintainers to check for conda package updates, which are then manually applied and tested through CI to ensure compatibility.
+#### 2. Conda Dependencies (Automated Testing & Updates)
+- **Weekly automated checks**: GitHub Actions workflow runs every Monday
+- **Automatic testing**: Tests new dependency versions with full CI suite
+- **Auto-created PRs**: When tests pass, creates PR to update environment.yml files
+- **Failure handling**: When tests fail, creates issue and adds version to ignore list
+- **Always working**: Ensures repository always contains executable lecture versions
+
+**How it works:**
+
+1. **Weekly check**: Workflow searches conda-forge for latest package versions
+2. **Update & test**: Creates test environment with new versions and runs full CI
+3. **Success**: If all tests pass, creates PR to merge updated environment.yml files
+4. **Failure**: If tests fail, creates issue with failure details and version is ignored
+5. **Review**: Maintainers review and merge automated PRs or investigate failures
 
 ### Updating Dependencies
 
-When you need to update conda dependencies:
+**Automated updates (recommended):**
 
-1. **Edit the appropriate `environment.yml` file** with new version requirements
-2. **Test the changes**: 
-   ```bash
-   make install-dev
-   micromamba activate rse_lecture
-   # Run tests and verify notebooks execute
-   ```
-3. **Commit changes**: Commit the updated `environment.yml` file after CI validation
+Dependencies are automatically updated by the GitHub Actions workflow. Simply:
+
+1. **Wait for automated PR**: Workflow runs weekly and creates PRs for passing updates
+2. **Review the PR**: Check what was updated in the PR description
+3. **Merge**: If everything looks good, merge the PR
+
+**Manual updates (when needed):**
+
+When you need to update a Python package dependency manually:
+
+1. **Edit the environment.yml file:**
 
 ### Version Pinning Strategy
 

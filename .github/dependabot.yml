@@ -4,8 +4,12 @@
 #
 # NOTE: Dependabot does not natively support conda environment.yml files.
 # This configuration only tracks GitHub Actions workflows.
-# Python/conda dependencies are monitored via the weekly dependency-check.yml workflow,
-# which creates issues for manual review and updating.
+# Python/conda dependencies are automatically tested and updated via the 
+# automated-dependency-updates.yml workflow, which:
+# 1. Checks for new versions weekly
+# 2. Tests them with the full CI suite
+# 3. Creates PRs when tests pass
+# 4. Creates issues when tests fail (add problematic versions to ignore list below)
 
 version: 2
 updates:
@@ -23,3 +27,7 @@ updates:
     commit-message:
       prefix: "deps(actions)"
       include: "scope"
+    # Uncomment and add versions to ignore if specific versions are incompatible
+    # ignore:
+    #   - dependency-name: "actions/checkout"
+    #     versions: ["4.2.0"]  # Example: if version 4.2.0 has issues
