@@ -150,8 +150,11 @@ print("Experiment 3:", exp3)
 def square(x):
     return x ** 2
 
+
 # Equivalent lambda function
-square_lambda = lambda x: x ** 2
+def square_lambda(x):
+    return x ** 2
+
 
 print(f"Regular function: {square(5)}")
 print(f"Lambda function: {square_lambda(5)}")
@@ -740,26 +743,26 @@ def create_parser():
     
     # Positional arguments
     parser.add_argument('input_file',
-                       help='Input data file path')
+                        help='Input data file path')
     
     # Optional arguments
     parser.add_argument('-o', '--output',
-                       help='Output file path (default: results.txt)',
-                       default='results.txt')
+                        help='Output file path (default: results.txt)',
+                        default='results.txt')
     
     parser.add_argument('-t', '--threshold',
-                       type=float,
-                       help='Temperature threshold in Celsius (default: 25.0)',
-                       default=25.0)
+                        type=float,
+                        help='Temperature threshold in Celsius (default: 25.0)',
+                        default=25.0)
     
     parser.add_argument('-v', '--verbose',
-                       action='store_true',
-                       help='Print verbose output')
+                        action='store_true',
+                        help='Print verbose output')
     
     parser.add_argument('--method',
-                       choices=['mean', 'median'],
-                       default='mean',
-                       help='Analysis method (default: mean)')
+                        choices=['mean', 'median'],
+                        default='mean',
+                        help='Analysis method (default: mean)')
     
     return parser
 
@@ -774,8 +777,10 @@ parser.print_help()
 # ### Complete Command-Line Script Example
 
 # %%
-def analyze_temperature_data(input_file, output_file='results.txt',
-                            threshold=25.0, method='mean', verbose=False):
+def analyze_temperature_data(
+        input_file, output_file='results.txt',
+        threshold=25.0, method='mean',
+        verbose=False):
     """
     Analyze temperature data from a file.
     
@@ -858,8 +863,12 @@ print(f"\nFinal results: {results}")
 # Map: apply function to all items
 temperatures_c = [20, 25, 30, 35, 40]
 
+
 # Convert to Fahrenheit using map
-to_fahrenheit = lambda c: c * 9/5 + 32
+def to_fahrenheit(c):
+    return c * 9/5 + 32
+
+
 temperatures_f = list(map(to_fahrenheit, temperatures_c))
 
 print(f"Celsius: {temperatures_c}")

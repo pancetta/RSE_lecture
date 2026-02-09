@@ -882,11 +882,11 @@ absorbance = 0.15 * concentrations + 0.05 + np.random.normal(0, 0.05, size=10)
 
 # Create scatter plot
 plt.figure(figsize=(10, 6))
-plt.scatter(concentrations, absorbance, 
-            s=100,              # Size of markers
-            c='crimson',        # Color
-            alpha=0.6,          # Transparency
-            edgecolors='black', # Marker edge color
+plt.scatter(concentrations, absorbance,
+            s=100,  # Size of markers
+            c='crimson',  # Color
+            alpha=0.6,  # Transparency
+            edgecolors='black',  # Marker edge color
             linewidths=1.5)
 
 # Add best-fit line
@@ -1027,8 +1027,8 @@ fig, axes = plt.subplots(2, 3, figsize=(15, 10))
 x = np.arange(0, 10)
 y = x ** 1.5
 yerr = y * 0.1  # 10% error
-axes[0, 0].errorbar(x, y, yerr=yerr, fmt='o-', capsize=5, capthick=2, 
-                     color='steelblue', ecolor='gray', linewidth=2)
+axes[0, 0].errorbar(x, y, yerr=yerr, fmt='o-', capsize=5, capthick=2,
+                    color='steelblue', ecolor='gray', linewidth=2)
 axes[0, 0].set_title('Error Bars', fontweight='bold')
 axes[0, 0].set_xlabel('X')
 axes[0, 0].set_ylabel('Y')
@@ -1047,8 +1047,8 @@ axes[0, 1].grid(True, alpha=0.3, axis='y')
 # 3. Histogram
 data = np.random.normal(100, 15, 1000)
 axes[0, 2].hist(data, bins=30, color='coral', edgecolor='black', alpha=0.7)
-axes[0, 2].axvline(np.mean(data), color='red', linestyle='--', 
-                    linewidth=2, label=f'Mean = {np.mean(data):.1f}')
+axes[0, 2].axvline(np.mean(data), color='red', linestyle='--',
+                   linewidth=2, label=f'Mean = {np.mean(data):.1f}')
 axes[0, 2].set_title('Distribution', fontweight='bold')
 axes[0, 2].set_xlabel('Value')
 axes[0, 2].set_ylabel('Frequency')
@@ -1320,7 +1320,8 @@ print(f"\nOptimal pH: {max(mean_activities, key=mean_activities.get)}")
 # 
 # ### Practice Exercises
 # 
-# 1. **Project Structure**: Create a research project with proper structure including src/, tests/, data/, and notebooks/ directories
+# 1. **Project Structure**: Create a research project with proper structure
+#    including src/, tests/, data/, and notebooks/ directories
 # 
 # 2. **NumPy Practice**: Analyze a matrix of experimental data:
 #    - Load or create a 10×5 matrix (10 samples, 5 measurements)
