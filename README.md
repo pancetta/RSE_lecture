@@ -181,7 +181,9 @@ Jupytext allows us to:
 
 ## Dependency Management
 
-This repository uses a multi-environment approach for clean dependency separation with automated dependency tracking:
+This repository uses a multi-environment approach for clean dependency separation with automated dependency tracking.
+
+**📖 For detailed dependency management instructions, see [DEPENDENCY_MANAGEMENT.md](DEPENDENCY_MANAGEMENT.md)**
 
 ### Environment Files
 
