@@ -181,7 +181,7 @@ Jupytext allows us to:
 
 ## Dependency Management
 
-This repository uses a multi-environment approach for clean dependency separation:
+This repository uses a multi-environment approach for clean dependency separation with automated dependency tracking:
 
 ### Environment Files
 
@@ -200,13 +200,52 @@ This repository uses a multi-environment approach for clean dependency separatio
   - Used by CI/CD pipeline
   - Recommended for contributors
 
+### Automated Dependency Tracking
+
+The repository uses a combination of **Dependabot** and **GitHub Actions** to track and update dependencies:
+
+#### 1. GitHub Actions Workflows
+- **Tracked by Dependabot**: Automatically monitors and updates GitHub Actions versions weekly
+- **Schedule**: Every Monday at 09:00 UTC
+
+#### 2. Python/Conda Dependencies  
+- **Weekly automated checks**: GitHub Actions workflow runs every Monday to review conda environments
+- **Creates issues**: When the workflow runs, it creates/updates an issue with current dependency status
+- **Manual updates required**: Conda dependencies must be manually updated in `environment.yml` files
+  
+**Why not automated Python dependency updates?**
+Dependabot doesn't natively support conda `environment.yml` files. While we maintain `requirements.txt` files for reference, conda environments are the source of truth and must be updated manually to ensure compatibility.
+
+### Updating Dependencies
+
+When you need to update dependencies:
+
+1. **Edit the appropriate `environment.yml` file** with new version requirements
+2. **Sync requirements files**: Run `make sync-requirements` to update `requirements.txt` files
+3. **Test the changes**: 
+   ```bash
+   make install-dev
+   micromamba activate rse_lecture
+   # Run tests and verify notebooks execute
+   ```
+4. **Commit both files**: Always commit both `environment.yml` and `requirements.txt` together
+
+### Version Pinning Strategy
+
+To ensure a stable, reproducible environment:
+- **Minimum versions**: Use `>=` for minimum required versions (e.g., `numpy>=1.21.0`)
+- **Specific versions**: Pin to specific versions when needed for stability
+- **Weekly reviews**: GitHub Actions reminds us to check for updates weekly
+- **CI validation**: All changes are tested across multiple platforms before merge
+
 ### Benefits
 
 - **Harmonized structure**: All lectures follow the same pattern (base + lecture file)
 - **Clear separation**: Each lecture's dependencies are explicit and documented
 - **True inheritance**: Lecture-specific files only contain additional dependencies, avoiding duplication
 - **No duplication**: Base dependencies defined once in `environment.yml`
-- **Dependabot compatible**: All `environment.yml` files are automatically tracked for security updates
+- **Automated tracking**: GitHub Actions monitors conda dependencies, Dependabot tracks Actions
+- **Known working versions**: Dependencies are frozen and tested in CI before deployment
 - **Scalable**: Easy to add new lectures with different dependency requirements
 - **Educational**: Students see exactly what each lecture adds beyond the base
 - **Simplified Makefile**: All `install-lectureX` targets follow identical pattern

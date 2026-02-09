@@ -1,0 +1,4 @@
+# Additional requirements for Lecture 1
+# Auto-generated from environment.yml - DO NOT EDIT MANUALLY
+# To update: modify environment.yml and run 'make sync-requirements'
+# Lecture 1 uses only base dependencies (no additions needed)

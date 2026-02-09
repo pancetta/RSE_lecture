@@ -1,0 +1,13 @@
+# Development requirements for RSE lecture series
+# Auto-generated from environment-dev.yml - DO NOT EDIT MANUALLY
+# To update: modify environment-dev.yml and run 'make sync-requirements'
+
+python>=3.7
+jupytext>=1.14.0
+jupyter>=1.0.0
+notebook>=6.5.0
+numpy>=1.21.0
+jupyter-book>=2.0.0
+matplotlib>=3.5.0
+flake8
+nbconvert

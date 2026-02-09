@@ -1,22 +1,23 @@
-.PHONY: help install install-dev install-lecture1 install-lecture2 install-lecture3 install-lecture4 convert clean notebooks build-website serve-website clean-website
+.PHONY: help install install-dev install-lecture1 install-lecture2 install-lecture3 install-lecture4 convert clean notebooks build-website serve-website clean-website sync-requirements
 
 help:
 	@echo "Research Software Engineering Lectures - Makefile"
 	@echo ""
 	@echo "Available targets:"
-	@echo "  install          - Create base micromamba environment for all lectures"
-	@echo "  install-dev      - Create development environment with all dependencies and dev tools"
-	@echo "  install-lecture1 - Create environment with lecture 1 dependencies"
-	@echo "  install-lecture2 - Create environment with lecture 2 dependencies"
-	@echo "  install-lecture3 - Create environment with lecture 3 dependencies"
-	@echo "  install-lecture4 - Create environment with lecture 4 dependencies (includes matplotlib)"
-	@echo "  convert          - Convert all Python lectures to Jupyter notebooks"
-	@echo "  notebooks        - Alias for convert"
-	@echo "  build-website    - Build the Jupyter Book website"
-	@echo "  serve-website    - Build and serve the website locally"
-	@echo "  clean            - Remove generated notebook files"
-	@echo "  clean-website    - Remove generated website files"
-	@echo "  help             - Show this help message"
+	@echo "  install             - Create base micromamba environment for all lectures"
+	@echo "  install-dev         - Create development environment with all dependencies and dev tools"
+	@echo "  install-lecture1    - Create environment with lecture 1 dependencies"
+	@echo "  install-lecture2    - Create environment with lecture 2 dependencies"
+	@echo "  install-lecture3    - Create environment with lecture 3 dependencies"
+	@echo "  install-lecture4    - Create environment with lecture 4 dependencies (includes matplotlib)"
+	@echo "  convert             - Convert all Python lectures to Jupyter notebooks"
+	@echo "  notebooks           - Alias for convert"
+	@echo "  build-website       - Build the Jupyter Book website"
+	@echo "  serve-website       - Build and serve the website locally"
+	@echo "  sync-requirements   - Sync requirements.txt from environment.yml files"
+	@echo "  clean               - Remove generated notebook files"
+	@echo "  clean-website       - Remove generated website files"
+	@echo "  help                - Show this help message"
 
 install:
 	micromamba env create -f environment.yml -y
@@ -81,3 +82,7 @@ clean:
 clean-website:
 	jupyter-book clean .
 	@echo "Cleaned website build files"
+
+sync-requirements:
+	python sync_requirements.py
+	@echo "Requirements files synced from environment.yml files"
