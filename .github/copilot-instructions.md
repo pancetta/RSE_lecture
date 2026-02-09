@@ -1,10 +1,8 @@
-# GitHub Copilot Instructions for RSE_lecture Repository
-
-## Repository Overview
+# Repository Overview
 
 This repository contains lecture materials for a Research Software Engineering (RSE) course. The lectures are written in Python files using Jupytext format and can be converted to Jupyter notebooks for interactive learning.
 
-## Project Structure
+# Project Structure
 
 - **Lecture Files**: Located in `lecture_01/`, `lecture_02/`, `lecture_03/`, `lecture_04/` directories
 - **Format**: Python files (`.py`) in Jupytext percent format that convert to Jupyter notebooks (`.ipynb`)
@@ -12,9 +10,9 @@ This repository contains lecture materials for a Research Software Engineering (
 - **Build System**: `Makefile` contains all build, install, and deployment commands
 - **CI/CD**: GitHub Actions workflows in `.github/workflows/`
 
-## Critical Requirements
+# Critical Requirements
 
-### 1. Lecture Duration - STRICTLY ENFORCED
+## 1. Lecture Duration - STRICTLY ENFORCED
 **Each lecture MUST be exactly 90 minutes - not more, not less.**
 
 When creating or modifying lectures:
@@ -28,7 +26,7 @@ When creating or modifying lectures:
 - If a lecture exceeds 90 minutes, content must be removed or moved to another lecture
 - If a lecture is under 90 minutes, add more exercises, examples, or depth
 
-### 2. Always Run CI Pipeline locally Before Finishing
+## 2. Always Run CI Pipeline locally Before Finishing
 **Before marking any task as complete, ALWAYS run the CI pipeline.**
 
 Required steps:
@@ -55,7 +53,7 @@ Required steps:
 4. Verify all checks pass
 5. Only then mark the task as complete
 
-### 3. Keep Makefile Up-to-Date
+## 3. Keep Makefile Up-to-Date
 **The Makefile is a critical component - always keep it synchronized with any changes.**
 
 When you:
@@ -70,7 +68,7 @@ make help  # Verify help text is current
 make <target>  # Test the specific target you modified
 ```
 
-### 4. Keep Documentation Up-to-Date
+## 4. Keep Documentation Up-to-Date
 **Documentation must always reflect the current state of the repository.**
 
 When you make changes, update:
@@ -84,23 +82,23 @@ When you make changes, update:
 
 Documentation changes should be part of the same commit as code changes.
 
-## Development Guidelines
+# Development Guidelines
 
-### Working with Jupytext Files
+## Working with Jupytext Files
 
 - **Always edit** the `.py` files, never the `.ipynb` files directly
 - Use Jupytext percent format (`# %%`) for cell markers
 - Add markdown cells with `# %% [markdown]`
 - Test conversion works: `python convert_to_notebooks.py`
 
-### Code Quality Standards
+## Code Quality Standards
 
 - **Linting**: All code must pass flake8 checks
 - **Style**: Follow PEP 8 conventions (enforced by `.flake8` config)
 - **Syntax**: All Python files must have valid syntax
 - **Execution**: All notebooks must execute without errors
 
-### Testing Requirements
+## Testing Requirements
 
 Before submitting changes:
 1. Syntax check: `python -m py_compile <file>`
@@ -108,7 +106,7 @@ Before submitting changes:
 3. Conversion test: `python convert_to_notebooks.py`
 4. Execution test: `jupyter nbconvert --to notebook --execute --inplace <notebook>`
 
-### Cross-Platform Compatibility
+## Cross-Platform Compatibility
 
 All code and scripts must work on:
 - Linux (Ubuntu)
@@ -118,14 +116,14 @@ All code and scripts must work on:
 
 Test on multiple platforms or ensure code is platform-agnostic.
 
-### Git Workflow
+## Git Workflow
 
 - Create feature branches for changes
 - Write clear, descriptive commit messages
 - Keep commits focused and atomic
 - Pull request must pass all CI checks before merge
 
-## Build and Development Commands
+# Build and Development Commands
 
 ```bash
 # Environment setup
@@ -142,7 +140,7 @@ make clean                  # Remove generated notebooks
 make clean-website          # Remove website build artifacts
 ```
 
-## CI/CD Pipeline
+# CI/CD Pipeline
 
 The repository uses GitHub Actions with workflows:
 - **ci.yml**: Runs on every push and PR
@@ -154,9 +152,9 @@ The repository uses GitHub Actions with workflows:
 
 - **deploy.yml**: Deploys website to GitHub Pages
 
-## Common Patterns
+# Common Patterns
 
-### Adding a New Lecture
+## Adding a New Lecture
 
 1. Create new directory: `lecture_XX/`
 2. Create lecture file: `lecture_XX/lecture_XX.py` in Jupytext format
@@ -168,7 +166,7 @@ The repository uses GitHub Actions with workflows:
 8. Update `myst.yml` if using Jupyter Book
 9. Run full CI pipeline
 
-### Modifying Existing Lectures
+## Modifying Existing Lectures
 
 1. Edit the `.py` file only
 2. Test locally: syntax, lint, convert, execute
@@ -178,7 +176,7 @@ The repository uses GitHub Actions with workflows:
 6. Run CI pipeline
 7. Clean up generated files: `make clean`
 
-### Adding Dependencies
+## Adding Dependencies
 
 1. Update `environment.yml` for base dependencies
 2. Update specific lecture install targets in `Makefile` if needed
@@ -186,7 +184,7 @@ The repository uses GitHub Actions with workflows:
 4. Test: `make install` and verify environment works
 5. Update CI workflow if new tools are required
 
-## Best Practices
+# Best Practices
 
 1. **Keep it simple**: Lectures are for teaching, not showcasing advanced techniques
 2. **Be explicit**: Clear, readable code is better than clever code
@@ -195,7 +193,7 @@ The repository uses GitHub Actions with workflows:
 5. **Consistency**: Follow existing patterns in the codebase
 6. **90-minute rule**: Never compromise on lecture duration - it's critical for course scheduling
 
-## Questions?
+# Questions?
 
 - Check `README.md` for detailed documentation
 - Review existing lectures for patterns and style
