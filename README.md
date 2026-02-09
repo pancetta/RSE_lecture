@@ -12,6 +12,8 @@ This lecture series covers fundamental concepts and practices in Research Softwa
 - **Lecture 2**: Advanced Git, GitHub Collaboration, and Python Basics (~90 minutes)
 - **Lecture 3**: Python Fundamentals and Advanced Concepts (including Error Handling) (~90 minutes)
 - **Lecture 4**: Python Project Structure and Working with Libraries (NumPy, Matplotlib) (~90 minutes)
+- **Lecture 5**: Testing Research Software (~90 minutes)
+- **Lecture 6**: Automation and Continuous Integration (~90 minutes)
 
 ## Structure
 
@@ -61,6 +63,12 @@ make install-lecture3
 
 # Lecture 4 (adds matplotlib)
 make install-lecture4
+
+# Lecture 5 (adds pytest, pytest-cov)
+make install-lecture5
+
+# Lecture 6
+make install-lecture6
 ```
 
 Then activate:
@@ -92,13 +100,18 @@ micromamba activate rse_lecture
 **Note:** 
 - The base `environment.yml` contains common dependencies (Python, Jupyter, NumPy, Jupyter Book).
 - Each lecture has an `environment.yml` file in its directory containing **only additional dependencies**.
-- Lectures 1-3 have empty dependency lists (use base only); Lecture 4 adds matplotlib.
+- Lectures 1-3 have empty dependency lists (use base only).
+- Lecture 4 adds matplotlib.
+- Lecture 5 adds pytest and pytest-cov for testing.
+- Lecture 6 has no additional dependencies (uses base only).
 - The `environment-dev.yml` includes all dependencies plus development tools (flake8, nbconvert).
 - Installation pattern is **harmonized**: all lectures follow the same two-step process (base + additions).
 - Lecture 1 introduces the course and essential tools (shell, git, GitHub).
 - Lecture 2 introduces Python basics (uses standard library only).
 - Lecture 3 focuses on advanced Python using the standard library.
-- Lecture 4 covers NumPy, matplotlib, and project structure (adds matplotlib to base environment).
+- Lecture 4 covers NumPy, matplotlib, and project structure.
+- Lecture 5 covers testing with pytest and achieving full test coverage.
+- Lecture 6 covers automation and continuous integration with GitHub Actions and GitLab CI.
 
 ## Usage
 

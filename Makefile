@@ -1,4 +1,4 @@
-.PHONY: help install install-dev install-lecture1 install-lecture2 install-lecture3 install-lecture4 convert clean notebooks build-website serve-website clean-website update-deps test-deps create-locks
+.PHONY: help install install-dev install-lecture1 install-lecture2 install-lecture3 install-lecture4 install-lecture5 install-lecture6 convert clean notebooks build-website serve-website clean-website update-deps test-deps create-locks
 
 help:
 	@echo "Research Software Engineering Lectures - Makefile"
@@ -10,6 +10,8 @@ help:
 	@echo "  install-lecture2 - Create environment with lecture 2 dependencies"
 	@echo "  install-lecture3 - Create environment with lecture 3 dependencies"
 	@echo "  install-lecture4 - Create environment with lecture 4 dependencies (includes matplotlib)"
+	@echo "  install-lecture5 - Create environment with lecture 5 dependencies (includes pytest, coverage)"
+	@echo "  install-lecture6 - Create environment with lecture 6 dependencies"
 	@echo "  convert          - Convert all Python lectures to Jupyter notebooks"
 	@echo "  notebooks        - Alias for convert"
 	@echo "  build-website    - Build the Jupyter Book website"
@@ -60,6 +62,22 @@ install-lecture4:
 	@echo "Adding lecture 4 specific dependencies..."
 	micromamba env update -f lecture_04/environment.yml -y
 	@echo "Environment created for lecture 4 (base + matplotlib)."
+	@echo "Activate with: micromamba activate rse_lecture"
+
+install-lecture5:
+	@echo "Creating base environment..."
+	micromamba env create -f environment.yml -y
+	@echo "Adding lecture 5 specific dependencies..."
+	micromamba env update -f lecture_05/environment.yml -y
+	@echo "Environment created for lecture 5 (base + pytest, pytest-cov)."
+	@echo "Activate with: micromamba activate rse_lecture"
+
+install-lecture6:
+	@echo "Creating base environment..."
+	micromamba env create -f environment.yml -y
+	@echo "Adding lecture 6 specific dependencies..."
+	micromamba env update -f lecture_06/environment.yml -y
+	@echo "Environment created for lecture 6."
 	@echo "Activate with: micromamba activate rse_lecture"
 
 convert: notebooks
