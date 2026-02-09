@@ -26,7 +26,7 @@ project:
     - file: lecture_03/lecture_03.ipynb
       title: 'Lecture 3: Advanced Python'
     - file: lecture_04/lecture_04.ipynb
-      title: 'Lecture 4: Documentation and Code Quality'
+      title: 'Lecture 4: Python Project Structure and Scientific Libraries'
 site:
   options:
     logo: ''
