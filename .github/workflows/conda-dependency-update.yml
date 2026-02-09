@@ -32,16 +32,16 @@ jobs:
         echo "Creating conda-lock files for all environments..."
         
         # Create lock file for base environment
-        conda-lock --file environment.yml --platform linux-64 --filename-template environment-{platform}.lock
+        conda-lock lock --file environment.yml --platform linux-64 --lockfile environment-linux-64.lock
         
         # Create lock file for dev environment
-        conda-lock --file environment-dev.yml --platform linux-64 --filename-template environment-dev-{platform}.lock
+        conda-lock lock --file environment-dev.yml --platform linux-64 --lockfile environment-dev-linux-64.lock
         
         # Create lock files for each lecture (base + lecture-specific)
         for lecture_dir in lecture_01 lecture_02 lecture_03 lecture_04; do
           echo "Processing $lecture_dir..."
-          conda-lock --file environment.yml --file $lecture_dir/environment.yml \
-            --platform linux-64 --filename-template ${lecture_dir}/environment-{platform}.lock
+          conda-lock lock --file environment.yml --file $lecture_dir/environment.yml \
+            --platform linux-64 --lockfile ${lecture_dir}/environment-linux-64.lock
         done
       shell: bash -el {0}
     

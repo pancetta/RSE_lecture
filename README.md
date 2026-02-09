@@ -260,6 +260,10 @@ The automated system will NOT create a PR if tests fail. Instead:
 
 This ensures the repository always contains executable versions of the lectures with compatible dependencies.
 
+**For more details:**
+- See [DEPENDENCY_MANAGEMENT.md](DEPENDENCY_MANAGEMENT.md) for the complete guide
+- See [TESTING_DEPENDENCIES.md](TESTING_DEPENDENCIES.md) for testing instructions
+
 ## Contributing
 
 Contributions are welcome! When adding or modifying lectures:
