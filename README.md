@@ -59,11 +59,14 @@ micromamba activate rse_lecture
 
 **For Lecture 4 (includes matplotlib):**
 ```bash
-micromamba env create -f lecture_04/environment.yml
+# First create base environment
+micromamba env create -f environment.yml
+# Then add lecture 4 specific dependencies
+micromamba env update -f lecture_04/environment.yml
 micromamba activate rse_lecture
 ```
 
-Or using the Makefile:
+Or using the Makefile (recommended):
 ```bash
 make install-lecture4
 micromamba activate rse_lecture
@@ -83,12 +86,13 @@ micromamba activate rse_lecture
 
 **Note:** 
 - The base `environment.yml` contains common dependencies (Python, Jupyter, NumPy, Jupyter Book).
-- Lecture-specific `environment.yml` files in lecture directories contain additional dependencies.
+- Lecture-specific `environment.yml` files contain **only additional dependencies**, inheriting from base.
 - The `environment-dev.yml` includes all dependencies plus development tools (flake8, nbconvert).
+- Installation uses inheritance: base environment is created first, then lecture-specific deps are added via `env update`.
 - Lecture 1 introduces the course and essential tools (shell, git, GitHub).
 - Lecture 2 introduces Python basics (uses standard library only).
 - Lecture 3 focuses on advanced Python using the standard library.
-- Lecture 4 covers NumPy, matplotlib, and project structure (requires matplotlib).
+- Lecture 4 covers NumPy, matplotlib, and project structure (adds matplotlib to base environment).
 
 ## Usage
 
@@ -177,9 +181,12 @@ This repository uses a multi-environment approach for clean dependency separatio
 
 - **`environment.yml`**: Base environment with core dependencies (Python, Jupyter, NumPy, Jupyter Book)
   - Used by Lectures 1, 2, and 3
+  - Foundation for all other environments
   
-- **`lecture_XX/environment.yml`**: Lecture-specific environments with additional dependencies
-  - Example: `lecture_04/environment.yml` includes matplotlib for visualization and plotting
+- **`lecture_XX/environment.yml`**: Lecture-specific environments with **only additional dependencies**
+  - These files use inheritance - they only specify what's needed beyond the base
+  - Example: `lecture_04/environment.yml` only lists matplotlib (base deps are inherited)
+  - Installed via `micromamba env update` to add to existing base environment
   
 - **`environment-dev.yml`**: Development environment with all dependencies plus dev tools
   - Includes flake8 for linting, nbconvert for notebook execution
@@ -189,10 +196,11 @@ This repository uses a multi-environment approach for clean dependency separatio
 ### Benefits
 
 - **Clear separation**: Each lecture's dependencies are explicit and documented
-- **No duplication**: Environments only specify their actual requirements
+- **True inheritance**: Lecture-specific files only contain additional dependencies, avoiding duplication
+- **No duplication**: Base dependencies defined once in `environment.yml`
 - **Dependabot compatible**: All `environment.yml` files are automatically tracked for security updates
 - **Scalable**: Easy to add new lectures with different dependency requirements
-- **Educational**: Students see exactly what each lecture needs
+- **Educational**: Students see exactly what each lecture adds beyond the base
 
 ## Contributing
 

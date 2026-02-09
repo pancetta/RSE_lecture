@@ -37,8 +37,11 @@ install-lecture3: install
 	@echo "Lecture 3 uses the base environment. Activate with: micromamba activate rse_lecture"
 
 install-lecture4:
-	micromamba env create -f lecture_04/environment.yml -y
-	@echo "Environment created with lecture 4 dependencies (includes matplotlib)."
+	@echo "Creating base environment..."
+	micromamba env create -f environment.yml -y
+	@echo "Adding lecture 4 specific dependencies..."
+	micromamba env update -f lecture_04/environment.yml -y
+	@echo "Environment created with lecture 4 dependencies (base + matplotlib)."
 	@echo "Activate with: micromamba activate rse_lecture"
 
 convert: notebooks
