@@ -1,4 +1,4 @@
-.PHONY: help install install-dev install-lecture1 install-lecture2 install-lecture3 install-lecture4 convert clean notebooks build-website serve-website clean-website
+.PHONY: help install install-dev install-lecture1 install-lecture2 install-lecture3 install-lecture4 convert clean notebooks build-website serve-website clean-website update-deps test-deps create-locks
 
 help:
 	@echo "Research Software Engineering Lectures - Makefile"
@@ -16,6 +16,9 @@ help:
 	@echo "  serve-website    - Build and serve the website locally"
 	@echo "  clean            - Remove generated notebook files"
 	@echo "  clean-website    - Remove generated website files"
+	@echo "  update-deps      - Test and update conda dependencies with lock files"
+	@echo "  test-deps        - Test current dependencies without creating lock files"
+	@echo "  create-locks     - Create conda-lock files for all platforms"
 	@echo "  help             - Show this help message"
 
 install:
@@ -81,3 +84,15 @@ clean:
 clean-website:
 	jupyter-book clean .
 	@echo "Cleaned website build files"
+
+update-deps:
+	python update_dependencies.py
+	@echo "Dependencies tested and lock files updated"
+
+test-deps:
+	python update_dependencies.py --test-only
+	@echo "Dependency testing complete"
+
+create-locks:
+	python update_dependencies.py --create-locks
+	@echo "Lock files created for all platforms"
