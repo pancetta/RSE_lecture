@@ -27,6 +27,10 @@ project:
       title: 'Lecture 3: Advanced Python'
     - file: lecture_04/lecture_04.ipynb
       title: 'Lecture 4: Python Project Structure and Scientific Libraries'
+    - file: lecture_05/lecture_05.ipynb
+      title: 'Lecture 5: Testing Research Software'
+    - file: lecture_06/lecture_06.ipynb
+      title: 'Lecture 6: Automation and Continuous Integration'
 site:
   options:
     logo: ''

@@ -7,6 +7,14 @@ __pycache__/
 .ipynb_checkpoints
 *.ipynb
 
+# Generated images from notebook execution
+lecture_*/*.png
+lecture_*/*.pdf
+lecture_*/*.svg
+lecture_*/figure_*.png
+lecture_*/figure_*.pdf
+lecture_*/figure_*.svg
+
 # Jupyter Book
 _build/
 .jupyter_cache/
