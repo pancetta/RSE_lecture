@@ -806,7 +806,61 @@ print(f"  Range: {results['min']:.2f} - {results['max']:.2f}")
 # - **Collections**: Lists and dictionaries
 # - **Control flow**: If statements and loops
 # - **Functions**: Creating reusable code
+
+# %% [markdown]
+# ## Acknowledgements and References
 # 
+# This lecture builds upon concepts from multiple authoritative sources:
+# 
+# ### Primary Sources
+# 
+# - **Research Software Engineering with Python** by The Alan Turing Institute  
+#   <https://alan-turing-institute.github.io/rse-course/html/>  
+#   Git branching workflows, collaboration patterns, and Python introduction content adapted from this course.
+# 
+# - **Research Software Engineering with Python** by Damien Irving, Kate Hertweck,
+#   Luke Johnston, Joel Ostblom, Charlotte Wickham, and Greg Wilson (2022)
+#   <https://third-bit.com/py-rse/>
+#   Python fundamentals and best practices informed by this comprehensive
+#   textbook.
+# 
+# ### Platform Documentation
+# 
+# - **GitHub Documentation**  
+#   <https://docs.github.com/>  
+#   - Pull Requests: <https://docs.github.com/en/pull-requests>
+#   - Forking Workflow: <https://docs.github.com/en/get-started/quickstart/fork-a-repo>
+#   - Branch Protection:
+#     <https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches>
+#   - GitHub Flow: <https://docs.github.com/en/get-started/quickstart/github-flow>
+# 
+# - **GitLab Documentation**  
+#   <https://docs.gitlab.com/>  
+#   - Merge Requests: <https://docs.gitlab.com/ee/user/project/merge_requests/>
+#   - GitLab Flow: <https://docs.gitlab.com/ee/topics/gitlab_flow.html>
+#   - Forking Workflow: <https://docs.gitlab.com/ee/user/project/repository/forking_workflow.html>
+# 
+# ### Additional Resources
+# 
+# - **Pro Git Book** by Scott Chacon and Ben Straub  
+#   <https://git-scm.com/book/en/v2>  
+#   Advanced Git concepts including branching, merging, and conflict resolution.
+# 
+# - **Software Carpentry: Version Control with Git**  
+#   <https://swcarpentry.github.io/git-novice/>  
+#   Collaborative Git workflows and best practices.
+# 
+# - **Python Documentation**  
+#   <https://docs.python.org/3/>  
+#   Official Python language reference for syntax and built-in types.
+# 
+# ### Notes
+# 
+# The lecture structure, examples, and exercises have been developed specifically for this course,
+# drawing on best practices from the sources above. Platform-specific content (GitHub/GitLab)
+# references official documentation to ensure accuracy.
+
+# %% [markdown]
 # ### Next Steps
 # 
 # In Lecture 3, we'll dive deeper into Python with:

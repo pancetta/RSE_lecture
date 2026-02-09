@@ -293,6 +293,56 @@ The repository includes a continuous integration (CI) pipeline that automaticall
 
 All pull requests must pass the CI checks before merging.
 
+## Acknowledgements
+
+This course has been developed drawing on best practices and content from several excellent resources in the Research Software Engineering community:
+
+### Primary Influences
+
+- **Research Software Engineering with Python** by The Alan Turing Institute  
+  <https://alan-turing-institute.github.io/rse-course/html/>  
+  This comprehensive RSE course has significantly influenced our pedagogical approach, course structure, and content organization.
+
+- **Research Software Engineering with Python** by Damien Irving, Kate Hertweck, Luke Johnston, Joel Ostblom, Charlotte Wickham, and Greg Wilson (2022)  
+  <https://third-bit.com/py-rse/>  
+  This excellent textbook informed our treatment of research software engineering principles, testing practices, and project organization.
+
+### Platform Documentation
+
+Our lectures on Git, GitHub, GitLab, and CI/CD reference and build upon official documentation:
+
+- **Git Documentation & Pro Git Book** by Scott Chacon and Ben Straub  
+  <https://git-scm.com/book/en/v2>
+
+- **GitHub Documentation**  
+  <https://docs.github.com/>
+
+- **GitLab Documentation**  
+  <https://docs.gitlab.com/>
+
+### Scientific Python Ecosystem
+
+Our coverage of Python libraries builds on official documentation and community resources:
+
+- **NumPy Documentation**: <https://numpy.org/doc/>
+- **Matplotlib Documentation**: <https://matplotlib.org/stable/>
+- **pytest Documentation**: <https://docs.pytest.org/>
+- **Python Documentation**: <https://docs.python.org/3/>
+
+### Additional Resources
+
+- **Software Carpentry**: Shell and Git lessons  
+  <https://software-carpentry.org/>
+
+- **Society of Research Software Engineering**  
+  <https://society-rse.org/>
+
+### Notes
+
+While this course draws inspiration and ideas from these sources, all lecture content, examples, and exercises have been developed independently for this specific educational context. Each lecture includes detailed acknowledgements and references to specific sources used.
+
+For complete bibliographic information, see [`references.bib`](references.bib).
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

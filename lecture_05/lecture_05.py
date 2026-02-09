@@ -1044,7 +1044,64 @@ print("\n🎉 All tests passed! Code is fully tested and bug-free!")
 # - Automate testing in CI
 # 
 # Don't let an unfamiliar language stop you from testing. Every language has tools—find them, learn them, use them!
+
+# %% [markdown]
+# ## Acknowledgements and References
 # 
+# This lecture draws on established testing practices and real-world lessons from research software:
+# 
+# ### Primary Sources
+# 
+# - **Research Software Engineering with Python** by The Alan Turing Institute  
+#   <https://alan-turing-institute.github.io/rse-course/html/>  
+#   Testing philosophy, pytest examples, and test-driven development approaches adapted from this course.
+# 
+# - **Research Software Engineering with Python** by Damien Irving, Kate Hertweck,
+#   Luke Johnston, Joel Ostblom, Charlotte Wickham, and Greg Wilson (2022)
+#   <https://third-bit.com/py-rse/>
+#   Chapter on "Testing Software" provided foundational concepts for defensive
+#   programming and test organization.
+# 
+# ### Testing Framework Documentation
+# 
+# - **pytest Documentation**  
+#   <https://docs.pytest.org/>  
+#   Official pytest framework documentation for test writing, fixtures, and coverage.
+#   - Getting Started: <https://docs.pytest.org/en/stable/getting-started.html>
+#   - Fixtures: <https://docs.pytest.org/en/stable/fixture.html>
+#   - Parametrize: <https://docs.pytest.org/en/stable/parametrize.html>
+# 
+# - **pytest-cov Plugin**  
+#   <https://pytest-cov.readthedocs.io/>  
+#   For test coverage measurement and reporting.
+# 
+# ### Inspirational Sources
+# 
+# The "cautionary tale" in this lecture is inspired by real research software failures documented in:
+# - Merali, Z. (2010). "Computational science: Error, why scientific programming does not compute". Nature 467, 775-777.
+# - Soergel, D.A. (2015). "Rampant software errors may undermine scientific results". F1000Research.
+# 
+# Notable real incidents that motivated our approach:
+# - Geoffrey Chang protein structure retractions (2006)
+# - Reinhart-Rogoff Excel error in economics (2013)
+# - Mars Climate Orbiter loss due to unit conversion (1999)
+# 
+# ### Additional References
+# 
+# - **Software Carpentry: Testing**  
+#   Testing principles and practices for scientific computing.
+# 
+# - **Python Documentation: unittest**  
+#   <https://docs.python.org/3/library/unittest.html>  
+#   Python's built-in testing framework (alternative to pytest).
+# 
+# ### Notes
+# 
+# While inspired by real research software failures, the specific "temperature conversion disaster" story
+# is a composite fictional narrative created for pedagogical purposes. All code examples and tests
+# were developed specifically for this lecture to illustrate testing concepts in research contexts.
+
+# %% [markdown]
 # ### Next Steps
 # 
 # In **Lecture 6**, we'll learn how to:
