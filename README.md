@@ -8,9 +8,9 @@ Welcome to the Research Software Engineering (RSE) lecture series! This reposito
 
 This lecture series covers fundamental concepts and practices in Research Software Engineering, including:
 
-- **Lecture 1**: Python Basics - Command Line & Introduction to Python (~90 minutes)
-- **Lecture 2**: Advanced Python & Working with Libraries (~90 minutes)
-- **Lecture 3**: Testing and Continuous Integration
+- **Lecture 1**: Introduction to Research Software Engineering (~90 minutes)
+- **Lecture 2**: Python Basics - Command Line & Introduction to Python (~90 minutes)
+- **Lecture 3**: Advanced Python & Working with Libraries (~90 minutes)
 - **Lecture 4**: Documentation and Code Quality
 
 ## Structure
@@ -59,9 +59,9 @@ micromamba activate rse_lecture
 
 **Note:** 
 - The main `environment.yml` contains all common dependencies (Python, Jupyter, NumPy, etc.). 
-- Lectures 1 and 2 focus on basic and advanced Python, using primarily the standard library and NumPy.
-- Lecture 3 may have additional dependencies if needed.
-- Lecture 4 covers documentation tools.
+- Lecture 1 introduces the course and essential tools (shell, git, GitHub).
+- Lectures 2 and 3 focus on basic and advanced Python, using primarily the standard library and NumPy.
+- Lecture 4 covers documentation and code quality tools.
 
 ## Usage
 

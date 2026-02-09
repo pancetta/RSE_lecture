@@ -1,40 +1,35 @@
-# Lecture 1: Python Basics - Command Line & Introduction to Python
+# Lecture 1: Introduction to Research Software Engineering
 
 ## Overview
-This lecture provides a foundation for Research Software Engineering by introducing basic command 
-line usage and fundamental Python programming concepts. This is not a comprehensive Python course, 
-but rather focuses on the essential skills needed for writing research software.
+This introductory lecture provides an overview of Research Software Engineering (RSE) and sets the stage for the entire course. You'll learn what RSE is, why it's important for modern research, and how to get started with this course.
 
 **Duration**: ~90 minutes
 
 ## Topics Covered
-- Working with the command line
-- Python fundamentals (variables, data types, collections)
-- Control flow (if statements, loops)
-- Functions and documentation
-- Creating command-line scripts
-- Using argparse for command-line arguments
-- Best practices for research software
+- What is Research Software Engineering (RSE)?
+- Why RSE is important for modern research
+- Structure and content of this course
+- How to access and install course materials
+- Introduction to essential tools:
+  - Working with the shell/command line
+  - Version control with Git
+  - Collaboration with GitHub
 
 ## Files
 - `lecture_01.py` - Main lecture content in Jupytext format
 
-## Additional Dependencies
-This lecture uses only the base dependencies (no additional packages required beyond Python standard library)
-
 ## Running the Lecture
 
-1. Create and activate the environment:
+1. Create and activate the base environment:
 ```bash
 cd /path/to/RSE_lecture
-make install-lecture1
+make install
 micromamba activate rse_lecture
 ```
 
 Or manually:
 ```bash
 micromamba env create -f environment.yml
-micromamba install -n rse_lecture -c conda-forge matplotlib>=3.5.0
 micromamba activate rse_lecture
 ```
 
