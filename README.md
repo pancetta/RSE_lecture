@@ -45,7 +45,7 @@ cd RSE_lecture
 
 3. Create and activate the environment:
 
-**For base environment (Lectures 1, 3, 4):**
+**For base environment (Lectures 1, 2, 3):**
 ```bash
 micromamba env create -f environment.yml
 micromamba activate rse_lecture
@@ -57,15 +57,15 @@ make install
 micromamba activate rse_lecture
 ```
 
-**For Lecture 2 (includes matplotlib):**
+**For Lecture 4 (includes matplotlib):**
 ```bash
-micromamba env create -f lecture_02/environment.yml
+micromamba env create -f lecture_04/environment.yml
 micromamba activate rse_lecture
 ```
 
 Or using the Makefile:
 ```bash
-make install-lecture2
+make install-lecture4
 micromamba activate rse_lecture
 ```
 
@@ -86,9 +86,9 @@ micromamba activate rse_lecture
 - Lecture-specific `environment.yml` files in lecture directories contain additional dependencies.
 - The `environment-dev.yml` includes all dependencies plus development tools (flake8, nbconvert).
 - Lecture 1 introduces the course and essential tools (shell, git, GitHub).
-- Lecture 2 introduces Python basics and visualization with matplotlib.
+- Lecture 2 introduces Python basics (uses standard library only).
 - Lecture 3 focuses on advanced Python using the standard library.
-- Lecture 4 covers NumPy, matplotlib, and project structure.
+- Lecture 4 covers NumPy, matplotlib, and project structure (requires matplotlib).
 
 ## Usage
 
@@ -176,10 +176,10 @@ This repository uses a multi-environment approach for clean dependency separatio
 ### Environment Files
 
 - **`environment.yml`**: Base environment with core dependencies (Python, Jupyter, NumPy, Jupyter Book)
-  - Used by Lectures 1, 3, and 4
+  - Used by Lectures 1, 2, and 3
   
 - **`lecture_XX/environment.yml`**: Lecture-specific environments with additional dependencies
-  - Example: `lecture_02/environment.yml` includes matplotlib for visualization examples
+  - Example: `lecture_04/environment.yml` includes matplotlib for visualization and plotting
   
 - **`environment-dev.yml`**: Development environment with all dependencies plus dev tools
   - Includes flake8 for linting, nbconvert for notebook execution
