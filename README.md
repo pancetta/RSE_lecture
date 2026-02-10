@@ -17,6 +17,7 @@ This lecture series covers fundamental concepts and practices in Research Softwa
 - **Lecture 7**: Debugging and Profiling Research Software (~90 minutes)
 - **Lecture 8**: Documenting and Publishing Research Software (~90 minutes)
 - **Lecture 9**: Containerization and Reproducibility (~90 minutes)
+- **Lecture 10**: Collaboration and Code Review in Research Software (~90 minutes)
 
 ## Structure
 
@@ -81,6 +82,9 @@ make install-lecture8
 
 # Lecture 9
 make install-lecture9
+
+# Lecture 10
+make install-lecture10
 ```
 
 Then activate:
@@ -119,6 +123,7 @@ micromamba activate rse_lecture
 - Lecture 7 has no additional dependencies (uses base only for pdb, logging, cProfile).
 - Lecture 8 has no additional dependencies (documentation tools covered conceptually).
 - Lecture 9 has no additional dependencies (containerization tools covered conceptually).
+- Lecture 10 has no additional dependencies (collaboration tools covered conceptually).
 - The `environment-dev.yml` includes all dependencies plus development tools (flake8, nbconvert).
 - Installation pattern is **harmonized**: all lectures follow the same two-step process (base + additions).
 - Lecture 1 introduces the course and essential tools (shell, git, GitHub).
@@ -130,6 +135,7 @@ micromamba activate rse_lecture
 - Lecture 7 covers debugging with pdb and profiling with cProfile.
 - Lecture 8 covers documenting and publishing research software (Sphinx, PyPI, Zenodo).
 - Lecture 9 covers containerization and reproducibility (Docker, Podman, Apptainer).
+- Lecture 10 covers collaboration and code review in research software teams.
 
 ## Usage
 

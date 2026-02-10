@@ -39,6 +39,8 @@ project:
       title: 'Lecture 8: Documentation and Publishing'
     - file: lecture_09/lecture_09.ipynb
       title: 'Lecture 9: Containerization and Reproducibility'
+    - file: lecture_10/lecture_10.ipynb
+      title: 'Lecture 10: Collaboration and Code Review'
 site:
   options:
     logo: ''
