@@ -73,3 +73,37 @@ jobs:
       run: |
         make clean
       shell: bash -el {0}
+  
+  container-demo:
+    name: Container Demo (Lecture 9)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Build Docker container
+      run: |
+        cd lecture_09/container-demo
+        echo "Building container image..."
+        docker build -t rse-lecture9-demo:test .
+        echo "✅ Container built successfully"
+    
+    - name: Run containerized analysis
+      run: |
+        echo "Running containerized data analysis..."
+        docker run --rm rse-lecture9-demo:test
+        echo "✅ Container executed successfully"
+    
+    - name: Verify container best practices
+      run: |
+        echo "Checking container metadata..."
+        docker inspect rse-lecture9-demo:test | grep -q "researcher"
+        echo "✅ Non-root user verified"
+        
+        echo "Checking image size..."
+        SIZE=$(docker images rse-lecture9-demo:test --format "{{.Size}}")
+        echo "Container size: $SIZE"
+        echo "✅ Container demo completed successfully"
