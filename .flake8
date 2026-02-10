@@ -19,7 +19,9 @@ ignore =
     # E226: missing whitespace around operator (style preference)
     E226,
     # F541: f-string without placeholders (style preference)
-    F541
+    F541,
+    # W503: line break before binary operator (deprecated, conflicts with PEP 8 update)
+    W503
 exclude =
     .git,
     __pycache__,
