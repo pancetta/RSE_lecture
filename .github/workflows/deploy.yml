@@ -1,8 +1,11 @@
 name: Deploy Jupyter Book
 
 on:
-  # Trigger on push to main branch
-  push:
+  # Trigger after CI workflow completes successfully
+  workflow_run:
+    workflows: ["CI - Lecture Scripts"]
+    types:
+      - completed
     branches:
       - main
   # Allow manual trigger
@@ -22,9 +25,13 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    # Only run if CI workflow succeeded or if manually triggered
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
 
       - name: Setup Micromamba
         uses: mamba-org/setup-micromamba@v1
