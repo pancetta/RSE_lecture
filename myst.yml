@@ -41,6 +41,8 @@ project:
       title: 'Lecture 9: Containerization and Reproducibility'
     - file: lecture_10/lecture_10.ipynb
       title: 'Lecture 10: Collaboration and Code Review'
+    - file: lecture_11/lecture_11.ipynb
+      title: 'Lecture 11: Working with Research Data'
 site:
   options:
     logo: ''
