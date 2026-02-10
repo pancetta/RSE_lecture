@@ -67,7 +67,9 @@
 # %% [markdown]
 # ### Branching Workflow Example
 # 
-# Let's walk through a typical workflow:
+# Let's walk through a typical workflow. This is the pattern you'll use countless times when 
+# developing software: create a branch for your work, make your changes, and then merge them back. 
+# Working on a branch keeps your main code stable while you experiment or develop new features.
 # 
 # ```bash
 # # Start on main branch
@@ -91,15 +93,23 @@
 # # View your branch history
 # git log --oneline --graph
 # ```
+# 
+# **Pro tip**: Use descriptive branch names like `fix-data-loading-bug` or `add-visualization-feature` 
+# rather than generic names like `test` or `new-branch`. This makes it easier to remember what each 
+# branch is for, especially when you're working on multiple features simultaneously.
 
 # %% [markdown]
 # ### Merging Branches
 # 
-# Once your feature is complete, merge it back into the main branch.
+# Once your feature is complete and tested, merge it back into the main branch. Git provides 
+# different types of merges depending on the situation. Understanding these helps you maintain 
+# a clean, readable Git history.
 # 
 # #### Fast-Forward Merge
 # 
-# When main hasn't changed since you branched:
+# When main hasn't changed since you branched, Git can do a "fast-forward" merge. This simply 
+# moves the main branch pointer forward to include your commits—no merge commit is created. 
+# It's the simplest and cleanest type of merge.
 # 
 # ```bash
 # # Switch to main
@@ -108,13 +118,15 @@
 # # Merge feature branch
 # git merge add-statistics
 # 
-# # Delete the feature branch (optional)
+# # Delete the feature branch (optional, but keeps things tidy)
 # git branch -d add-statistics
 # ```
 # 
 # #### Three-Way Merge
 # 
-# When both branches have new commits:
+# When both branches have new commits (for example, if someone else pushed changes to main while 
+# you were working on your feature), Git creates a special "merge commit" that combines the changes. 
+# This preserves the full history of both branches.
 # 
 # ```bash
 # # Git creates a merge commit
@@ -124,11 +136,18 @@
 # # Git will open an editor for merge commit message
 # # Save and close to complete the merge
 # ```
+# 
+# **When does this happen?** This is common in collaborative projects. While you're working on your 
+# feature branch, your colleague merges their changes into main. When you go to merge, Git needs to 
+# reconcile both sets of changes.
 
 # %% [markdown]
 # ### Handling Merge Conflicts
 # 
-# Conflicts occur when the same lines are changed in both branches.
+# Conflicts occur when the same lines are changed in both branches. This is actually quite common 
+# and nothing to be afraid of! Git is smart enough to merge most changes automatically, but when 
+# two people edit the exact same lines, Git needs you to decide which version to keep (or how to 
+# combine them).
 # 
 # ```bash
 # # When a conflict occurs
@@ -157,16 +176,35 @@
 # # Complete the merge
 # git commit -m "Merge feature-branch, resolved conflicts"
 # ```
+# 
+# **How to resolve conflicts**: Open the file and look for the `<<<<<<<`, `=======`, and `>>>>>>>` 
+# markers. The section between `<<<<<<< HEAD` and `=======` is your current branch's version. The 
+# section between `=======` and `>>>>>>> feature-branch` is the incoming branch's version. Delete 
+# the markers and edit the code to include the changes you want to keep. Sometimes you'll keep one 
+# version, sometimes the other, and sometimes you'll combine both. After editing, save the file, 
+# stage it with `git add`, and complete the merge with `git commit`.
+# 
+# **Common mistake**: Forgetting to remove the conflict markers (`<<<<<<<`, etc.) from your code. 
+# If you leave them in, your code won't run! Always check that the final version is valid code 
+# before committing.
 
 # %% [markdown]
 # ### The .gitignore File
 # 
-# Not all files should be tracked by Git. Use `.gitignore` to exclude:
-# - Build artifacts and compiled code
-# - Dependencies (like `node_modules/`, `venv/`)
-# - Temporary files
-# - Sensitive data (passwords, API keys)
-# - Large data files
+# Not all files should be tracked by Git. Some files are generated automatically (like compiled code), 
+# some are too large (like data files), and some contain sensitive information (like API keys). The 
+# `.gitignore` file tells Git which files to ignore completely.
+# 
+# Use `.gitignore` to exclude:
+# - **Build artifacts and compiled code**: These are regenerated from source code
+# - **Dependencies**: Like `node_modules/` or `venv/` – these can be recreated from requirements files
+# - **Temporary files**: Cache files, log files, etc.
+# - **Sensitive data**: Passwords, API keys, tokens – NEVER commit these!
+# - **Large data files**: Git isn't designed for large binary files; use Git LFS or store separately
+# 
+# **Why this matters**: Including generated files in Git creates unnecessary noise in your history 
+# and can cause merge conflicts when different machines generate slightly different versions. Worse, 
+# accidentally committing API keys or passwords can be a serious security breach.
 # 
 # #### Common .gitignore Patterns
 # 
@@ -431,20 +469,30 @@
 # %% [markdown]
 # ## Part 3: Introduction to Python
 # 
-# Python is a versatile, beginner-friendly programming language widely used in research.
+# Python is a versatile, beginner-friendly programming language widely used in research. Now that 
+# we've covered version control, it's time to start writing code! This section introduces Python 
+# fundamentals that you'll build on in later lectures.
 # 
 # ### Why Python for Research?
 # 
-# - **Easy to learn**: Clear, readable syntax
-# - **Powerful libraries**: NumPy, pandas, matplotlib, scikit-learn
-# - **Interactive**: Jupyter notebooks for exploration
-# - **Community**: Large, helpful community
-# - **Cross-platform**: Works on Windows, macOS, Linux
+# - **Easy to learn**: Clear, readable syntax that resembles English
+# - **Powerful libraries**: NumPy for numerical computing, pandas for data analysis, matplotlib for 
+#   visualization, scikit-learn for machine learning, and thousands more
+# - **Interactive**: Jupyter notebooks let you explore data and test ideas interactively
+# - **Community**: Large, helpful community with extensive documentation and Stack Overflow answers
+# - **Cross-platform**: Write once, run anywhere—Windows, macOS, or Linux
+# - **Research-ready**: Used across all scientific domains from genomics to astronomy to economics
+# 
+# **Fun fact**: Python is named after Monty Python's Flying Circus, not the snake! The language was 
+# designed to be fun to use, and you'll often see Monty Python references in Python documentation.
 
 # %% [markdown]
 # ### Python Basics: Variables and Data Types
 # 
-# Variables store data. Python is dynamically typed - you don't declare types.
+# Variables store data. Unlike some languages (like C++ or Java), Python is dynamically typed—
+# you don't need to declare what type of data a variable holds. Python figures it out automatically 
+# based on the value you assign. This makes Python code shorter and easier to read, though you need 
+# to be careful about what types you're working with.
 
 # %%
 # Basic data types
@@ -468,7 +516,15 @@ print(f"Type of temperature: {type(temperature)}")
 print(f"Type of is_complete: {type(is_complete)}")
 
 # %% [markdown]
+# **Understanding types**: Even though you don't declare types, Python still keeps track of them 
+# internally. This matters when you try to combine values—you can't add a string to a number 
+# directly. Use the `type()` function when debugging to check what type a variable actually is.
+
+# %% [markdown]
 # ### Working with Strings
+# 
+# Strings are sequences of characters—perfect for text data, DNA sequences, file paths, and more. 
+# Python provides powerful string operations that you'll use constantly in research software.
 
 # %%
 # String operations
@@ -486,9 +542,18 @@ print(f"Count of A: {sequence.count('A')}")
 print(f"Replace A with N: {sequence.replace('A', 'N')}")
 
 # %% [markdown]
+# **String indexing**: Python uses zero-based indexing, meaning the first character is at position 
+# 0, not 1. Negative indices count from the end: -1 is the last character, -2 is second-to-last, 
+# etc. The slicing notation `[start:end]` gives you characters from `start` up to (but not including) 
+# `end`. The special slice `[::-1]` reverses a string—useful for getting the reverse complement of 
+# DNA sequences!
+
+# %% [markdown]
 # ### Lists: Ordered Collections
 # 
-# Lists store multiple values in order. They are mutable (can be changed).
+# Lists store multiple values in order. They are mutable (can be changed after creation), making 
+# them perfect for collecting measurements, storing sequences of results, or building up data as 
+# your program runs. Lists are one of Python's most versatile and commonly-used data structures.
 
 # %%
 # Creating and using lists
@@ -504,6 +569,12 @@ print(f"After appending: {measurements}")
 
 measurements[0] = 23.6
 print(f"After modification: {measurements}")
+
+# %% [markdown]
+# **Lists are mutable**: Unlike strings, which can't be changed after creation (immutable), lists 
+# can be modified. You can add items with `.append()`, remove items with `.remove()`, or change 
+# individual elements by index. This mutability is powerful but requires care—if you pass a list 
+# to a function and the function modifies it, the original list changes too!
 
 # %%
 # List operations
