@@ -35,14 +35,19 @@ Runs on every push and pull request to main/master branches.
 Deploys the lecture website to GitHub Pages.
 
 **What it does:**
-1. Converts lectures to notebooks
-2. Executes notebooks to generate plots
-3. Builds static HTML with Jupyter Book
-4. Deploys to GitHub Pages
+1. Waits for CI workflow to complete successfully
+2. Converts lectures to notebooks
+3. Executes notebooks to generate plots
+4. Builds static HTML with Jupyter Book
+5. Deploys to GitHub Pages
 
 **Trigger:** 
-- Push to main branch
+- Automatically after CI workflow completes successfully on main branch
 - Manual workflow dispatch
+
+**Dependencies:**
+- Only runs after "CI - Lecture Scripts" workflow completes successfully
+- This ensures deployment only happens when all tests pass
 
 ---
 
