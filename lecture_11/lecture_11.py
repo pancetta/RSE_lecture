@@ -297,10 +297,16 @@ print(json.dumps(fair_data["metadata"], indent=2)[:500] + "...")
 # %%
 import h5py
 import numpy as np
+import tempfile
+import os
 
 # Create a realistic climate dataset
 # Dimensions: time (365 days), latitude (180), longitude (360)
 np.random.seed(42)
+
+# Use cross-platform temporary directory
+temp_dir = tempfile.gettempdir()
+hdf5_file = os.path.join(temp_dir, 'climate_simulation.h5')
 
 # Simulate temperature data (in Kelvin, typical range 200-320K)
 time_steps = 365
@@ -333,7 +339,7 @@ print(f"Memory size: {temperature.nbytes / 1e6:.1f} MB")
 
 # %%
 # Create HDF5 file with comprehensive metadata
-with h5py.File('/tmp/climate_simulation.h5', 'w') as f:
+with h5py.File(hdf5_file, 'w') as f:
     # Root-level metadata (FAIR principles)
     f.attrs['title'] = 'Climate Model Simulation - Temperature Data'
     f.attrs['institution'] = 'Research Software Engineering Course'
@@ -376,20 +382,19 @@ with h5py.File('/tmp/climate_simulation.h5', 'w') as f:
     coord_group['latitude'].attrs['units'] = 'degrees_north'
     coord_group['longitude'].attrs['units'] = 'degrees_east'
 
-print("✅ HDF5 file created: /tmp/climate_simulation.h5")
+print(f"✅ HDF5 file created: {hdf5_file}")
 
 # Check the file size
-import os
-file_size = os.path.getsize('/tmp/climate_simulation.h5') / 1e6
+file_size = os.path.getsize(hdf5_file) / 1e6
 print(f"File size: {file_size:.1f} MB (compressed from {temperature.nbytes/1e6:.1f} MB)")
-print(f"Compression ratio: {temperature.nbytes / os.path.getsize('/tmp/climate_simulation.h5'):.1f}x")
+print(f"Compression ratio: {temperature.nbytes / os.path.getsize(hdf5_file):.1f}x")
 
 # %% [markdown]
 # ### Reading and Working with HDF5 Data
 
 # %%
 # Read the HDF5 file
-with h5py.File('/tmp/climate_simulation.h5', 'r') as f:
+with h5py.File(hdf5_file, 'r') as f:
     # Explore the file structure
     print("File structure:")
     print(f"  Root attributes: {list(f.attrs.keys())}")
@@ -610,13 +615,18 @@ nc.close()
 import sqlite3
 import json
 import os
+import tempfile
+
+# Use cross-platform temporary directory
+temp_dir = tempfile.gettempdir()
+db_file = os.path.join(temp_dir, 'materials_experiments.db')
 
 # Remove old database if it exists to ensure clean run
-if os.path.exists('/tmp/materials_experiments.db'):
-    os.remove('/tmp/materials_experiments.db')
+if os.path.exists(db_file):
+    os.remove(db_file)
 
 # Create database
-conn = sqlite3.connect('/tmp/materials_experiments.db')
+conn = sqlite3.connect(db_file)
 cursor = conn.cursor()
 
 # Create tables with proper schema
