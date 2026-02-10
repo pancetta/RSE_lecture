@@ -2,9 +2,9 @@ version: 1
 project:
   title: Research Software Engineering Lectures
   authors:
-    - name: RSE Lecture Team
-  copyright: '2024'
-  github: pancetta/RSE_lecture
+    - name: [Robert Speck](https://www.fz-juelich.de/profile/speck_r), Jülich Supercomputing Centre, Forschungszentrum Jülich GmbH, 
+  copyright: '2026'
+  github: pancetta/RSE_course_JuRSE
   exclude:
     - .github/**
     - _build/**
