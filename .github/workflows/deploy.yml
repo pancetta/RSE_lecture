@@ -60,7 +60,7 @@ jobs:
 
       - name: Build static HTML for GitHub Pages
         env:
-          BASE_URL: /RSE_lecture
+          BASE_URL: /RSE_course_JuRSE
         run: |
           jupyter-book build --html
         shell: bash -el {0}

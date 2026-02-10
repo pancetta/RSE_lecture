@@ -1,6 +1,6 @@
 # Research Software Engineering Lectures
 
-[![CI - Lecture Scripts](https://github.com/pancetta/RSE_lecture/workflows/CI%20-%20Lecture%20Scripts/badge.svg)](https://github.com/pancetta/RSE_lecture/actions)
+[![CI - Lecture Scripts](https://github.com/pancetta/RSE_course_JuRSE/workflows/CI%20-%20Lecture%20Scripts/badge.svg)](https://github.com/pancetta/RSE_course_JuRSE/actions)
 
 Welcome to the Research Software Engineering (RSE) lecture series! This repository contains materials for learning best practices in developing high-quality research software.
 
@@ -39,8 +39,8 @@ Each lecture is organized in its own directory and consists of:
 
 1. Clone this repository:
 ```bash
-git clone https://github.com/pancetta/RSE_lecture.git
-cd RSE_lecture
+git clone https://github.com/pancetta/RSE_course_JuRSE.git
+cd RSE_course_JuRSE
 ```
 
 2. Install [micromamba](https://mamba.readthedocs.io/en/latest/installation/micromamba-installation.html) if you haven't already.

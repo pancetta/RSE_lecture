@@ -42,7 +42,7 @@ micromamba activate rse_lecture
 ### Weekly Routine (5 minutes)
 
 1. **Check for automated PRs**
-   - Go to: https://github.com/pancetta/RSE_lecture/pulls
+   - Go to: https://github.com/pancetta/RSE_course_JuRSE/pulls
    - Look for: "chore: Update conda dependencies"
 
 2. **If PR exists:**
