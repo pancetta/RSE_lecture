@@ -489,8 +489,9 @@ def process_climate_data(station_data, quality_threshold=0.8):
             data['quality'] = 1.0
         
         if data['quality'] < quality_threshold:
-            logger.warning(f"Station {station_id} rejected: quality {data['quality']:.2f} "
-                          f"below threshold {quality_threshold:.2f}")
+            logger.warning(
+                f"Station {station_id} rejected: quality {data['quality']:.2f} "
+                f"below threshold {quality_threshold:.2f}")
             rejected_stations.append(station_id)
             continue
         
@@ -951,8 +952,8 @@ def naive_correlation_analysis(data):
             mean_i = sum(temps_i) / len(temps_i)
             mean_j = sum(temps_j) / len(temps_j)
             
-            cov = sum((temps_i[k] - mean_i) * (temps_j[k] - mean_j) 
-                     for k in range(len(temps_i)))
+            cov = sum((temps_i[k] - mean_i) * (temps_j[k] - mean_j)
+                      for k in range(len(temps_i)))
             
             var_i = sum((t - mean_i) ** 2 for t in temps_i)
             var_j = sum((t - mean_j) ** 2 for t in temps_j)
@@ -1035,9 +1036,9 @@ def smart_correlation_analysis(data):
             sj = stats[station_j]
             
             # Calculate covariance using pre-computed statistics
-            cov = sum((si['temps'][k] - si['mean']) * 
-                     (sj['temps'][k] - sj['mean']) 
-                     for k in range(si['n']))
+            cov = sum((si['temps'][k] - si['mean']) *
+                      (sj['temps'][k] - sj['mean'])
+                      for k in range(si['n']))
             
             if si['variance'] > 0 and sj['variance'] > 0:
                 corr = cov / (si['variance'] * sj['variance']) ** 0.5
@@ -1294,7 +1295,8 @@ print(f"(Analyzed fewer pairs by focusing on nearby stations)")
 # - **profile viewer** - Visual profiling results
 # - **tic/toc** - Simple timing measurements
 # 
-# **What to look for:** MATLAB's GUI makes debugging very visual - you can click to set breakpoints and see variables in workspace.
+# **What to look for:** MATLAB's GUI makes debugging very visual - you can
+# click to set breakpoints and see variables in workspace.
 # 
 # ### C/C++
 # 
@@ -1310,7 +1312,8 @@ print(f"(Analyzed fewer pairs by focusing on nearby stations)")
 # - **Valgrind** with **callgrind** - Call graph profiling
 # - **Intel VTune** - Advanced profiling (commercial)
 # 
-# **What to look for:** Compiled languages need special compilation flags for debugging (-g) and profiling (-pg). Memory errors are common - use valgrind!
+# **What to look for:** Compiled languages need special compilation flags for
+# debugging (-g) and profiling (-pg). Memory errors are common - use valgrind!
 # 
 # ### Julia
 # 
@@ -1371,12 +1374,14 @@ print(f"(Analyzed fewer pairs by focusing on nearby stations)")
 # 5. **Memory checkers** - For compiled languages (valgrind, sanitizers)
 # 6. **IDE integration** - Visual debugging and profiling
 # 
-# **Key principle:** The concepts (systematic debugging, logging, profiling before optimizing) are universal - only the tools change!
+# **Key principle:** The concepts (systematic debugging, logging, profiling
+# before optimizing) are universal - only the tools change!
 
 # %% [markdown]
 # ## Acknowledgements and References
 # 
-# This lecture draws on established debugging and profiling practices from software engineering and research software development:
+# This lecture draws on established debugging and profiling practices from
+# software engineering and research software development:
 # 
 # ### Primary Sources
 # 
