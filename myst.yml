@@ -37,6 +37,8 @@ project:
       title: 'Lecture 7: Debugging and Profiling'
     - file: lecture_08/lecture_08.ipynb
       title: 'Lecture 8: Documentation and Publishing'
+    - file: lecture_09/lecture_09.ipynb
+      title: 'Lecture 9: Containerization and Reproducibility'
 site:
   options:
     logo: ''
