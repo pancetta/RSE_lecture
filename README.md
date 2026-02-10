@@ -15,6 +15,7 @@ This lecture series covers fundamental concepts and practices in Research Softwa
 - **Lecture 5**: Testing Research Software (~90 minutes)
 - **Lecture 6**: Automation and Continuous Integration (~90 minutes)
 - **Lecture 7**: Debugging and Profiling Research Software (~90 minutes)
+- **Lecture 8**: Documenting and Publishing Research Software (~90 minutes)
 
 ## Structure
 
@@ -73,6 +74,9 @@ make install-lecture6
 
 # Lecture 7
 make install-lecture7
+
+# Lecture 8
+make install-lecture8
 ```
 
 Then activate:
@@ -109,6 +113,7 @@ micromamba activate rse_lecture
 - Lecture 5 adds pytest and pytest-cov for testing.
 - Lecture 6 has no additional dependencies (uses base only).
 - Lecture 7 has no additional dependencies (uses base only for pdb, logging, cProfile).
+- Lecture 8 has no additional dependencies (documentation tools covered conceptually).
 - The `environment-dev.yml` includes all dependencies plus development tools (flake8, nbconvert).
 - Installation pattern is **harmonized**: all lectures follow the same two-step process (base + additions).
 - Lecture 1 introduces the course and essential tools (shell, git, GitHub).
@@ -118,6 +123,7 @@ micromamba activate rse_lecture
 - Lecture 5 covers testing with pytest and achieving full test coverage.
 - Lecture 6 covers automation and continuous integration with GitHub Actions and GitLab CI.
 - Lecture 7 covers debugging with pdb and profiling with cProfile.
+- Lecture 8 covers documenting and publishing research software (Sphinx, PyPI, Zenodo).
 
 ## Usage
 
