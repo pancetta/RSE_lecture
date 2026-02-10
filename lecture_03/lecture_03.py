@@ -294,7 +294,7 @@ print("Error examples shown as comments to prevent execution")
 # %% [markdown]
 # **Understanding these errors**:
 # - **TypeError**: You tried to perform an operation on incompatible types (like adding a string to a number)
-# - **ValueError**: The value is the wrong type but has the wrong value (like converting "hello" to an integer)
+# - **ValueError**: The type is correct but the value is wrong (like converting "hello" to an integer)
 # - **KeyError**: You tried to access a dictionary key that doesn't exist
 # - **IndexError**: You tried to access a list element that doesn't exist
 # - **FileNotFoundError**: You tried to open a file that doesn't exist
