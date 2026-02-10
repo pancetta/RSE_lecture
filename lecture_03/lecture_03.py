@@ -256,9 +256,17 @@ print(calculate_statistics.__doc__)
 # %% [markdown]
 # ## Part 2: Error Handling
 # 
-# Errors are inevitable. Good programs handle them gracefully.
+# Errors are inevitable in programming—even experienced developers encounter them daily. The 
+# difference between beginner and professional code is how errors are handled. Good programs 
+# anticipate what can go wrong and handle errors gracefully, providing useful feedback instead 
+# of crashing. This is especially important in research software, where a crash during a long 
+# experiment can waste hours or days of computation time.
 # 
 # ### Common Error Types
+# 
+# Python has many built-in exception types. Understanding the most common ones helps you write 
+# better error handling code and debug problems faster. Each exception type represents a specific 
+# kind of problem.
 
 # %%
 # Examples of common errors (commented to prevent execution)
@@ -284,9 +292,29 @@ print(calculate_statistics.__doc__)
 print("Error examples shown as comments to prevent execution")
 
 # %% [markdown]
+# **Understanding these errors**:
+# - **TypeError**: You tried to perform an operation on incompatible types (like adding a string to a number)
+# - **ValueError**: The value is the wrong type but has the wrong value (like converting "hello" to an integer)
+# - **KeyError**: You tried to access a dictionary key that doesn't exist
+# - **IndexError**: You tried to access a list element that doesn't exist
+# - **FileNotFoundError**: You tried to open a file that doesn't exist
+# 
+# **Common mistake**: Confusing ValueError and TypeError. TypeError means "wrong type entirely" 
+# (e.g., a string when you need a number). ValueError means "right type, wrong value" (e.g., the 
+# string "hello" when converting to an integer—it's a string, which is the right type for `int()`, 
+# but the value can't be converted).
+
+# %% [markdown]
 # ### Try-Except Blocks
 # 
-# Use try-except to catch and handle errors.
+# Use try-except to catch and handle errors. The basic pattern is: try to do something that might 
+# fail, and if it fails, handle the error gracefully instead of crashing. This is similar to 
+# "error checking" in other languages but more powerful and Pythonic.
+# 
+# **When to use try-except**: Use it whenever you're doing something that might fail for reasons 
+# outside your control—reading files, network requests, parsing user input, etc. Don't use it for 
+# logic errors in your own code (like accessing the wrong list index)—those should be fixed, not 
+# caught.
 
 # %%
 def safe_divide(a, b):
@@ -316,6 +344,12 @@ def safe_divide(a, b):
 print(f"10 / 2 = {safe_divide(10, 2)}")
 print(f"10 / 0 = {safe_divide(10, 0)}")
 print(f"15 / 3 = {safe_divide(15, 3)}")
+
+# %% [markdown]
+# **Design choice**: Notice that `safe_divide` returns `None` when division by zero occurs instead 
+# of crashing. This allows the program to continue running. However, the caller needs to check for 
+# `None` before using the result. An alternative design would be to let the exception propagate up 
+# or raise a different exception. Choose based on how you want errors to be handled in your application.
 
 # %%
 def read_number_from_user(prompt):
@@ -348,6 +382,16 @@ print(f"Result: {result}")
 
 # %% [markdown]
 # ### Multiple Exception Types
+# 
+# Real-world code often needs to handle multiple types of errors differently. Python allows you 
+# to specify multiple `except` blocks, each handling a specific exception type. The order matters: 
+# Python checks exception types from top to bottom, so put more specific exceptions before more 
+# general ones.
+# 
+# **Exception hierarchy**: Python's exceptions form a hierarchy. `Exception` is a general exception 
+# that catches most errors. More specific exceptions like `ValueError` or `FileNotFoundError` 
+# inherit from it. If you catch `Exception` first, you'll never reach the more specific handlers 
+# below it. This is why we always put the catch-all `Exception` last.
 
 # %%
 def process_data_file(filename, column_index):
@@ -399,7 +443,28 @@ print("Column 1:", process_data_file("data.csv", 1))
 print("Column 5:", process_data_file("data.csv", 5))  # Out of range
 
 # %% [markdown]
+# **Best practice**: The final `except Exception as e:` catches any unexpected errors. The `as e` 
+# syntax gives you access to the exception object, which you can print for debugging. This catch-all 
+# is useful for logging unexpected problems in production code, but during development, it's often 
+# better to let exceptions crash your program so you notice and fix them.
+# 
+# **Common pitfall**: Don't use bare `except:` without specifying the exception type—it will catch 
+# EVERYTHING, including KeyboardInterrupt (Ctrl+C), making your program hard to stop. Always specify 
+# the exception types you're catching, or at minimum use `except Exception:` which excludes system-
+# level exceptions like KeyboardInterrupt.
+
+# %% [markdown]
 # ### Try-Except-Else-Finally
+# 
+# Beyond the basic try-except, Python provides `else` and `finally` clauses for more sophisticated 
+# error handling. The `else` block runs only if no exception occurred—useful for code that should 
+# only run on success. The `finally` block always runs, whether an exception occurred or not—perfect 
+# for cleanup operations like closing files or network connections.
+# 
+# **When to use what**:
+# - Use `else` for code that should only run if everything succeeded (e.g., success logging)
+# - Use `finally` for cleanup that must happen regardless (e.g., closing files, releasing locks)
+# - Common pattern: `try` to open/use a resource, `finally` to close it
 
 # %%
 def analyze_file_safely(filename):
@@ -438,12 +503,12 @@ def analyze_file_safely(filename):
         print(f"Error processing file: {e}")
         
     else:
-        # Executes if try block succeeds
+        # Executes if try block succeeds (no exceptions)
         result['status'] = 'success'
         print(f"Successfully processed {filename}")
         
     finally:
-        # Always executes, regardless of errors
+        # Always executes, regardless of errors or success
         print(f"Finished processing attempt for {filename}")
     
     return result
@@ -453,9 +518,25 @@ analysis = analyze_file_safely("test.txt")
 print(f"Analysis result: {analysis}")
 
 # %% [markdown]
+# **Flow control**: The flow is: `try` → if error: `except` → if no error: `else` → always: `finally`. 
+# This allows fine-grained control: put risky operations in `try`, error handling in `except`, 
+# success-only operations in `else`, and cleanup in `finally`. In practice, `finally` is most 
+# commonly used with file I/O to ensure files are closed even if an error occurs.
+
+# %% [markdown]
 # ### Raising Exceptions
 # 
-# You can raise your own exceptions for error conditions.
+# You can raise your own exceptions for error conditions. This is how you enforce rules in your 
+# functions and provide clear error messages when something goes wrong. Raising exceptions is 
+# better than returning error codes or special values (like -1 or None) because:
+# 1. It forces the caller to handle the error (can't accidentally ignore it)
+# 2. It provides a clear error message
+# 3. It automatically stops execution if not handled
+# 
+# **When to raise exceptions**: Raise exceptions when the caller made a mistake (wrong arguments) 
+# or when a precondition isn't met (file doesn't exist, network is down). Use meaningful exception 
+# types (`ValueError` for bad values, `FileNotFoundError` for missing files) so callers can handle 
+# different errors differently.
 
 # %%
 def validate_temperature(temp, min_temp=-273.15, max_temp=100):
