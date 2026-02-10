@@ -35,6 +35,8 @@ project:
       title: 'Lecture 6: Automation and Continuous Integration'
     - file: lecture_07/lecture_07.ipynb
       title: 'Lecture 7: Debugging and Profiling'
+    - file: lecture_08/lecture_08.ipynb
+      title: 'Lecture 8: Documentation and Publishing'
 site:
   options:
     logo: ''
