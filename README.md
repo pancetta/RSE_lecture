@@ -353,6 +353,24 @@ For complete bibliographic information, see [`references.bib`](references.bib).
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
+## Contributing
+
+We welcome contributions! Before submitting changes:
+
+1. **Run local CI checks** to catch issues before pushing:
+   ```bash
+   make ci-local
+   ```
+
+2. See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines on:
+   - Running flake8 linting locally
+   - Checking Python syntax
+   - Converting and testing notebooks
+   - Common flake8 errors and how to fix them
+   - Setting up pre-commit hooks
+
+**Running `make ci-local` before committing prevents CI failures!**
+
 ## Additional Resources
 
 - [Jupytext Documentation](https://jupytext.readthedocs.io/)

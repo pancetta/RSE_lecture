@@ -1,4 +1,4 @@
-.PHONY: help install install-dev install-lecture1 install-lecture2 install-lecture3 install-lecture4 install-lecture5 install-lecture6 install-lecture7 convert clean notebooks build-website serve-website clean-website update-deps test-deps create-locks
+.PHONY: help install install-dev install-lecture1 install-lecture2 install-lecture3 install-lecture4 install-lecture5 install-lecture6 install-lecture7 convert clean notebooks build-website serve-website clean-website update-deps test-deps create-locks ci-local lint
 
 help:
 	@echo "Research Software Engineering Lectures - Makefile"
@@ -22,6 +22,8 @@ help:
 	@echo "  update-deps      - Test and update conda dependencies with lock files"
 	@echo "  test-deps        - Test current dependencies without creating lock files"
 	@echo "  create-locks     - Create conda-lock files for all platforms"
+	@echo "  ci-local         - Run local CI checks (lint, syntax, convert) before committing"
+	@echo "  lint             - Run flake8 linting on all Python files"
 	@echo "  help             - Show this help message"
 
 install:
@@ -123,3 +125,18 @@ test-deps:
 create-locks:
 	python update_dependencies.py --create-locks
 	@echo "Lock files created for all platforms"
+
+ci-local:
+	@echo "Running local CI checks (same as GitHub Actions)..."
+	@bash scripts/local_ci_check.sh
+
+lint:
+	@echo "Running flake8 linting..."
+	@echo "Checking for critical errors (E9, F63, F7, F82)..."
+	@flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+	@echo ""
+	@echo "Running full flake8 check..."
+	@flake8 . --count --statistics
+	@echo ""
+	@echo "✓ All flake8 checks passed"
+
