@@ -952,7 +952,8 @@ def naive_correlation_analysis(data):
             mean_i = sum(temps_i) / len(temps_i)
             mean_j = sum(temps_j) / len(temps_j)
             
-            cov = sum((temps_i[k] - mean_i) * (temps_j[k] - mean_j)
+            cov = sum((temps_i[k] - mean_i)
+                      * (temps_j[k] - mean_j)
                       for k in range(len(temps_i)))
             
             var_i = sum((t - mean_i) ** 2 for t in temps_i)
@@ -1036,8 +1037,8 @@ def smart_correlation_analysis(data):
             sj = stats[station_j]
             
             # Calculate covariance using pre-computed statistics
-            cov = sum((si['temps'][k] - si['mean']) *
-                      (sj['temps'][k] - sj['mean'])
+            cov = sum((si['temps'][k] - si['mean'])
+                      * (sj['temps'][k] - sj['mean'])
                       for k in range(si['n']))
             
             if si['variance'] > 0 and sj['variance'] > 0:

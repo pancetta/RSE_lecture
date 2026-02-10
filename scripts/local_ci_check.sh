@@ -27,6 +27,12 @@ echo ""
 
 echo "2. Running flake8 linting (strict)..."
 echo "--------------------------------------"
+if ! command -v flake8 &> /dev/null; then
+    echo "❌ flake8 not found. Please install the development environment:"
+    echo "   make install-dev"
+    echo "   or: micromamba env create -f environment-dev.yml -y"
+    exit 1
+fi
 flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
 echo "✓ No critical flake8 errors"
 echo ""
