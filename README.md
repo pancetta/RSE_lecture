@@ -14,6 +14,7 @@ This lecture series covers fundamental concepts and practices in Research Softwa
 - **Lecture 4**: Python Project Structure and Working with Libraries (NumPy, Matplotlib) (~90 minutes)
 - **Lecture 5**: Testing Research Software (~90 minutes)
 - **Lecture 6**: Automation and Continuous Integration (~90 minutes)
+- **Lecture 7**: Debugging and Profiling Research Software (~90 minutes)
 
 ## Structure
 
@@ -69,6 +70,9 @@ make install-lecture5
 
 # Lecture 6
 make install-lecture6
+
+# Lecture 7
+make install-lecture7
 ```
 
 Then activate:
@@ -104,6 +108,7 @@ micromamba activate rse_lecture
 - Lecture 4 adds matplotlib.
 - Lecture 5 adds pytest and pytest-cov for testing.
 - Lecture 6 has no additional dependencies (uses base only).
+- Lecture 7 has no additional dependencies (uses base only for pdb, logging, cProfile).
 - The `environment-dev.yml` includes all dependencies plus development tools (flake8, nbconvert).
 - Installation pattern is **harmonized**: all lectures follow the same two-step process (base + additions).
 - Lecture 1 introduces the course and essential tools (shell, git, GitHub).
@@ -112,6 +117,7 @@ micromamba activate rse_lecture
 - Lecture 4 covers NumPy, matplotlib, and project structure.
 - Lecture 5 covers testing with pytest and achieving full test coverage.
 - Lecture 6 covers automation and continuous integration with GitHub Actions and GitLab CI.
+- Lecture 7 covers debugging with pdb and profiling with cProfile.
 
 ## Usage
 
@@ -346,6 +352,24 @@ For complete bibliographic information, see [`references.bib`](references.bib).
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Contributing
+
+We welcome contributions! Before submitting changes:
+
+1. **Run local CI checks** to catch issues before pushing:
+   ```bash
+   make ci-local
+   ```
+
+2. See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines on:
+   - Running flake8 linting locally
+   - Checking Python syntax
+   - Converting and testing notebooks
+   - Common flake8 errors and how to fix them
+   - Setting up pre-commit hooks
+
+**Running `make ci-local` before committing prevents CI failures!**
 
 ## Additional Resources
 

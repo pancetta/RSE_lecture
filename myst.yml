@@ -33,6 +33,8 @@ project:
       title: 'Lecture 5: Testing Research Software'
     - file: lecture_06/lecture_06.ipynb
       title: 'Lecture 6: Automation and Continuous Integration'
+    - file: lecture_07/lecture_07.ipynb
+      title: 'Lecture 7: Debugging and Profiling'
 site:
   options:
     logo: ''
