@@ -1260,6 +1260,120 @@ print(f"(Analyzed fewer pairs by focusing on nearby stations)")
 # - **Reproducible**: Others can verify results
 
 # %% [markdown]
+# ## Debugging and Profiling in Other Languages
+# 
+# While this lecture focused on Python, the principles apply to all programming languages.
+# Here's what to look for in other common research software languages:
+# 
+# ### R
+# 
+# **Debugging:**
+# - **browser()** - R's interactive debugger (similar to pdb)
+# - **debug()** / **debugonce()** - Set breakpoints on functions
+# - **traceback()** - Show call stack after errors
+# - **print()** / **cat()** - Basic debugging (like Python print)
+# 
+# **Profiling:**
+# - **Rprof()** - Built-in profiler for time analysis
+# - **profvis** package - Visual profiling tool
+# - **microbenchmark** package - Precise timing for small code snippets
+# 
+# **What to look for:** RStudio has excellent built-in debugging support with breakpoints and variable inspection.
+# 
+# ### MATLAB
+# 
+# **Debugging:**
+# - **dbstop** - Set breakpoints in code
+# - **dbstep** - Step through code line by line
+# - **dbcont** - Continue execution
+# - **dbquit** - Exit debugger
+# - Built-in GUI debugger in MATLAB IDE
+# 
+# **Profiling:**
+# - **profile on/off** - Start/stop profiler
+# - **profile viewer** - Visual profiling results
+# - **tic/toc** - Simple timing measurements
+# 
+# **What to look for:** MATLAB's GUI makes debugging very visual - you can click to set breakpoints and see variables in workspace.
+# 
+# ### C/C++
+# 
+# **Debugging:**
+# - **gdb** - GNU Debugger (command-line, powerful)
+# - **lldb** - LLVM debugger (macOS default)
+# - **valgrind** - Memory debugging and leak detection
+# - IDE debuggers (Visual Studio, CLion, Eclipse)
+# 
+# **Profiling:**
+# - **gprof** - GNU profiler (compile with -pg flag)
+# - **perf** - Linux performance analysis tools
+# - **Valgrind** with **callgrind** - Call graph profiling
+# - **Intel VTune** - Advanced profiling (commercial)
+# 
+# **What to look for:** Compiled languages need special compilation flags for debugging (-g) and profiling (-pg). Memory errors are common - use valgrind!
+# 
+# ### Julia
+# 
+# **Debugging:**
+# - **Debugger.jl** - Interactive debugging package
+# - **@enter** macro - Step into function
+# - **@run** macro - Run with debugger
+# - Similar commands to pdb: `n` (next), `s` (step), `c` (continue)
+# 
+# **Profiling:**
+# - **@time** macro - Quick timing measurement
+# - **@profile** macro - Statistical profiler
+# - **ProfileView.jl** - Visualize profiling results
+# - **BenchmarkTools.jl** - Accurate benchmarking
+# 
+# **What to look for:** Julia's JIT compilation means first run is slow - profile after warm-up!
+# 
+# ### Fortran
+# 
+# **Debugging:**
+# - **gdb** - Works with Fortran (compile with -g)
+# - **idb** - Intel Fortran debugger
+# - **totalview** - Commercial parallel debugger
+# - **print** statements - Still widely used
+# 
+# **Profiling:**
+# - **gprof** - GNU profiler (compile with -pg)
+# - **Intel VTune** - For Intel compilers
+# - **TAU** - Performance analysis for parallel code
+# - **Scalasca** - For MPI/OpenMP programs
+# 
+# **What to look for:** Fortran is often used for parallel computing - look for MPI/OpenMP-aware profilers.
+# 
+# ### Rust
+# 
+# **Debugging:**
+# - **rust-gdb** / **rust-lldb** - GDB/LLDB wrappers for Rust
+# - **println!** macro - Debug printing
+# - **dbg!** macro - Quick debug output with values
+# - IDE support (VSCode, IntelliJ)
+# 
+# **Profiling:**
+# - **cargo-flamegraph** - Generate flame graphs
+# - **perf** - Linux performance tools
+# - **Criterion.rs** - Benchmarking library
+# - **dhat** - Heap profiling
+# 
+# **What to look for:** Rust's ownership system catches many bugs at compile time. Focus profiling on algorithmic issues.
+# 
+# ### Common Patterns Across Languages
+# 
+# No matter what language you use, look for these tools:
+# 
+# 1. **Interactive debugger** - Step through code, inspect variables
+# 2. **Logging framework** - Structured output with levels
+# 3. **Profiler** - Time and memory analysis
+# 4. **Benchmarking tools** - Accurate performance measurement
+# 5. **Memory checkers** - For compiled languages (valgrind, sanitizers)
+# 6. **IDE integration** - Visual debugging and profiling
+# 
+# **Key principle:** The concepts (systematic debugging, logging, profiling before optimizing) are universal - only the tools change!
+
+# %% [markdown]
 # ## Acknowledgements and References
 # 
 # This lecture draws on established debugging and profiling practices from software engineering and research software development:
