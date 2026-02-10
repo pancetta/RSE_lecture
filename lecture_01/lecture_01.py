@@ -111,7 +111,7 @@
 # ### How to Access This Course
 # 
 # The course materials are available on GitHub:
-# - **Repository**: https://github.com/pancetta/RSE_lecture
+# - **Repository**: https://github.com/pancetta/RSE_course_JuRSE
 # - **Website**: Rendered as an interactive website using Jupyter Book
 # - **Format**: Python files (using Jupytext) that convert to Jupyter notebooks
 # 
@@ -122,8 +122,8 @@
 # First, you need Git installed on your system. Then:
 # 
 # ```bash
-# git clone https://github.com/pancetta/RSE_lecture.git
-# cd RSE_lecture
+# git clone https://github.com/pancetta/RSE_course_JuRSE.git
+# cd RSE_course_JuRSE
 # ```
 # 
 # #### 2. Install Micromamba (or Conda/Mamba)

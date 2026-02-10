@@ -2,7 +2,9 @@ version: 1
 project:
   title: Research Software Engineering Lectures
   authors:
-    - name: [Robert Speck](https://www.fz-juelich.de/profile/speck_r), Jülich Supercomputing Centre, Forschungszentrum Jülich GmbH, 
+    - name: Robert Speck
+      url: https://www.fz-juelich.de/profile/speck_r
+      affiliation: Jülich Supercomputing Centre, Forschungszentrum Jülich GmbH 
   copyright: '2026'
   github: pancetta/RSE_course_JuRSE
   exclude:
