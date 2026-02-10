@@ -41,56 +41,87 @@
 # 
 # But there's still a problem: **tests only help if you actually run them!**
 # 
+# This seems obvious, but it's the Achilles' heel of testing. You can have a perfect test suite 
+# with 100% coverage, but if someone forgets to run the tests before committing code, bugs still 
+# slip through. Manual processes fail eventually—someone gets busy, forgets, or assumes their 
+# small change "couldn't possibly break anything."
+# 
 # ### The Human Factor
 # 
-# Even with a comprehensive test suite, bugs can slip through:
+# Even with a comprehensive test suite, bugs can slip through when testing isn't automated:
 # 
-# - Developer forgets to run tests before committing
-# - Tests run on one person's machine but not others
-# - New team member doesn't know tests exist
-# - Tests pass on your computer but fail on colleague's setup
-# - Someone commits code late at night without testing
-# - Tests exist but aren't part of the workflow
+# - **Developer forgets to run tests before committing**: Happens more often than you'd think
+# - **Tests run on one person's machine but not others**: "Works on my machine" syndrome
+# - **New team member doesn't know tests exist**: No documentation or onboarding
+# - **Tests pass on your computer but fail on colleague's setup**: Environment differences
+# - **Someone commits code late at night without testing**: Tired developer, honest mistake
+# - **Tests exist but aren't part of the workflow**: No one remembers to run them regularly
+# 
+# **The fundamental problem**: Relying on humans to remember manual steps doesn't scale. We're 
+# forgetful, we get busy, we take shortcuts. The solution is to remove humans from the loop—
+# automate testing so it happens every time, without exception.
 # 
 # ### Enter: Continuous Integration
 # 
-# **Continuous Integration (CI)** automates testing every time code changes.
+# **Continuous Integration (CI)** automates testing every time code changes. It's a practice where 
+# developers integrate their work frequently (daily or more), and each integration is verified by 
+# an automated build and test process. This catches problems early, when they're easiest to fix.
 # 
 # **How it works:**
 # 1. Developer pushes code to repository (e.g., GitHub, GitLab)
-# 2. CI system automatically detects the change
-# 3. CI system runs all tests in a clean environment
-# 4. Results are reported back (pass/fail)
-# 5. Bugs are caught before they can cause harm
+# 2. CI system automatically detects the change—no human intervention needed
+# 3. CI system runs all tests in a clean, reproducible environment
+# 4. Results are reported back (pass/fail) within minutes
+# 5. Bugs are caught before they can cause harm or reach other developers
 # 
 # **Benefits:**
-# - **Catch bugs early**: Before they reach main branch
-# - **Consistent environment**: Same for everyone
-# - **No excuses**: Tests always run
-# - **Confidence**: Know code works before merging
-# - **Documentation**: CI config shows how to run tests
+# - **Catch bugs early**: Before they reach main branch and affect others
+# - **Consistent environment**: Same for everyone—no more "works on my machine"
+# - **No excuses**: Tests always run—can't forget or skip them
+# - **Confidence**: Know code works before merging—sleep better at night
+# - **Documentation**: CI config shows exactly how to run tests—reproducible by anyone
+# - **Faster feedback**: Know within minutes if your change broke something
+# 
+# **Research context**: For research software, CI is crucial for reproducibility. Your CI configuration 
+# documents exactly how to build and test your code, making it easy for reviewers and other researchers 
+# to verify your results. Many journals now require CI badges showing tests pass.
 
 # %% [markdown]
 # ## Part 2: Introduction to GitHub Actions
 # 
 # ### What is GitHub Actions?
 # 
-# **GitHub Actions** is GitHub's built-in CI/CD platform. It's:
-# - Free for public repositories
-# - Free for private repos (with limits)
-# - Integrated directly into GitHub
-# - Uses simple YAML configuration
-# - Supports multiple operating systems
-# - Has a huge marketplace of pre-built actions
+# **GitHub Actions** is GitHub's built-in CI/CD platform. Unlike earlier CI systems that required 
+# separate services (like Travis CI or CircleCI), GitHub Actions is integrated directly into GitHub, 
+# making it incredibly convenient.
+# 
+# **GitHub Actions** is:
+# - **Free for public repositories**: Unlimited minutes for open-source projects
+# - **Free for private repos (with limits)**: 2000 minutes/month on free tier
+# - **Integrated directly into GitHub**: No third-party accounts needed
+# - **Uses simple YAML configuration**: Human-readable, version-controlled with your code
+# - **Supports multiple operating systems**: Linux, Windows, macOS—test on all platforms
+# - **Has a huge marketplace of pre-built actions**: Don't reinvent the wheel
+# 
+# **When to use GitHub Actions vs. other CI systems**: For most projects hosted on GitHub, GitHub 
+# Actions is the easiest choice. Use alternatives like GitLab CI if you're on GitLab, Jenkins for 
+# self-hosted enterprise systems, or CircleCI/Travis if you need features GitHub Actions doesn't 
+# provide yet.
 # 
 # ### Key Concepts
 # 
-# - **Workflow**: Automated process (e.g., "run tests")
-# - **Job**: Set of steps that run together
-# - **Step**: Individual task (e.g., "install Python")
-# - **Action**: Reusable unit of code
-# - **Runner**: Virtual machine that executes jobs
-# - **Trigger**: Event that starts workflow (e.g., push, pull request)
+# Understanding these terms helps you read and write GitHub Actions workflows:
+# 
+# - **Workflow**: An automated process (e.g., "run tests")—the whole CI pipeline
+# - **Job**: Set of steps that run together on the same machine—can run multiple jobs in parallel
+# - **Step**: Individual task (e.g., "install Python")—the smallest unit of work
+# - **Action**: Reusable unit of code—like a function you can call in your workflow
+# - **Runner**: Virtual machine that executes jobs—GitHub provides these, or you can host your own
+# - **Trigger**: Event that starts workflow (e.g., push, pull request)—defines when CI runs
+# 
+# **Mental model**: Think of a workflow as a script, jobs as functions in that script (that can run 
+# in parallel), and steps as individual commands. Triggers are like "when should this script run?" 
+# and runners are the computers that execute it.
 
 # %% [markdown]
 # ## Part 3: Creating Your First GitHub Actions Workflow
@@ -167,24 +198,29 @@ print(basic_workflow)
 # %% [markdown]
 # ### Understanding the Workflow
 # 
+# Let's break down each part of the workflow to understand what it does and why:
+# 
 # **Triggers (`on`):**
-# - `push`: Run when code is pushed to main or develop branches
-# - `pull_request`: Run when PR is opened/updated targeting main
+# - `push`: Run when code is pushed to main or develop branches—catches bugs in merged code
+# - `pull_request`: Run when PR is opened/updated targeting main—prevents bugs from being merged
 # 
 # **Jobs (`jobs`):**
-# - `runs-on: ubuntu-latest`: Use Ubuntu Linux virtual machine
-# - Could also use `windows-latest` or `macos-latest`
+# - `runs-on: ubuntu-latest`: Use Ubuntu Linux virtual machine—most common, fastest
+# - Could also use `windows-latest` or `macos-latest`—useful for cross-platform testing
 # 
 # **Steps:**
-# - `uses`: Pre-built action from GitHub marketplace
-# - `run`: Shell command to execute
-# - Each step runs in sequence
+# - `uses`: Pre-built action from GitHub marketplace—tested, maintained code you can trust
+# - `run`: Shell command to execute—anything you'd type in terminal
+# - Each step runs in sequence—if one fails, the job fails
 # 
 # **Why this prevents disasters:**
-# - Tests run automatically on every push
-# - Can't merge PR with failing tests
-# - Same environment for all developers
-# - Catches bugs before they reach main branch
+# - Tests run automatically on every push—no way to forget
+# - Can't merge PR with failing tests—GitHub shows red X, reviewers see it
+# - Same environment for all developers—no "works on my machine" excuses
+# - Catches bugs before they reach main branch—main stays stable and deployable
+# 
+# **Common pitfall**: Forgetting to make tests a required check before merging. In your repository 
+# settings, enable "Require status checks to pass before merging" to enforce that CI must pass.
 
 # %% [markdown]
 # ## Part 4: Advanced GitHub Actions Features
