@@ -113,13 +113,21 @@ print(f"Average anomaly: {sum(anomalies) / len(anomalies):.2f}°C")
 # 
 # ### Why Test Research Software?
 # 
-# Research software is often perceived as "write once, run once" code. But consider:
+# Research software is often perceived as "write once, run once" code that doesn't need testing. 
+# This is a dangerous misconception. In reality, research code is modified constantly, used with 
+# different datasets, and often reused in future projects. Without tests, every change is a potential 
+# source of bugs that can silently corrupt your results.
 # 
-# - **Research is iterative**: You'll run and modify your code many times
-# - **Data changes**: New data might expose edge cases
-# - **Collaborators need confidence**: Others must trust your results
-# - **You might be wrong**: Even experts make mistakes (as our story shows)
-# - **Future you needs help**: You'll forget the details in 6 months
+# **Research is iterative**: You'll run and modify your code many times as you refine your analysis
+# - **Data changes**: New data might expose edge cases your code doesn't handle
+# - **Collaborators need confidence**: Others must trust your results to build on them
+# - **You might be wrong**: Even experts make mistakes (as our story shows)—tests catch them
+# - **Future you needs help**: You'll forget the implementation details in 6 months; tests document behavior
+# - **Journals increasingly require it**: Many publishers now expect code and tests to be available
+# 
+# **Testing mindset**: Think of tests as "documentation that runs." They show how your code is 
+# supposed to work and prove that it does. Good tests make refactoring safe—you can improve your 
+# code's implementation without breaking its behavior.
 # 
 # ### Real-World Research Software Failures
 # 
@@ -132,12 +140,19 @@ print(f"Average anomaly: {sum(anomalies) / len(anomalies):.2f}°C")
 # 
 # ### Types of Testing
 # 
-# - **Unit tests**: Test individual functions in isolation
-# - **Integration tests**: Test how components work together
-# - **Regression tests**: Ensure bugs don't come back
-# - **Acceptance tests**: Verify the software meets requirements
+# Testing comes in different forms, each serving a specific purpose:
 # 
-# Today we focus on **unit tests** - the foundation of testing.
+# - **Unit tests**: Test individual functions in isolation—does this one function work correctly?
+# - **Integration tests**: Test how components work together—do these functions interact properly?
+# - **Regression tests**: Ensure bugs don't come back—once fixed, stay fixed
+# - **Acceptance tests**: Verify the software meets requirements—does it solve the right problem?
+# 
+# Today we focus on **unit tests**—the foundation of testing. Unit tests are small, fast, and test 
+# one specific piece of functionality. They're the most common type of test and the easiest to write. 
+# 
+# **Testing pyramid**: Most projects should have many unit tests (fast, easy to write), fewer 
+# integration tests (slower, test interactions), and a few acceptance tests (slowest, test whole 
+# system). Start with unit tests—they give you the most value for the least effort.
 
 # %% [markdown]
 # ## Part 3: Writing Your First Test
@@ -164,15 +179,31 @@ else:
 # %% [markdown]
 # ### Problems with Manual Testing
 # 
-# 1. **Not automated**: You must run it manually every time
-# 2. **Not organized**: Tests scattered throughout code
-# 3. **Not comprehensive**: Easy to forget edge cases
-# 4. **Not persistent**: Tests lost when cells are re-run
-# 5. **No clear pass/fail**: Must interpret output yourself
+# 1. **Not automated**: You must run it manually every time—easy to forget or skip
+# 2. **Not organized**: Tests scattered throughout code—hard to maintain
+# 3. **Not comprehensive**: Easy to forget edge cases—what about negative numbers? zero? infinity?
+# 4. **Not persistent**: Tests lost when cells are re-run—no record of what was tested
+# 5. **No clear pass/fail**: Must interpret output yourself—did all tests pass?
 # 
+# **Why this matters**: Manual testing is how bugs slip through. You test the happy path (normal 
+# inputs) but forget edge cases. You test once but don't re-test after changes. You test locally 
+# but not on different systems. Automated testing solves all these problems.
+# 
+# %% [markdown]
 # ### Using pytest - The Right Way
 # 
-# `pytest` is Python's most popular testing framework. It makes testing easy and automatic.
+# `pytest` is Python's most popular testing framework. It makes testing easy and automatic. Unlike 
+# manual testing, pytest discovers and runs all your tests automatically, provides clear pass/fail 
+# output, and integrates with CI/CD systems.
+# 
+# **Why pytest over alternatives?**:
+# - **Simple**: Just write functions starting with `test_` and use `assert`
+# - **Powerful**: Advanced features like fixtures and parametrization when you need them
+# - **Fast**: Runs tests in parallel and caches results
+# - **Popular**: Huge ecosystem of plugins and community support
+# 
+# **Best practice**: Keep test files separate from source code. Put them in a `tests/` directory with 
+# names like `test_module.py`. This keeps your source code clean and makes tests easy to find.
 
 # %%
 # First, let's write tests in a format pytest can discover
@@ -584,36 +615,66 @@ except (AssertionError, NameError) as e:
 # %% [markdown]
 # ### Benefits of TDD
 # 
-# 1. **Clear requirements**: Tests define what the code should do
-# 2. **Confidence**: You know your code works
-# 3. **Documentation**: Tests show how to use the code
-# 4. **Design**: Writing tests first leads to better code design
-# 5. **Regression prevention**: Tests catch bugs when changing code
+# Test-Driven Development might feel backward at first (write tests before code?!), but it has 
+# profound benefits:
+# 
+# 1. **Clear requirements**: Tests define what the code should do before you write it—no ambiguity
+# 2. **Confidence**: You know your code works because you've tested every feature as you built it
+# 3. **Documentation**: Tests show how to use the code—they're executable examples
+# 4. **Design**: Writing tests first leads to better code design—testable code is usually good code
+# 5. **Regression prevention**: Tests catch bugs when changing code—refactor fearlessly
+# 
+# **When to use TDD**: TDD is especially valuable for algorithmic code, data processing, or any logic-
+# heavy code where correctness is critical. For exploratory research, you might start without TDD 
+# and add tests as your code stabilizes. The key is to eventually have tests, even if you don't 
+# write them first.
+# 
+# **Common misconception**: TDD doesn't mean "write ALL tests first, then ALL code." It means work 
+# in small cycles: one test, just enough code to pass it, repeat. Each cycle takes minutes, not days.
 
 # %% [markdown]
 # ## Part 7: Test Coverage
 # 
 # ### What is Test Coverage?
 # 
-# **Test coverage** measures which lines of code are executed during testing.
+# **Test coverage** measures which lines of code are executed during testing. It's a metric that 
+# tells you how much of your code is actually being tested. Think of it as a quality check for your 
+# test suite.
 # 
-# - **100% coverage**: Every line is tested
-# - **<100% coverage**: Some code is untested (potential bugs hiding!)
+# - **100% coverage**: Every line is tested—but this doesn't mean bug-free!
+# - **<100% coverage**: Some code is untested—potential bugs hiding there
+# 
+# **Important caveat**: High coverage doesn't guarantee correctness. You can have 100% coverage 
+# with terrible tests that don't assert anything meaningful. Coverage tells you what's tested, not 
+# whether it's tested well. It's a necessary but not sufficient condition for quality.
+# 
+# **Coverage targets**: Aim for 80-90% coverage for research software. 100% is often not worth the 
+# effort—some code (like logging or error messages) is hard to test meaningfully. Focus on testing 
+# your core scientific logic comprehensively.
 # 
 # ### Measuring Coverage with pytest-cov
 # 
-# Use `pytest-cov` to measure coverage:
+# Use `pytest-cov` to measure coverage. This plugin integrates with pytest to track which lines 
+# run during tests and generates reports showing untested code.
 # 
 # ```bash
 # # Run tests with coverage report
 # pytest --cov=src tests/
 # 
-# # Generate HTML coverage report
+# # Generate HTML coverage report (easier to read, highlights untested lines)
 # pytest --cov=src --cov-report=html tests/
 # 
-# # Set minimum coverage threshold
+# # Set minimum coverage threshold (fails if below 80%)
 # pytest --cov=src --cov-fail-under=80 tests/
 # ```
+# 
+# **Reading coverage reports**: The HTML report shows your code with green (tested) and red (untested) 
+# highlighting. Look for red sections—those are your blind spots. Prioritize testing branches (if/else), 
+# loops, and error handling paths.
+# 
+# **Coverage in CI/CD**: Add coverage checks to your CI pipeline with `--cov-fail-under`. This ensures 
+# coverage doesn't drop over time. Many projects display a coverage badge in their README showing 
+# their coverage percentage—it's a quality signal to users.
 # 
 # ### Coverage Example
 
