@@ -1,6 +1,7 @@
 # Research Software Engineering Lectures
 
 [![CI - Lecture Scripts](https://github.com/pancetta/RSE_course_JuRSE/workflows/CI%20-%20Lecture%20Scripts/badge.svg)](https://github.com/pancetta/RSE_course_JuRSE/actions)
+[![Link Checker](https://github.com/pancetta/RSE_course_JuRSE/workflows/Link%20Checker/badge.svg)](https://github.com/pancetta/RSE_course_JuRSE/actions)
 
 Welcome to the Research Software Engineering (RSE) lecture series! This repository contains materials for learning best practices in developing high-quality research software.
 
@@ -355,9 +356,22 @@ The repository includes a continuous integration (CI) pipeline that automaticall
 - Lints code with flake8 to maintain code quality
 - Converts all lectures to notebooks to verify the conversion process
 - Executes all notebooks to ensure they run without errors
+- Verifies all links in markdown and lecture files are valid
 - Runs on Linux (Ubuntu), macOS 15 (Sequoia), macOS 26 (Tahoe), and Windows to ensure cross-platform compatibility
 
 All pull requests must pass the CI checks before merging.
+
+### Link Checking
+
+The repository uses [Lychee](https://github.com/lycheeverse/lychee) to automatically check all links in:
+- Markdown files (README.md, documentation, etc.)
+- Lecture Python files (lecture_*.py)
+
+Link checking runs:
+- On every push and pull request to catch broken links early
+- Weekly on Mondays at 10:00 UTC to detect links that become stale over time
+
+Configuration is in `.lycherc.toml`. Example/placeholder URLs are excluded from checks.
 
 ## Acknowledgements
 

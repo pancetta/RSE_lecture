@@ -1,0 +1,71 @@
+name: Link Checker
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  schedule:
+    # Run weekly on Mondays at 10:00 UTC (after dependency updates)
+    - cron: '0 10 * * 1'
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  link-check:
+    name: Check Links
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Check links with Lychee
+      uses: lycheeverse/lychee-action@v1
+      with:
+        # Check all markdown files and Python lecture files
+        args: >-
+          --verbose
+          --no-progress
+          --exclude-path './lecture_*/lecture_*.ipynb'
+          --exclude-path './.git'
+          --exclude 'http://localhost:*'
+          --exclude 'http://127.0.0.1:*'
+          --exclude 'https://github.com/username/*'
+          --exclude 'https://github.com/user/*'
+          --exclude 'https://github.com/yourusername/*'
+          --exclude 'https://github.com/original/*'
+          --exclude 'https://github.com/jpark/*'
+          --exclude 'https://gitlab.com/username/*'
+          --exclude 'https://gitlab.com/your-username/*'
+          --exclude 'https://gitlab.com/original-owner/*'
+          --exclude 'https://your-project.readthedocs.io/*'
+          --exclude 'https://genomeanalyzer.readthedocs.io/*'
+          --exclude 'https://doi.org/10.5281/zenodo.XXXXXXX'
+          --exclude 'https://doi.org/10.5281/zenodo.1234567'
+          --exclude 'https://www.noaa.gov/api/*'
+          --exclude 'https://data.nasa.gov/api/*'
+          --exclude 'file://.*/docker:*'
+          --exclude 'file://.*/docker-daemon:*'
+          --exclude 'https://www.alexandra-hill.com/2018/06/25/the-art-of-giving-and-receiving-code-reviews/'
+          --exclude 'https://docs.gitlab.com/ee/topics/gitlab_flow.html'
+          --exclude 'https://docs.gitlab.com/ee/user/project/protected_branches.html'
+          --exclude 'https://www.unidata.ucar.edu/software/netcdf/*'
+          --exclude 'https://www.gnu.org/software/make/manual/'
+          './**/*.md'
+          './**/*.py'
+        # Fail the job on broken links
+        fail: true
+        # Output format
+        format: markdown
+        # Output file
+        output: ./lychee-report.md
+    
+    - name: Upload link check report
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: link-check-report
+        path: ./lychee-report.md
+        retention-days: 30
