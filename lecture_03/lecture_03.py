@@ -938,41 +938,139 @@ results = analyze_temperature_data(
 print(f"\nFinal results: {results}")
 
 # %% [markdown]
-# ## Part 6: Functional Programming Concepts
+# ## Part 6: Classes and Object-Oriented Programming
+# 
+# Classes allow you to bundle data and functionality together. They're essential for organizing 
+# complex research code and are heavily used in testing frameworks like pytest (which we'll see 
+# in Lecture 5).
+# 
+# ### Why Use Classes?
+# 
+# - **Organization**: Group related data and functions together
+# - **Reusability**: Create multiple instances with the same behavior
+# - **Clarity**: Model real-world entities (experiments, datasets, instruments)
+# - **Testing**: Organize test cases (test classes in pytest)
+
+# %% [markdown]
+# ### Basic Class Syntax
 
 # %%
-# Map: apply function to all items
-temperatures_c = [20, 25, 30, 35, 40]
+class TemperatureData:
+    """Store and analyze temperature measurements."""
+    
+    def __init__(self, location, unit='celsius'):
+        """
+        Initialize temperature data.
+        
+        Parameters
+        ----------
+        location : str
+            Measurement location
+        unit : str, optional
+            Temperature unit ('celsius' or 'fahrenheit')
+        """
+        self.location = location
+        self.unit = unit
+        self.measurements = []
+    
+    def add_measurement(self, temperature):
+        """Add a temperature reading."""
+        self.measurements.append(temperature)
+    
+    def get_average(self):
+        """Calculate average temperature."""
+        if not self.measurements:
+            return None
+        return sum(self.measurements) / len(self.measurements)
+    
+    def get_summary(self):
+        """Return a summary string."""
+        avg = self.get_average()
+        if avg is None:
+            return f"{self.location}: No measurements"
+        return f"{self.location}: {len(self.measurements)} measurements, avg={avg:.1f}°{self.unit[0].upper()}"
 
 
-# Convert to Fahrenheit using map
-def to_fahrenheit(c):
-    return c * 9/5 + 32
+# Create an instance of the class
+lab_temps = TemperatureData("Lab A", unit='celsius')
 
+# Add measurements
+lab_temps.add_measurement(23.5)
+lab_temps.add_measurement(24.1)
+lab_temps.add_measurement(23.8)
 
-temperatures_f = list(map(to_fahrenheit, temperatures_c))
+# Use methods
+print(lab_temps.get_summary())
+print(f"Average: {lab_temps.get_average():.2f}°C")
 
-print(f"Celsius: {temperatures_c}")
-print(f"Fahrenheit: {temperatures_f}")
+# %% [markdown]
+# ### Understanding `self` and `__init__`
+# 
+# - **`__init__`**: Special method called when creating a new instance (constructor)
+# - **`self`**: Refers to the instance itself (like "this" in other languages)
+# - **Instance variables**: `self.location`, `self.measurements` belong to each instance
+# - **Methods**: Functions defined inside a class that operate on instance data
+
+# %% [markdown]
+# ### Multiple Instances
 
 # %%
-# Filter: select items matching condition
-measurements = [23.5, 24.1, 26.8, 24.3, 27.1, 23.9, 25.5]
+# Create multiple independent instances
+lab_a = TemperatureData("Lab A")
+lab_b = TemperatureData("Lab B")
+outdoor = TemperatureData("Outdoor")
 
-# Filter values above 25
-above_25 = list(filter(lambda x: x > 25, measurements))
-print(f"All measurements: {measurements}")
-print(f"Above 25°C: {above_25}")
+# Each has its own data
+lab_a.add_measurement(23.5)
+lab_a.add_measurement(24.1)
 
-# %%
-# Combining map and filter
-# Get Fahrenheit values for temperatures above 25°C
-high_temps_f = list(map(to_fahrenheit, filter(lambda x: x > 25, measurements)))
-print(f"High temps in Fahrenheit: {high_temps_f}")
+lab_b.add_measurement(22.1)
+lab_b.add_measurement(22.3)
+lab_b.add_measurement(22.0)
 
-# Equivalent list comprehension (often more Pythonic)
-high_temps_f_comp = [t * 9/5 + 32 for t in measurements if t > 25]
-print(f"Same result with comprehension: {high_temps_f_comp}")
+outdoor.add_measurement(15.2)
+outdoor.add_measurement(16.8)
+
+# Display summaries
+for location in [lab_a, lab_b, outdoor]:
+    print(location.get_summary())
+
+# %% [markdown]
+# ### Classes in Testing (Preview of Lecture 5)
+# 
+# In Lecture 5, you'll use test classes with pytest. Here's a preview of what that looks like:
+# 
+# ```python
+# class TestTemperatureConversion:
+#     """Group related temperature conversion tests."""
+#     
+#     def test_freezing_point(self):
+#         """Water freezes at 0°C = 32°F."""
+#         assert celsius_to_fahrenheit(0) == 32
+#     
+#     def test_boiling_point(self):
+#         """Water boils at 100°C = 212°F."""
+#         assert celsius_to_fahrenheit(100) == 212
+# ```
+# 
+# Test classes organize related tests together. Each method starting with `test_` is a separate test case.
+
+# %% [markdown]
+# ### When to Use Classes vs Functions
+# 
+# **Use classes when you need to:**
+# - Store state (data) and behavior (methods) together
+# - Create multiple instances of similar objects
+# - Organize complex code into logical units
+# - Build test suites (test classes)
+# 
+# **Use functions when you:**
+# - Have a simple operation that doesn't need state
+# - Want to transform inputs to outputs
+# - Need something quick and straightforward
+# 
+# **Research example**: A function is good for calculating mean temperature. A class is better 
+# for representing an entire experiment with settings, data, and multiple analysis methods.
 
 # %% [markdown]
 # ## Summary
@@ -999,7 +1097,7 @@ print(f"Same result with comprehension: {high_temps_f_comp}")
 # - **List comprehensions**: Concise list creation and filtering
 # - **Dictionary comprehensions**: Creating dictionaries elegantly
 # - **Command-line arguments**: Using argparse for CLI tools
-# - **Functional programming**: Map, filter, and lambda functions
+# - **Classes and OOP**: Organizing code with classes, methods, and instances
 
 # %% [markdown]
 # ## Acknowledgements and References
@@ -1010,7 +1108,7 @@ print(f"Same result with comprehension: {high_temps_f_comp}")
 # 
 # - **Research Software Engineering with Python** by The Alan Turing Institute  
 #   <https://alan-turing-institute.github.io/rse-course/html/>  
-#   Advanced Python concepts, error handling patterns, and functional programming approaches adapted from this course.
+#   Advanced Python concepts, error handling patterns, and object-oriented programming approaches adapted from this course.
 # 
 # - **Research Software Engineering with Python** by Damien Irving, Kate Hertweck,
 #   Luke Johnston, Joel Ostblom, Charlotte Wickham, and Greg Wilson (2022)
@@ -1025,7 +1123,7 @@ print(f"Same result with comprehension: {high_temps_f_comp}")
 #   - Built-in Exceptions: <https://docs.python.org/3/library/exceptions.html>
 #   - File I/O: <https://docs.python.org/3/tutorial/inputoutput.html>
 #   - argparse: <https://docs.python.org/3/library/argparse.html>
-#   - Functional Programming: <https://docs.python.org/3/howto/functional.html>
+#   - Classes and OOP: <https://docs.python.org/3/tutorial/classes.html>
 # 
 # - **NumPy Docstring Style Guide**  
 #   <https://numpydoc.readthedocs.io/en/latest/format.html>  
