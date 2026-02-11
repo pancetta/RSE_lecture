@@ -43,6 +43,8 @@ project:
       title: 'Lecture 10: Collaboration and Code Review'
     - file: lecture_11/lecture_11.ipynb
       title: 'Lecture 11: Working with Research Data'
+    - file: lecture_12/lecture_12.ipynb
+      title: 'Lecture 12: AI-Assisted Coding'
 site:
   options:
     logo: ''
