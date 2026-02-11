@@ -367,9 +367,15 @@
 #     <h4 style="color: #7b1fa2; margin-top: 0;">💡 Try It Yourself</h4>
 #     <p>Want to understand dependency management deeply? Explore these Make concepts:</p>
 #     <ul>
-#         <li><strong>Visualize your dependencies</strong>: Draw the dependency graph for your research project by hand. Which files depend on which? Where do changes ripple through? Make automates this thinking!</li>
-#         <li><strong>Test incremental builds</strong>: Create a simple Makefile with 3-4 steps. Run it, change one input file, run again. Which steps re-run? Which are skipped? Understanding this saves computation time.</li>
-#         <li><strong>Break something on purpose</strong>: Delete an intermediate file and run <code>make</code>. Does it rebuild just what's needed? Try making a file older with <code>touch -t</code> - what happens?</li>
+#         <li><strong>Visualize your dependencies</strong>: Draw the dependency graph for
+#         your research project by hand. Which files depend on which? Where do changes
+#         ripple through? Make automates this thinking!</li>
+#         <li><strong>Test incremental builds</strong>: Create a simple Makefile with 3-4
+#         steps. Run it, change one input file, run again. Which steps re-run? Which are
+#         skipped? Understanding this saves computation time.</li>
+#         <li><strong>Break something on purpose</strong>: Delete an intermediate file and
+#         run <code>make</code>. Does it rebuild just what's needed? Try making a file
+#         older with <code>touch -t</code> - what happens?</li>
 #     </ul>
 # </div>
 
@@ -757,9 +763,15 @@
 #     <h4 style="color: #7b1fa2; margin-top: 0;">💡 Try It Yourself</h4>
 #     <p>Ready to build real workflows? Try these multi-step explorations:</p>
 #     <ul>
-#         <li><strong>Convert your analysis to Snakemake</strong>: Take a shell script with 3-4 steps (download, process, analyze, plot). Rewrite it as a Snakefile. Notice how Snakemake thinks backwards from outputs!</li>
-#         <li><strong>Add wildcards</strong>: If you process multiple similar files, try using <code>{sample}</code> wildcards instead of writing separate rules. One rule to rule them all!</li>
-#         <li><strong>Visualize your workflow</strong>: Generate a DAG diagram of your Snakemake workflow. Share it with a colleague - can they understand your pipeline from the diagram alone?</li>
+#         <li><strong>Convert your analysis to Snakemake</strong>: Take a shell script
+#         with 3-4 steps (download, process, analyze, plot). Rewrite it as a Snakefile.
+#         Notice how Snakemake thinks backwards from outputs!</li>
+#         <li><strong>Add wildcards</strong>: If you process multiple similar files, try
+#         using <code>{sample}</code> wildcards instead of writing separate rules. One rule
+#         to rule them all!</li>
+#         <li><strong>Visualize your workflow</strong>: Generate a DAG diagram of your
+#         Snakemake workflow. Share it with a colleague - can they understand your pipeline
+#         from the diagram alone?</li>
 #     </ul>
 # </div>
 
@@ -768,9 +780,15 @@
 #     <h4 style="color: #7b1fa2; margin-top: 0;">💡 Try It Yourself</h4>
 #     <p>Curious about parallelization and optimization? Experiment with workflow scaling:</p>
 #     <ul>
-#         <li><strong>Benchmark parallel execution</strong>: Run your Snakemake workflow with <code>-j 1</code>, <code>-j 2</code>, <code>-j 4</code>, <code>-j 8</code>. Time each run. Does it scale linearly? Why or why not?</li>
-#         <li><strong>Find the bottleneck</strong>: Look at your workflow DAG. Which steps can run in parallel? Which must run sequentially? The longest sequential chain determines minimum runtime.</li>
-#         <li><strong>Add resource constraints</strong>: Try declaring memory or threads requirements for rules. What happens when you over-subscribe resources? Workflow systems help prevent this!</li>
+#         <li><strong>Benchmark parallel execution</strong>: Run your Snakemake workflow
+#         with <code>-j 1</code>, <code>-j 2</code>, <code>-j 4</code>, <code>-j 8</code>.
+#         Time each run. Does it scale linearly? Why or why not?</li>
+#         <li><strong>Find the bottleneck</strong>: Look at your workflow DAG. Which steps
+#         can run in parallel? Which must run sequentially? The longest sequential chain
+#         determines minimum runtime.</li>
+#         <li><strong>Add resource constraints</strong>: Try declaring memory or threads
+#         requirements for rules. What happens when you over-subscribe resources? Workflow
+#         systems help prevent this!</li>
 #     </ul>
 # </div>
 

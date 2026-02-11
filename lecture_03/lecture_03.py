@@ -600,9 +600,12 @@ except ValueError as e:
 #     <h4 style="color: #7b1fa2; margin-top: 0;">💡 Try It Yourself</h4>
 #     <p>Ready to master error handling? Practice makes perfect!</p>
 #     <ul>
-#         <li><strong>Build a robust calculator:</strong> Create a calculator function that handles division by zero, type errors, and invalid operations with specific error messages for each case.</li>
-#         <li><strong>Chain exception handlers:</strong> Write code with multiple except blocks to handle TypeError, ValueError, and FileNotFoundError differently, showing how specific error handling improves user experience.</li>
-#         <li><strong>Create custom exceptions:</strong> Design your own exception class (like TemperatureError or DataValidationError) for domain-specific error handling in your research code.</li>
+#         <li><strong>Build a robust calculator:</strong> Create a calculator function that handles division by zero, type
+#         errors, and invalid operations with specific error messages for each case.</li>
+#         <li><strong>Chain exception handlers:</strong> Write code with multiple except blocks to handle TypeError,
+#         ValueError, and FileNotFoundError differently, showing how specific error handling improves user experience.</li>
+#         <li><strong>Create custom exceptions:</strong> Design your own exception class (like TemperatureError or
+#         DataValidationError) for domain-specific error handling in your research code.</li>
 #     </ul>
 # </div>
 
@@ -782,9 +785,12 @@ print(f"Average valid temperature: {sum(valid_temps) / len(valid_temps):.2f}°C"
 #     <h4 style="color: #7b1fa2; margin-top: 0;">💡 Try It Yourself</h4>
 #     <p>File I/O is where theory meets practice—explore real data scenarios!</p>
 #     <ul>
-#         <li><strong>Build a data pipeline:</strong> Process a real CSV file from your research (or a public dataset), validate each row, and write only the clean data to a new file with summary statistics.</li>
-#         <li><strong>Handle messy data gracefully:</strong> Create a CSV reader that skips malformed rows, logs warnings for questionable values, and generates a quality report showing what percentage of data was usable.</li>
-#         <li><strong>Implement data versioning:</strong> Write functions that save processed data with timestamps and metadata (processing date, filters applied, source file) so you can track data provenance.</li>
+#         <li><strong>Build a data pipeline:</strong> Process a real CSV file from your research (or a public dataset),
+#         validate each row, and write only the clean data to a new file with summary statistics.</li>
+#         <li><strong>Handle messy data gracefully:</strong> Create a CSV reader that skips malformed rows, logs warnings
+#         for questionable values, and generates a quality report showing what percentage of data was usable.</li>
+#         <li><strong>Implement data versioning:</strong> Write functions that save processed data with timestamps and
+#         metadata (processing date, filters applied, source file) so you can track data provenance.</li>
 #     </ul>
 # </div>
 
@@ -850,9 +856,14 @@ print(f"High temperatures: {high_temp_dict}")
 #     <h4 style="color: #7b1fa2; margin-top: 0;">💡 Try It Yourself</h4>
 #     <p>List comprehensions unlock functional programming—discover the elegance!</p>
 #     <ul>
-#         <li><strong>Refactor loops to comprehensions:</strong> Take existing code with nested for-loops and multiple if statements and rewrite it as concise list/dict comprehensions—see how readability improves.</li>
-#         <li><strong>Chain transformations:</strong> Process data in multiple steps using comprehensions—filter, transform, aggregate—and compare the performance against traditional loops using timeit.</li>
-#         <li><strong>Explore generator expressions:</strong> Convert memory-heavy list comprehensions to generator expressions for large datasets and observe the memory difference using sys.getsizeof().</li>
+#         <li><strong>Refactor loops to comprehensions:</strong> Take existing code with
+#         nested for-loops and multiple if statements and rewrite it as concise list/dict
+#         comprehensions—see how readability improves.</li>
+#         <li><strong>Chain transformations:</strong> Process data in multiple steps using comprehensions—filter, transform,
+#         aggregate—and compare the performance against traditional loops using timeit.</li>
+#         <li><strong>Explore generator expressions:</strong> Convert memory-heavy list
+#         comprehensions to generator expressions for large datasets and observe the memory
+#         difference using sys.getsizeof().</li>
 #     </ul>
 # </div>
 

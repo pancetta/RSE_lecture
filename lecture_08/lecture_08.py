@@ -487,9 +487,16 @@ print(f"Anomalies: {anomalies}")
 #     <h4 style="color: #7b1fa2; margin-top: 0;">💡 Try It Yourself</h4>
 #     <p>Documentation is a gift to your future self—invest in it now!</p>
 #     <ul>
-#         <li><strong>Document your research functions:</strong> Pick 5 key functions from your current project and write complete NumPy-style docstrings with parameters, returns, examples, and scientific references—see how it clarifies your own thinking.</li>
-#         <li><strong>Build Sphinx documentation:</strong> Set up Sphinx for your project, configure autodoc to extract docstrings, add a tutorial page, and deploy to Read the Docs—create professional documentation website for free.</li>
-#         <li><strong>Add usage examples:</strong> Write docstring examples that users can copy-paste and run immediately—test them with doctest to ensure they stay up-to-date as code evolves.</li>
+#         <li><strong>Document your research functions:</strong> Pick 5 key functions from
+#         your current project and write complete NumPy-style docstrings with parameters,
+#         returns, examples, and scientific references—see how it clarifies your own
+#         thinking.</li>
+#         <li><strong>Build Sphinx documentation:</strong> Set up Sphinx for your project,
+#         configure autodoc to extract docstrings, add a tutorial page, and deploy to Read
+#         the Docs—create professional documentation website for free.</li>
+#         <li><strong>Add usage examples:</strong> Write docstring examples that users can
+#         copy-paste and run immediately—test them with doctest to ensure they stay
+#         up-to-date as code evolves.</li>
 #     </ul>
 # </div>
 
@@ -808,9 +815,16 @@ print(f"Anomalies: {anomalies}")
 #     <h4 style="color: #7b1fa2; margin-top: 0;">💡 Try It Yourself</h4>
 #     <p>Choosing the right license protects you and empowers others!</p>
 #     <ul>
-#         <li><strong>License your research code:</strong> Review your GitHub repositories, choose appropriate licenses (MIT for permissive, GPL for copyleft, or CC0 for public domain data), add LICENSE files, and update READMEs with license badges.</li>
-#         <li><strong>Understand license compatibility:</strong> Research which licenses can be combined—learn why you can use MIT libraries in GPL projects but not vice versa, and how this affects your research software dependencies.</li>
-#         <li><strong>Add citation metadata:</strong> Create a CITATION.cff file for your main project specifying how you want to be cited—make it easy for others to give you proper academic credit.</li>
+#         <li><strong>License your research code:</strong> Review your GitHub
+#         repositories, choose appropriate licenses (MIT for permissive, GPL for copyleft,
+#         or CC0 for public domain data), add LICENSE files, and update READMEs with
+#         license badges.</li>
+#         <li><strong>Understand license compatibility:</strong> Research which licenses can
+#         be combined—learn why you can use MIT libraries in GPL projects but not vice
+#         versa, and how this affects your research software dependencies.</li>
+#         <li><strong>Add citation metadata:</strong> Create a CITATION.cff file for your
+#         main project specifying how you want to be cited—make it easy for others to give
+#         you proper academic credit.</li>
 #     </ul>
 # </div>
 
@@ -948,9 +962,15 @@ print(f"Anomalies: {anomalies}")
 #     <h4 style="color: #7b1fa2; margin-top: 0;">💡 Try It Yourself</h4>
 #     <p>Publishing to PyPI makes your code accessible to the world—share your work!</p>
 #     <ul>
-#         <li><strong>Package your research tool:</strong> Take a useful script or module from your work, create proper package structure with setup.py/pyproject.toml, and publish to TestPyPI first—practice the full release workflow safely.</li>
-#         <li><strong>Automate releases with CI:</strong> Set up GitHub Actions to automatically build, test, and publish to PyPI when you create a new Git tag—eliminate manual release steps and ensure consistency.</li>
-#         <li><strong>Create a complete package:</strong> Build a small but complete package with documentation, tests, examples, CLI entry points, and proper versioning—experience what production-ready Python packages require.</li>
+#         <li><strong>Package your research tool:</strong> Take a useful script or module
+#         from your work, create proper package structure with setup.py/pyproject.toml, and
+#         publish to TestPyPI first—practice the full release workflow safely.</li>
+#         <li><strong>Automate releases with CI:</strong> Set up GitHub Actions to
+#         automatically build, test, and publish to PyPI when you create a new Git
+#         tag—eliminate manual release steps and ensure consistency.</li>
+#         <li><strong>Create a complete package:</strong> Build a small but complete package
+#         with documentation, tests, examples, CLI entry points, and proper
+#         versioning—experience what production-ready Python packages require.</li>
 #     </ul>
 # </div>
 

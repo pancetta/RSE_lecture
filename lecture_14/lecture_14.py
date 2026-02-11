@@ -200,9 +200,15 @@
 #     <h4 style="color: #7b1fa2; margin-top: 0;">💡 Try It Yourself</h4>
 #     <p>Ready to solidify what you've learned? Reflect on your RSE journey:</p>
 #     <ul>
-#         <li><strong>Inventory your new skills</strong>: Pick three lectures that changed how you work. What specific practices have you adopted? Which ones will you implement next week?</li>
-#         <li><strong>Review your old code</strong>: Look at a project from before this course. What would you do differently now? What quick wins could you apply (tests, documentation, Git workflow)?</li>
-#         <li><strong>Make a learning plan</strong>: From the course topics, which do you want to master? Pick one to dive deep into this month - focused practice beats broad exposure.</li>
+#         <li><strong>Inventory your new skills</strong>: Pick three lectures that changed
+#         how you work. What specific practices have you adopted? Which ones will you
+#         implement next week?</li>
+#         <li><strong>Review your old code</strong>: Look at a project from before this
+#         course. What would you do differently now? What quick wins could you apply
+#         (tests, documentation, Git workflow)?</li>
+#         <li><strong>Make a learning plan</strong>: From the course topics, which do you
+#         want to master? Pick one to dive deep into this month - focused practice beats
+#         broad exposure.</li>
 #     </ul>
 # </div>
 
@@ -590,9 +596,13 @@
 #     <h4 style="color: #7b1fa2; margin-top: 0;">💡 Try It Yourself</h4>
 #     <p>Curious about what's next in your RSE journey? Explore these growth paths:</p>
 #     <ul>
-#         <li><strong>Pick one advanced topic</strong>: From Part 2, choose something that excites you (HPC, web dev, ML, etc.). Spend 30 minutes exploring - read an article, watch a tutorial. Is this your next learning goal?</li>
-#         <li><strong>Attend an RSE event</strong>: Find the next de-RSE meetup, HiRSE seminar, or local coding club. Mark your calendar now - community connections matter more than you think!</li>
-#         <li><strong>Map your learning path</strong>: Where do you want to be in 6 months? 1 year? What skills would get you there? Write down 3-5 concrete learning goals and share them with a friend for accountability.</li>
+#         <li><strong>Pick one advanced topic</strong>: From Part 2, choose something that
+#         excites you (HPC, web dev, ML, etc.). Spend 30 minutes exploring - read an
+#         article, watch a tutorial. Is this your next learning goal?</li>
+#         <li><strong>Attend an RSE event</strong>: Find the next de-RSE meetup, HiRSE seminar, or local coding club. Mark your
+#         calendar now - community connections matter more than you think!</li>
+#         <li><strong>Map your learning path</strong>: Where do you want to be in 6 months? 1 year? What skills would get you
+#         there? Write down 3-5 concrete learning goals and share them with a friend for accountability.</li>
 #     </ul>
 # </div>
 
@@ -617,9 +627,15 @@
 #     <h4 style="color: #7b1fa2; margin-top: 0;">💡 Try It Yourself</h4>
 #     <p>Ready to give back and grow the RSE community? Start contributing today:</p>
 #     <ul>
-#         <li><strong>Teach someone something</strong>: Find a colleague struggling with Git, testing, or Python. Spend 30 minutes helping them. Teaching solidifies your own understanding and builds community!</li>
-#         <li><strong>Contribute to open source</strong>: Find a scientific package you use. Check their issues for "good first issue" or "documentation" labels. Even fixing a typo helps - and you'll learn their workflow!</li>
-#         <li><strong>Document your journey</strong>: Write a blog post, create a tutorial, or give a talk about what you learned in this course. Future you (and others!) will appreciate it. Share your knowledge!</li>
+#         <li><strong>Teach someone something</strong>: Find a colleague struggling with
+#         Git, testing, or Python. Spend 30 minutes helping them. Teaching solidifies your
+#         own understanding and builds community!</li>
+#         <li><strong>Contribute to open source</strong>: Find a scientific package you use.
+#         Check their issues for "good first issue" or "documentation" labels. Even fixing
+#         a typo helps - and you'll learn their workflow!</li>
+#         <li><strong>Document your journey</strong>: Write a blog post, create a tutorial,
+#         or give a talk about what you learned in this course. Future you (and others!)
+#         will appreciate it. Share your knowledge!</li>
 #     </ul>
 # </div>
 

@@ -305,9 +305,15 @@
 #     <h4 style="color: #7b1fa2; margin-top: 0;">💡 Try It Yourself</h4>
 #     <p>Want to build your team's review culture? Here's how to start:</p>
 #     <ul>
-#         <li><strong>Create your team's standards</strong>: Gather your research group and draft a simple review checklist. What matters most to your projects? Start with 5-7 items.</li>
-#         <li><strong>Customize the PR template</strong>: Copy the template above into your repository's <code>.github/pull_request_template.md</code>. Adapt it to your team's needs - remove what doesn't fit, add what's missing.</li>
-#         <li><strong>Practice with old PRs</strong>: Go back to a merged PR from your project. Review it using your new checklist. What would you have caught? What questions would you ask?</li>
+#         <li><strong>Create your team's standards</strong>: Gather your research group and
+#         draft a simple review checklist. What matters most to your projects? Start with
+#         5-7 items.</li>
+#         <li><strong>Customize the PR template</strong>: Copy the template above into your
+#         repository's <code>.github/pull_request_template.md</code>. Adapt it to your
+#         team's needs - remove what doesn't fit, add what's missing.</li>
+#         <li><strong>Practice with old PRs</strong>: Go back to a merged PR from your
+#         project. Review it using your new checklist. What would you have caught? What
+#         questions would you ask?</li>
 #     </ul>
 # </div>
 
@@ -459,9 +465,15 @@
 #     <h4 style="color: #7b1fa2; margin-top: 0;">💡 Try It Yourself</h4>
 #     <p>Ready to practice constructive code review? Try these approaches:</p>
 #     <ul>
-#         <li><strong>Review a colleague's code</strong>: Ask a lab mate if you can review one of their recent PRs or scripts. Focus on being helpful, not critical. Did they appreciate your feedback?</li>
-#         <li><strong>Get your code reviewed</strong>: Share a small piece of your code and explicitly ask for feedback on readability and design. What did you learn? What surprised you?</li>
-#         <li><strong>Practice "Yes, and..."</strong>: Next time you see code you'd do differently, start your comment with "This works, and we could also..." Notice how the tone changes!</li>
+#         <li><strong>Review a colleague's code</strong>: Ask a lab mate if you can review
+#         one of their recent PRs or scripts. Focus on being helpful, not critical. Did
+#         they appreciate your feedback?</li>
+#         <li><strong>Get your code reviewed</strong>: Share a small piece of your code and
+#         explicitly ask for feedback on readability and design. What did you learn? What
+#         surprised you?</li>
+#         <li><strong>Practice "Yes, and..."</strong>: Next time you see code you'd do
+#         differently, start your comment with "This works, and we could also..." Notice
+#         how the tone changes!</li>
 #     </ul>
 # </div>
 
@@ -866,9 +878,15 @@
 #     <h4 style="color: #7b1fa2; margin-top: 0;">💡 Try It Yourself</h4>
 #     <p>Interested in architectural thinking? Explore these design-focused activities:</p>
 #     <ul>
-#         <li><strong>Map your project's architecture</strong>: Draw a diagram of how your main code modules relate. Where does data flow? Which parts depend on others? Seeing structure helps you review it.</li>
-#         <li><strong>Review for future change</strong>: Look at a PR and ask: "If requirements changed, which parts would need to be rewritten?" Good architecture makes change easy - is this flexible or brittle?</li>
-#         <li><strong>Spot coupling in the wild</strong>: Find a large function in your codebase that does multiple things. How would you split it? What would make it more testable and maintainable?</li>
+#         <li><strong>Map your project's architecture</strong>: Draw a diagram of how
+#         your main code modules relate. Where does data flow? Which parts depend on
+#         others? Seeing structure helps you review it.</li>
+#         <li><strong>Review for future change</strong>: Look at a PR and ask: "If
+#         requirements changed, which parts would need to be rewritten?" Good architecture
+#         makes change easy - is this flexible or brittle?</li>
+#         <li><strong>Spot coupling in the wild</strong>: Find a large function in your
+#         codebase that does multiple things. How would you split it? What would make it
+#         more testable and maintainable?</li>
 #     </ul>
 # </div>
 

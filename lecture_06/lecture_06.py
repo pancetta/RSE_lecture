@@ -144,9 +144,15 @@
 #     <h4 style="color: #7b1fa2; margin-top: 0;">💡 Try It Yourself</h4>
 #     <p>CI/CD transforms how you work—automation prevents disasters!</p>
 #     <ul>
-#         <li><strong>Set up your first workflow:</strong> Create a .github/workflows/tests.yml file for one of your projects that runs pytest on every push—watch it catch bugs automatically.</li>
-#         <li><strong>Add multiple triggers:</strong> Configure your workflow to run on push, pull_request, and schedule (daily at midnight)—ensure your code stays healthy even when you're not actively developing.</li>
-#         <li><strong>Experiment with matrix testing:</strong> Test your code across Python 3.8, 3.9, 3.10, 3.11, and multiple operating systems (Ubuntu, macOS, Windows)—discover platform-specific bugs before users do.</li>
+#         <li><strong>Set up your first workflow:</strong> Create a
+#         .github/workflows/tests.yml file for one of your projects that runs pytest on
+#         every push—watch it catch bugs automatically.</li>
+#         <li><strong>Add multiple triggers:</strong> Configure your workflow to run on push,
+#         pull_request, and schedule (daily at midnight)—ensure your code stays healthy even
+#         when you're not actively developing.</li>
+#         <li><strong>Experiment with matrix testing:</strong> Test your code across Python
+#         3.8, 3.9, 3.10, 3.11, and multiple operating systems (Ubuntu, macOS,
+#         Windows)—discover platform-specific bugs before users do.</li>
 #     </ul>
 # </div>
 
@@ -254,9 +260,13 @@ print(basic_workflow)
 #     <h4 style="color: #7b1fa2; margin-top: 0;">💡 Try It Yourself</h4>
 #     <p>Advanced workflows unlock professional development practices!</p>
 #     <ul>
-#         <li><strong>Add linting and formatting checks:</strong> Extend your workflow to run flake8, black, and mypy—enforce code quality standards automatically and never merge poorly formatted code again.</li>
-#         <li><strong>Build a deployment pipeline:</strong> Add steps that build documentation with Sphinx, run performance benchmarks, and deploy to GitHub Pages—automate your entire release process.</li>
-#         <li><strong>Set up status badges:</strong> Add workflow status badges to your README that show build status, test coverage, and documentation status—make quality visible at a glance.</li>
+#         <li><strong>Add linting and formatting checks:</strong> Extend your workflow to
+#         run flake8, black, and mypy—enforce code quality standards automatically and never
+#         merge poorly formatted code again.</li>
+#         <li><strong>Build a deployment pipeline:</strong> Add steps that build documentation with Sphinx, run performance
+#         benchmarks, and deploy to GitHub Pages—automate your entire release process.</li>
+#         <li><strong>Set up status badges:</strong> Add workflow status badges to your README that show build status, test
+#         coverage, and documentation status—make quality visible at a glance.</li>
 #     </ul>
 # </div>
 
@@ -1076,9 +1086,15 @@ print(test_timing_example)
 #     <h4 style="color: #7b1fa2; margin-top: 0;">💡 Try It Yourself</h4>
 #     <p>Optimize your CI pipeline for speed and reliability—every second counts!</p>
 #     <ul>
-#         <li><strong>Measure and optimize runtime:</strong> Add timing to each workflow step, identify the slowest parts, and optimize them—try caching dependencies, running jobs in parallel, or using faster test selection strategies.</li>
-#         <li><strong>Implement smart caching:</strong> Cache pip packages, pre-built dependencies, and test databases across runs—reduce a 5-minute build to 30 seconds by reusing previous work.</li>
-#         <li><strong>Handle flaky tests:</strong> Identify tests that randomly fail, add retries with proper delays, or refactor them to be deterministic—build a CI pipeline you can trust 100% of the time.</li>
+#         <li><strong>Measure and optimize runtime:</strong> Add timing to each workflow
+#         step, identify the slowest parts, and optimize them—try caching dependencies,
+#         running jobs in parallel, or using faster test selection strategies.</li>
+#         <li><strong>Implement smart caching:</strong> Cache pip packages, pre-built
+#         dependencies, and test databases across runs—reduce a 5-minute build to 30 seconds
+#         by reusing previous work.</li>
+#         <li><strong>Handle flaky tests:</strong> Identify tests that randomly fail, add
+#         retries with proper delays, or refactor them to be deterministic—build a CI
+#         pipeline you can trust 100% of the time.</li>
 #     </ul>
 # </div>
 

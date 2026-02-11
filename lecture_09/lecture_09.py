@@ -251,9 +251,14 @@
 #     <h4 style="color: #7b1fa2; margin-top: 0;">💡 Try It Yourself</h4>
 #     <p>Ready to get hands-on with containers? Here are some ways to deepen your understanding:</p>
 #     <ul>
-#         <li><strong>Write your first Dockerfile</strong>: Take one of your existing Python scripts and create a Dockerfile for it. Start simple - just Python, dependencies, and the script.</li>
-#         <li><strong>Test on a colleague's machine</strong>: Build your container and share the image. Does it run identically on their system? Experience the "it works everywhere" moment!</li>
-#         <li><strong>Compare installation methods</strong>: Time how long it takes to set up your project manually vs. using a container. Which is more reliable?</li>
+#         <li><strong>Write your first Dockerfile</strong>: Take one of your existing
+#         Python scripts and create a Dockerfile for it. Start simple - just Python,
+#         dependencies, and the script.</li>
+#         <li><strong>Test on a colleague's machine</strong>: Build your container and
+#         share the image. Does it run identically on their system? Experience the "it
+#         works everywhere" moment!</li>
+#         <li><strong>Compare installation methods</strong>: Time how long it takes to set up your project manually vs. using a
+#         container. Which is more reliable?</li>
 #     </ul>
 # </div>
 
@@ -346,9 +351,15 @@
 #     <h4 style="color: #7b1fa2; margin-top: 0;">💡 Try It Yourself</h4>
 #     <p>Want to master container debugging? Try these exploration activities:</p>
 #     <ul>
-#         <li><strong>Inspect layer sizes</strong>: Use <code>docker history &lt;image&gt;</code> to see how much each instruction adds to your image. What surprised you?</li>
-#         <li><strong>Debug a failing build</strong>: Intentionally break your Dockerfile (wrong package name, missing file). Practice using <code>docker run -it &lt;image&gt; /bin/bash</code> to investigate.</li>
-#         <li><strong>Experiment with layer caching</strong>: Make small changes to your Dockerfile and rebuild. Which layers are cached? Which rebuild? Understanding this saves hours of build time!</li>
+#         <li><strong>Inspect layer sizes</strong>: Use <code>docker history
+#         &lt;image&gt;</code> to see how much each instruction adds to your image. What
+#         surprised you?</li>
+#         <li><strong>Debug a failing build</strong>: Intentionally break your Dockerfile
+#         (wrong package name, missing file). Practice using <code>docker run -it &lt;image&gt;
+#         /bin/bash</code> to investigate.</li>
+#         <li><strong>Experiment with layer caching</strong>: Make small changes to your
+#         Dockerfile and rebuild. Which layers are cached? Which rebuild? Understanding this
+#         saves hours of build time!</li>
 #     </ul>
 # </div>
 
@@ -1046,9 +1057,15 @@
 #     <h4 style="color: #7b1fa2; margin-top: 0;">💡 Try It Yourself</h4>
 #     <p>Curious about different containerization approaches? Explore these comparisons:</p>
 #     <ul>
-#         <li><strong>Conda environment vs. container</strong>: Create both for the same project. Which is easier to share? Which is more reproducible? When would you choose each?</li>
-#         <li><strong>Compare Docker and Podman</strong>: If you have access to both, try running the same container with each tool. Notice the differences in commands and permissions.</li>
-#         <li><strong>Test portability</strong>: Build a container on your laptop and run it on a cluster or cloud instance. Does it truly work everywhere? What challenges arise?</li>
+#         <li><strong>Conda environment vs. container</strong>: Create both for the same
+#         project. Which is easier to share? Which is more reproducible? When would you
+#         choose each?</li>
+#         <li><strong>Compare Docker and Podman</strong>: If you have access to both, try
+#         running the same container with each tool. Notice the differences in commands and
+#         permissions.</li>
+#         <li><strong>Test portability</strong>: Build a container on your laptop and run
+#         it on a cluster or cloud instance. Does it truly work everywhere? What challenges
+#         arise?</li>
 #     </ul>
 # </div>
 

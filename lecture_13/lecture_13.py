@@ -821,9 +821,14 @@ except ValueError as e:
 #     <h4 style="color: #7b1fa2; margin-top: 0;">💡 Try It Yourself</h4>
 #     <p>Want to become better at working with AI? Practice these critical thinking exercises:</p>
 #     <ul>
-#         <li><strong>Test AI's knowledge boundaries</strong>: Ask your AI assistant about a niche library from your field. How accurate is it? Try asking about recent releases (post-2023) - does it hallucinate features?</li>
-#         <li><strong>Practice prompt engineering</strong>: Try asking the same question 3 different ways (vague, specific, with context). How does output quality change? Good prompts are a skill!</li>
-#         <li><strong>Verify everything</strong>: Take an AI code suggestion and check every claim: Does the function exist? Are parameters correct? Does the example run? Build verification habits early.</li>
+#         <li><strong>Test AI's knowledge boundaries</strong>: Ask your AI assistant about a niche library from your field. How
+#         accurate is it? Try asking about recent releases (post-2023) - does it hallucinate features?</li>
+#         <li><strong>Practice prompt engineering</strong>: Try asking the same question 3
+#         different ways (vague, specific, with context). How does output quality change?
+#         Good prompts are a skill!</li>
+#         <li><strong>Verify everything</strong>: Take an AI code suggestion and check
+#         every claim: Does the function exist? Are parameters correct? Does the example
+#         run? Build verification habits early.</li>
 #     </ul>
 # </div>
 
@@ -866,9 +871,15 @@ except ValueError as e:
 #     <h4 style="color: #7b1fa2; margin-top: 0;">💡 Try It Yourself</h4>
 #     <p>Concerned about legal risks? Explore these validation approaches:</p>
 #     <ul>
-#         <li><strong>Validate AI-generated code</strong>: Take a substantial code snippet from AI. Search GitHub for similar code - does exact or near-identical code exist? What license does it have?</li>
-#         <li><strong>Compare licenses</strong>: Read the MIT, Apache 2.0, and GPL licenses (15 minutes each). Which allows what? What obligations do they create? Understanding licenses protects you.</li>
-#         <li><strong>Audit your dependencies</strong>: Run <code>pip-licenses</code> or similar on your project. What licenses do you depend on? Are they compatible with your project's license? Any surprises?</li>
+#         <li><strong>Validate AI-generated code</strong>: Take a substantial code snippet
+#         from AI. Search GitHub for similar code - does exact or near-identical code
+#         exist? What license does it have?</li>
+#         <li><strong>Compare licenses</strong>: Read the MIT, Apache 2.0, and GPL licenses
+#         (15 minutes each). Which allows what? What obligations do they create?
+#         Understanding licenses protects you.</li>
+#         <li><strong>Audit your dependencies</strong>: Run <code>pip-licenses</code> or
+#         similar on your project. What licenses do you depend on? Are they compatible with
+#         your project's license? Any surprises?</li>
 #     </ul>
 # </div>
 
@@ -931,9 +942,15 @@ except ValueError as e:
 #     <h4 style="color: #7b1fa2; margin-top: 0;">💡 Try It Yourself</h4>
 #     <p>Thinking about legal and ethical implications? Explore these deeper questions:</p>
 #     <ul>
-#         <li><strong>Read the terms of service</strong>: Actually read GitHub Copilot's or ChatGPT's terms (10-15 minutes). What rights do you retain? What do they claim? Are you comfortable with this?</li>
-#         <li><strong>Understand your institution's policy</strong>: Does your university or research center have guidelines on AI tools? On data protection? Find and read them - they exist to protect you.</li>
-#         <li><strong>Consider self-hosted options</strong>: Research tools like Ollama or local LLMs. What would it take to run AI assistance on your institution's infrastructure? Worth exploring for sensitive projects!</li>
+#         <li><strong>Read the terms of service</strong>: Actually read GitHub Copilot's
+#         or ChatGPT's terms (10-15 minutes). What rights do you retain? What do they
+#         claim? Are you comfortable with this?</li>
+#         <li><strong>Understand your institution's policy</strong>: Does your university
+#         or research center have guidelines on AI tools? On data protection? Find and read
+#         them - they exist to protect you.</li>
+#         <li><strong>Consider self-hosted options</strong>: Research tools like Ollama or
+#         local LLMs. What would it take to run AI assistance on your institution's
+#         infrastructure? Worth exploring for sensitive projects!</li>
 #     </ul>
 # </div>
 

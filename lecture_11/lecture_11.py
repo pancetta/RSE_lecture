@@ -267,9 +267,15 @@ print(json.dumps(fair_data["metadata"], indent=2)[:500] + "...")
 #     <h4 style="color: #7b1fa2; margin-top: 0;">💡 Try It Yourself</h4>
 #     <p>Curious about data formats in practice? Explore these hands-on activities:</p>
 #     <ul>
-#         <li><strong>Benchmark your data</strong>: Take a dataset you work with and save it as CSV, JSON, and pickle. Compare file sizes and read/write speeds. Which format wins for your use case?</li>
-#         <li><strong>Test data validation</strong>: Intentionally corrupt a data file (wrong data type, missing value, out-of-range number). Does your code catch it? Add validation that would!</li>
-#         <li><strong>Think about 10 years from now</strong>: Which format would you trust to be readable in a decade? Try opening a 10-year-old Excel file or CSV - what happened to it?</li>
+#         <li><strong>Benchmark your data</strong>: Take a dataset you work with and save
+#         it as CSV, JSON, and pickle. Compare file sizes and read/write speeds. Which
+#         format wins for your use case?</li>
+#         <li><strong>Test data validation</strong>: Intentionally corrupt a data file (wrong
+#         data type, missing value, out-of-range number). Does your code catch it? Add
+#         validation that would!</li>
+#         <li><strong>Think about 10 years from now</strong>: Which format would you trust
+#         to be readable in a decade? Try opening a 10-year-old Excel file or CSV - what
+#         happened to it?</li>
 #     </ul>
 # </div>
 
@@ -602,9 +608,15 @@ nc.close()
 #     <h4 style="color: #7b1fa2; margin-top: 0;">💡 Try It Yourself</h4>
 #     <p>Want to master scientific data formats? Try these comparative experiments:</p>
 #     <ul>
-#         <li><strong>Convert between formats</strong>: Take data in CSV and convert it to HDF5, then to NetCDF. What metadata can you preserve? What gets lost? Which format feels most natural for your data?</li>
-#         <li><strong>Explore compression</strong>: Save the same array in HDF5 with different compression levels. How much space do you save? How much slower is reading? Find the sweet spot for your data.</li>
-#         <li><strong>Read a subset</strong>: Load just one variable from a multi-variable HDF5/NetCDF file, or just rows 1000-2000 from a million-row dataset. Experience the power of partial I/O!</li>
+#         <li><strong>Convert between formats</strong>: Take data in CSV and convert it to
+#         HDF5, then to NetCDF. What metadata can you preserve? What gets lost? Which
+#         format feels most natural for your data?</li>
+#         <li><strong>Explore compression</strong>: Save the same array in HDF5 with
+#         different compression levels. How much space do you save? How much slower is
+#         reading? Find the sweet spot for your data.</li>
+#         <li><strong>Read a subset</strong>: Load just one variable from a multi-variable
+#         HDF5/NetCDF file, or just rows 1000-2000 from a million-row dataset. Experience
+#         the power of partial I/O!</li>
 #     </ul>
 # </div>
 
@@ -838,9 +850,15 @@ conn.close()
 #     <h4 style="color: #7b1fa2; margin-top: 0;">💡 Try It Yourself</h4>
 #     <p>Ready to think like a database designer? Try these schema explorations:</p>
 #     <ul>
-#         <li><strong>Design your research schema</strong>: Take a research project you're working on. What are the entities (experiments, samples, measurements)? How do they relate? Sketch a simple schema with 3-4 tables.</li>
-#         <li><strong>CSV vs. SQLite showdown</strong>: Convert a multi-file CSV dataset into a SQLite database with proper relationships. Which is easier to query? Which is easier to maintain?</li>
-#         <li><strong>Practice SQL queries</strong>: Using your data, write queries that join tables, filter results, and aggregate values. SQL is powerful once you get comfortable with it!</li>
+#         <li><strong>Design your research schema</strong>: Take a research project you're
+#         working on. What are the entities (experiments, samples, measurements)? How do
+#         they relate? Sketch a simple schema with 3-4 tables.</li>
+#         <li><strong>CSV vs. SQLite showdown</strong>: Convert a multi-file CSV dataset
+#         into a SQLite database with proper relationships. Which is easier to query? Which
+#         is easier to maintain?</li>
+#         <li><strong>Practice SQL queries</strong>: Using your data, write queries that
+#         join tables, filter results, and aggregate values. SQL is powerful once you get
+#         comfortable with it!</li>
 #     </ul>
 # </div>
 

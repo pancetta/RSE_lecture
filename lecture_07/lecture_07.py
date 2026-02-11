@@ -385,9 +385,15 @@ print(f"  Trend: {result3['trend']:.4f}°C/day")
 #     <h4 style="color: #7b1fa2; margin-top: 0;">💡 Try It Yourself</h4>
 #     <p>Master pdb and become a debugging wizard—interactive debugging changes everything!</p>
 #     <ul>
-#         <li><strong>Debug a real bug:</strong> Intentionally introduce a subtle bug in your code (off-by-one error, wrong variable, incorrect condition) and use pdb to hunt it down—practice stepping, inspecting variables, and testing hypotheses.</li>
-#         <li><strong>Explore unfamiliar code:</strong> Use pdb to step through a library function you don't understand—see exactly how it processes your data and what intermediate values look like.</li>
-#         <li><strong>Set conditional breakpoints:</strong> Use pdb.set_trace() with an if statement to break only when specific conditions occur (like when a variable exceeds a threshold)—debug rare edge cases efficiently.</li>
+#         <li><strong>Debug a real bug:</strong> Intentionally introduce a subtle bug in
+#         your code (off-by-one error, wrong variable, incorrect condition) and use pdb to
+#         hunt it down—practice stepping, inspecting variables, and testing hypotheses.</li>
+#         <li><strong>Explore unfamiliar code:</strong> Use pdb to step through a library
+#         function you don't understand—see exactly how it processes your data and what
+#         intermediate values look like.</li>
+#         <li><strong>Set conditional breakpoints:</strong> Use pdb.set_trace() with an if
+#         statement to break only when specific conditions occur (like when a variable
+#         exceeds a threshold)—debug rare edge cases efficiently.</li>
 #     </ul>
 # </div>
 
@@ -605,9 +611,16 @@ print(f"\nAcceptance rate: {result['acceptance_rate']:.1%}")
 #     <h4 style="color: #7b1fa2; margin-top: 0;">💡 Try It Yourself</h4>
 #     <p>Strategic logging transforms debugging from guesswork to science!</p>
 #     <ul>
-#         <li><strong>Build a comprehensive logging strategy:</strong> Add structured logging to a research pipeline with DEBUG for detailed flow, INFO for progress, WARNING for questionable data, and ERROR for failures—then run it and observe how visibility improves troubleshooting.</li>
-#         <li><strong>Log for reproducibility:</strong> Create logs that record all parameters, random seeds, data versions, and environment details—practice reconstructing a computation from log files alone.</li>
-#         <li><strong>Implement performance logging:</strong> Add timing logs for each major step in your pipeline, then analyze the logs to identify which stages are slowest and should be optimized first.</li>
+#         <li><strong>Build a comprehensive logging strategy:</strong> Add structured
+#         logging to a research pipeline with DEBUG for detailed flow, INFO for progress,
+#         WARNING for questionable data, and ERROR for failures—then run it and observe how
+#         visibility improves troubleshooting.</li>
+#         <li><strong>Log for reproducibility:</strong> Create logs that record all
+#         parameters, random seeds, data versions, and environment details—practice
+#         reconstructing a computation from log files alone.</li>
+#         <li><strong>Implement performance logging:</strong> Add timing logs for each major
+#         step in your pipeline, then analyze the logs to identify which stages are slowest
+#         and should be optimized first.</li>
 #     </ul>
 # </div>
 
@@ -655,9 +668,15 @@ print(f"\nAcceptance rate: {result['acceptance_rate']:.1%}")
 #     <h4 style="color: #7b1fa2; margin-top: 0;">💡 Try It Yourself</h4>
 #     <p>Profiling reveals hidden performance bottlenecks—prepare to be surprised!</p>
 #     <ul>
-#         <li><strong>Profile your slowest code:</strong> Run cProfile on a computation that takes >10 seconds, identify the top 3 time-consuming functions, and focus optimization efforts there—measure the speedup achieved.</li>
-#         <li><strong>Find unexpected hotspots:</strong> Profile code where you think you know what's slow, then look for surprises—often the bottleneck is somewhere unexpected like string formatting, file I/O, or data structure operations.</li>
-#         <li><strong>Compare algorithms empirically:</strong> Implement the same calculation two ways (nested loops vs. NumPy, list comprehension vs. generator) and profile both—see concrete evidence of which is faster for your data size.</li>
+#         <li><strong>Profile your slowest code:</strong> Run cProfile on a computation
+#         that takes >10 seconds, identify the top 3 time-consuming functions, and focus
+#         optimization efforts there—measure the speedup achieved.</li>
+#         <li><strong>Find unexpected hotspots:</strong> Profile code where you think you
+#         know what's slow, then look for surprises—often the bottleneck is somewhere
+#         unexpected like string formatting, file I/O, or data structure operations.</li>
+#         <li><strong>Compare algorithms empirically:</strong> Implement the same
+#         calculation two ways (nested loops vs. NumPy, list comprehension vs. generator)
+#         and profile both—see concrete evidence of which is faster for your data size.</li>
 #     </ul>
 # </div>
 
