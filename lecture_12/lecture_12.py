@@ -205,31 +205,6 @@
 # This is exactly what **build systems** and **workflow managers** provide.
 
 # %% [markdown]
-# ![Workflow Dependency Graph (DAG)](workflow_dag.png)
-# 
-# **Understanding the Workflow DAG:**
-# 
-# This Directed Acyclic Graph (DAG) shows how workflow steps depend on each other:
-# 
-# - **Nodes** (boxes) = Tasks/steps in your analysis pipeline
-# - **Edges** (arrows) = Dependencies between steps
-# - **Colors** indicate different pipeline stages:
-#   - 🔵 Blue = Data acquisition
-#   - 🟢 Green = Data processing
-#   - 🟠 Orange = Analysis (can run in parallel!)
-#   - 🟣 Purple = Final output
-# 
-# **Key insights:**
-# 1. **Sequential when needed**: Clean data before analyzing it
-# 2. **Parallel when possible**: Plots, statistics, and modeling are independent
-# 3. **Smart updates**: If raw data changes, everything reruns. If only plot code
-#    changes, only plots and report rerun (not statistics or model!)
-# 4. **No cycles**: Can't have circular dependencies (that's the "Acyclic" part)
-# 
-# Workflow managers like Make and Snakemake automatically figure this out from your
-# rules - you just declare the dependencies, they handle the execution order!
-
-# %% [markdown]
 # ## Part 3: Make - The Classic Build System
 #
 # ### Introduction to Make

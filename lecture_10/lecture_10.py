@@ -194,31 +194,6 @@
 # - CI tests pass ✅
 # - Merge the PR (squash, rebase, or merge commit - team decision)
 # - Delete the feature branch
-
-# %% [markdown]
-# ![Pull Request Workflow](pr_workflow.png)
-# 
-# **The Pull Request Workflow in Action:**
-# **The Pull Request Workflow in Action:**
-# 
-# This diagram shows the complete PR lifecycle:
-# 
-# 1. **Sync with main** - Start with the latest code
-# 2. **Create branch** - Isolated workspace for your changes
-# 3. **Make changes** - Edit code, write tests, commit
-# 4. **Push branch** - Share your work on GitHub
-# 5. **Open Pull Request** - Formally request to merge
-# 6. **Review + CI** - Code review AND automated tests (parallel!)
-# 7. **Address feedback** - Make changes if requested (dashed loop)
-# 8. **Merge** - Once approved and tests pass ✅
-# 
-# **Key insights:**
-# - Code review and CI testing happen **simultaneously** (saves time!)
-# - Feedback creates a **loop** - you may push multiple times before merge
-# - The PR stays **open** during the feedback cycle - all updates are tracked
-# - Once approved + tests pass → merge immediately
-# 
-# This workflow ensures every change is reviewed and tested before reaching main!
 #
 # ### Platform Comparison: GitHub vs GitLab
 #

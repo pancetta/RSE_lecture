@@ -194,25 +194,6 @@
 # │         Hardware                │
 # └─────────────────────────────────┘
 # ```
-
-# %% [markdown]
-# ![VM vs Containers Architecture](vm_vs_containers.png)
-# 
-# The visualization above highlights the key architectural differences:
-# The visualization above highlights the key architectural differences:
-# 
-# **Virtual Machines** (left):
-# - Each VM includes a full Guest OS → Heavy (gigabytes)
-# - Hypervisor virtualizes hardware → Slower startup
-# - Strong isolation but resource-intensive
-# 
-# **Containers** (right):
-# - Share the Host OS kernel → Lightweight (megabytes)
-# - Only package app + libraries → Fast startup (seconds)
-# - Good isolation with much less overhead
-# 
-# For research software, containers offer the best balance of reproducibility,
-# portability, and performance!
 #
 # ### Key Container Concepts
 #
@@ -364,24 +345,6 @@
 # RUN pip install -r requirements.txt  # Only rebuilds if requirements change
 # COPY . .                           # Then copy code
 # ```
-
-# %% [markdown]
-# ![Docker Image Layers](docker_layers.png)
-# 
-# **Understanding Image Layers:**
-# %% [markdown]
-# **Understanding Image Layers:**
-# 
-# Docker images are built like a layer cake - each instruction in your Dockerfile
-# creates a new layer on top of the previous one:
-# 
-# - **Layer caching** means unchanged layers don't rebuild (saves time!)
-# - **Place frequently changing code last** (e.g., your Python scripts)
-# - **Place rarely changing dependencies first** (e.g., Python packages)
-# - **Total image size** = sum of all layers
-# 
-# This is why the "good practice" pattern copies requirements.txt first, installs
-# packages, then copies code - code changes don't force package reinstallation!
 
 # %% [markdown]
 # <div style="background-color: #f3e5f5; border-left: 5px solid #9c27b0; padding: 15px; margin: 10px 0; border-radius: 5px;">

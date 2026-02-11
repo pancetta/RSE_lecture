@@ -98,33 +98,6 @@
 # **Reference**: Wilkinson et al. (2016), "The FAIR Guiding Principles for
 # scientific data management and stewardship", *Scientific Data*, 3:160018.
 # DOI: 10.1038/sdata.2016.18
-
-# %% [markdown]
-# ![FAIR Principles](fair_principles.png)
-# 
-# **Understanding FAIR Principles:**
-# **Understanding FAIR Principles:**
-# 
-# The diagram shows how the four FAIR principles work together:
-# 
-# - **Findable (F)** 🔍: Can others discover your data?
-#   - Needs: DOI, metadata, searchable location
-# 
-# - **Accessible (A)** 🔓: Can others get your data?
-#   - Needs: Standard download protocols, clear access rules
-# 
-# - **Interoperable (I)** 🔗: Can your data work with other data/tools?
-#   - Needs: Standard formats, community conventions
-# 
-# - **Reusable (R)** ♻️: Can others actually use your data for new research?
-#   - Needs: License, provenance, documentation
-# 
-# The arrows show that these principles are **interconnected** - you need all four
-# for truly FAIR data! For example, data can be findable but not reusable (no license),
-# or accessible but not interoperable (proprietary format).
-# 
-# **In practice**: Publishing to repositories like Zenodo, Figshare, or domain-specific
-# repositories (GenBank, PDB) helps satisfy all FAIR principles at once.
 #
 # ### Research Data Management (RDM)
 #

@@ -293,17 +293,6 @@
 # with a descriptive message. This might seem like extra steps at first, but the staging area 
 # gives you fine control over what goes into each commit, allowing you to create logical, 
 # focused commits even if you've changed multiple files.
-
-# %% [markdown]
-# ![Git Three-Stage Workflow](git_three_stage_workflow.png)
-# 
-# The diagram above shows how Git manages your code through three distinct areas:
-# 
-# 1. **Working Directory**: Where you edit your files normally
-# 2. **Staging Area**: Where you prepare changes before committing (lets you choose exactly what to commit)
-# 3. **Repository**: Where Git permanently stores your project history
-# 
-# This three-stage approach gives you precise control over what goes into each commit.
 # 
 # ```bash
 # # Configure Git (first time only)
@@ -349,19 +338,6 @@
 # always go back if the experiment doesn't work out.
 
 # %% [markdown]
-# ![Git Commit History Timeline](git_commit_timeline.png)
-# 
-# The timeline above shows how Git tracks your project history through a sequence of commits.
-# Each commit is like a snapshot of your project at a specific point in time. Git remembers:
-# - **What changed** (the actual file modifications)
-# - **When it changed** (timestamp)
-# - **Who changed it** (author)
-# - **Why it changed** (commit message)
-# 
-# With `git log`, you can view this history. With `git checkout <hash>`, you can even go back
-# to any point in time to see or restore old versions!
-
-# %% [markdown]
 # <div style="background-color: #f3e5f5; border-left: 5px solid #9c27b0; padding: 15px; margin: 10px 0; border-radius: 5px;">
 #     <h4 style="color: #7b1fa2; margin-top: 0;">💡 Try It Yourself</h4>
 #     <p>Build your Git intuition with hands-on practice:</p>
@@ -405,17 +381,6 @@
 # After making changes locally and committing them, you "push" those commits to GitHub. When your 
 # collaborators make changes, you "pull" their commits to your local repository. This push-pull 
 # cycle keeps everyone synchronized.
-
-# %% [markdown]
-# ![Git Local vs Remote Workflow](git_local_remote_workflow.png)
-# 
-# This diagram shows the relationship between your local repository and GitHub:
-# 
-# - **git clone**: Copy a repository from GitHub to your computer (do this once)
-# - **git push**: Send your local commits to GitHub (share your work)
-# - **git pull**: Get new commits from GitHub to your computer (get others' work)
-# 
-# Think of GitHub as a shared backup and collaboration hub for your code!
 # 
 # ```bash
 # # Clone an existing repository

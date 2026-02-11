@@ -97,23 +97,6 @@
 # - **Confidence**: Know code works before merging—sleep better at night
 # - **Documentation**: CI config shows exactly how to run tests—reproducible by anyone
 # - **Faster feedback**: Know within minutes if your change broke something
-
-# %% [markdown]
-# ![CI Pipeline Workflow](ci_pipeline_workflow.png)
-# 
-# The diagram above shows the complete CI workflow:
-# 
-# 1. **Developer pushes code** → Commits and pushes changes to GitHub
-# 2. **CI automatically triggers** → No manual intervention needed
-# 3. **CI system runs tests** → In a clean, reproducible environment
-#    - Checks out code
-#    - Installs dependencies
-#    - Runs entire test suite
-# 4. **Results reported** → Pass ✅ or Fail ❌
-# 5. **Feedback loop** → If tests fail, fix and repeat
-# 
-# The entire process takes just minutes and happens automatically every time code
-# changes. This ensures bugs are caught immediately, before they can affect others!
 # 
 # **Research context**: For research software, CI is crucial for reproducibility. Your CI configuration 
 # documents exactly how to build and test your code, making it easy for reviewers and other researchers 

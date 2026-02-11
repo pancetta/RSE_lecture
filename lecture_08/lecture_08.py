@@ -132,44 +132,6 @@
 # - DOI for specific versions
 
 # %% [markdown]
-# ![Documentation Hierarchy Pyramid](documentation_hierarchy.png)
-# 
-# **Understanding the Documentation Pyramid:**
-
-# %% [markdown]
-# **Understanding the Documentation Pyramid:**
-# 
-# Documentation forms a pyramid from broad (bottom) to specialized (top):
-# 
-# 1. **README** (widest base) - Quick overview for everyone browsing your repo
-#    - Most people only read this - make it count!
-#    - 5 minutes to convince them to try your software
-# 
-# 2. **Installation Guide** - For users who decided to try it
-#    - Detailed, step-by-step setup
-#    - Troubleshooting common problems
-# 
-# 3. **Tutorials** - For users learning to use your software
-#    - Complete examples with expected output
-#    - Learn by doing
-# 
-# 4. **How-To Guides** - For users solving specific problems
-#    - Task-oriented recipes
-#    - "How do I...?" questions
-# 
-# 5. **API Reference** - For developers who need details
-#    - Every function, class, parameter
-#    - Auto-generated from docstrings
-# 
-# 6. **Contributing Guide** (narrow top) - For potential contributors
-#    - Development setup and workflow
-#    - Coding standards
-# 
-# **Key insight**: Each level serves a different audience size. Most users only
-# need README + Installation. Only a small fraction needs Contributing docs.
-# **Build the pyramid from bottom up** - don't write API docs before README!
-
-# %% [markdown]
 # ## Part 3: Writing an Effective README
 # 
 # ### The README is Your Software's First Impression

@@ -158,25 +158,6 @@
 # reconcile both sets of changes.
 
 # %% [markdown]
-# ![Git Merge Strategies](git_merge_strategies.png)
-# 
-# The diagrams above show two different merge scenarios:
-# 
-# **Fast-Forward Merge** (top):
-# - Main branch hasn't changed since the feature branch was created
-# - Git simply moves the main branch pointer forward
-# - No new merge commit needed - clean, linear history
-# - Use when: working alone or main hasn't been updated
-# 
-# **Three-Way Merge** (bottom):
-# - Both branches have new commits since they diverged
-# - Git creates a new merge commit (M) with two parents
-# - Preserves the complete history of both branches
-# - Use when: collaborating and main has advanced
-# 
-# Both are perfectly valid! The type of merge depends on your project's history.
-
-# %% [markdown]
 # ### Handling Merge Conflicts
 # 
 # Conflicts occur when the same lines are changed in both branches. This is actually quite common 
