@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: "If you use this course material, please cite it as below."
+type: dataset
+title: "Research Software Engineering Lectures (JuRSE)"
+abstract: "A comprehensive lecture series covering fundamental concepts and practices in Research Software Engineering, including version control, Python programming, testing, CI/CD, debugging, documentation, containerization, collaboration, and AI-assisted coding."
+authors:
+  - family-names: Speck
+    given-names: Robert
+    orcid: https://orcid.org/0000-0002-9843-5321
+    affiliation: "Jülich Supercomputing Centre, Forschungszentrum Jülich"
+    email: r.speck@fz-juelich.de
+repository-code: "https://github.com/pancetta/RSE_course_JuRSE"
+url: "https://pancetta.github.io/RSE_course_JuRSE/"
+license: CC-BY-4.0
+keywords:
+  - research software engineering
+  - software development
+  - best practices
+  - python
+  - git
+  - testing
+  - continuous integration
+  - documentation
+  - reproducibility
+  - education
+date-released: 2026-02-11
+version: 1.0.0

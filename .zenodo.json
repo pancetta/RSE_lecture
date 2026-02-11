@@ -1,0 +1,40 @@
+{
+  "title": "Research Software Engineering Lectures (JuRSE)",
+  "description": "A comprehensive lecture series covering fundamental concepts and practices in Research Software Engineering, including version control, Python programming, testing, CI/CD, debugging, documentation, containerization, collaboration, and AI-assisted coding. Each lecture is designed for 90-minute sessions and includes hands-on exercises.",
+  "creators": [
+    {
+      "name": "Speck, Robert",
+      "affiliation": "Jülich Supercomputing Centre, Forschungszentrum Jülich",
+      "orcid": "0000-0002-9843-5321"
+    }
+  ],
+  "access_right": "open",
+  "license": "cc-by-4.0",
+  "upload_type": "lesson",
+  "keywords": [
+    "research software engineering",
+    "software development",
+    "best practices",
+    "python",
+    "git",
+    "version control",
+    "testing",
+    "continuous integration",
+    "documentation",
+    "reproducibility",
+    "education",
+    "training"
+  ],
+  "related_identifiers": [
+    {
+      "relation": "isSupplementTo",
+      "identifier": "https://github.com/pancetta/RSE_course_JuRSE"
+    }
+  ],
+  "contributors": [
+    {
+      "name": "RSE Lecture Contributors",
+      "type": "Other"
+    }
+  ]
+}
