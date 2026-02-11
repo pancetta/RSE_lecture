@@ -401,6 +401,22 @@ def calculate_temperature_anomaly_clean(temperatures_f, baseline_f):
 # Now the code is clearer and more testable!
 
 # %% [markdown]
+# <div style="background-color: #f3e5f5; border-left: 5px solid #9c27b0; padding: 15px; margin: 10px 0; border-radius: 5px;">
+#     <h4 style="color: #7b1fa2; margin-top: 0;">💡 Try It Yourself</h4>
+#     <p>Refactoring smelly code is incredibly satisfying—transform bad into beautiful!</p>
+#     <ul>
+#         <li><strong>Refactor the code smells:</strong> Take the example functions above
+#         and refactor them to eliminate all code smells—extract functions, remove
+#         duplication, add clear names, and compare before/after readability.</li>
+#         <li><strong>Audit your own code:</strong> Review your current research code for the
+#         5 common smells—make a list of issues found, prioritize by impact, and refactor
+#         the worst offenders first.</li>
+#         <li><strong>Practice continuous refactoring:</strong> Next time you write new code, pause every 30 minutes to
+#         refactor—experience how incremental cleanup prevents technical debt from accumulating.</li>
+#     </ul>
+# </div>
+
+# %% [markdown]
 # #### The Testing Connection: Smelly Code is Hard to Test
 # 
 # Here's the key insight: **If your code is hard to test, it probably has design problems.**
@@ -431,6 +447,24 @@ def calculate_temperature_anomaly_clean(temperatures_f, baseline_f):
 # - Martin Fowler, *Refactoring: Improving the Design of Existing Code* (2018) - The definitive guide
 # - Robert C. Martin, *Clean Code* (2008) - Chapters 3, 6, 10 on functions, objects, and classes
 # - Steve McConnell, *Code Complete* (2004) - Chapter 7 on defensive programming
+
+# %% [markdown]
+# <div style="background-color: #f3e5f5; border-left: 5px solid #9c27b0; padding: 15px; margin: 10px 0; border-radius: 5px;">
+#     <h4 style="color: #7b1fa2; margin-top: 0;">💡 Try It Yourself</h4>
+#     <p>The best way to learn testing is to catch real bugs—let's hunt!</p>
+#     <ul>
+#         <li><strong>Write tests that catch the disaster:</strong> Before looking at the
+#         solution, write comprehensive tests for the buggy fahrenheit_to_celsius
+#         function—see if you can create a test suite that would have caught the bug before
+#         publication.</li>
+#         <li><strong>Test your own research code:</strong> Pick a critical function from
+#         your current project and write 3-5 tests for it—edge cases, typical inputs, and
+#         error conditions. You might discover bugs you didn't know existed!</li>
+#         <li><strong>Practice test-first thinking:</strong> Choose a new small feature you
+#         need and write the tests BEFORE implementing it—experience how tests clarify
+#         requirements and guide design.</li>
+#     </ul>
+# </div>
 
 # %% [markdown]
 # ## Part 2: Introduction to Testing
@@ -608,6 +642,21 @@ def test_assertion_patterns():
 
 
 test_assertion_patterns()
+
+# %% [markdown]
+# <div style="background-color: #f3e5f5; border-left: 5px solid #9c27b0; padding: 15px; margin: 10px 0; border-radius: 5px;">
+#     <h4 style="color: #7b1fa2; margin-top: 0;">💡 Try It Yourself</h4>
+#     <p>Coverage is your safety net—aim for comprehensive test suites!</p>
+#     <ul>
+#         <li><strong>Measure your test coverage:</strong> Run pytest with --cov on your research code and aim for >80%
+#         coverage—identify untested code paths and write tests for them.</li>
+#         <li><strong>Find the gaps:</strong> Use coverage reports to discover edge cases
+#         you missed—what happens with empty inputs, negative numbers, None values, or
+#         extremely large datasets?</li>
+#         <li><strong>Test the error paths:</strong> Many codebases test only the "happy path"—write tests that intentionally
+#         trigger errors, validate error messages, and ensure cleanup happens even when things fail.</li>
+#     </ul>
+# </div>
 
 # %% [markdown]
 # ## Part 4: Testing the Buggy Code

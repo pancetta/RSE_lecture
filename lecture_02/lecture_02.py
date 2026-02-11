@@ -205,6 +205,21 @@
 # before committing.
 
 # %% [markdown]
+# <div style="background-color: #f3e5f5; border-left: 5px solid #9c27b0; padding: 15px; margin: 10px 0; border-radius: 5px;">
+#     <h4 style="color: #7b1fa2; margin-top: 0;">💡 Try It Yourself</h4>
+#     <p>Master Git branching and conflict resolution:</p>
+#     <ul>
+#         <li><strong>Create an intentional conflict:</strong> Make two branches that modify the same
+#         line in different ways, then practice resolving the conflict manually</li>
+#         <li><strong>Experiment with merge strategies:</strong> Try both fast-forward and three-way
+#         merges. Use <code>git log --graph</code> to visualize the differences in history</li>
+#         <li><strong>Practice the feature branch workflow:</strong> Create a branch for a small
+#         feature, make several commits, then merge it back to main with a descriptive commit
+#         message</li>
+#     </ul>
+# </div>
+
+# %% [markdown]
 # ### The .gitignore File
 # 
 # Not all files should be tracked by Git. Some files are generated automatically (like compiled code), 
@@ -481,6 +496,21 @@
 # - Self-hosting requirements
 # - Specific features needed
 # - Existing infrastructure
+
+# %% [markdown]
+# <div style="background-color: #f3e5f5; border-left: 5px solid #9c27b0; padding: 15px; margin: 10px 0; border-radius: 5px;">
+#     <h4 style="color: #7b1fa2; margin-top: 0;">💡 Try It Yourself</h4>
+#     <p>Experience collaborative workflows firsthand:</p>
+#     <ul>
+#         <li><strong>Create a practice PR/MR:</strong> Fork a small open-source project (or use a
+#         personal test repo), make a meaningful improvement, and submit a pull request or merge
+#         request</li>
+#         <li><strong>Review someone else's code:</strong> Find an open PR in a project you're
+#         interested in, read through the changes, and try to understand what they do and why</li>
+#         <li><strong>Explore CI/CD in action:</strong> Look at the GitHub Actions or GitLab CI logs of
+#         a real project to see how automated tests and checks work</li>
+#     </ul>
+# </div>
 
 # %% [markdown]
 # ## Part 3: Introduction to Python
@@ -865,6 +895,23 @@ print(f"  Original samples: {results['original_count']}")
 print(f"  Samples above threshold: {results['filtered_count']}")
 print(f"  Mean of filtered data: {results['mean']:.2f}")
 print(f"  Range: {results['min']:.2f} - {results['max']:.2f}")
+
+# %% [markdown]
+# <div style="background-color: #f3e5f5; border-left: 5px solid #9c27b0; padding: 15px; margin: 10px 0; border-radius: 5px;">
+#     <h4 style="color: #7b1fa2; margin-top: 0;">💡 Try It Yourself</h4>
+#     <p>Deepen your Python skills through experimentation:</p>
+#     <ul>
+#         <li><strong>Explore slicing:</strong> Try different slice patterns on strings and lists
+#         (<code>[::2]</code>, <code>[::-1]</code>, negative indexing) to build intuition for how
+#         Python handles sequences</li>
+#         <li><strong>Create a data processor:</strong> Write a function that takes a list of
+#         measurements, filters out outliers, and returns a dictionary with mean, median, min, and max
+#         values</li>
+#         <li><strong>Practice with real data:</strong> Find a small CSV file (or create one), read it
+#         line by line, parse the values, and generate summary statistics using loops and
+#         conditionals</li>
+#     </ul>
+# </div>
 
 # %% [markdown]
 # ## Summary

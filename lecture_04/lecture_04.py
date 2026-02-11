@@ -722,6 +722,23 @@ print("Your package becomes a proper Python package")
 # 8. **Version your code** - Use semantic versioning (major.minor.patch)
 
 # %% [markdown]
+# <div style="background-color: #f3e5f5; border-left: 5px solid #9c27b0; padding: 15px; margin: 10px 0; border-radius: 5px;">
+#     <h4 style="color: #7b1fa2; margin-top: 0;">💡 Try It Yourself</h4>
+#     <p>Transform your messy script into a professional project structure!</p>
+#     <ul>
+#         <li><strong>Refactor into modules:</strong> Take a monolithic script from your
+#         research and split it into logical modules (data_processing.py, analysis.py,
+#         visualization.py)—experience how organization improves maintainability.</li>
+#         <li><strong>Create your first package:</strong> Set up a complete project with
+#         setup.py, __init__.py, requirements.txt, and README, then practice installing it
+#         in development mode with <code>pip install -e .</code></li>
+#         <li><strong>Build a CLI tool:</strong> Turn your analysis script into a
+#         command-line tool with argparse that accepts input files and parameters—make your
+#         code reusable by others.</li>
+#     </ul>
+# </div>
+
+# %% [markdown]
 # ---
 # ## Part 2: Working with NumPy (30 minutes)
 # 
@@ -1136,6 +1153,23 @@ print(f"Days with average > {threshold}°C: {hot_days}")
 # 5. **In-place operations** - Use `+=`, `-=` to save memory
 # 6. **Use built-in functions** - NumPy functions are optimized (C/Fortran)
 # 7. **Boolean indexing** - Elegant filtering without loops
+
+# %% [markdown]
+# <div style="background-color: #f3e5f5; border-left: 5px solid #9c27b0; padding: 15px; margin: 10px 0; border-radius: 5px;">
+#     <h4 style="color: #7b1fa2; margin-top: 0;">💡 Try It Yourself</h4>
+#     <p>NumPy's power lies in vectorization—discover the performance gains!</p>
+#     <ul>
+#         <li><strong>Benchmark everything:</strong> Compare Python loops vs. NumPy
+#         operations on increasingly large arrays (1K, 10K, 100K, 1M elements) and plot the
+#         performance difference—watch NumPy's advantage grow exponentially.</li>
+#         <li><strong>Vectorize your research code:</strong> Find a computation in your work
+#         that uses nested loops and rewrite it using NumPy broadcasting and
+#         vectorization—measure the speedup and memory usage.</li>
+#         <li><strong>Master multidimensional indexing:</strong> Create a 3D NumPy array
+#         (like time×latitude×longitude climate data) and practice advanced slicing, boolean
+#         indexing across dimensions, and aggregation operations.</li>
+#     </ul>
+# </div>
 
 # %% [markdown]
 # ---
@@ -1645,6 +1679,23 @@ print(f"\nOptimal pH: {max(mean_activities, key=mean_activities.get)}")
 # ✓ **Publication-quality** - DPI, vector formats, accessibility  
 # ✓ **Save figures** - PNG (raster), PDF/SVG (vector)  
 # ✓ **Best practices** - Clear labels, error bars, colorblind-friendly, simple  
+
+# %% [markdown]
+# <div style="background-color: #f3e5f5; border-left: 5px solid #9c27b0; padding: 15px; margin: 10px 0; border-radius: 5px;">
+#     <h4 style="color: #7b1fa2; margin-top: 0;">💡 Try It Yourself</h4>
+#     <p>Great visualizations tell compelling stories—master the art!</p>
+#     <ul>
+#         <li><strong>Create publication-ready figures:</strong> Take a plot from your
+#         research and polish it to journal standards—add error bars, use colorblind-friendly
+#         palettes, export as vector PDF at 300 DPI, and ensure all text is readable.</li>
+#         <li><strong>Build a multi-panel figure:</strong> Combine 4-6 related plots into a
+#         single figure with subplots, shared axes where appropriate, and panel labels (A, B,
+#         C, D)—practice telling a complete story in one figure.</li>
+#         <li><strong>Explore advanced plot types:</strong> Go beyond line plots—create
+#         heatmaps for correlation matrices, violin plots for distributions, contour plots
+#         for 2D functions, or 3D surface plots for multivariate data in your field.</li>
+#     </ul>
+# </div>
 
 # %% [markdown]
 # ## Next Steps

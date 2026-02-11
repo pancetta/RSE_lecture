@@ -245,7 +245,24 @@
 # Docker is the most widely-used containerization platform. While it requires
 # administrative privileges and runs a daemon, it has excellent documentation,
 # broad ecosystem support, and is well-integrated with most platforms.
-#
+
+# %% [markdown]
+# <div style="background-color: #f3e5f5; border-left: 5px solid #9c27b0; padding: 15px; margin: 10px 0; border-radius: 5px;">
+#     <h4 style="color: #7b1fa2; margin-top: 0;">💡 Try It Yourself</h4>
+#     <p>Ready to get hands-on with containers? Here are some ways to deepen your understanding:</p>
+#     <ul>
+#         <li><strong>Write your first Dockerfile</strong>: Take one of your existing
+#         Python scripts and create a Dockerfile for it. Start simple - just Python,
+#         dependencies, and the script.</li>
+#         <li><strong>Test on a colleague's machine</strong>: Build your container and
+#         share the image. Does it run identically on their system? Experience the "it
+#         works everywhere" moment!</li>
+#         <li><strong>Compare installation methods</strong>: Time how long it takes to set up your project manually vs. using a
+#         container. Which is more reliable?</li>
+#     </ul>
+# </div>
+
+# %% [markdown]
 # ### Writing a Dockerfile
 #
 # A Dockerfile is a text file with instructions to build a container image.
@@ -328,7 +345,25 @@
 # RUN pip install -r requirements.txt  # Only rebuilds if requirements change
 # COPY . .                           # Then copy code
 # ```
-#
+
+# %% [markdown]
+# <div style="background-color: #f3e5f5; border-left: 5px solid #9c27b0; padding: 15px; margin: 10px 0; border-radius: 5px;">
+#     <h4 style="color: #7b1fa2; margin-top: 0;">💡 Try It Yourself</h4>
+#     <p>Want to master container debugging? Try these exploration activities:</p>
+#     <ul>
+#         <li><strong>Inspect layer sizes</strong>: Use <code>docker history
+#         &lt;image&gt;</code> to see how much each instruction adds to your image. What
+#         surprised you?</li>
+#         <li><strong>Debug a failing build</strong>: Intentionally break your Dockerfile
+#         (wrong package name, missing file). Practice using <code>docker run -it &lt;image&gt;
+#         /bin/bash</code> to investigate.</li>
+#         <li><strong>Experiment with layer caching</strong>: Make small changes to your
+#         Dockerfile and rebuild. Which layers are cached? Which rebuild? Understanding this
+#         saves hours of build time!</li>
+#     </ul>
+# </div>
+
+# %% [markdown]
 # ### Building and Running Containers
 #
 # **Build an image:**
@@ -1016,6 +1051,23 @@
 #       - name: Test image
 #         run: docker run test python -m pytest
 # ```
+
+# %% [markdown]
+# <div style="background-color: #f3e5f5; border-left: 5px solid #9c27b0; padding: 15px; margin: 10px 0; border-radius: 5px;">
+#     <h4 style="color: #7b1fa2; margin-top: 0;">💡 Try It Yourself</h4>
+#     <p>Curious about different containerization approaches? Explore these comparisons:</p>
+#     <ul>
+#         <li><strong>Conda environment vs. container</strong>: Create both for the same
+#         project. Which is easier to share? Which is more reproducible? When would you
+#         choose each?</li>
+#         <li><strong>Compare Docker and Podman</strong>: If you have access to both, try
+#         running the same container with each tool. Notice the differences in commands and
+#         permissions.</li>
+#         <li><strong>Test portability</strong>: Build a container on your laptop and run
+#         it on a cluster or cloud instance. Does it truly work everywhere? What challenges
+#         arise?</li>
+#     </ul>
+# </div>
 
 # %% [markdown]
 # ## Part 9: Choosing the Right Tool

@@ -250,6 +250,22 @@
 # files.
 
 # %% [markdown]
+# <div style="background-color: #f3e5f5; border-left: 5px solid #9c27b0; padding: 15px; margin: 10px 0; border-radius: 5px;">
+#     <h4 style="color: #7b1fa2; margin-top: 0;">💡 Try It Yourself</h4>
+#     <p>Deepen your shell skills with these exploration activities:</p>
+#     <ul>
+#         <li><strong>Experiment with glob patterns:</strong> Try using wildcards like
+#         <code>*.txt</code>, <code>data_*.csv</code>, or <code>**/*.py</code> to match multiple files
+#         at once</li>
+#         <li><strong>Chain commands together:</strong> Use <code>&&</code> to run multiple commands
+#         sequentially (e.g., <code>mkdir test_dir && cd test_dir && touch file.txt</code>)</li>
+#         <li><strong>Explore your system:</strong> Navigate to different directories on your computer,
+#         use <code>ls -la</code> to see hidden files, and practice using tab completion to speed up
+#         navigation</li>
+#     </ul>
+# </div>
+
+# %% [markdown]
 # ### Introduction to Git
 # 
 # Git is a version control system that tracks changes to your code. Think of Git as a sophisticated 
@@ -320,6 +336,22 @@
 # want to return to later. This could be after fixing a bug, adding a new function, or refactoring 
 # code to be cleaner. If you're about to try something experimental, commit first—then you can 
 # always go back if the experiment doesn't work out.
+
+# %% [markdown]
+# <div style="background-color: #f3e5f5; border-left: 5px solid #9c27b0; padding: 15px; margin: 10px 0; border-radius: 5px;">
+#     <h4 style="color: #7b1fa2; margin-top: 0;">💡 Try It Yourself</h4>
+#     <p>Build your Git intuition with hands-on practice:</p>
+#     <ul>
+#         <li><strong>Create a practice repository:</strong> Make a new directory, run
+#         <code>git init</code>, and create several files. Make 5-10 commits with descriptive
+#         messages</li>
+#         <li><strong>Visualize your history:</strong> Try <code>git log --graph --oneline --all</code>
+#         to see your commit history as a visual graph</li>
+#         <li><strong>Experiment with diffs:</strong> Modify a file, use <code>git diff</code> before
+#         staging, then <code>git diff --staged</code> after adding it. Understand what each shows
+#         you</li>
+#     </ul>
+# </div>
 
 # %% [markdown]
 # ### Introduction to GitHub
@@ -398,6 +430,22 @@
 # system lets the original authors review your changes before accepting them, ensuring code quality 
 # and preventing malicious changes. This same workflow is used by major open-source projects with 
 # thousands of contributors.
+
+# %% [markdown]
+# <div style="background-color: #f3e5f5; border-left: 5px solid #9c27b0; padding: 15px; margin: 10px 0; border-radius: 5px;">
+#     <h4 style="color: #7b1fa2; margin-top: 0;">💡 Try It Yourself</h4>
+#     <p>Experience the power of GitHub collaboration:</p>
+#     <ul>
+#         <li><strong>Fork and explore this course:</strong> Fork the RSE_course_JuRSE repository, clone
+#         your fork locally, and browse the code structure</li>
+#         <li><strong>Practice the PR workflow:</strong> Make a small change (e.g., fix a typo in a
+#         README), commit it, push to your fork, and create a draft pull request (you can close it
+#         without merging)</li>
+#         <li><strong>Explore a real project:</strong> Find an interesting research software project on
+#         GitHub, read its documentation, look at recent pull requests, and understand how the community
+#         collaborates</li>
+#     </ul>
+# </div>
 
 # %% [markdown]
 # ## Part 5: Getting Started with This Course
