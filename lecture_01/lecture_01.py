@@ -293,6 +293,79 @@
 # with a descriptive message. This might seem like extra steps at first, but the staging area 
 # gives you fine control over what goes into each commit, allowing you to create logical, 
 # focused commits even if you've changed multiple files.
+
+# %%
+# Visualize the Git workflow
+import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
+from matplotlib.patches import FancyBboxPatch, FancyArrowPatch
+
+fig, ax = plt.subplots(figsize=(12, 6))
+ax.set_xlim(0, 10)
+ax.set_ylim(0, 5)
+ax.axis('off')
+
+# Define boxes for the three stages
+boxes = [
+    {'x': 0.5, 'y': 2, 'width': 2.5, 'height': 1.5, 'label': 'Working\nDirectory',
+     'color': '#ffebee', 'desc': 'Edit files'},
+    {'x': 3.5, 'y': 2, 'width': 2.5, 'height': 1.5, 'label': 'Staging\nArea',
+     'color': '#fff3e0', 'desc': 'git add'},
+    {'x': 6.5, 'y': 2, 'width': 2.5, 'height': 1.5, 'label': 'Repository\n(.git)',
+     'color': '#e8f5e9', 'desc': 'git commit'}
+]
+
+# Draw boxes
+for box in boxes:
+    fancy_box = FancyBboxPatch(
+        (box['x'], box['y']), box['width'], box['height'],
+        boxstyle="round,pad=0.1", 
+        edgecolor='#333', linewidth=2,
+        facecolor=box['color']
+    )
+    ax.add_patch(fancy_box)
+    
+    # Add label
+    ax.text(box['x'] + box['width']/2, box['y'] + box['height']/2 + 0.3,
+            box['label'], ha='center', va='center',
+            fontsize=12, fontweight='bold')
+    
+    # Add description
+    ax.text(box['x'] + box['width']/2, box['y'] + box['height']/2 - 0.3,
+            box['desc'], ha='center', va='center',
+            fontsize=10, style='italic', color='#555')
+
+# Draw arrows between stages
+arrow1 = FancyArrowPatch((3, 2.75), (3.5, 2.75),
+                         arrowstyle='->', mutation_scale=20,
+                         linewidth=2, color='#1976d2')
+ax.add_patch(arrow1)
+
+arrow2 = FancyArrowPatch((6, 2.75), (6.5, 2.75),
+                         arrowstyle='->', mutation_scale=20,
+                         linewidth=2, color='#1976d2')
+ax.add_patch(arrow2)
+
+# Add title
+ax.text(5, 4.5, 'Git Three-Stage Workflow', ha='center',
+        fontsize=16, fontweight='bold')
+
+# Add workflow steps at bottom
+ax.text(5, 0.8, '1. Modify files → 2. Stage changes (git add) → 3. Commit to history (git commit)',
+        ha='center', fontsize=11, color='#333',
+        bbox=dict(boxstyle='round,pad=0.5', facecolor='#f5f5f5', edgecolor='#999'))
+
+plt.tight_layout()
+plt.show()
+
+# %% [markdown]
+# The diagram above shows how Git manages your code through three distinct areas:
+# 
+# 1. **Working Directory**: Where you edit your files normally
+# 2. **Staging Area**: Where you prepare changes before committing (lets you choose exactly what to commit)
+# 3. **Repository**: Where Git permanently stores your project history
+# 
+# This three-stage approach gives you precise control over what goes into each commit.
 # 
 # ```bash
 # # Configure Git (first time only)
@@ -336,6 +409,71 @@
 # want to return to later. This could be after fixing a bug, adding a new function, or refactoring 
 # code to be cleaner. If you're about to try something experimental, commit first—then you can 
 # always go back if the experiment doesn't work out.
+
+# %%
+# Visualize Git commit history as a timeline
+fig, ax = plt.subplots(figsize=(12, 4))
+ax.set_xlim(-0.5, 5.5)
+ax.set_ylim(-1, 2)
+ax.axis('off')
+
+# Define commits
+commits = [
+    {'x': 0, 'hash': 'a1b2c3d', 'msg': 'Initial commit', 'file': 'README.md'},
+    {'x': 1, 'hash': 'e4f5g6h', 'msg': 'Add data processing', 'file': 'process.py'},
+    {'x': 2, 'hash': 'i7j8k9l', 'msg': 'Fix bug in analysis', 'file': 'analysis.py'},
+    {'x': 3, 'hash': 'm0n1o2p', 'msg': 'Add visualization', 'file': 'plot.py'},
+    {'x': 4, 'hash': 'q3r4s5t', 'msg': 'Update documentation', 'file': 'README.md'},
+]
+
+# Draw timeline
+ax.plot([-0.3, 4.3], [0, 0], 'k-', linewidth=2, alpha=0.3)
+
+# Draw commits
+for commit in commits:
+    # Commit circle
+    circle = plt.Circle((commit['x'], 0), 0.15, color='#1976d2', zorder=3)
+    ax.add_patch(circle)
+    
+    # Commit hash
+    ax.text(commit['x'], -0.5, commit['hash'],
+            ha='center', fontsize=9, family='monospace',
+            color='#666')
+    
+    # Commit message
+    ax.text(commit['x'], 0.6, commit['msg'],
+            ha='center', fontsize=9, fontweight='bold',
+            color='#333')
+    
+    # File changed
+    ax.text(commit['x'], 1.1, f"({commit['file']})",
+            ha='center', fontsize=8, style='italic',
+            color='#777')
+
+# Add arrows between commits
+for i in range(len(commits) - 1):
+    ax.annotate('', xy=(commits[i+1]['x'], 0), xytext=(commits[i]['x'], 0),
+                arrowprops=dict(arrowstyle='->', lw=2, color='#999'))
+
+# Add labels
+ax.text(-0.3, -0.85, 'Oldest', ha='center', fontsize=10, color='#666')
+ax.text(4.3, -0.85, 'Newest', ha='center', fontsize=10, color='#666')
+ax.text(2, 1.7, 'Git Commit History Timeline', ha='center',
+        fontsize=14, fontweight='bold')
+
+plt.tight_layout()
+plt.show()
+
+# %% [markdown]
+# The timeline above shows how Git tracks your project history through a sequence of commits.
+# Each commit is like a snapshot of your project at a specific point in time. Git remembers:
+# - **What changed** (the actual file modifications)
+# - **When it changed** (timestamp)
+# - **Who changed it** (author)
+# - **Why it changed** (commit message)
+# 
+# With `git log`, you can view this history. With `git checkout <hash>`, you can even go back
+# to any point in time to see or restore old versions!
 
 # %% [markdown]
 # <div style="background-color: #f3e5f5; border-left: 5px solid #9c27b0; padding: 15px; margin: 10px 0; border-radius: 5px;">
@@ -381,6 +519,74 @@
 # After making changes locally and committing them, you "push" those commits to GitHub. When your 
 # collaborators make changes, you "pull" their commits to your local repository. This push-pull 
 # cycle keeps everyone synchronized.
+
+# %%
+# Visualize Local vs Remote Repository workflow
+fig, ax = plt.subplots(figsize=(12, 5))
+ax.set_xlim(0, 10)
+ax.set_ylim(0, 6)
+ax.axis('off')
+
+# Local repository
+local_box = FancyBboxPatch((0.5, 2), 3.5, 2.5,
+                           boxstyle="round,pad=0.15",
+                           edgecolor='#1976d2', linewidth=3,
+                           facecolor='#e3f2fd')
+ax.add_patch(local_box)
+ax.text(2.25, 4, 'Your Computer', ha='center', fontsize=13, fontweight='bold')
+ax.text(2.25, 3.4, 'Local Repository', ha='center', fontsize=11)
+ax.text(2.25, 2.8, '(.git folder)', ha='center', fontsize=9, style='italic', color='#666')
+
+# Remote repository (GitHub)
+remote_box = FancyBboxPatch((6, 2), 3.5, 2.5,
+                            boxstyle="round,pad=0.15",
+                            edgecolor='#388e3c', linewidth=3,
+                            facecolor='#e8f5e9')
+ax.add_patch(remote_box)
+ax.text(7.75, 4, 'GitHub', ha='center', fontsize=13, fontweight='bold')
+ax.text(7.75, 3.4, 'Remote Repository', ha='center', fontsize=11)
+ax.text(7.75, 2.8, '(Cloud backup)', ha='center', fontsize=9, style='italic', color='#666')
+
+# Push arrow
+push_arrow = FancyArrowPatch((4, 3.8), (6, 3.8),
+                             arrowstyle='->', mutation_scale=25,
+                             linewidth=2.5, color='#1976d2')
+ax.add_patch(push_arrow)
+ax.text(5, 4.2, 'git push', ha='center', fontsize=11,
+        fontweight='bold', color='#1976d2')
+
+# Pull arrow
+pull_arrow = FancyArrowPatch((6, 2.7), (4, 2.7),
+                             arrowstyle='->', mutation_scale=25,
+                             linewidth=2.5, color='#388e3c')
+ax.add_patch(pull_arrow)
+ax.text(5, 2.3, 'git pull', ha='center', fontsize=11,
+        fontweight='bold', color='#388e3c')
+
+# Clone arrow
+clone_arrow = FancyArrowPatch((7.75, 2), (2.25, 1.5),
+                              arrowstyle='->', mutation_scale=25,
+                              linewidth=2, color='#f57c00',
+                              linestyle='dashed')
+ax.add_patch(clone_arrow)
+ax.text(5, 1, 'git clone (first time)', ha='center', fontsize=10,
+        style='italic', color='#f57c00')
+
+# Title
+ax.text(5, 5.3, 'Git + GitHub Workflow', ha='center',
+        fontsize=15, fontweight='bold')
+
+plt.tight_layout()
+plt.show()
+
+# %% [markdown]
+# This diagram shows the relationship between your local repository and GitHub:
+# 
+# - **git clone**: Copy a repository from GitHub to your computer (do this once)
+# - **git push**: Send your local commits to GitHub (share your work)
+# - **git pull**: Get new commits from GitHub to your computer (get others' work)
+# 
+# Think of GitHub as a shared backup and collaboration hub for your code!
 # 
 # ```bash
 # # Clone an existing repository
