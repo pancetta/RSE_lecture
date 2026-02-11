@@ -25,13 +25,10 @@ jobs:
       uses: lycheeverse/lychee-action@v1
       with:
         # Check all markdown files and Python lecture files
+        # Most configuration is in .lycherc.toml to avoid duplication
         args: >-
           --verbose
           --no-progress
-          --accept 200,204,206,301,302,307,308,403,429
-          --timeout 20
-          --retry-wait-time 5
-          --max-retries 3
           --exclude-path ./lecture_*/lecture_*.ipynb
           --exclude-path ./.git
           './**/*.md'
