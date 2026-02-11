@@ -727,7 +727,7 @@ print("Your package becomes a proper Python package")
 #     <p>Transform your messy script into a professional project structure!</p>
 #     <ul>
 #         <li><strong>Refactor into modules:</strong> Take a monolithic script from your research and split it into logical modules (data_processing.py, analysis.py, visualization.py)—experience how organization improves maintainability.</li>
-#         <li><strong>Create your first package:</strong> Set up a complete project with setup.py, __init__.py, requirements.txt, and README, then practice installing it in development mode with pip install -e .</li>
+#         <li><strong>Create your first package:</strong> Set up a complete project with setup.py, __init__.py, requirements.txt, and README, then practice installing it in development mode with <code>pip install -e .</code></li>
 #         <li><strong>Build a CLI tool:</strong> Turn your analysis script into a command-line tool with argparse that accepts input files and parameters—make your code reusable by others.</li>
 #     </ul>
 # </div>
