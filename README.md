@@ -12,15 +12,30 @@ This lecture series covers fundamental concepts and practices in Research Softwa
 - **Lecture 2**: Advanced Git, GitHub & GitLab Collaboration, and Python Basics (~90 minutes)
 - **Lecture 3**: Python Fundamentals and Advanced Concepts (including Error Handling) (~90 minutes)
 - **Lecture 4**: Python Project Structure and Working with Libraries (NumPy, Matplotlib) (~90 minutes)
+  - *New*: Design Principles for Maintainable Code (DRY, SRP, Separation of Concerns)
 - **Lecture 5**: Testing Research Software (~90 minutes)
+  - *New*: Code Smells - Warning Signs of Design Problems
 - **Lecture 6**: Automation and Continuous Integration (~90 minutes)
 - **Lecture 7**: Debugging and Profiling Research Software (~90 minutes)
+  - *New*: Technical Debt and Refactoring Decisions
 - **Lecture 8**: Documenting and Publishing Research Software (~90 minutes)
 - **Lecture 9**: Containerization and Reproducibility (~90 minutes)
 - **Lecture 10**: Collaboration and Code Review in Research Software (~90 minutes)
+  - *New*: Code Review for Software Architecture
 - **Lecture 11**: Working with Research Data - File Formats and Databases (~90 minutes)
 - **Lecture 12**: Scientific Workflows and Automation (~90 minutes)
 - **Lecture 13**: AI-Assisted Coding for Research Software (~90 minutes)
+
+### Software Architecture Topics
+
+Throughout the course, we integrate software architecture and design concepts:
+
+- **Design Principles** (Lecture 4): Learn DRY (Don't Repeat Yourself), Single Responsibility Principle, and Separation of Concerns with practical examples from research software
+- **Code Smells** (Lecture 5): Recognize common anti-patterns in research code including god functions, duplication, tight coupling, magic numbers, and global state
+- **Refactoring Decisions** (Lecture 7): Understand technical debt, learn when to refactor vs. rewrite, and practice incremental refactoring strategies
+- **Architectural Code Review** (Lecture 10): Review code for design quality, spot architectural issues in pull requests, and give constructive feedback on software design
+
+These topics are distributed across lectures where they naturally fit, providing a foundation for writing maintainable, sustainable research software.
 
 ## Structure
 
