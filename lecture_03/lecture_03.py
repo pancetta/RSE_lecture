@@ -620,9 +620,17 @@ except ValueError as e:
 # </div>
 
 # %% [markdown]
+# Now that you understand how to handle errors gracefully, let's apply that knowledge to a critical 
+# research task: reading and writing data files. Most research involves processing data from files, 
+# and combining file I/O with proper error handling ensures your data pipelines are robust and 
+# reliable.
+
+# %% [markdown]
 # ## Part 3: File Input/Output
 # 
-# Reading and writing files is essential for research data processing.
+# Reading and writing files is essential for research data processing. Whether you're analyzing 
+# experimental results, processing sensor data, or saving analysis outputs, file I/O is a core 
+# skill for research software engineers.
 
 # %% [markdown]
 # ### Reading Text Files
@@ -805,9 +813,16 @@ print(f"Average valid temperature: {sum(valid_temps) / len(valid_temps):.2f}°C"
 # </div>
 
 # %% [markdown]
+# With solid foundations in functions, error handling, and file I/O, let's explore some of Python's 
+# elegant features that make code more concise and readable. List comprehensions are a Pythonic way 
+# to transform and filter data, making your research code both more expressive and often faster.
+
+# %% [markdown]
 # ## Part 4: List Comprehensions
 # 
-# List comprehensions provide elegant, concise ways to create lists.
+# List comprehensions provide elegant, concise ways to create and transform lists. They're not just 
+# syntactic sugar—they're often faster than traditional loops and make your code's intent clearer. 
+# In research contexts, you'll use them constantly for data filtering, transformation, and processing.
 
 # %%
 # Traditional approach

@@ -296,6 +296,12 @@
 # 5. **Commit often on branches**: Makes it easier to track progress
 
 # %% [markdown]
+# Now that you understand Git branching and merging workflows, let's explore how GitHub and GitLab 
+# extend Git with powerful collaboration features. These platforms transform Git from a personal 
+# version control tool into a collaborative research environment where teams can work together 
+# effectively.
+
+# %% [markdown]
 # ## Part 2: GitHub Collaboration
 # 
 # ### GitHub Workflow Basics
