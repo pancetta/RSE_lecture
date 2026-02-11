@@ -1,5 +1,5 @@
 {
-  "title": "Research Software Engineering Lectures (JuRSE)",
+  "title": "Research Software Engineering Lectures",
   "description": "A comprehensive lecture series covering fundamental concepts and practices in Research Software Engineering, including version control, Python programming, testing, CI/CD, debugging, documentation, containerization, collaboration, and AI-assisted coding. Each lecture is designed for 90-minute sessions and includes hands-on exercises.",
   "creators": [
     {
