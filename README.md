@@ -25,6 +25,10 @@ This lecture series covers fundamental concepts and practices in Research Softwa
 - **Lecture 11**: Working with Research Data - File Formats and Databases (~90 minutes)
 - **Lecture 12**: Scientific Workflows and Automation (~90 minutes)
 - **Lecture 13**: AI-Assisted Coding for Research Software (~90 minutes)
+- **Lecture 14**: Course Summary and the RSE Community (45-60 minutes)
+  - Course review and integration of concepts
+  - Important topics not covered and how to learn them
+  - Connecting with international and German RSE communities
 
 ### Software Architecture Topics
 
@@ -112,6 +116,9 @@ make install-lecture12
 
 # Lecture 13
 make install-lecture13
+
+# Lecture 14
+make install-lecture14
 ```
 
 Then activate:
@@ -154,6 +161,7 @@ micromamba activate rse_lecture
 - Lecture 11 adds h5py, netCDF4, and pandas for working with research data formats.
 - Lecture 12 has no additional dependencies (workflow tools are typically installed separately).
 - Lecture 13 has no additional dependencies (AI coding tools are IDE extensions, not Python packages).
+- Lecture 14 has no additional dependencies (summary lecture with community resources).
 - The `environment-dev.yml` includes all dependencies plus development tools (flake8, nbconvert).
 - Installation pattern is **harmonized**: all lectures follow the same two-step process (base + additions).
 - Lecture 1 introduces the course and essential tools (shell, git, GitHub).
@@ -166,6 +174,10 @@ micromamba activate rse_lecture
 - Lecture 8 covers documenting and publishing research software (Sphinx, PyPI, Zenodo).
 - Lecture 9 covers containerization and reproducibility (Docker, Podman, Apptainer).
 - Lecture 10 covers collaboration and code review in research software teams.
+- Lecture 11 covers working with research data, file formats (HDF5, NetCDF), and databases.
+- Lecture 12 covers scientific workflows and automation (Make, Snakemake, Nextflow).
+- Lecture 13 covers AI-assisted coding tools, best practices, and privacy considerations.
+- Lecture 14 summarizes the course and connects students with the RSE community.
 - Lecture 11 covers working with research data, file formats (HDF5, NetCDF), and databases.
 - Lecture 12 covers scientific workflows and automation (Make, Snakemake, Nextflow).
 - Lecture 13 covers AI-assisted coding tools, best practices, and privacy considerations.
