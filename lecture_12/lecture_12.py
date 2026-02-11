@@ -204,6 +204,128 @@
 #
 # This is exactly what **build systems** and **workflow managers** provide.
 
+# %%
+# Visualize a typical research workflow dependency graph (DAG)
+import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
+from matplotlib.patches import FancyBboxPatch, FancyArrowPatch
+
+fig, ax = plt.subplots(figsize=(12, 8))
+ax.set_xlim(0, 12)
+ax.set_ylim(0, 10)
+ax.axis('off')
+
+# Title
+ax.text(6, 9.5, 'Research Workflow Dependency Graph (DAG)', ha='center',
+        fontsize=14, fontweight='bold')
+
+# Define workflow steps with positions
+steps = [
+    # Level 1: Data acquisition
+    {'x': 6, 'y': 7.5, 'label': 'Download\nRaw Data', 'color': '#1976d2',
+     'file': 'data/raw/temp.csv'},
+    
+    # Level 2: Processing
+    {'x': 6, 'y': 5.5, 'label': 'Clean &\nValidate', 'color': '#388e3c',
+     'file': 'data/processed/\ntemp_clean.csv'},
+    
+    # Level 3: Analysis (parallel)
+    {'x': 3, 'y': 3.5, 'label': 'Generate\nPlots', 'color': '#f57c00',
+     'file': 'results/\nplots.png'},
+    {'x': 6, 'y': 3.5, 'label': 'Compute\nStatistics', 'color': '#f57c00',
+     'file': 'results/\nstats.txt'},
+    {'x': 9, 'y': 3.5, 'label': 'Run\nModel', 'color': '#f57c00',
+     'file': 'results/\nmodel.pkl'},
+    
+    # Level 4: Final output
+    {'x': 6, 'y': 1.5, 'label': 'Generate\nReport', 'color': '#7b1fa2',
+     'file': 'report.pdf'},
+]
+
+# Draw boxes for each step
+boxes = []
+for i, step in enumerate(steps):
+    box = FancyBboxPatch((step['x'] - 1, step['y'] - 0.4), 2, 0.8,
+                         boxstyle="round,pad=0.08",
+                         edgecolor='black', linewidth=2,
+                         facecolor=step['color'], alpha=0.8)
+    ax.add_patch(box)
+    boxes.append(box)
+    
+    # Step label
+    ax.text(step['x'], step['y'], step['label'],
+            ha='center', va='center', fontsize=9,
+            color='white', fontweight='bold')
+    
+    # File name below
+    ax.text(step['x'], step['y'] - 0.7, step['file'],
+            ha='center', va='top', fontsize=7,
+            style='italic', color='#666')
+
+# Draw dependency arrows
+dependencies = [
+    (0, 1),  # Download -> Clean
+    (1, 2),  # Clean -> Plots
+    (1, 3),  # Clean -> Statistics
+    (1, 4),  # Clean -> Model
+    (2, 5),  # Plots -> Report
+    (3, 5),  # Statistics -> Report
+    (4, 5),  # Model -> Report
+]
+
+for start_idx, end_idx in dependencies:
+    start = steps[start_idx]
+    end = steps[end_idx]
+    
+    # Calculate arrow positions
+    arrow = FancyArrowPatch((start['x'], start['y'] - 0.5),
+                            (end['x'], end['y'] + 0.5),
+                            arrowstyle='->', mutation_scale=15,
+                            linewidth=1.5, color='#333',
+                            alpha=0.7)
+    ax.add_patch(arrow)
+
+# Add annotations
+# Parallel execution
+ax.annotate('', xy=(2.5, 3.5), xytext=(1.5, 3.5),
+            arrowprops=dict(arrowstyle='<->', lw=1, color='#f57c00'))
+ax.annotate('', xy=(9.5, 3.5), xytext=(10.5, 3.5),
+            arrowprops=dict(arrowstyle='<->', lw=1, color='#f57c00'))
+ax.text(6, 4.2, '← These 3 steps can run in parallel →',
+        ha='center', fontsize=8, style='italic', color='#f57c00')
+
+# Dependency explanation
+ax.text(6, 0.3, '⚡ Smart execution: Only reruns steps when inputs change',
+        ha='center', fontsize=9, color='#1976d2',
+        bbox=dict(boxstyle='round,pad=0.4', facecolor='#e3f2fd',
+                  edgecolor='#1976d2', linewidth=2))
+
+plt.tight_layout()
+plt.show()
+
+# %% [markdown]
+# **Understanding the Workflow DAG:**
+# 
+# This Directed Acyclic Graph (DAG) shows how workflow steps depend on each other:
+# 
+# - **Nodes** (boxes) = Tasks/steps in your analysis pipeline
+# - **Edges** (arrows) = Dependencies between steps
+# - **Colors** indicate different pipeline stages:
+#   - 🔵 Blue = Data acquisition
+#   - 🟢 Green = Data processing
+#   - 🟠 Orange = Analysis (can run in parallel!)
+#   - 🟣 Purple = Final output
+# 
+# **Key insights:**
+# 1. **Sequential when needed**: Clean data before analyzing it
+# 2. **Parallel when possible**: Plots, statistics, and modeling are independent
+# 3. **Smart updates**: If raw data changes, everything reruns. If only plot code
+#    changes, only plots and report rerun (not statistics or model!)
+# 4. **No cycles**: Can't have circular dependencies (that's the "Acyclic" part)
+# 
+# Workflow managers like Make and Snakemake automatically figure this out from your
+# rules - you just declare the dependencies, they handle the execution order!
+
 # %% [markdown]
 # ## Part 3: Make - The Classic Build System
 #
