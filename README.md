@@ -81,6 +81,7 @@ jupyter notebook
 - **[Contributing Guide](CONTRIBUTING.md)** - How to contribute to the course
 - **[Dependency Management](docs/DEPENDENCY_MANAGEMENT.md)** - How dependencies are managed
 - **[Publishing Guide](docs/PUBLISHING.md)** - Citation and publishing information
+- **[Using Figures from Publications](docs/FIGURES_FROM_PUBLICATIONS.md)** - Guidelines for incorporating licensed figures
 
 ## Citation
 
@@ -105,6 +106,7 @@ For a citable DOI, see our [Publishing Guide](docs/PUBLISHING.md).
 
 - **Educational content** (lectures, documentation): [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) - Attribution required
 - **Code examples**: MIT License
+- **Third-party figures**: Where used, figures from external sources retain their original licenses (e.g., CC BY 4.0) with proper attribution as documented in [FIGURES_FROM_PUBLICATIONS.md](docs/FIGURES_FROM_PUBLICATIONS.md)
 
 See [LICENSE](LICENSE) for complete details.
 
