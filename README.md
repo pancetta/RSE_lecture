@@ -409,9 +409,44 @@ While this course draws inspiration and ideas from these sources, all lecture co
 
 For complete bibliographic information, see [`references.bib`](references.bib).
 
+## Citation
+
+If you use this course material in your teaching, research, or other work, please cite it as:
+
+```bibtex
+@misc{speck2026rse,
+  author       = {Speck, Robert},
+  title        = {Research Software Engineering Lectures},
+  year         = {2026},
+  publisher    = {GitHub},
+  url          = {https://github.com/pancetta/RSE_course_JuRSE},
+  note         = {Version 1.0.0}
+}
+```
+
+Or in text format:
+
+> Speck, Robert. (2026). Research Software Engineering Lectures. https://github.com/pancetta/RSE_course_JuRSE
+
+For automated citation formats, this repository includes a `CITATION.cff` file that can be used with tools like Zotero, Mendeley, and GitHub's "Cite this repository" feature.
+
+### Obtaining a DOI
+
+For a persistent, citable reference, we recommend archiving releases of this course on [Zenodo](https://zenodo.org/), which provides a DOI (Digital Object Identifier). Each release can be independently cited with its own DOI, ensuring permanent accessibility and citability.
+
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This repository uses **dual licensing** to ensure proper attribution while remaining open and accessible:
+
+### Educational Content: CC BY 4.0
+All lecture materials, documentation, and educational content are licensed under the [Creative Commons Attribution 4.0 International License (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/).
+
+**Attribution is required** when using or adapting this content. See the [LICENSE](LICENSE) file for details on how to give proper attribution.
+
+### Code Examples: MIT License
+All code examples and scripts are licensed under the MIT License.
+
+See the [LICENSE](LICENSE) file for complete details on both licenses and guidance on which applies to specific content.
 
 ## Contributing
 
