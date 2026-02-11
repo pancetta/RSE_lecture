@@ -236,11 +236,32 @@ jupytext --to notebook lecture_01/lecture_01.py
 python convert_to_notebooks.py
 ```
 
+This script automatically:
+- Generates QR codes for the course website and each lecture
+- Converts all Python lecture files to Jupyter notebooks
+- Embeds QR codes in the notebooks for quick access to online materials
+
+#### Generate QR codes separately:
+```bash
+python generate_qr_codes.py
+# or
+make generate-qr-codes
+```
+
 #### Open as notebook directly:
 You can also pair the Python file with a notebook and keep them synchronized:
 ```bash
 jupytext --set-formats py:percent,ipynb lecture_01/lecture_01.py
 ```
+
+### QR Codes for Quick Access
+
+Each lecture includes QR codes at the beginning for easy access to:
+- **Course Website**: The main course website at https://pancetta.github.io/RSE_course_JuRSE
+- **This Lecture**: Direct link to the specific lecture page
+
+These QR codes are automatically generated when running `make convert` or `python convert_to_notebooks.py`.
+You can scan them with your mobile device to quickly access the online materials during lectures.
 
 ### Running the Lectures
 

@@ -1,4 +1,4 @@
-.PHONY: help install install-dev install-lecture1 install-lecture2 install-lecture3 install-lecture4 install-lecture5 install-lecture6 install-lecture7 install-lecture8 install-lecture9 install-lecture10 install-lecture11 install-lecture12 install-lecture13 install-lecture14 convert clean notebooks build-website serve-website clean-website update-deps test-deps create-locks ci-local lint
+.PHONY: help install install-dev install-lecture1 install-lecture2 install-lecture3 install-lecture4 install-lecture5 install-lecture6 install-lecture7 install-lecture8 install-lecture9 install-lecture10 install-lecture11 install-lecture12 install-lecture13 install-lecture14 convert clean notebooks build-website serve-website clean-website update-deps test-deps create-locks ci-local lint generate-qr-codes
 
 help:
 	@echo "Research Software Engineering Lectures - Makefile"
@@ -20,8 +20,9 @@ help:
 	@echo "  install-lecture12 - Create environment with lecture 12 dependencies"
 	@echo "  install-lecture13 - Create environment with lecture 13 dependencies"
 	@echo "  install-lecture14 - Create environment with lecture 14 dependencies"
-	@echo "  convert          - Convert all Python lectures to Jupyter notebooks"
+	@echo "  convert          - Convert all Python lectures to Jupyter notebooks (includes QR code generation)"
 	@echo "  notebooks        - Alias for convert"
+	@echo "  generate-qr-codes - Generate QR codes for course website and all lectures"
 	@echo "  build-website    - Build the Jupyter Book website"
 	@echo "  serve-website    - Build and serve the website locally"
 	@echo "  clean            - Remove generated notebook files"
@@ -158,6 +159,9 @@ convert: notebooks
 
 notebooks:
 	python convert_to_notebooks.py
+
+generate-qr-codes:
+	python generate_qr_codes.py
 
 build-website: notebooks
 	@echo "Building Jupyter Book v2 static HTML site..."

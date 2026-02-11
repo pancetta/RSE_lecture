@@ -15,6 +15,22 @@
 # %% [markdown]
 # # Lecture 1: Introduction to Research Software Engineering
 # 
+# 
+# ## Quick Access
+# 
+# Scan the QR codes below for quick access to course materials:
+# 
+# <div style="display: flex; gap: 20px; align-items: flex-start;">
+#   <div style="text-align: center;">
+#     <img src="../course_qr_code.png" alt="Course Website QR Code" width="150"/>
+#     <p><strong>Course Website</strong></p>
+#   </div>
+#   <div style="text-align: center;">
+#     <img src="lecture_01_qr_code.png" alt="This Lecture QR Code" width="150"/>
+#     <p><strong>This Lecture</strong></p>
+#   </div>
+# </div>
+# 
 # ## Overview
 # Welcome to the Research Software Engineering (RSE) lecture series! This introductory 
 # lecture provides an overview of what RSE is, why it matters for modern research, and 

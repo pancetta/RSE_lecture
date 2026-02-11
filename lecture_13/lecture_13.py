@@ -15,6 +15,22 @@
 # %% [markdown]
 # # Lecture 13: AI-Assisted Coding for Research Software
 #
+# 
+# ## Quick Access
+# 
+# Scan the QR codes below for quick access to course materials:
+# 
+# <div style="display: flex; gap: 20px; align-items: flex-start;">
+#   <div style="text-align: center;">
+#     <img src="../course_qr_code.png" alt="Course Website QR Code" width="150"/>
+#     <p><strong>Course Website</strong></p>
+#   </div>
+#   <div style="text-align: center;">
+#     <img src="lecture_13_qr_code.png" alt="This Lecture QR Code" width="150"/>
+#     <p><strong>This Lecture</strong></p>
+#   </div>
+# </div>
+# 
 # ## Overview
 # Artificial Intelligence coding assistants have rapidly become widespread tools in
 # software development, offering to help write, debug, and document code. For research
