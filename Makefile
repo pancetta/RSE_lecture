@@ -1,4 +1,4 @@
-.PHONY: help install install-dev install-lecture1 install-lecture2 install-lecture3 install-lecture4 install-lecture5 install-lecture6 install-lecture7 install-lecture8 install-lecture9 install-lecture10 install-lecture11 convert clean notebooks build-website serve-website clean-website update-deps test-deps create-locks ci-local lint
+.PHONY: help install install-dev install-lecture1 install-lecture2 install-lecture3 install-lecture4 install-lecture5 install-lecture6 install-lecture7 install-lecture8 install-lecture9 install-lecture10 install-lecture11 install-lecture12 convert clean notebooks build-website serve-website clean-website update-deps test-deps create-locks ci-local lint
 
 help:
 	@echo "Research Software Engineering Lectures - Makefile"
@@ -17,6 +17,7 @@ help:
 	@echo "  install-lecture9 - Create environment with lecture 9 dependencies"
 	@echo "  install-lecture10 - Create environment with lecture 10 dependencies"
 	@echo "  install-lecture11 - Create environment with lecture 11 dependencies (includes h5py, netCDF4, pandas)"
+	@echo "  install-lecture12 - Create environment with lecture 12 dependencies"
 	@echo "  convert          - Convert all Python lectures to Jupyter notebooks"
 	@echo "  notebooks        - Alias for convert"
 	@echo "  build-website    - Build the Jupyter Book website"
@@ -125,6 +126,14 @@ install-lecture11:
 	@echo "Adding lecture 11 specific dependencies..."
 	micromamba env update -f lecture_11/environment.yml -y
 	@echo "Environment created for lecture 11 (base + h5py, netCDF4, pandas)."
+	@echo "Activate with: micromamba activate rse_lecture"
+
+install-lecture12:
+	@echo "Creating base environment..."
+	micromamba env create -f environment.yml -y
+	@echo "Adding lecture 12 specific dependencies..."
+	micromamba env update -f lecture_12/environment.yml -y
+	@echo "Environment created for lecture 12."
 	@echo "Activate with: micromamba activate rse_lecture"
 
 convert: notebooks
