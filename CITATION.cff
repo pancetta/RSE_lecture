@@ -1,7 +1,7 @@
 cff-version: 1.2.0
 message: "If you use this course material, please cite it as below."
 type: dataset
-title: "Research Software Engineering Lectures (JuRSE)"
+title: "Research Software Engineering Lectures"
 abstract: "A comprehensive lecture series covering fundamental concepts and practices in Research Software Engineering, including version control, Python programming, testing, CI/CD, debugging, documentation, containerization, collaboration, and AI-assisted coding."
 authors:
   - family-names: Speck
