@@ -25,7 +25,7 @@ To cite the course:
 ```bibtex
 @misc{speck2026rse,
   author       = {Speck, Robert},
-  title        = {Research Software Engineering Lectures (JuRSE)},
+  title        = {Research Software Engineering Lectures},
   year         = {2026},
   publisher    = {GitHub},
   url          = {https://github.com/pancetta/RSE_course_JuRSE},
@@ -34,7 +34,7 @@ To cite the course:
 ```
 
 **Text format:**
-> Speck, Robert. (2026). Research Software Engineering Lectures (JuRSE). https://github.com/pancetta/RSE_course_JuRSE
+> Speck, Robert. (2026). Research Software Engineering Lectures. https://github.com/pancetta/RSE_course_JuRSE
 
 ## Obtaining a DOI with Zenodo
 
@@ -80,7 +80,7 @@ After getting the DOI, update:
    ```bibtex
    @misc{speck2026rse,
      author       = {Speck, Robert},
-     title        = {Research Software Engineering Lectures (JuRSE)},
+     title        = {Research Software Engineering Lectures},
      year         = {2026},
      publisher    = {Zenodo},
      doi          = {10.5281/zenodo.1234567},
@@ -130,7 +130,7 @@ Always include attribution when using or adapting this material.
 > This research training program was based on materials from the RSE Course (Speck, 2026), adapted for our institutional context.
 
 ### In Course Materials
-> These lectures are adapted from "Research Software Engineering Lectures (JuRSE)" by Robert Speck (https://github.com/pancetta/RSE_course_JuRSE), licensed under CC BY 4.0.
+> These lectures are adapted from "Research Software Engineering Lectures" by Robert Speck (https://github.com/pancetta/RSE_course_JuRSE), licensed under CC BY 4.0.
 
 ### In a Repository README
 ```markdown
