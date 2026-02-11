@@ -293,13 +293,13 @@ def generate_lecture06_figures(output_dir):
                              edgecolor='#1976d2', linewidth=2,
                              facecolor='#e3f2fd')
     ax.add_patch(dev_box)
-    ax.text(1.5, 5.8, '👨‍💻 Developer', ha='center', fontsize=11, fontweight='bold')
+    ax.text(1.5, 5.8, 'Developer', ha='center', fontsize=11, fontweight='bold')
     ax.text(1.5, 5.3, 'Pushes Code', ha='center', fontsize=10)
     ax.text(1.5, 4.9, 'to GitHub', ha='center', fontsize=9, style='italic')
     
     trigger_circle = Circle((4.5, 5.5), 0.4, color='#ff9800', zorder=3)
     ax.add_patch(trigger_circle)
-    ax.text(4.5, 5.5, '⚡', ha='center', va='center', fontsize=20)
+    ax.text(4.5, 5.5, '!', ha='center', va='center', fontsize=20)
     ax.text(4.5, 4.3, 'Trigger', ha='center', fontsize=9, fontweight='bold')
     ax.text(4.5, 3.9, 'Automatic', ha='center', fontsize=8, style='italic')
     
@@ -308,13 +308,13 @@ def generate_lecture06_figures(output_dir):
                             edgecolor='#388e3c', linewidth=3,
                             facecolor='#e8f5e9')
     ax.add_patch(ci_box)
-    ax.text(7.5, 6.5, '🤖 CI System', ha='center', fontsize=11, fontweight='bold')
+    ax.text(7.5, 6.5, 'CI System', ha='center', fontsize=11, fontweight='bold')
     ax.text(7.5, 6, 'Clean Environment', ha='center', fontsize=9, color='#555')
     
     substeps = [
-        {'y': 5.4, 'text': '1. Checkout code', 'icon': '📥'},
-        {'y': 4.9, 'text': '2. Install dependencies', 'icon': '📦'},
-        {'y': 4.4, 'text': '3. Run all tests', 'icon': '🧪'},
+        {'y': 5.4, 'text': '1. Checkout code', 'icon': '>'},
+        {'y': 4.9, 'text': '2. Install dependencies', 'icon': '*'},
+        {'y': 4.4, 'text': '3. Run all tests', 'icon': '+'},
     ]
     for step in substeps:
         ax.text(6.3, step['y'], step['icon'], ha='left', fontsize=10)
@@ -325,7 +325,7 @@ def generate_lecture06_figures(output_dir):
                               edgecolor='#2e7d32', linewidth=2,
                               facecolor='#c8e6c9')
     ax.add_patch(pass_box)
-    ax.text(11.6, 6.3, '✅ PASS', ha='center', fontsize=11,
+    ax.text(11.6, 6.3, 'PASS', ha='center', fontsize=11,
             fontweight='bold', color='#1b5e20')
     ax.text(11.6, 5.9, 'Tests succeeded', ha='center', fontsize=8)
     
@@ -334,7 +334,7 @@ def generate_lecture06_figures(output_dir):
                               edgecolor='#c62828', linewidth=2,
                               facecolor='#ffcdd2')
     ax.add_patch(fail_box)
-    ax.text(11.6, 4.3, '❌ FAIL', ha='center', fontsize=11,
+    ax.text(11.6, 4.3, 'FAIL', ha='center', fontsize=11,
             fontweight='bold', color='#b71c1c')
     ax.text(11.6, 3.9, 'Tests failed', ha='center', fontsize=8)
     
@@ -369,12 +369,12 @@ def generate_lecture06_figures(output_dir):
     ax.text(6, 2.5, 'Fix bugs & push again', ha='center', fontsize=9,
             style='italic', color='#c62828')
     
-    ax.text(7, 1.5, '⏱️ Entire process: 2-5 minutes (fully automated)',
+    ax.text(7, 1.5, 'Entire process: 2-5 minutes (fully automated)',
             ha='center', fontsize=10, color='#1976d2',
             bbox=dict(boxstyle='round,pad=0.5', facecolor='#e3f2fd',
                       edgecolor='#1976d2', linewidth=2))
     
-    ax.text(7, 0.5, '✨ No manual testing • Consistent results • Immediate feedback',
+    ax.text(7, 0.5, 'No manual testing • Consistent results • Immediate feedback',
             ha='center', fontsize=9, color='#555',
             bbox=dict(boxstyle='round,pad=0.4', facecolor='#f5f5f5',
                       edgecolor='#999'))
@@ -451,7 +451,7 @@ def generate_lecture12_figures(output_dir):
     ax.text(6, 4.2, '← These 3 steps can run in parallel →',
             ha='center', fontsize=8, style='italic', color='#f57c00')
     
-    ax.text(6, 0.3, '⚡ Smart execution: Only reruns steps when inputs change',
+    ax.text(6, 0.3, '! Smart execution: Only reruns steps when inputs change',
             ha='center', fontsize=9, color='#1976d2',
             bbox=dict(boxstyle='round,pad=0.4', facecolor='#e3f2fd',
                       edgecolor='#1976d2', linewidth=2))
@@ -481,22 +481,22 @@ def generate_lecture08_figures(output_dir):
     
     layers = [
         {'y': 1, 'width': 10, 'height': 1.3, 'label': 'README',
-         'desc': 'What, why, quick start', 'audience': '👥 Everyone',
+         'desc': 'What, why, quick start', 'audience': 'Everyone',
          'color': '#1976d2', 'time': '5 min read'},
         {'y': 2.3, 'width': 8, 'height': 1.2, 'label': 'Installation Guide',
-         'desc': 'Detailed setup instructions', 'audience': '👤 New users',
+         'desc': 'Detailed setup instructions', 'audience': 'New users',
          'color': '#388e3c', 'time': '15 min read'},
         {'y': 3.5, 'width': 6.5, 'height': 1.2, 'label': 'Tutorials',
-         'desc': 'Learning by example', 'audience': '🎓 Learners',
+         'desc': 'Learning by example', 'audience': 'Learners',
          'color': '#f57c00', 'time': '1-2 hours'},
         {'y': 4.7, 'width': 5, 'height': 1.1, 'label': 'How-To Guides',
-         'desc': 'Specific tasks', 'audience': '🔧 Users',
+         'desc': 'Specific tasks', 'audience': 'Users',
          'color': '#fbc02d', 'time': '10-30 min'},
         {'y': 5.8, 'width': 3.8, 'height': 1.0, 'label': 'API Reference',
-         'desc': 'Function details', 'audience': '💻 Developers',
+         'desc': 'Function details', 'audience': 'Developers',
          'color': '#7b1fa2', 'time': 'As needed'},
         {'y': 6.8, 'width': 2.5, 'height': 0.9, 'label': 'Contributing',
-         'desc': 'Development guide', 'audience': '🤝 Contributors',
+         'desc': 'Development guide', 'audience': 'Contributors',
          'color': '#c2185b', 'time': '30 min read'},
     ]
     
@@ -548,7 +548,7 @@ def generate_lecture08_figures(output_dir):
                                    edgecolor='#f57c00', linewidth=2,
                                    facecolor='#fff3e0')
     ax.add_patch(essential_box)
-    ax.text(10.55, 3.8, '✨ All Essential', ha='center', fontsize=10,
+    ax.text(10.55, 3.8, 'All Essential', ha='center', fontsize=10,
             fontweight='bold', color='#f57c00')
     ax.text(10.55, 3.4, 'Each level\nserves a purpose', ha='center',
             fontsize=8, color='#555')
@@ -690,7 +690,7 @@ def generate_lecture09_figures(output_dir):
     
     ax.text(5, 8.5, 'Docker Image Layers', ha='center',
             fontsize=16, fontweight='bold')
-    ax.text(5, 0.3, '⚡ Each layer is cached • Only changed layers rebuild',
+    ax.text(5, 0.3, '! Each layer is cached • Only changed layers rebuild',
             ha='center', fontsize=10, color='#2e7d32',
             bbox=dict(boxstyle='round,pad=0.5', facecolor='#e8f5e9',
                       edgecolor='#2e7d32', linewidth=2))
@@ -733,7 +733,7 @@ def generate_lecture10_figures(output_dir):
          'cmd': 'automated', 'color': '#7b1fa2'},
         {'x': 6.5, 'y': 2, 'num': '7', 'label': 'Address\nFeedback',
          'cmd': 'if needed', 'color': '#d32f2f'},
-        {'x': 2, 'y': 0.5, 'num': '8', 'label': 'Merge!\n✅',
+        {'x': 2, 'y': 0.5, 'num': '8', 'label': 'Merge!\n✓',
          'cmd': 'approved', 'color': '#2e7d32'},
     ]
     
@@ -797,7 +797,7 @@ def generate_lecture10_figures(output_dir):
                                      arrowstyle='->', mutation_scale=15,
                                      linewidth=2, color='#2e7d32')
     ax.add_patch(approved_arrow)
-    ax.text(4, 1.8, 'Approved!\nCI passes ✅',
+    ax.text(4, 1.8, 'Approved!\nCI passes ✓',
             ha='center', fontsize=8, fontweight='bold', color='#2e7d32')
     
     plt.tight_layout()
@@ -825,19 +825,19 @@ def generate_lecture11_figures(output_dir):
     
     principles = [
         {'x': 2, 'y': 6.5, 'letter': 'F', 'name': 'Findable',
-         'color': '#1976d2', 'icon': '🔍',
+         'color': '#1976d2', 'icon': 'F',
          'points': ['Persistent identifier\n(DOI)', 'Rich metadata',
                     'Searchable registry']},
         {'x': 6, 'y': 6.5, 'letter': 'A', 'name': 'Accessible',
-         'color': '#388e3c', 'icon': '🔓',
+         'color': '#388e3c', 'icon': 'A',
          'points': ['Standard protocols\n(HTTP, FTP)', 'Clear access rules',
                     'Metadata always\navailable']},
         {'x': 10, 'y': 6.5, 'letter': 'I', 'name': 'Interoperable',
-         'color': '#f57c00', 'icon': '🔗',
+         'color': '#f57c00', 'icon': 'I',
          'points': ['Community\nstandards', 'Standard formats',
                     'References to\nother data']},
         {'x': 6, 'y': 2.5, 'letter': 'R', 'name': 'Reusable',
-         'color': '#7b1fa2', 'icon': '♻️',
+         'color': '#7b1fa2', 'icon': 'R',
          'points': ['Clear license', 'Detailed provenance',
                     'Domain standards']},
     ]
@@ -920,7 +920,7 @@ def main():
     generate_lecture11_figures(os.path.join(base_dir, 'lecture_11'))
     generate_lecture12_figures(os.path.join(base_dir, 'lecture_12'))
     
-    print("\n✅ All lecture figures generated successfully!")
+    print("\n✓ All lecture figures generated successfully!")
     print("\nGenerated files:")
     print("  lecture_01: 3 images (Git workflows)")
     print("  lecture_02: 1 image (merge strategies)")
