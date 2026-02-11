@@ -47,7 +47,8 @@ def generate_qr_code(url, output_path):
 
 def main():
     """Generate all QR codes for the course."""
-    base_dir = Path(__file__).parent
+    # Get repository root (parent of scripts directory)
+    base_dir = Path(__file__).parent.parent
     
     # Course website URL
     course_url = "https://pancetta.github.io/RSE_course_JuRSE"

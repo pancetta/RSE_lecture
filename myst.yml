@@ -12,7 +12,7 @@ project:
     - _build/**
     - .jupyter_cache/**
     - '*.py'
-    - convert_to_notebooks.py
+    - scripts/**
   bibliography:
     - references.bib
   exports:

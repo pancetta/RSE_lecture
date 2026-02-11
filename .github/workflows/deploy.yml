@@ -54,7 +54,7 @@ jobs:
 
       - name: Convert lectures to notebooks
         run: |
-          python convert_to_notebooks.py
+          python scripts/convert_to_notebooks.py
         shell: bash -el {0}
 
       - name: Execute notebooks to generate plots

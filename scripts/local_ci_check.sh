@@ -10,14 +10,14 @@ echo "=========================================="
 echo ""
 
 # Check if we're in the right directory
-if [ ! -f "convert_to_notebooks.py" ]; then
+if [ ! -f "scripts/convert_to_notebooks.py" ]; then
     echo "Error: Must be run from repository root"
     exit 1
 fi
 
 echo "1. Checking Python syntax errors..."
 echo "-----------------------------------"
-python -m py_compile convert_to_notebooks.py
+python -m py_compile scripts/convert_to_notebooks.py
 for lecture_file in lecture_*/lecture_*.py; do
     echo "  Checking: $lecture_file"
     python -m py_compile "$lecture_file"
@@ -51,7 +51,7 @@ echo ""
 
 echo "4. Converting lectures to notebooks..."
 echo "---------------------------------------"
-python convert_to_notebooks.py
+python scripts/convert_to_notebooks.py
 echo "✓ Notebooks converted successfully"
 echo ""
 

@@ -1,216 +1,213 @@
-# Local CI Testing Guide
+# Contributing to RSE Course
 
-This guide explains how to run CI checks locally **before** committing and pushing code, preventing CI failures.
+Thank you for your interest in contributing to the Research Software Engineering course! We welcome contributions that improve the course materials, fix errors, or add new content.
 
-## Why Local CI Checks Matter
+## Quick Start for Contributors
 
-The GitHub Actions CI runs several checks on every commit:
-1. **Syntax validation** - Checks Python code for syntax errors
-2. **Linting (flake8)** - Checks code style and quality
-3. **Notebook conversion** - Converts `.py` files to `.ipynb`
-4. **Notebook execution** - Runs all notebooks to verify they work
-
-**Running these checks locally BEFORE committing prevents CI failures and wasted time.**
-
-## Quick Start
-
-### Option 1: Use the Automated Script (Recommended)
-
-Run the complete CI check suite:
-
-```bash
-# From repository root
-bash scripts/local_ci_check.sh
-```
-
-This runs ALL the same checks as GitHub Actions CI.
-
-### Option 2: Use Make Targets
-
-```bash
-# Run complete local CI check
-make ci-local
-
-# Or just run linting
-make lint
-```
-
-## Manual Step-by-Step Process
-
-If you prefer to run checks individually:
-
-### 1. Check Python Syntax
-
-```bash
-# Check the conversion script
-python -m py_compile convert_to_notebooks.py
-
-# Check all lecture files
-for lecture_file in lecture_*/lecture_*.py; do
-    echo "Checking: $lecture_file"
-    python -m py_compile "$lecture_file"
-done
-```
-
-### 2. Run Flake8 Linting
-
-**Critical errors first** (these will always fail CI):
-
-```bash
-flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-```
-
-**Full linting check** (checks all style rules):
-
-```bash
-flake8 . --count --statistics
-```
-
-### 3. Convert Notebooks
-
-```bash
-python convert_to_notebooks.py
-```
-
-### 4. Verify Notebooks
-
-```bash
-for lecture_file in lecture_*/lecture_*.py; do
-    notebook_file="${lecture_file%.py}.ipynb"
-    test -f "$notebook_file" && echo "✓ $notebook_file" || echo "✗ Missing: $notebook_file"
-done
-```
-
-## Common Flake8 Errors and Fixes
-
-### E501: Line too long
-
-**Error:** `E501 line too long (131 > 127 characters)`
-
-**Fix:** Break long lines at natural points:
-
-```python
-# BAD
-logger.warning(f"Station {station_id} rejected: quality {data['quality']:.2f} below threshold {quality_threshold:.2f}")
-
-# GOOD
-logger.warning(
-    f"Station {station_id} rejected: quality {data['quality']:.2f} "
-    f"below threshold {quality_threshold:.2f}")
-```
-
-### E128: Continuation line under-indented
-
-**Error:** `E128 continuation line under-indented for visual indent`
-
-**Fix:** Align continuation lines properly:
-
-```python
-# BAD
-cov = sum((temps_i[k] - mean_i) * (temps_j[k] - mean_j) 
-         for k in range(len(temps_i)))
-
-# GOOD
-cov = sum((temps_i[k] - mean_i) * (temps_j[k] - mean_j)
-          for k in range(len(temps_i)))
-```
-
-### W504: Line break after binary operator
-
-**Error:** `W504 line break after binary operator`
-
-**Fix:** Put operator at the start of the next line:
-
-```python
-# BAD
-cov = sum((si['temps'][k] - si['mean']) * 
-         (sj['temps'][k] - sj['mean'])
-         for k in range(si['n']))
-
-# GOOD
-cov = sum((si['temps'][k] - si['mean']) *
-          (sj['temps'][k] - sj['mean'])
-          for k in range(si['n']))
-```
-
-## Flake8 Configuration
-
-The repository uses `.flake8` configuration file with these settings:
-
-- **Max line length:** 127 characters
-- **Max complexity:** 10
-- **Ignored errors:** E402, W293, W291, E302, E305, F401, F841, E226, F541 (common in notebooks)
-
-See `.flake8` file for complete configuration.
-
-## Pre-Commit Workflow
-
-**Recommended workflow before every commit:**
-
-1. Make your changes to lecture files
-2. Run local CI checks:
+1. **Fork and clone** the repository
+2. **Install the development environment:**
+   ```bash
+   make install-dev
+   micromamba activate rse_lecture
+   ```
+3. **Make your changes** (edit `.py` files, not `.ipynb` files)
+4. **Test your changes:**
    ```bash
    make ci-local
    ```
-3. Fix any issues found
-4. Run CI checks again to confirm
-5. Commit and push (CI should pass!)
+5. **Commit and push** to your fork
+6. **Open a pull request**
 
-## Troubleshooting
+## Before You Commit
 
-### "flake8: command not found"
-
-Install the development environment:
+**ALWAYS run the local CI checks before committing:**
 
 ```bash
-make install-dev
-# or
-micromamba env create -f environment-dev.yml -y
-micromamba activate rse_lecture
+make ci-local
 ```
 
-### "No module named 'jupytext'"
+This runs the same checks as the GitHub Actions CI pipeline:
+1. Flake8 linting (strict and full)
+2. Python syntax validation
+3. Notebook conversion
+4. Notebook verification
 
-Install development dependencies:
+Running these checks locally saves time and prevents CI failures!
 
-```bash
-micromamba activate rse_lecture
-micromamba install jupytext -c conda-forge
+## Contribution Guidelines
+
+### Working with Lectures
+
+**Important:** Always edit the `.py` files, never the `.ipynb` files directly.
+
+- Lectures are written in [Jupytext](https://jupytext.readthedocs.io/) percent format
+- Cell markers: `# %%` for code cells
+- Markdown cells: `# %% [markdown]`
+- Convert to notebooks with: `make convert`
+
+### Lecture Duration
+
+**Each lecture MUST be exactly 90 minutes.**
+
+When modifying lectures:
+- Include timing estimates for sections
+- Consider time for introduction, content, exercises, and Q&A
+- If content exceeds 90 minutes, remove or relocate content
+- If content is under 90 minutes, add exercises or depth
+
+### Code Quality
+
+All contributions must meet these standards:
+
+- **Pass flake8 linting** (max line length: 127 characters)
+- **Valid Python syntax** (test with `python -m py_compile`)
+- **Execute without errors** (all notebooks must run successfully)
+- **Platform compatibility** (Linux, macOS, Windows)
+
+Configuration is in `.flake8`.
+
+### Common flake8 Issues
+
+**Line too long (E501):**
+```python
+# BAD
+print(f"A very long message that exceeds the maximum line length of 127 characters and needs to be broken up")
+
+# GOOD
+print(
+    f"A very long message that exceeds the maximum line length "
+    f"and is broken into multiple lines")
 ```
 
-### Script won't run on Windows
+**Continuation line indentation (E128):**
+```python
+# BAD
+result = some_function(arg1, arg2,
+    arg3, arg4)
 
-Use Git Bash or WSL, or run the manual commands in PowerShell.
-
-## Integration with Git Hooks (Optional)
-
-To automatically run checks before every commit, create `.git/hooks/pre-commit`:
-
-```bash
-#!/bin/bash
-# Auto-run CI checks before commit
-
-echo "Running pre-commit CI checks..."
-if bash scripts/local_ci_check.sh; then
-    echo "✓ Pre-commit checks passed"
-    exit 0
-else
-    echo "✗ Pre-commit checks failed"
-    echo "Fix the issues above before committing"
-    exit 1
-fi
+# GOOD
+result = some_function(arg1, arg2,
+                      arg3, arg4)
 ```
 
-Make it executable:
+## Types of Contributions
 
-```bash
-chmod +x .git/hooks/pre-commit
-```
+### Bug Fixes
+- Fix typos or errors in lectures
+- Correct broken code examples
+- Fix broken links
 
-Now checks run automatically before every `git commit`.
+### Content Improvements
+- Improve explanations or examples
+- Add missing context or details
+- Update outdated information
 
-## Summary
+### New Features
+- Add new exercises or examples
+- Enhance existing content
+- Propose new lecture topics (discuss in an issue first)
 
-**Always run `make ci-local` before committing to avoid CI failures!**
+## Development Workflow
 
-This saves time and keeps the CI green. 🟢
+1. **Create a feature branch:**
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
+
+2. **Make your changes** to `.py` files
+
+3. **Test locally:**
+   ```bash
+   # Check syntax
+   python -m py_compile lecture_XX/lecture_XX.py
+   
+   # Lint
+   flake8 lecture_XX/lecture_XX.py
+   
+   # Convert to notebook
+   make convert
+   
+   # Execute notebook
+   jupyter nbconvert --to notebook --execute --inplace lecture_XX/lecture_XX.ipynb
+   ```
+
+4. **Run full CI checks:**
+   ```bash
+   make ci-local
+   ```
+
+5. **Commit with a clear message:**
+   ```bash
+   git add .
+   git commit -m "Brief description of changes"
+   ```
+
+6. **Push and create PR:**
+   ```bash
+   git push origin feature/your-feature-name
+   ```
+
+## Pull Request Process
+
+1. **Describe your changes** clearly in the PR description
+2. **Link related issues** if applicable
+3. **Wait for CI checks** to pass (required)
+4. **Respond to review feedback** promptly
+5. **Squash commits** if requested
+
+All PRs must pass CI checks before merging.
+
+## Adding Dependencies
+
+When adding new dependencies:
+
+1. **Add to appropriate environment file:**
+   - Common dependencies → `environment.yml`
+   - Development tools → `environment-dev.yml`
+   - Lecture-specific → `lecture_XX/environment.yml`
+
+2. **Test the dependency:**
+   ```bash
+   make test-deps
+   ```
+
+3. **Document why** the dependency is needed
+
+## Documentation Updates
+
+When making changes, update the relevant documentation:
+
+- **README.md** - High-level changes visible to students
+- **docs/DEVELOPER_GUIDE.md** - Technical details for developers
+- **docs/DEPENDENCY_MANAGEMENT.md** - Dependency-related changes
+- **Lecture docstrings** - Content changes in lectures
+
+## Getting Help
+
+- **For development questions:** See [docs/DEVELOPER_GUIDE.md](docs/DEVELOPER_GUIDE.md)
+- **For dependency issues:** See [docs/QUICKSTART.md](docs/QUICKSTART.md)
+- **For other questions:** Open an issue on GitHub
+
+## Code of Conduct
+
+- Be respectful and inclusive
+- Welcome newcomers
+- Provide constructive feedback
+- Focus on improving the course materials
+
+## License
+
+By contributing, you agree that your contributions will be licensed under:
+- **CC BY 4.0** for educational content
+- **MIT License** for code examples
+
+See [LICENSE](LICENSE) for details.
+
+## Recognition
+
+Contributors are recognized in:
+- Git commit history
+- Pull request acknowledgments
+- Course acknowledgments (for significant contributions)
+
+Thank you for contributing to making research software engineering education better!

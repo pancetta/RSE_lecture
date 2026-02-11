@@ -74,7 +74,7 @@ jupyter notebook lecture_07.ipynb
 Or use the conversion script from the repository root:
 
 ```bash
-python convert_to_notebooks.py
+python scripts/convert_to_notebooks.py
 jupyter notebook lecture_07/lecture_07.ipynb
 ```
 
