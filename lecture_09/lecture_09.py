@@ -194,6 +194,123 @@
 # │         Hardware                │
 # └─────────────────────────────────┘
 # ```
+
+# %%
+# Visualize VMs vs Containers architecture
+import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
+from matplotlib.patches import Rectangle, FancyBboxPatch
+
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 7))
+
+# === VIRTUAL MACHINES ===
+ax1.set_xlim(0, 10)
+ax1.set_ylim(0, 10)
+ax1.axis('off')
+ax1.set_title('Virtual Machines', fontsize=16, fontweight='bold', pad=20)
+
+# Hardware layer
+vm_hw = Rectangle((0.5, 0.5), 9, 1.2, facecolor='#424242', edgecolor='black', linewidth=2)
+ax1.add_patch(vm_hw)
+ax1.text(5, 1.1, 'Hardware (CPU, Memory, Disk)', ha='center', va='center',
+         fontsize=10, color='white', fontweight='bold')
+
+# Host OS
+vm_host = Rectangle((0.5, 2), 9, 1.2, facecolor='#616161', edgecolor='black', linewidth=2)
+ax1.add_patch(vm_host)
+ax1.text(5, 2.6, 'Host Operating System', ha='center', va='center',
+         fontsize=10, color='white', fontweight='bold')
+
+# Hypervisor
+vm_hyper = Rectangle((0.5, 3.5), 9, 1, facecolor='#795548', edgecolor='black', linewidth=2)
+ax1.add_patch(vm_hyper)
+ax1.text(5, 4, 'Hypervisor', ha='center', va='center',
+         fontsize=10, color='white', fontweight='bold')
+
+# Guest OS layers (3 VMs)
+vm_colors = ['#1976d2', '#388e3c', '#f57c00']
+vm_labels = ['Guest OS A', 'Guest OS B', 'Guest OS C']
+for i, (color, label) in enumerate(zip(vm_colors, vm_labels)):
+    x = 0.5 + i * 3
+    # Guest OS
+    vm_os = Rectangle((x, 4.8), 2.8, 1.5, facecolor=color, edgecolor='black', linewidth=2)
+    ax1.add_patch(vm_os)
+    ax1.text(x + 1.4, 5.55, label, ha='center', va='center',
+             fontsize=9, color='white', fontweight='bold')
+    
+    # App
+    vm_app = Rectangle((x, 6.5), 2.8, 1.2, facecolor=color, edgecolor='black',
+                       linewidth=2, alpha=0.7)
+    ax1.add_patch(vm_app)
+    ax1.text(x + 1.4, 7.1, f'App {chr(65+i)}', ha='center', va='center',
+             fontsize=9, color='white', fontweight='bold')
+
+# Add annotations
+ax1.text(9.8, 8, '~GB each', ha='right', fontsize=9, style='italic', color='#d32f2f')
+ax1.text(9.8, 7.5, 'Minutes to start', ha='right', fontsize=9, style='italic', color='#d32f2f')
+
+# === CONTAINERS ===
+ax2.set_xlim(0, 10)
+ax2.set_ylim(0, 10)
+ax2.axis('off')
+ax2.set_title('Containers', fontsize=16, fontweight='bold', pad=20)
+
+# Hardware layer
+cont_hw = Rectangle((0.5, 0.5), 9, 1.2, facecolor='#424242', edgecolor='black', linewidth=2)
+ax2.add_patch(cont_hw)
+ax2.text(5, 1.1, 'Hardware (CPU, Memory, Disk)', ha='center', va='center',
+         fontsize=10, color='white', fontweight='bold')
+
+# Host OS
+cont_host = Rectangle((0.5, 2), 9, 1.2, facecolor='#616161', edgecolor='black', linewidth=2)
+ax2.add_patch(cont_host)
+ax2.text(5, 2.6, 'Host Operating System', ha='center', va='center',
+         fontsize=10, color='white', fontweight='bold')
+
+# Container Runtime
+cont_runtime = Rectangle((0.5, 3.5), 9, 1, facecolor='#00796b', edgecolor='black', linewidth=2)
+ax2.add_patch(cont_runtime)
+ax2.text(5, 4, 'Container Runtime (Docker/Podman)', ha='center', va='center',
+         fontsize=10, color='white', fontweight='bold')
+
+# Containers (3 containers)
+cont_colors = ['#1976d2', '#388e3c', '#f57c00']
+cont_labels = ['App A', 'App B', 'App C']
+for i, (color, label) in enumerate(zip(cont_colors, cont_labels)):
+    x = 0.5 + i * 3
+    # Container (smaller than VM)
+    cont = Rectangle((x, 4.8), 2.8, 2.8, facecolor=color, edgecolor='black',
+                     linewidth=2, alpha=0.8)
+    ax2.add_patch(cont)
+    
+    # App + Libs label
+    ax2.text(x + 1.4, 6.5, label, ha='center', va='center',
+             fontsize=10, color='white', fontweight='bold')
+    ax2.text(x + 1.4, 5.8, '+ Libs', ha='center', va='center',
+             fontsize=9, color='white', style='italic')
+
+# Add annotations
+ax2.text(9.8, 8, '~MB each', ha='right', fontsize=9, style='italic', color='#2e7d32')
+ax2.text(9.8, 7.5, 'Seconds to start', ha='right', fontsize=9, style='italic', color='#2e7d32')
+
+plt.tight_layout()
+plt.show()
+
+# %% [markdown]
+# The visualization above highlights the key architectural differences:
+# 
+# **Virtual Machines** (left):
+# - Each VM includes a full Guest OS → Heavy (gigabytes)
+# - Hypervisor virtualizes hardware → Slower startup
+# - Strong isolation but resource-intensive
+# 
+# **Containers** (right):
+# - Share the Host OS kernel → Lightweight (megabytes)
+# - Only package app + libraries → Fast startup (seconds)
+# - Good isolation with much less overhead
+# 
+# For research software, containers offer the best balance of reproducibility,
+# portability, and performance!
 #
 # ### Key Container Concepts
 #
@@ -345,6 +462,87 @@
 # RUN pip install -r requirements.txt  # Only rebuilds if requirements change
 # COPY . .                           # Then copy code
 # ```
+
+# %%
+# Visualize Docker image layers
+fig, ax = plt.subplots(figsize=(10, 8))
+ax.set_xlim(0, 10)
+ax.set_ylim(0, 10)
+ax.axis('off')
+
+# Define layers (bottom to top)
+layers = [
+    {'label': 'Base OS (Ubuntu)', 'size': 'Layer 1: 50 MB', 'color': '#424242',
+     'instruction': 'FROM ubuntu:22.04'},
+    {'label': 'Python Runtime', 'size': 'Layer 2: 150 MB', 'color': '#1976d2',
+     'instruction': 'RUN apt-get install python3'},
+    {'label': 'System Dependencies', 'size': 'Layer 3: 80 MB', 'color': '#388e3c',
+     'instruction': 'RUN apt-get install libgsl-dev'},
+    {'label': 'Python Packages', 'size': 'Layer 4: 120 MB', 'color': '#f57c00',
+     'instruction': 'RUN pip install -r requirements.txt'},
+    {'label': 'Application Code', 'size': 'Layer 5: 5 MB', 'color': '#7b1fa2',
+     'instruction': 'COPY . /app'},
+]
+
+y_start = 1
+layer_height = 1.3
+
+for i, layer in enumerate(layers):
+    y = y_start + i * layer_height
+    
+    # Draw layer rectangle
+    rect = Rectangle((1, y), 8, layer_height * 0.9,
+                     facecolor=layer['color'], edgecolor='black',
+                     linewidth=2, alpha=0.8)
+    ax.add_patch(rect)
+    
+    # Layer label (left)
+    ax.text(5, y + 0.55, layer['label'],
+            ha='center', va='center', fontsize=11,
+            color='white', fontweight='bold')
+    
+    # Layer size (right)
+    ax.text(8.7, y + 0.55, layer['size'],
+            ha='right', va='center', fontsize=9,
+            color='white', style='italic')
+    
+    # Instruction (below)
+    ax.text(0.5, y + 0.1, layer['instruction'],
+            ha='left', va='bottom', fontsize=8,
+            family='monospace', color='#666')
+
+# Add arrows showing layer stacking
+for i in range(len(layers) - 1):
+    y = y_start + (i + 1) * layer_height - 0.1
+    ax.annotate('', xy=(0.5, y), xytext=(0.5, y - 0.3),
+                arrowprops=dict(arrowstyle='->', lw=2, color='#999'))
+
+# Title
+ax.text(5, 8.5, 'Docker Image Layers', ha='center',
+        fontsize=16, fontweight='bold')
+
+# Add notes
+ax.text(5, 0.3, '⚡ Each layer is cached • Only changed layers rebuild',
+        ha='center', fontsize=10, color='#2e7d32',
+        bbox=dict(boxstyle='round,pad=0.5', facecolor='#e8f5e9',
+                  edgecolor='#2e7d32', linewidth=2))
+
+plt.tight_layout()
+plt.show()
+
+# %% [markdown]
+# **Understanding Image Layers:**
+# 
+# Docker images are built like a layer cake - each instruction in your Dockerfile
+# creates a new layer on top of the previous one:
+# 
+# - **Layer caching** means unchanged layers don't rebuild (saves time!)
+# - **Place frequently changing code last** (e.g., your Python scripts)
+# - **Place rarely changing dependencies first** (e.g., Python packages)
+# - **Total image size** = sum of all layers
+# 
+# This is why the "good practice" pattern copies requirements.txt first, installs
+# packages, then copies code - code changes don't force package reinstallation!
 
 # %% [markdown]
 # <div style="background-color: #f3e5f5; border-left: 5px solid #9c27b0; padding: 15px; margin: 10px 0; border-radius: 5px;">

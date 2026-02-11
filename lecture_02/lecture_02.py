@@ -157,6 +157,138 @@
 # feature branch, your colleague merges their changes into main. When you go to merge, Git needs to 
 # reconcile both sets of changes.
 
+# %%
+# Visualize Fast-Forward vs Three-Way Merge
+import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
+from matplotlib.patches import Circle, FancyArrowPatch, FancyBboxPatch
+
+fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 10))
+
+# === FAST-FORWARD MERGE ===
+ax1.set_xlim(0, 12)
+ax1.set_ylim(0, 5)
+ax1.axis('off')
+ax1.set_title('Fast-Forward Merge', fontsize=14, fontweight='bold', pad=10)
+
+# Main branch commits
+commits_ff = [
+    {'x': 1, 'y': 2, 'label': 'A', 'branch': 'main', 'color': '#1976d2'},
+    {'x': 2.5, 'y': 2, 'label': 'B', 'branch': 'main', 'color': '#1976d2'},
+    {'x': 4, 'y': 3, 'label': 'C', 'branch': 'feature', 'color': '#f57c00'},
+    {'x': 5.5, 'y': 3, 'label': 'D', 'branch': 'feature', 'color': '#f57c00'},
+    {'x': 7, 'y': 3, 'label': 'E', 'branch': 'feature', 'color': '#f57c00'},
+]
+
+# Draw commits
+for commit in commits_ff:
+    circle = Circle((commit['x'], commit['y']), 0.3, color=commit['color'], zorder=3)
+    ax1.add_patch(circle)
+    ax1.text(commit['x'], commit['y'], commit['label'], ha='center', va='center',
+             fontsize=11, fontweight='bold', color='white')
+
+# Draw connections
+ax1.plot([1, 2.5], [2, 2], 'k-', linewidth=2, alpha=0.5)
+ax1.plot([2.5, 4], [2, 3], 'k-', linewidth=2, alpha=0.5)
+ax1.plot([4, 5.5, 7], [3, 3, 3], 'k-', linewidth=2, alpha=0.5)
+
+# Branch labels
+ax1.text(1, 1.3, 'main', ha='center', fontsize=10, fontweight='bold',
+         color='#1976d2', bbox=dict(boxstyle='round,pad=0.3', facecolor='white',
+                                    edgecolor='#1976d2'))
+ax1.text(5.5, 3.7, 'feature', ha='center', fontsize=10, fontweight='bold',
+         color='#f57c00', bbox=dict(boxstyle='round,pad=0.3', facecolor='white',
+                                    edgecolor='#f57c00'))
+
+# Show merge result
+ax1.annotate('', xy=(9, 2.5), xytext=(7.5, 3),
+             arrowprops=dict(arrowstyle='->', lw=2.5, color='#388e3c'))
+ax1.text(9.5, 2.5, 'main (after merge)', ha='left', va='center',
+         fontsize=10, fontweight='bold', color='#388e3c')
+
+# Explanation
+ax1.text(6, 0.5, 'No new merge commit needed - main just "fast-forwards" to include feature commits',
+         ha='center', fontsize=10, style='italic', color='#555',
+         bbox=dict(boxstyle='round,pad=0.5', facecolor='#e8f5e9',
+                   edgecolor='#388e3c', linewidth=2))
+
+# === THREE-WAY MERGE ===
+ax2.set_xlim(0, 12)
+ax2.set_ylim(0, 5)
+ax2.axis('off')
+ax2.set_title('Three-Way Merge', fontsize=14, fontweight='bold', pad=10)
+
+# Commits with divergent history
+commits_3way = [
+    {'x': 1, 'y': 2.5, 'label': 'A', 'branch': 'both', 'color': '#1976d2'},
+    {'x': 2.5, 'y': 2.5, 'label': 'B', 'branch': 'both', 'color': '#1976d2'},
+    {'x': 4, 'y': 3.5, 'label': 'C', 'branch': 'feature', 'color': '#f57c00'},
+    {'x': 5.5, 'y': 3.5, 'label': 'D', 'branch': 'feature', 'color': '#f57c00'},
+    {'x': 4, 'y': 1.5, 'label': 'F', 'branch': 'main', 'color': '#1976d2'},
+    {'x': 5.5, 'y': 1.5, 'label': 'G', 'branch': 'main', 'color': '#1976d2'},
+]
+
+# Draw commits
+for commit in commits_3way:
+    circle = Circle((commit['x'], commit['y']), 0.3, color=commit['color'], zorder=3)
+    ax2.add_patch(circle)
+    ax2.text(commit['x'], commit['y'], commit['label'], ha='center', va='center',
+             fontsize=11, fontweight='bold', color='white')
+
+# Draw connections
+ax2.plot([1, 2.5], [2.5, 2.5], 'k-', linewidth=2, alpha=0.5)
+ax2.plot([2.5, 4], [2.5, 3.5], 'k-', linewidth=2, alpha=0.5)
+ax2.plot([4, 5.5], [3.5, 3.5], 'k-', linewidth=2, alpha=0.5)
+ax2.plot([2.5, 4], [2.5, 1.5], 'k-', linewidth=2, alpha=0.5)
+ax2.plot([4, 5.5], [1.5, 1.5], 'k-', linewidth=2, alpha=0.5)
+
+# Branch labels
+ax2.text(5.5, 1, 'main', ha='center', fontsize=10, fontweight='bold',
+         color='#1976d2', bbox=dict(boxstyle='round,pad=0.3', facecolor='white',
+                                    edgecolor='#1976d2'))
+ax2.text(5.5, 4, 'feature', ha='center', fontsize=10, fontweight='bold',
+         color='#f57c00', bbox=dict(boxstyle='round,pad=0.3', facecolor='white',
+                                    edgecolor='#f57c00'))
+
+# Merge commit
+merge_circle = Circle((7.5, 2.5), 0.35, color='#388e3c', zorder=3)
+ax2.add_patch(merge_circle)
+ax2.text(7.5, 2.5, 'M', ha='center', va='center',
+         fontsize=11, fontweight='bold', color='white')
+
+# Arrows to merge commit
+ax2.plot([5.5, 7.5], [3.5, 2.5], 'k-', linewidth=2, alpha=0.5)
+ax2.plot([5.5, 7.5], [1.5, 2.5], 'k-', linewidth=2, alpha=0.5)
+
+ax2.text(8.3, 2.5, 'Merge commit\n(combines both)', ha='left', va='center',
+         fontsize=9, color='#388e3c', fontweight='bold')
+
+# Explanation
+ax2.text(6, 0.5, 'Creates a merge commit to combine changes from both branches',
+         ha='center', fontsize=10, style='italic', color='#555',
+         bbox=dict(boxstyle='round,pad=0.5', facecolor='#fff3e0',
+                   edgecolor='#f57c00', linewidth=2))
+
+plt.tight_layout()
+plt.show()
+
+# %% [markdown]
+# The diagrams above show two different merge scenarios:
+# 
+# **Fast-Forward Merge** (top):
+# - Main branch hasn't changed since the feature branch was created
+# - Git simply moves the main branch pointer forward
+# - No new merge commit needed - clean, linear history
+# - Use when: working alone or main hasn't been updated
+# 
+# **Three-Way Merge** (bottom):
+# - Both branches have new commits since they diverged
+# - Git creates a new merge commit (M) with two parents
+# - Preserves the complete history of both branches
+# - Use when: collaborating and main has advanced
+# 
+# Both are perfectly valid! The type of merge depends on your project's history.
+
 # %% [markdown]
 # ### Handling Merge Conflicts
 # 
