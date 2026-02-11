@@ -20,6 +20,7 @@ This lecture series covers fundamental concepts and practices in Research Softwa
 - **Lecture 10**: Collaboration and Code Review in Research Software (~90 minutes)
 - **Lecture 11**: Working with Research Data - File Formats and Databases (~90 minutes)
 - **Lecture 12**: AI-Assisted Coding for Research Software (~90 minutes)
+- **Lecture 13**: Scientific Workflows and Automation (~90 minutes)
 
 ## Structure
 
@@ -93,6 +94,9 @@ make install-lecture11
 
 # Lecture 12
 make install-lecture12
+
+# Lecture 13
+make install-lecture13
 ```
 
 Then activate:
@@ -134,6 +138,7 @@ micromamba activate rse_lecture
 - Lecture 10 has no additional dependencies (collaboration tools covered conceptually).
 - Lecture 11 adds h5py, netCDF4, and pandas for working with research data formats.
 - Lecture 12 has no additional dependencies (AI coding tools are IDE extensions, not Python packages).
+- Lecture 13 has no additional dependencies (workflow tools are typically installed separately).
 - The `environment-dev.yml` includes all dependencies plus development tools (flake8, nbconvert).
 - Installation pattern is **harmonized**: all lectures follow the same two-step process (base + additions).
 - Lecture 1 introduces the course and essential tools (shell, git, GitHub).
@@ -148,6 +153,7 @@ micromamba activate rse_lecture
 - Lecture 10 covers collaboration and code review in research software teams.
 - Lecture 11 covers working with research data, file formats (HDF5, NetCDF), and databases.
 - Lecture 12 covers AI-assisted coding tools, best practices, and privacy considerations.
+- Lecture 13 covers scientific workflows and automation (Make, Snakemake, Nextflow).
 
 ## Usage
 
