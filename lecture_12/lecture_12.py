@@ -13,1166 +13,1386 @@
 # ---
 
 # %% [markdown]
-# # Lecture 12: AI-Assisted Coding for Research Software
+# # Lecture 12: Scientific Workflows and Automation
 #
 # ## Overview
-# Artificial Intelligence coding assistants have rapidly become widespread tools in
-# software development, offering to help write, debug, and document code. For research
-# software engineers, these tools present both exciting opportunities and serious risks.
-# This lecture explores how to use AI coding assistants effectively and safely,
-# understanding their capabilities and limitations, and navigating the legal and ethical
-# considerations specific to research software.
+# Scientific research often involves complex, multi-step data analysis pipelines:
+# download data, preprocess it, run simulations, analyze results, generate figures,
+# and compile reports. As projects grow, manually executing these steps becomes
+# error-prone, time-consuming, and difficult to reproduce. This lecture introduces
+# scientific workflow management systems that automate these pipelines, track
+# dependencies between steps, and ensure reproducibility.
+#
+# We'll explore how workflow systems differ from simple shell scripts and Makefiles,
+# when to use each tool, and demonstrate practical examples using both Make and
+# modern workflow managers like Snakemake. While examples use Python, the concepts
+# apply across programming languages.
 #
 # **Duration**: ~90 minutes
 #
 # ## Learning Objectives
-# - Understand what AI coding assistants are and how they work
-# - Compare different types of AI assistance (integrated vs chat-based)
-# - Use GitHub Copilot and ChatGPT effectively for research coding
-# - Recognize common pitfalls and security risks
-# - Navigate legal implications (licensing, copyright, data protection)
-# - Understand self-hosted options for sensitive research code
-# - Apply best practices for AI-assisted research software development
+# - Understand the challenges of managing complex research pipelines
+# - Recognize when to use scripts, Make, or workflow management systems
+# - Learn the fundamentals of dependency-based execution
+# - Write basic Snakemake workflows for data analysis
+# - Understand alternatives (Nextflow, CWL, Galaxy) and their use cases
+# - Apply workflow concepts across different programming languages
+# - Integrate workflows with version control and containerization
 
 # %% [markdown]
-# ## Part 1: The Copy-Paste Catastrophe - A Cautionary Tale
+# ## Part 1: The Pipeline Problem
 #
-# ### The Story
+# ### When Manual Execution Breaks Down
 #
-# Dr. Sarah Chen was excited. A new AI coding assistant had just been released, and it
-# promised to "write code from comments." She was under pressure to analyze genomic data
-# for an upcoming paper deadline. The AI seemed perfect - she could describe what she
-# needed, and it would generate the code instantly.
+# Dr. Elena Rodriguez ran the same analysis every week for her climate research.
+# Her workflow involved:
+# 1. Download satellite data from three different sources
+# 2. Convert formats and merge datasets
+# 3. Run quality control checks
+# 4. Execute climate model
+# 5. Generate 15 different visualizations
+# 6. Compile results into a report
 #
-# ```python
-# # She typed: "Function to normalize gene expression data"
-# # The AI generated a complete function in seconds
+# Every Monday, she would:
+# ```bash
+# python download_data.py --source nasa
+# python download_data.py --source noaa
+# python download_data.py --source esa
+# python merge_datasets.py
+# python quality_control.py
+# python run_model.py --config weekly.json
+# python plot_temperature.py
+# python plot_precipitation.py
+# python plot_wind.py
+# # ... 12 more plotting scripts
+# python generate_report.py
 # ```
 #
-# Sarah was impressed. The function looked professional, had docstrings, and even included
-# error handling. She didn't fully understand the normalization algorithm it used, but it
-# ran without errors and produced reasonable-looking results. She copied it into her
-# analysis pipeline.
+# **The problems emerged quickly:**
 #
-# **Three weeks later**, during peer review, a reviewer asked: "Why did you use
-# quantile normalization instead of the standard TPM normalization for this dataset?"
+# **Problem 1: What if something fails midway?**
+# - Download succeeded, but merge failed
+# - She reran the entire pipeline
+# - Wasted time re-downloading gigabytes of data
+# - No way to restart from the failure point
 #
-# Sarah froze. She didn't know what the AI had generated. Looking back at the code:
-# - The normalization method was inappropriate for her data type
-# - The algorithm had a subtle bug that only appeared with certain data distributions
-# - The function was nearly identical to GPL-licensed code (licensing violation)
-# - Her results were scientifically incorrect
+# **Problem 2: What changed?**
+# - Updated the plotting code
+# - Should she rerun everything?
+# - Or just the plots?
+# - No systematic way to know
 #
-# **The paper was rejected.** Worse, Sarah had to retract a conference presentation
-# based on the flawed analysis. The AI had been fast, but she hadn't understood what
-# it generated or verified it was correct.
+# **Problem 3: Parallel execution**
+# - The 15 plots could run simultaneously
+# - But she ran them sequentially
+# - Analysis that could take 10 minutes took 90 minutes
 #
-# ### The Lessons
+# **Problem 4: Documentation**
+# - Six months later, a collaborator asked: "How do I reproduce this?"
+# - The README.md was outdated
+# - Some scripts had been renamed
+# - Parameters had changed
 #
-# This story illustrates several critical points:
+# **Problem 5: Reproducibility**
+# - Which version of the code produced Figure 3 in the paper?
+# - She couldn't remember the exact order she ran things
+# - Some intermediate files had been deleted
 #
-# 1. **AI generates plausible code, not necessarily correct code**
-# 2. **Understanding your code is non-negotiable in research**
-# 3. **AI suggestions may have hidden bugs or use inappropriate algorithms**
-# 4. **Legal issues (licensing) can arise from AI-generated code**
-# 5. **Speed without comprehension is dangerous in science**
-#
-# With these lessons in mind, let's learn how to use AI assistants effectively and safely.
+# **She needed automation. But what kind?**
 
 # %% [markdown]
-# ## Part 2: What AI Means for Research Software Engineers
+# ## Part 2: Automation Approaches - From Scripts to Workflows
 #
-# ### AI as Tool, Not Replacement
+# ### Approach 1: The Shell Script
 #
-# The rise of AI coding assistants has sparked anxiety in the software development
-# community: "Will AI replace programmers?" For Research Software Engineers, this question
-# misses the fundamental nature of our work. **AI doesn't replace RSEs—it changes how we work.**
-#
-# Think of AI assistants like calculators for mathematicians:
-# - Calculators didn't replace mathematicians
-# - They freed mathematicians from tedious arithmetic
-# - Mathematical thinking, proof design, and insight remain uniquely human
-# - The best mathematicians use calculators as tools to amplify their capabilities
-#
-# Similarly, AI coding assistants are tools that amplify RSE capabilities, not replacements
-# for RSE expertise.
-#
-# ### How AI Helps Research Software Engineers
-#
-# AI assistants can genuinely improve RSE productivity when used appropriately:
-#
-# **1. Accelerating Routine Tasks**
-# - Generating boilerplate code (imports, class structures, test fixtures)
-# - Writing standard docstrings following established patterns
-# - Converting data between formats (JSON to CSV, MATLAB to Python)
-# - Implementing well-known algorithms (sorting, searching, basic statistics)
-#
-# **2. Learning New Tools and Libraries**
-# - Getting started with unfamiliar APIs (example: "How do I read NetCDF in Python?")
-# - Understanding error messages and stack traces
-# - Exploring alternative approaches to a problem
-# - Quickly prototyping to test ideas
-#
-# **3. Code Quality Improvements**
-# - Suggesting better variable names
-# - Identifying potential edge cases
-# - Proposing more efficient algorithms
-# - Generating comprehensive test cases
-#
-# **4. Documentation and Communication**
-# - Writing clear README files and user guides
-# - Creating code examples for documentation
-# - Explaining complex code to collaborators
-# - Drafting comments for code review
-#
-# **What AI does well**: Pattern recognition, synthesis from examples, generating
-# variations on known solutions.
-#
-# ### What Remains Uniquely Human (and Why)
-#
-# Despite AI's capabilities, Research Software Engineering expertise remains fundamentally
-# human. Here's what AI cannot do—and why RSEs remain essential:
-#
-# **1. Understanding the Research Question**
-# - **Why AI fails**: AI doesn't understand scientific goals, hypotheses, or domain constraints
-# - **RSE expertise**: Translating research questions into computational approaches
-# - **Example**: Choosing between Monte Carlo and analytical methods for a climate model
-#   requires understanding physics, not just coding patterns
-#
-# **2. Evaluating Scientific Correctness**
-# - **Why AI fails**: AI recognizes code patterns but not scientific validity
-# - **RSE expertise**: Knowing if an algorithm is appropriate for the data and question
-# - **Example**: Sarah's story—AI suggested quantile normalization, but TPM was needed.
-#   Only domain knowledge reveals this mismatch.
-#
-# **3. Designing Software Architecture**
-# - **Why AI fails**: Large-scale design requires understanding trade-offs, scalability,
-#   maintainability over years—not patterns in existing code
-# - **RSE expertise**: Architecting systems that grow with research needs
-# - **Example**: Deciding whether a workflow needs a database, flat files, or HDF5
-#   requires understanding data access patterns, collaboration needs, and future scale
-#
-# **4. Critical Evaluation and Debugging**
-# - **Why AI fails**: AI can suggest fixes but doesn't understand the *why* behind bugs
-# - **RSE expertise**: Diagnosing root causes, not just symptoms
-# - **Example**: A simulation produces unexpected results. AI might fix syntax errors,
-#   but understanding if the physics equations are correct requires domain expertise.
-#
-# **5. Research Ethics and Integrity**
-# - **Why AI fails**: Cannot make ethical judgments about data use, privacy, or research practices
-# - **RSE expertise**: Navigating GDPR, research ethics, data sovereignty, reproducibility
-# - **Example**: Deciding what medical research data can be sent to cloud AI services
-#   requires understanding regulations and institutional policies
-#
-# **6. Collaboration and Mentoring**
-# - **Why AI fails**: Can't build teams, resolve conflicts, or mentor junior researchers
-# - **RSE expertise**: Working with researchers, teaching best practices, building community
-# - **Example**: Helping a PhD student understand not just how to write a function,
-#   but why testing matters and how to think about software design
-#
-# **The irreplaceable RSE**: You bring scientific domain knowledge, critical thinking,
-# ethical judgment, and collaborative skills. AI brings pattern matching and code generation.
-# These are complementary, not competing capabilities.
-#
-# ### Skills RSEs Need to Thrive with AI
-#
-# To make the best use of AI assistants while maintaining your expertise, develop these skills:
-#
-# **1. Critical Evaluation**
-# - **Skill**: Quickly assess if AI-generated code is correct, efficient, and appropriate
-# - **Why essential**: AI generates plausible code, not always correct code
-# - **How to develop**: Practice reviewing AI suggestions with the same rigor as code review
-#   - Does it handle edge cases?
-#   - Is the algorithm appropriate for the data size?
-#   - Are there security implications?
-#
-# **2. Prompt Engineering**
-# - **Skill**: Crafting clear, specific requests that get useful AI responses
-# - **Why essential**: Better prompts → better suggestions → less time debugging
-# - **How to develop**: 
-#   - Be specific: "Generate pytest test for temperature validation with edge cases"
-#     vs "write tests"
-#   - Provide context: "For climate data with possible sensor errors..."
-#   - Iterate: If first response misses the mark, refine your prompt
-#
-# **3. Deep Domain Knowledge**
-# - **Skill**: Understanding the science behind your code
-# - **Why essential**: Only you can judge if the algorithm matches the scientific question
-# - **How to develop**: 
-#   - Collaborate closely with domain scientists
-#   - Read the papers describing methods you implement
-#   - Attend domain-specific conferences, not just software ones
-#
-# **4. Software Engineering Fundamentals**
-# - **Skill**: Testing, version control, design patterns, performance optimization
-# - **Why essential**: AI can write individual functions but can't architect systems
-# - **How to develop**: 
-#   - Study classic software engineering (Clean Code, Design Patterns)
-#   - Practice test-driven development (write tests first, then use AI for implementation)
-#   - Learn to profile and optimize—AI suggestions often prioritize clarity over performance
-#
-# **5. Ethical and Legal Awareness**
-# - **Skill**: Understanding privacy, licensing, research integrity
-# - **Why essential**: AI doesn't understand these constraints
-# - **How to develop**: 
-#   - Learn about research ethics and data protection (GDPR, HIPAA)
-#   - Understand open-source licenses
-#   - Follow institutional policies on data and code
-#
-# **6. Effective Communication**
-# - **Skill**: Explaining technical decisions to non-technical researchers
-# - **Why essential**: AI can't translate between research and software perspectives
-# - **How to develop**: 
-#   - Practice explaining code in terms of scientific impact
-#   - Write documentation for your future self, not just today's you
-#   - Mentor others—teaching clarifies your own understanding
-#
-# ### The Future RSE: Human Expertise + AI Tools
-#
-# The most effective Research Software Engineers in the AI era will be those who:
-#
-# 1. **Use AI for acceleration**: Let AI handle boilerplate while you focus on hard problems
-# 2. **Maintain deep expertise**: Your domain knowledge and critical thinking can't be automated
-# 3. **Stay critical**: Never trust AI output without verification
-# 4. **Keep learning**: Software and AI tools evolve; continuous learning is essential
-# 5. **Collaborate effectively**: Work with both AI tools and human researchers
-#
-# **Bottom line**: AI assistants make good RSEs more productive. They don't make
-# inexperienced developers into RSEs. The expertise—understanding research, evaluating
-# correctness, designing systems, navigating ethics—remains uniquely human.
-#
-# As we explore specific AI tools in the following sections, remember: you're learning
-# to use powerful tools, not training your replacement. Your judgment, expertise, and
-# scientific understanding are what make you valuable. AI just helps you work faster.
+# Elena's first attempt was a simple bash script:
 
 # %% [markdown]
-# ## Part 3: What Are AI Coding Assistants?
+# ```bash
+# #!/bin/bash
+# # run_analysis.sh
 #
-# ### The Technology
-#
-# AI coding assistants are built on **Large Language Models (LLMs)** trained on vast
-# amounts of code from public repositories, documentation, and sometimes private sources.
-# These models learn patterns in code and can generate new code based on context.
-#
-# **Key characteristics:**
-# - **Pattern-based**: They recognize common coding patterns and reproduce them
-# - **Statistical**: They predict the most likely next tokens, not "understand" logic
-# - **Context-aware**: They use your current code as context for suggestions
-# - **Non-deterministic**: The same prompt may produce different outputs
-#
-# **Important**: AI assistants don't "understand" code the way humans do. They recognize
-# statistical patterns in text. This is powerful but has fundamental limitations.
-#
-# ### The Landscape (Brief Overview)
-#
-# **Integrated coding assistants** work inside your IDE:
-# - GitHub Copilot (Microsoft/OpenAI) - widely used, commercial
-# - Amazon CodeWhisperer - free tier available
-# - Tabnine - partial free tier
-# - Continue.dev - open-source, supports local models
-#
-# **Chat-based assistants** work through conversation:
-# - ChatGPT (OpenAI) - general purpose, code-capable
-# - Claude (Anthropic) - strong at code explanation
-# - Gemini (Google) - multimodal capabilities
-#
-# **Self-hosted options** for data privacy:
-# - Ollama with Code Llama - run locally
-# - Continue.dev with local models - privacy-preserving
-# - Tabby - self-hosted coding assistant
-#
-# **Note**: This landscape changes rapidly. The principles in this lecture apply
-# regardless of which specific tools you use. Focus on understanding how to use any
-# AI assistant safely, not memorizing today's tool list.
+# python download_data.py --source nasa
+# python download_data.py --source noaa
+# python download_data.py --source esa
+# python merge_datasets.py
+# python quality_control.py
+# python run_model.py --config weekly.json
+# python plot_temperature.py
+# python plot_precipitation.py
+# # ... more commands
+# ```
 
 # %% [markdown]
-# ## Part 4: GitHub Copilot vs ChatGPT - Different Tools for Different Tasks
+# **Advantages:**
+# - Simple and straightforward
+# - Easy to understand
+# - Works across all platforms (with Bash available)
+# - No additional tools needed
 #
-# ### Understanding the Difference
+# **Limitations:**
+# - Runs everything every time (no dependency tracking)
+# - No parallelization
+# - If step 5 fails, must restart from step 1
+# - No automatic detection of what needs rerunning
 #
-# While both use similar underlying technology (large language models), they're designed
-# for very different workflows:
+# **When to use:** Simple, linear pipelines that run quickly; one-off analyses
+
+# %% [markdown]
+# ### Approach 2: Smarter Shell Scripts
 #
-# **GitHub Copilot** (Integrated Assistant):
-# - **Where**: Works inside your code editor (VS Code, JetBrains, etc.)
-# - **When**: Suggests code as you type
-# - **How**: Autocomplete-style, line-by-line or multi-line suggestions
-# - **Context**: Uses your current file and nearby files
-# - **Speed**: Instant, real-time suggestions
-# - **Best for**: Writing routine code, completing patterns, generating boilerplate
+# Elena added some logic:
+
+# %% [markdown]
+# ```bash
+# #!/bin/bash
+# # run_analysis_smart.sh
 #
-# **ChatGPT** (Conversational Assistant):
-# - **Where**: Web interface or API
-# - **When**: You explicitly ask questions
-# - **How**: Back-and-forth conversation, explain-and-iterate
-# - **Context**: Only what you provide in the conversation
-# - **Speed**: Deliberate, response-based interaction
-# - **Best for**: Learning concepts, debugging logic, designing algorithms, code review
+# # Only download if data doesn't exist
+# if [ ! -f "data/nasa.nc" ]; then
+#     python download_data.py --source nasa
+# fi
 #
-# ### Comparison Through Example
+# # Only merge if inputs are newer than output
+# if [ data/nasa.nc -nt data/merged.nc ] || \
+#    [ data/noaa.nc -nt data/merged.nc ]; then
+#     python merge_datasets.py
+# fi
 #
-# Let's see how each tool helps with a common research task: writing a function to
-# calculate rolling statistics for time series data.
+# # ... more conditional logic
+# ```
+
+# %% [markdown]
+# **Improvements:**
+# - Skips unnecessary steps
+# - Checks file timestamps
+# - More efficient
 #
-# #### Copilot Workflow (Integrated)
+# **New Problems:**
+# - Complex conditional logic
+# - Hard to maintain
+# - Error-prone file timestamp checks
+# - Still no parallelization
+# - Becomes unwieldy for complex dependencies
 #
-# **You type a comment and function signature:**
-# ```python
-# # Calculate rolling mean and standard deviation for time series
-# def rolling_stats(data, window_size):
+# **When to use:** Moderately complex pipelines where some caching is beneficial
+#
+# ### The Core Problem: Dependency Management
+#
+# What Elena really needed was a system that understood:
+# - **Dependencies**: Which outputs depend on which inputs?
+# - **Freshness**: Which files are up-to-date?
+# - **Ordering**: What order must steps execute in?
+# - **Parallelization**: Which steps can run simultaneously?
+# - **Failure handling**: Which steps to rerun after a failure?
+#
+# This is exactly what **build systems** and **workflow managers** provide.
+
+# %% [markdown]
+# ## Part 3: Make - The Classic Build System
+#
+# ### Introduction to Make
+#
+# Make was created in 1976 for compiling software, but it's excellent for research
+# workflows. Make uses a `Makefile` that declares:
+# - **Targets**: Files to create (outputs)
+# - **Prerequisites**: Files needed to create the target (inputs)
+# - **Recipes**: Commands to create the target
+#
+# Make automatically:
+# - Determines what needs updating based on file timestamps
+# - Runs commands in the correct order
+# - Parallelizes independent tasks
+# - Stops on errors
+#
+# ### Basic Make Syntax
+#
+# A Make rule follows this pattern:
+# ```makefile
+# target: prerequisites
+#     recipe
 # ```
 #
-# **Copilot immediately suggests** (as you type):
+# **Important**: The recipe line MUST start with a TAB character, not spaces.
+
+# %% [markdown]
+# ### Example: A Research Data Pipeline with Make
+#
+# Let's create a realistic example. Imagine analyzing temperature data:
+
+# %% [markdown]
+# ```makefile
+# # Makefile for temperature analysis pipeline
+#
+# # Final output
+# report.pdf: results/plots.png results/statistics.txt
+#     python generate_report.py
+#
+# # Generate plots from analyzed data
+# results/plots.png: data/processed/temperature_clean.csv
+#     python plot_data.py --input $< --output $@
+#
+# # Compute statistics
+# results/statistics.txt: data/processed/temperature_clean.csv
+#     python compute_stats.py --input $< --output $@
+#
+# # Clean and validate data
+# data/processed/temperature_clean.csv: data/raw/temperature.csv
+#     python clean_data.py --input $< --output $@
+#
+# # Download raw data
+# data/raw/temperature.csv:
+#     python download_data.py --output $@
+#
+# # Utility targets
+# .PHONY: clean all
+#
+# all: report.pdf
+#
+# clean:
+#     rm -rf data/processed data/raw results
+# ```
+
+# %% [markdown]
+# **Key Make features demonstrated:**
+#
+# - `$<`: First prerequisite (input file)
+# - `$@`: Target (output file)
+# - `.PHONY`: Targets that aren't files (like `clean`, `all`)
+# - Dependencies chain automatically: changing raw data triggers everything
+#
+# **Running Make:**
+# ```bash
+# make              # Builds the default target (first in file)
+# make report.pdf   # Builds specific target
+# make -j 4         # Runs with 4 parallel jobs
+# make clean        # Runs the clean target
+# make -n           # Dry run (shows what would execute)
+# ```
+
+# %% [markdown]
+# ### Make's Intelligence
+#
+# When you run `make`, it:
+# 1. Checks if `report.pdf` exists and its timestamp
+# 2. Checks timestamps of all dependencies (recursively)
+# 3. Identifies what's out of date
+# 4. Runs only necessary commands
+# 5. Executes independent tasks in parallel (with `-j`)
+#
+# **Example scenario:**
+# - You modify `plot_data.py`
+# - Run `make report.pdf`
+# - Make sees the plot script is newer than `plots.png`
+# - Reruns only the plotting and report generation
+# - Skips data download, cleaning, and statistics (still up-to-date)
+
+# %% [markdown]
+# ### Make Advantages and Limitations
+#
+# **Advantages:**
+# - Ubiquitous (available on all Unix systems)
+# - Simple syntax for simple workflows
+# - Language-agnostic (works with any command-line tools)
+# - Parallel execution built-in
+# - Dependency tracking based on file timestamps
+# - Well-understood and documented
+#
+# **Limitations:**
+# - Syntax can be cryptic (`$@`, `$<`, etc.)
+# - TAB vs. spaces is error-prone
+# - File-based only (can't track other dependencies easily)
+# - Limited pattern matching
+# - No built-in support for:
+#   - Remote execution
+#   - Resource management (CPU, memory)
+#   - Cluster/cloud computing
+#   - Complex parameter sweeps
+#
+# **When to use Make:**
+# - Moderate complexity pipelines
+# - File-based workflows
+# - Need broad compatibility
+# - Integration with existing build systems
+
+# %% [markdown]
+# ### Make Beyond Python
+#
+# Make is language-agnostic. Here's the same pipeline in R:
+#
+# ```makefile
+# # Makefile for R-based analysis
+#
+# report.pdf: results/plots.png results/statistics.txt
+#     Rscript generate_report.R
+#
+# results/plots.png: data/processed/temperature_clean.csv
+#     Rscript plot_data.R data/processed/temperature_clean.csv $@
+#
+# data/processed/temperature_clean.csv: data/raw/temperature.csv
+#     Rscript clean_data.R $< $@
+# ```
+#
+# Or mixing languages:
+# ```makefile
+# # Download with Python, analyze with R, plot with Julia
+# data/raw/data.csv:
+#     python download.py
+#
+# data/processed/data.csv: data/raw/data.csv
+#     Rscript clean.R $< $@
+#
+# results/plot.png: data/processed/data.csv
+#     julia plot.jl $< $@
+# ```
+
+# %% [markdown]
+# ## Part 4: Snakemake - Make for the 21st Century
+#
+# ### Why Snakemake?
+#
+# Snakemake is a workflow management system that combines Make's core concepts with
+# modern features for scientific computing. Created by Johannes Köster in 2012, it's
+# widely used in bioinformatics and computational research.
+#
+# **Key improvements over Make:**
+# - Python-based syntax (more intuitive)
+# - Pattern matching and wildcards
+# - Automatic job submission to clusters
+# - Container integration (Docker, Singularity)
+# - Conda environment management
+# - Remote file handling (S3, HTTP, etc.)
+# - Detailed execution reports
+#
+# **Reference**: Köster, J., & Rahmann, S. (2012). "Snakemake—a scalable
+# bioinformatics workflow engine". *Bioinformatics*, 28(19), 2520-2522.
+# DOI: 10.1093/bioinformatics/bts480
+
+# %% [markdown]
+# ### Basic Snakemake Syntax
+#
+# A Snakemake workflow is written in a `Snakefile` (similar to `Makefile`).
+# Rules follow this pattern:
+#
 # ```python
-#     """
-#     Calculate rolling statistics for time series data.
+# rule rule_name:
+#     input:
+#         "input_file.txt"
+#     output:
+#         "output_file.txt"
+#     shell:
+#         "python process.py {input} {output}"
+# ```
+
+# %% [markdown]
+# ### Example: Temperature Analysis with Snakemake
+#
+# Let's recreate Elena's workflow in Snakemake:
+
+# %% [markdown]
+# ```python
+# # Snakefile for temperature analysis pipeline
+#
+# # Define the final target
+# rule all:
+#     input:
+#         "report.pdf"
+#
+# # Download raw data
+# rule download_data:
+#     output:
+#         "data/raw/temperature.csv"
+#     shell:
+#         "python download_data.py --output {output}"
+#
+# # Clean and validate data
+# rule clean_data:
+#     input:
+#         "data/raw/temperature.csv"
+#     output:
+#         "data/processed/temperature_clean.csv"
+#     shell:
+#         "python clean_data.py --input {input} --output {output}"
+#
+# # Generate plots
+# rule plot_data:
+#     input:
+#         "data/processed/temperature_clean.csv"
+#     output:
+#         "results/plots.png"
+#     shell:
+#         "python plot_data.py --input {input} --output {output}"
+#
+# # Compute statistics
+# rule compute_stats:
+#     input:
+#         "data/processed/temperature_clean.csv"
+#     output:
+#         "results/statistics.txt"
+#     shell:
+#         "python compute_stats.py --input {input} --output {output}"
+#
+# # Generate final report
+# rule generate_report:
+#     input:
+#         plots="results/plots.png",
+#         stats="results/statistics.txt"
+#     output:
+#         "report.pdf"
+#     shell:
+#         "python generate_report.py --plots {input.plots} --stats {input.stats}"
+# ```
+
+# %% [markdown]
+# **Running Snakemake:**
+# ```bash
+# snakemake              # Runs the first rule (usually 'all')
+# snakemake report.pdf   # Runs specific target
+# snakemake -n           # Dry run (shows execution plan)
+# snakemake -j 4         # Runs with 4 parallel jobs
+# snakemake --dag | dot -Tpng > dag.png  # Visualize workflow
+# ```
+
+# %% [markdown]
+# ### The Power of Wildcards
+#
+# Snakemake's killer feature is wildcards for pattern matching. Instead of writing
+# separate rules for each file, use patterns:
+
+# %% [markdown]
+# ```python
+# # Process multiple samples with one rule
+# SAMPLES = ["sample1", "sample2", "sample3"]
+#
+# rule all:
+#     input:
+#         expand("results/{sample}_plot.png", sample=SAMPLES)
+#
+# # Wildcard rule: processes any sample
+# rule process_sample:
+#     input:
+#         "data/raw/{sample}.csv"
+#     output:
+#         "data/processed/{sample}_clean.csv"
+#     shell:
+#         "python clean_data.py --input {input} --output {output}"
+#
+# rule plot_sample:
+#     input:
+#         "data/processed/{sample}_clean.csv"
+#     output:
+#         "results/{sample}_plot.png"
+#     shell:
+#         "python plot_data.py --input {input} --output {output}"
+# ```
+#
+# Snakemake automatically:
+# - Matches the wildcard `{sample}` to actual filenames
+# - Creates the dependency graph
+# - Runs all three samples (potentially in parallel)
+
+# %% [markdown]
+# ### Configuration and Parameters
+#
+# Snakemake supports configuration files for parameters:
+
+# %% [markdown]
+# ```python
+# # Snakefile with configuration
+# configfile: "config.yaml"
+#
+# rule process_data:
+#     input:
+#         "data/raw/{sample}.csv"
+#     output:
+#         "data/processed/{sample}_clean.csv"
+#     params:
+#         threshold=config["quality_threshold"],
+#         method=config["cleaning_method"]
+#     shell:
+#         "python clean_data.py --input {input} --output {output} "
+#         "--threshold {params.threshold} --method {params.method}"
+# ```
+#
+# With `config.yaml`:
+# ```yaml
+# quality_threshold: 0.95
+# cleaning_method: "interpolation"
+# samples:
+#   - sample1
+#   - sample2
+#   - sample3
+# ```
+
+# %% [markdown]
+# ### Conda Integration
+#
+# Snakemake can automatically create environments for each rule:
+
+# %% [markdown]
+# ```python
+# rule analyze_data:
+#     input:
+#         "data/processed/data.csv"
+#     output:
+#         "results/analysis.txt"
+#     conda:
+#         "envs/analysis.yaml"
+#     shell:
+#         "python analyze.py {input} {output}"
+# ```
+#
+# Where `envs/analysis.yaml` contains:
+# ```yaml
+# channels:
+#   - conda-forge
+# dependencies:
+#   - python=3.9
+#   - pandas=1.3
+#   - numpy=1.21
+# ```
+#
+# Snakemake automatically creates and activates this environment before running
+# the rule.
+
+# %% [markdown]
+# ### Container Support
+#
+# Snakemake integrates with containers for ultimate reproducibility:
+
+# %% [markdown]
+# ```python
+# rule analyze_in_container:
+#     input:
+#         "data/input.csv"
+#     output:
+#         "results/output.txt"
+#     container:
+#         "docker://continuumio/miniconda3:latest"
+#     shell:
+#         "python analyze.py {input} {output}"
+# ```
+#
+# This automatically:
+# - Pulls the Docker container (if needed)
+# - Runs the command inside the container
+# - Maps input/output files appropriately
+
+# %% [markdown]
+# ### Cluster Execution
+#
+# Snakemake can submit jobs to cluster schedulers (SLURM, PBS, SGE):
+
+# %% [markdown]
+# ```bash
+# # Submit to SLURM cluster
+# snakemake --cluster "sbatch --cpus-per-task={threads}" --jobs 100
+#
+# # With resource specifications in rules
+# ```
+#
+# ```python
+# rule intensive_computation:
+#     input:
+#         "data/large_dataset.csv"
+#     output:
+#         "results/computation.txt"
+#     threads: 8
+#     resources:
+#         mem_mb=16000,
+#         runtime=240
+#     shell:
+#         "python compute.py --threads {threads} {input} {output}"
+# ```
+
+# %% [markdown]
+# ### A Complete Realistic Example
+#
+# Here's a realistic workflow for climate data analysis:
+
+# %% [markdown]
+# ```python
+# # Snakefile for multi-source climate analysis
+#
+# SOURCES = ["nasa", "noaa", "esa"]
+# VARIABLES = ["temperature", "precipitation", "wind"]
+#
+# rule all:
+#     input:
+#         "report/final_report.pdf",
+#         "results/combined_analysis.html"
+#
+# # Download data from multiple sources
+# rule download_source:
+#     output:
+#         "data/raw/{source}_data.nc"
+#     params:
+#         source="{source}"
+#     shell:
+#         "python scripts/download_data.py --source {params.source} --output {output}"
+#
+# # Convert NetCDF to CSV for processing
+# rule convert_to_csv:
+#     input:
+#         "data/raw/{source}_data.nc"
+#     output:
+#         "data/converted/{source}_data.csv"
+#     conda:
+#         "envs/netcdf.yaml"
+#     shell:
+#         "python scripts/convert_netcdf.py {input} {output}"
+#
+# # Merge all sources
+# rule merge_sources:
+#     input:
+#         expand("data/converted/{source}_data.csv", source=SOURCES)
+#     output:
+#         "data/merged/all_sources.csv"
+#     shell:
+#         "python scripts/merge_datasets.py {input} --output {output}"
+#
+# # Quality control
+# rule quality_control:
+#     input:
+#         "data/merged/all_sources.csv"
+#     output:
+#         data="data/processed/qc_data.csv",
+#         report="results/qc_report.txt"
+#     shell:
+#         "python scripts/quality_control.py {input} --data {output.data} --report {output.report}"
+#
+# # Analyze each variable
+# rule analyze_variable:
+#     input:
+#         "data/processed/qc_data.csv"
+#     output:
+#         "results/analysis_{variable}.json"
+#     params:
+#         variable="{variable}"
+#     threads: 4
+#     shell:
+#         "python scripts/analyze.py --input {input} --variable {params.variable} "
+#         "--output {output} --threads {threads}"
+#
+# # Create plots for each variable
+# rule plot_variable:
+#     input:
+#         data="data/processed/qc_data.csv",
+#         analysis="results/analysis_{variable}.json"
+#     output:
+#         "figures/{variable}_plot.png"
+#     shell:
+#         "python scripts/plot_variable.py --data {input.data} "
+#         "--analysis {input.analysis} --output {output}"
+#
+# # Generate HTML summary
+# rule create_html_summary:
+#     input:
+#         plots=expand("figures/{variable}_plot.png", variable=VARIABLES),
+#         analyses=expand("results/analysis_{variable}.json", variable=VARIABLES)
+#     output:
+#         "results/combined_analysis.html"
+#     shell:
+#         "python scripts/generate_html.py --plots {input.plots} "
+#         "--analyses {input.analyses} --output {output}"
+#
+# # Generate PDF report
+# rule generate_report:
+#     input:
+#         plots=expand("figures/{variable}_plot.png", variable=VARIABLES),
+#         analyses=expand("results/analysis_{variable}.json", variable=VARIABLES),
+#         qc="results/qc_report.txt"
+#     output:
+#         "report/final_report.pdf"
+#     shell:
+#         "python scripts/create_pdf_report.py --plots {input.plots} "
+#         "--analyses {input.analyses} --qc {input.qc} --output {output}"
+# ```
+
+# %% [markdown]
+# This workflow:
+# - Downloads data from 3 sources
+# - Converts formats
+# - Merges datasets
+# - Performs quality control
+# - Analyzes 3 variables in parallel
+# - Creates visualizations
+# - Generates both HTML and PDF reports
+#
+# **Running it:**
+# ```bash
+# snakemake -j 8       # Uses up to 8 cores
+# snakemake --dag | dot -Tpng > workflow.png  # Visualize the DAG
+# ```
+
+# %% [markdown]
+# ## Part 5: Alternative Workflow Systems
+#
+# While Make and Snakemake are powerful, different research domains and use cases
+# may benefit from alternative workflow systems. Here's an overview of the ecosystem.
+
+# %% [markdown]
+# ### Nextflow
+#
+# **Language**: Groovy-based DSL  
+# **Strengths**: Cloud computing, containerization, scalability  
+# **Common in**: Genomics, bioinformatics
+#
+# **Example Nextflow workflow:**
+# ```groovy
+# // Nextflow workflow (nextflow.nf)
+#
+# params.input = "data/*.fastq"
+# params.outdir = "results"
+#
+# process qualityControl {
+#     publishDir "${params.outdir}/qc"
 #     
-#     Parameters
-#     ----------
-#     data : list or np.ndarray
-#         Time series data
-#     window_size : int
-#         Size of the rolling window
-#         
-#     Returns
-#     -------
-#     tuple
-#         (rolling_mean, rolling_std)
+#     input:
+#     path(reads)
+#     
+#     output:
+#     path("*_qc.html")
+#     
+#     script:
 #     """
-#     import numpy as np
-#     # Copilot generates implementation here...
+#     fastqc ${reads}
+#     """
+# }
+#
+# process trimReads {
+#     input:
+#     path(reads)
+#     
+#     output:
+#     path("*_trimmed.fastq")
+#     
+#     script:
+#     """
+#     trimmomatic ${reads} ${reads.baseName}_trimmed.fastq
+#     """
+# }
+#
+# workflow {
+#     input_ch = Channel.fromPath(params.input)
+#     qualityControl(input_ch)
+#     trimReads(input_ch)
+# }
 # ```
 #
-# **Strengths**: Fast, maintains code flow, good for experienced developers
-# **Weaknesses**: Less explanation, harder to understand complex logic, may distract
+# **When to use Nextflow:**
+# - Cloud-native workflows (AWS, Google Cloud, Azure)
+# - Heavy use of containers
+# - Large-scale genomics pipelines
+# - Need for dataflow programming model
 #
-# #### ChatGPT Workflow (Conversational)
-#
-# **You ask:**
-# > "I need to calculate rolling statistics for climate time series data. What's the
-# > best approach in Python, and are there any edge cases I should handle?"
-#
-# **ChatGPT responds** with:
-# - Explanation of rolling window concepts
-# - Comparison of different approaches (NumPy, Pandas, custom)
-# - Discussion of edge cases (window size > data length, NaN handling)
-# - Example implementation with explanations
-# - Suggestions for testing
-#
-# **Then you can follow up:**
-# > "What if my data has missing values? How should I handle them?"
-#
-# **ChatGPT explains** different strategies (skip, interpolate, forward-fill) with
-# pros/cons for each.
-#
-# **Strengths**: Educational, exploratory, great for learning, handles complexity
-# **Weaknesses**: Slower, requires copy-paste, context switching
-#
-# ### When to Use Which?
-#
-# **Use Copilot when:**
-# - Writing routine, well-understood code
-# - Generating boilerplate (imports, docstrings, test fixtures)
-# - Completing patterns you've already established
-# - You know what you want and just need it typed faster
-# - You're experienced and can quickly evaluate suggestions
-#
-# **Use ChatGPT when:**
-# - Learning a new concept or library
-# - Designing an algorithm (need to think through options)
-# - Debugging complex logic (explain the problem, get insights)
-# - Understanding existing code (paste code, ask for explanation)
-# - Planning architecture or comparing approaches
-# - You're less familiar with the domain and need guidance
-#
-# **Use both in sequence:**
-# 1. ChatGPT: Design the approach, understand the algorithm
-# 2. Copilot: Implement it efficiently in your editor
-# 3. ChatGPT: Review for issues you might have missed
-#
-# ### Live Demonstration: Writing a Data Validation Function
-#
-# Let's demonstrate both tools with a realistic research task: validating experimental
-# data before analysis.
-#
-# **Task**: Write a function that validates temperature measurements, checking for:
-# - Physically impossible values (e.g., below absolute zero)
-# - Statistical outliers
-# - Missing data
-# - Temporal consistency
-
-# %%
-def validate_temperature_data(temperatures, timestamps=None,
-                              min_valid=-273.15, max_valid=100,
-                              std_threshold=3.0):
-    """
-    Validate temperature measurement data for physical and statistical correctness.
-    
-    This function checks experimental temperature data for common issues that could
-    indicate sensor errors, data corruption, or measurement problems. It's designed
-    for quality control in research data pipelines.
-    
-    Parameters
-    ----------
-    temperatures : list or np.ndarray
-        Temperature measurements in Celsius
-    timestamps : list or np.ndarray, optional
-        Timestamps for each measurement (for temporal checks)
-    min_valid : float, optional
-        Minimum physically valid temperature (default: -273.15°C, absolute zero)
-    max_valid : float, optional
-        Maximum expected temperature for the application (default: 100°C)
-    std_threshold : float, optional
-        Number of standard deviations for outlier detection (default: 3.0)
-        
-    Returns
-    -------
-    dict
-        Validation results containing:
-        - 'valid': bool, whether all checks passed
-        - 'errors': list of error messages
-        - 'warnings': list of warning messages
-        - 'statistics': dict of data statistics
-    
-    Examples
-    --------
-    >>> temps = [20.5, 21.0, 20.8, 22.1, 21.5]
-    >>> result = validate_temperature_data(temps)
-    >>> result['valid']
-    True
-    
-    Notes
-    -----
-    This function is conservative - it will flag potential issues for human review
-    rather than automatically removing data. In research, it's better to manually
-    investigate outliers than to automatically discard potentially valid measurements.
-    """
-    import numpy as np
-    
-    # Convert to numpy array for easier manipulation
-    temps = np.array(temperatures)
-    
-    # Initialize results
-    errors = []
-    warnings = []
-    statistics = {}
-    
-    # Check for missing data
-    if np.any(np.isnan(temps)):
-        n_missing = np.sum(np.isnan(temps))
-        warnings.append(f"Found {n_missing} missing values ({n_missing/len(temps)*100:.1f}%)")
-    
-    # Work with non-NaN values for remaining checks
-    valid_temps = temps[~np.isnan(temps)]
-    
-    if len(valid_temps) == 0:
-        errors.append("All temperature values are missing")
-        return {
-            'valid': False,
-            'errors': errors,
-            'warnings': warnings,
-            'statistics': {}
-        }
-    
-    # Check for physically impossible values
-    if np.any(valid_temps < min_valid):
-        impossible_count = np.sum(valid_temps < min_valid)
-        min_value = np.min(valid_temps)
-        errors.append(
-            f"Found {impossible_count} physically impossible values "
-            f"(minimum: {min_value:.2f}°C, below {min_valid}°C)"
-        )
-    
-    if np.any(valid_temps > max_valid):
-        extreme_count = np.sum(valid_temps > max_valid)
-        max_value = np.max(valid_temps)
-        warnings.append(
-            f"Found {extreme_count} values above expected maximum "
-            f"(maximum: {max_value:.2f}°C, threshold: {max_valid}°C)"
-        )
-    
-    # Calculate statistics
-    mean_temp = np.mean(valid_temps)
-    std_temp = np.std(valid_temps)
-    statistics = {
-        'count': len(valid_temps),
-        'mean': mean_temp,
-        'std': std_temp,
-        'min': np.min(valid_temps),
-        'max': np.max(valid_temps),
-        'median': np.median(valid_temps)
-    }
-    
-    # Check for statistical outliers using z-score
-    if std_temp > 0:  # Avoid division by zero
-        z_scores = np.abs((valid_temps - mean_temp) / std_temp)
-        outliers = z_scores > std_threshold
-        if np.any(outliers):
-            outlier_count = np.sum(outliers)
-            outlier_values = valid_temps[outliers]
-            warnings.append(
-                f"Found {outlier_count} statistical outliers "
-                f"(>{std_threshold} std devs from mean): "
-                f"[{', '.join(f'{v:.2f}' for v in outlier_values[:5])}...]"
-            )
-    
-    # Temporal consistency check (if timestamps provided)
-    if timestamps is not None and len(timestamps) == len(temps):
-        # Check for rapid temperature changes that might indicate sensor errors
-        # This is a simplified check - real implementation would be more sophisticated
-        temp_diffs = np.diff(valid_temps)
-        if len(temp_diffs) > 0:
-            max_change = np.max(np.abs(temp_diffs))
-            if max_change > 10:  # More than 10°C change between consecutive readings
-                warnings.append(
-                    f"Large temperature jump detected: {max_change:.2f}°C "
-                    "between consecutive measurements (possible sensor error)"
-                )
-    
-    # Determine overall validity
-    valid = len(errors) == 0
-    
-    return {
-        'valid': valid,
-        'errors': errors,
-        'warnings': warnings,
-        'statistics': statistics
-    }
-
-
-# Test with sample data
-print("Example 1: Clean data")
-clean_temps = [20.5, 21.0, 20.8, 22.1, 21.5, 20.9, 21.3]
-result1 = validate_temperature_data(clean_temps)
-print(f"Valid: {result1['valid']}")
-print(f"Errors: {result1['errors']}")
-print(f"Warnings: {result1['warnings']}")
-print(f"Mean: {result1['statistics']['mean']:.2f}°C\n")
-
-print("Example 2: Data with outliers")
-outlier_temps = [20.5, 21.0, 45.0, 22.1, 21.5, 20.9, 21.3]  # 45°C is unusual
-result2 = validate_temperature_data(outlier_temps, max_valid=30)
-print(f"Valid: {result2['valid']}")
-print(f"Errors: {result2['errors']}")
-print(f"Warnings: {result2['warnings']}")
-
-print("\nExample 3: Physically impossible data")
-impossible_temps = [20.5, -500.0, 22.1]  # -500°C is below absolute zero
-result3 = validate_temperature_data(impossible_temps)
-print(f"Valid: {result3['valid']}")
-print(f"Errors: {result3['errors']}")
+# **Reference**: Di Tommaso, P., et al. (2017). "Nextflow enables reproducible
+# computational workflows". *Nature Biotechnology*, 35(4), 316-319.
+# DOI: 10.1038/nbt.3820
 
 # %% [markdown]
-# ### How This Example Demonstrates Both Tools
+# ### Common Workflow Language (CWL)
 #
-# **How Copilot might help** with this function:
-# - Suggesting the function structure and docstring format
-# - Auto-completing common NumPy operations
-# - Generating the boilerplate for the return dictionary
-# - Completing parameter validation patterns
+# **Language**: YAML/JSON specification  
+# **Strengths**: Portability, standardization, tool interoperability  
+# **Common in**: Multi-institutional collaborations
 #
-# **How ChatGPT would help** with this function:
-# - Discussing what validation checks are appropriate for temperature data
-# - Explaining the z-score method for outlier detection
-# - Suggesting edge cases to handle (NaN values, empty arrays)
-# - Reviewing the implementation for bugs or improvements
-# - Explaining when to use errors vs warnings
+# **Example CWL workflow:**
+# ```yaml
+# # workflow.cwl
+# cwlVersion: v1.2
+# class: Workflow
 #
-# **The key insight**: Copilot helps you *write* code faster. ChatGPT helps you
-# *understand* what to write. Both are valuable, for different reasons.
+# inputs:
+#   input_file: File
+#   reference_genome: File
+#
+# outputs:
+#   aligned_bam:
+#     type: File
+#     outputSource: align/output_bam
+#
+# steps:
+#   quality_check:
+#     run: fastqc.cwl
+#     in:
+#       reads: input_file
+#     out: [qc_report]
+#
+#   align:
+#     run: bwa-mem.cwl
+#     in:
+#       reads: input_file
+#       reference: reference_genome
+#     out: [output_bam]
+# ```
+#
+# **When to use CWL:**
+# - Maximum portability across platforms
+# - Need strict workflow specification
+# - Collaboration across different institutions
+# - Long-term workflow preservation
+#
+# **Reference**: Amstutz, P., et al. (2016). "Common Workflow Language".
+# Available at: https://www.commonwl.org/
 
 # %% [markdown]
-# ## Part 5: Pitfalls, Risks, and Common Failures
+# ### Galaxy
 #
-# ### Technical Pitfalls
+# **Interface**: Web-based GUI  
+# **Strengths**: User-friendly, no programming required, extensive tool library  
+# **Common in**: Biomedical research, teaching
 #
-# AI coding assistants are powerful but flawed. Here are the most common technical
-# problems you'll encounter:
+# Galaxy provides a point-and-click interface for building workflows. Users:
+# - Select tools from a catalog
+# - Connect outputs to inputs graphically
+# - Run workflows through a web browser
+# - Share workflows via Galaxy servers
 #
-# #### 1. Hallucinated APIs (Functions That Don't Exist)
+# **When to use Galaxy:**
+# - Users uncomfortable with command-line
+# - Teaching environments
+# - Standardized analysis workflows
+# - Need for web-based access
 #
-# **The Problem**: AI models sometimes invent functions or methods that sound plausible
-# but don't actually exist.
+# **Reference**: Afgan, E., et al. (2018). "The Galaxy platform for accessible,
+# reproducible and collaborative biomedical analyses". *Nucleic Acids Research*,
+# 46(W1), W537-W544. DOI: 10.1093/nar/gky379
+
+# %% [markdown]
+# ### Apache Airflow
 #
-# **Example**:
+# **Language**: Python  
+# **Strengths**: Complex scheduling, monitoring, data engineering  
+# **Common in**: Data science, production pipelines
+#
+# **Example Airflow DAG:**
 # ```python
-# # AI might suggest (Python 3.10):
-# import numpy as np
-# result = np.ndarray.remove_outliers(data, threshold=3.0)  # Doesn't exist!
+# # airflow_dag.py
+# from airflow import DAG
+# from airflow.operators.bash import BashOperator
+# from datetime import datetime, timedelta
+#
+# default_args = {
+#     'owner': 'researcher',
+#     'depends_on_past': False,
+#     'start_date': datetime(2024, 1, 1),
+#     'retries': 1,
+#     'retry_delay': timedelta(minutes=5),
+# }
+#
+# dag = DAG(
+#     'research_pipeline',
+#     default_args=default_args,
+#     schedule_interval='@daily',
+# )
+#
+# download = BashOperator(
+#     task_id='download_data',
+#     bash_command='python download_data.py',
+#     dag=dag,
+# )
+#
+# process = BashOperator(
+#     task_id='process_data',
+#     bash_command='python process_data.py',
+#     dag=dag,
+# )
+#
+# download >> process  # Set dependency
 # ```
 #
-# **Why it happens**: The model learns patterns like "remove_outliers" from comments
-# and documentation, and generates a plausible-looking API that doesn't exist.
+# **When to use Airflow:**
+# - Scheduled/recurring workflows
+# - Complex dependencies
+# - Need for monitoring dashboard
+# - Integration with data engineering tools
 #
-# **How to avoid**:
-# - Always check documentation for unfamiliar methods
-# - Test AI-generated code before trusting it
-# - Use type checkers and linters (they'll catch non-existent attributes)
-
-# %%
-# Demonstration: What happens with a hallucinated function?
-import numpy as np
-
-# This is what AI might suggest, but it doesn't exist:
-# result = np.ndarray.remove_outliers(data)  # Would raise AttributeError
-
-# What actually exists - you must know your libraries:
-data = np.array([1, 2, 3, 100, 4, 5])
-mean = np.mean(data)
-std = np.std(data)
-# Manual outlier detection using z-score
-z_scores = np.abs((data - mean) / std)
-data_clean = data[z_scores < 3]
-print(f"Original data: {data}")
-print(f"After removing outliers (|z| < 3): {data_clean}")
+# **Reference**: Apache Software Foundation. "Apache Airflow Documentation".
+# Available at: https://airflow.apache.org/
 
 # %% [markdown]
-# #### 2. Outdated or Deprecated Code
+# ### Comparison Table
 #
-# **The Problem**: AI models are trained on historical code, which may use deprecated
-# APIs or outdated practices.
+# | System | Language | Best For | Learning Curve | Cluster Support |
+# |--------|----------|----------|----------------|-----------------|
+# | **Make** | Makefile syntax | Simple pipelines, compilation | Low | Manual |
+# | **Snakemake** | Python-like | Scientific workflows, HPC | Medium | Excellent |
+# | **Nextflow** | Groovy | Cloud, containers, genomics | Medium-High | Excellent |
+# | **CWL** | YAML/JSON | Portability, standards | Medium | Good |
+# | **Galaxy** | GUI | Teaching, non-coders | Low | Good |
+# | **Airflow** | Python | Data engineering, scheduling | High | Good |
 #
-# **Example**:
+# **Choosing a workflow system:**
+# - **Small project, simple pipeline**: Make or shell script
+# - **Python-based research, HPC**: Snakemake
+# - **Genomics, cloud-first**: Nextflow
+# - **Multi-institution, portability**: CWL
+# - **Teaching, non-programmers**: Galaxy
+# - **Production data pipelines**: Airflow
+
+# %% [markdown]
+# ## Part 6: Best Practices for Research Workflows
+#
+# ### Design Principles
+#
+# **1. Make workflows modular**
+# - Each step should be a distinct, reusable unit
+# - One rule/task per logical operation
+# - Avoid monolithic scripts that do everything
+#
+# **2. Document dependencies explicitly**
+# - Declare all inputs and outputs
+# - Don't hide dependencies in code
+# - Make implicit dependencies explicit
+#
+# **3. Use configuration files**
+# - Separate parameters from workflow logic
+# - Makes workflows reusable across projects
+# - Easier to share and modify
+#
+# **4. Version control your workflows**
+# - Workflows are code—treat them as such
+# - Use Git for workflow files
+# - Include example configuration files
+# - Tag releases used for publications
+#
+# **5. Test your workflows**
+# - Create test datasets (small, fast)
+# - Verify outputs are correct
+# - Test error handling
+#
+# **6. Document for reproducibility**
+# - Include README with clear instructions
+# - Specify software versions
+# - Provide example run commands
+# - Explain expected outputs
+
+# %% [markdown]
+# ### Integrating Workflows with Other Tools
+#
+# **Version Control (Git)**
+# ```
+# research_project/
+# ├── Snakefile          # Workflow definition
+# ├── config.yaml        # Configuration
+# ├── envs/              # Conda environments
+# │   ├── analysis.yaml
+# │   └── plotting.yaml
+# ├── scripts/           # Analysis scripts
+# │   ├── download.py
+# │   ├── process.py
+# │   └── plot.py
+# ├── README.md          # Documentation
+# └── .gitignore         # Ignore data/, results/
+# ```
+#
+# **.gitignore for workflows:**
+# ```
+# # Ignore data and results (usually too large)
+# data/
+# results/
+#
+# # But track workflow components
+# !Snakefile
+# !config.yaml
+# !scripts/
+# !envs/
+#
+# # Snakemake working directories
+# .snakemake/
+# ```
+
+# %% [markdown]
+# **Containers (from Lecture 9)**
+# - Use containers for each workflow step
+# - Ensures consistent environment
+# - Snakemake/Nextflow have built-in container support
+#
+# **CI/CD (from Lecture 6)**
+# - Test workflows on small datasets in CI
+# - Verify workflows execute without errors
+# - Catch breaking changes early
+#
+# **Example GitHub Actions workflow for testing:**
+# ```yaml
+# name: Test Workflow
+#
+# on: [push, pull_request]
+#
+# jobs:
+#   test:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v2
+#       - uses: conda-incubator/setup-miniconda@v2
+#         with:
+#           activate-environment: workflow-env
+#           environment-file: environment.yml
+#       - name: Install Snakemake
+#         run: conda install -c bioconda snakemake
+#       - name: Run workflow on test data
+#         run: snakemake --cores 2 --use-conda
+# ```
+
+# %% [markdown]
+# **Data Management (from Lecture 11)**
+# - Workflows consume and produce data
+# - Apply FAIR principles to workflow outputs
+# - Use appropriate file formats (HDF5, NetCDF)
+# - Include metadata in outputs
+
+# %% [markdown]
+# ## Part 7: Workflows in Different Languages
+#
+# The concepts we've discussed apply regardless of programming language.
+
+# %% [markdown]
+# ### R-based Workflows
+#
+# **Using targets (R's workflow package):**
+# ```r
+# # _targets.R
+# library(targets)
+#
+# tar_option_set(packages = c("tidyverse", "arrow"))
+#
+# list(
+#   tar_target(raw_data, read_csv("data/raw.csv")),
+#   tar_target(clean_data, clean(raw_data)),
+#   tar_target(model, fit_model(clean_data)),
+#   tar_target(plot, create_plot(model))
+# )
+# ```
+#
+# **Running:**
+# ```r
+# targets::tar_make()        # Run workflow
+# targets::tar_visnetwork()  # Visualize
+# ```
+#
+# **Snakemake with R:**
 # ```python
-# # AI trained on old code might suggest:
-# import numpy as np
-# matrix = np.matrix([[1, 2], [3, 4]])  # Deprecated since NumPy 1.25!
+# rule analyze_with_r:
+#     input:
+#         "data/input.csv"
+#     output:
+#         "results/output.png"
+#     script:
+#         "scripts/analyze.R"
+# ```
+
+# %% [markdown]
+# ### Julia-based Workflows
 #
-# # Modern NumPy uses:
-# matrix = np.array([[1, 2], [3, 4]])
+# Julia can be integrated into Make or Snakemake:
+#
+# **Makefile:**
+# ```makefile
+# results/output.txt: data/input.txt
+#     julia scripts/process.jl $< $@
 # ```
 #
-# **How to avoid**:
-# - Check the latest documentation
-# - Use linters that warn about deprecated code
-# - Review changelogs when updating libraries
-
-# %%
-# Modern NumPy practices
-import numpy as np
-
-# Correct modern approach
-modern_array = np.array([[1, 2], [3, 4]])
-print("Modern numpy array:")
-print(modern_array)
-print(f"Type: {type(modern_array)}")
-
-# Old approach (still works but discouraged)
-# np.matrix is deprecated - don't use it in new code!
+# **Snakefile:**
+# ```python
+# rule julia_analysis:
+#     input:
+#         "data/input.txt"
+#     output:
+#         "results/output.txt"
+#     shell:
+#         "julia scripts/process.jl {input} {output}"
+# ```
 
 # %% [markdown]
-# #### 3. Subtle Logic Errors
+# ### Mixed-Language Workflows
 #
-# **The Problem**: AI-generated code may have subtle bugs that only appear with certain
-# inputs or edge cases. These are the most dangerous because the code *looks* correct.
+# Real research often combines multiple languages:
 #
-# **Example - Off-by-One Error**:
-
-# %%
-def calculate_differences_buggy(values):
-    """Calculate differences between consecutive values (BUGGY VERSION)."""
-    differences = []
-    # BUG: This misses the last difference
-    for i in range(len(values) - 1):
-        diff = values[i + 1] - values[i]
-        differences.append(diff)
-    return differences
-
-
-def calculate_differences_correct(values):
-    """Calculate differences between consecutive values (CORRECT VERSION)."""
-    if len(values) < 2:
-        return []
-    return [values[i + 1] - values[i] for i in range(len(values) - 1)]
-
-
-# Test both versions
-test_data = [10, 15, 12, 18, 20]
-print(f"Input: {test_data}")
-print(f"Buggy result: {calculate_differences_buggy(test_data)}")
-print(f"Correct result: {calculate_differences_correct(test_data)}")
-print(f"Expected: [5, -3, 6, 2]")
-
-# Actually, both are correct! The subtle bug is harder to spot.
-# Let's try with edge cases:
-edge_case = [5]
-print(f"\nEdge case - single value: {edge_case}")
-print(f"Buggy result: {calculate_differences_buggy(edge_case)}")
-print(f"Correct result: {calculate_differences_correct(edge_case)}")
-print("Buggy version doesn't handle single-element arrays explicitly")
+# ```python
+# # Snakefile with Python, R, and Julia
+#
+# rule download_with_python:
+#     output:
+#         "data/raw.csv"
+#     shell:
+#         "python scripts/download.py {output}"
+#
+# rule analyze_with_r:
+#     input:
+#         "data/raw.csv"
+#     output:
+#         "data/analyzed.rds"
+#     script:
+#         "scripts/analyze.R"
+#
+# rule optimize_with_julia:
+#     input:
+#         "data/analyzed.rds"
+#     output:
+#         "results/optimized.csv"
+#     shell:
+#         "julia scripts/optimize.jl {input} {output}"
+#
+# rule visualize_with_python:
+#     input:
+#         "results/optimized.csv"
+#     output:
+#         "figures/plot.png"
+#     conda:
+#         "envs/plotting.yaml"
+#     shell:
+#         "python scripts/plot.py {input} {output}"
+# ```
 
 # %% [markdown]
-# #### 4. Security Vulnerabilities
+# ## Part 8: Real-World Example - Complete Climate Analysis Pipeline
 #
-# **The Problem**: AI may suggest code with security vulnerabilities, especially for
-# file handling, database queries, or user input.
-#
-# **Example - Path Traversal Vulnerability**:
+# Let's put it all together with a complete, realistic example that demonstrates
+# best practices.
+
+# %% [markdown]
+# ### Project Structure
+# ```
+# climate_analysis/
+# ├── Snakefile                 # Main workflow
+# ├── config.yaml               # Configuration
+# ├── README.md                 # Documentation
+# ├── environment.yml           # Main environment
+# ├── envs/                     # Rule-specific environments
+# │   ├── download.yaml
+# │   ├── analysis.yaml
+# │   └── plotting.yaml
+# ├── scripts/                  # Analysis scripts
+# │   ├── download_data.py
+# │   ├── quality_control.py
+# │   ├── merge_datasets.py
+# │   ├── compute_trends.py
+# │   ├── generate_plots.py
+# │   └── create_report.py
+# ├── data/                     # Data (in .gitignore)
+# │   ├── raw/
+# │   ├── processed/
+# │   └── metadata/
+# ├── results/                  # Results (in .gitignore)
+# │   ├── figures/
+# │   ├── tables/
+# │   └── reports/
+# └── tests/                    # Test data and scripts
+#     ├── test_data/
+#     └── test_workflow.sh
+# ```
 
 # %%
+# Example: Simulating a simple workflow execution
 import os
-import tempfile
+import json
+from datetime import datetime
 
 
-def load_user_file_insecure(filename):
+def simulate_workflow_execution():
     """
-    Load a file from user directory (INSECURE - for demonstration only).
-    
-    VULNERABILITY: Path traversal attack possible!
-    User could provide: "../../../etc/passwd"
+    Demonstrates workflow concepts without requiring actual data files.
+    Shows dependency tracking and execution order.
     """
-    # DANGEROUS: Directly concatenating user input to file path
-    base_dir = tempfile.gettempdir()
-    filepath = os.path.join(base_dir, filename)
-    # This check can be bypassed with "../" in filename
-    return filepath
-
-
-def load_user_file_secure(filename):
-    """
-    Load a file from user directory (SECURE VERSION).
     
-    Protection: Validates filename has no path components.
-    """
-    # Only allow simple filenames, no directory traversal
-    if os.path.sep in filename or filename.startswith('.'):
-        raise ValueError(f"Invalid filename: {filename}")
+    # Define workflow structure as a dictionary
+    workflow = {
+        'download_data': {
+            'inputs': [],
+            'outputs': ['data/raw/temperature.csv'],
+            'command': 'download_data.py',
+            'status': 'pending'
+        },
+        'clean_data': {
+            'inputs': ['data/raw/temperature.csv'],
+            'outputs': ['data/processed/temperature_clean.csv'],
+            'command': 'clean_data.py',
+            'status': 'pending'
+        },
+        'plot_data': {
+            'inputs': ['data/processed/temperature_clean.csv'],
+            'outputs': ['results/plots.png'],
+            'command': 'plot_data.py',
+            'status': 'pending'
+        },
+        'compute_stats': {
+            'inputs': ['data/processed/temperature_clean.csv'],
+            'outputs': ['results/statistics.txt'],
+            'command': 'compute_stats.py',
+            'status': 'pending'
+        },
+        'generate_report': {
+            'inputs': ['results/plots.png', 'results/statistics.txt'],
+            'outputs': ['report.pdf'],
+            'command': 'generate_report.py',
+            'status': 'pending'
+        }
+    }
     
-    base_dir = tempfile.gettempdir()
-    filepath = os.path.join(base_dir, filename)
+    print("Workflow Dependency Graph")
+    print("=" * 60)
     
-    # Additional check: ensure final path is still within base_dir
-    real_base = os.path.realpath(base_dir)
-    real_path = os.path.realpath(filepath)
-    if not real_path.startswith(real_base):
-        raise ValueError("Path traversal detected")
+    # Build and display dependency graph
+    for step, details in workflow.items():
+        print(f"\n{step}:")
+        if details['inputs']:
+            print(f"  Depends on: {', '.join(details['inputs'])}")
+        else:
+            print(f"  Depends on: (no dependencies - can start immediately)")
+        print(f"  Produces: {', '.join(details['outputs'])}")
+        print(f"  Command: {details['command']}")
     
-    return filepath
+    print("\n" + "=" * 60)
+    print("\nExecution Order (respecting dependencies):")
+    print("-" * 60)
+    
+    # Simulate execution order
+    execution_order = [
+        'download_data',
+        'clean_data',
+        'plot_data (parallel)',
+        'compute_stats (parallel)',
+        'generate_report'
+    ]
+    
+    for i, step in enumerate(execution_order, 1):
+        print(f"{i}. {step}")
+    
+    print("\n" + "=" * 60)
+    print("\nWorkflow Metadata:")
+    print("-" * 60)
+    
+    metadata = {
+        'workflow_name': 'temperature_analysis',
+        'total_steps': len(workflow),
+        'parallel_capable_steps': ['plot_data', 'compute_stats'],
+        'created': datetime.now().isoformat(),
+        'version': '1.0.0'
+    }
+    
+    print(json.dumps(metadata, indent=2))
+    
+    return workflow, metadata
 
 
-# Demonstration
-print("Insecure version allows path traversal:")
-try:
-    dangerous_path = load_user_file_insecure("../../../etc/passwd")
-    print(f"  Would attempt to access: {dangerous_path}")
-except Exception as e:
-    print(f"  Error: {e}")
-
-print("\nSecure version prevents path traversal:")
-try:
-    safe_path = load_user_file_secure("data.txt")
-    print(f"  Safe path: {safe_path}")
-except Exception as e:
-    print(f"  Error: {e}")
-
-try:
-    attack_path = load_user_file_secure("../../../etc/passwd")
-    print(f"  Would access: {attack_path}")
-except ValueError as e:
-    print(f"  Blocked: {e}")
-
-# %% [markdown]
-# ### Cognitive Risks
-#
-# Beyond technical issues, AI assistants pose risks to your development and learning:
-#
-# **1. Over-Reliance and Skill Atrophy**
-# - Using AI as a crutch instead of learning fundamentals
-# - Forgetting how to solve problems without AI
-# - Becoming unable to code in environments without AI access
-#
-# **2. False Confidence**
-# - Code that "looks professional" but you don't understand
-# - Feeling productive while actually accumulating technical debt
-# - Inability to debug or maintain AI-generated code
-#
-# **3. Reduced Problem-Solving**
-# - Accepting the first AI solution instead of thinking deeply
-# - Missing better approaches because AI gave "an answer"
-# - Not developing algorithmic thinking skills
-#
-# **4. Research-Specific Risks**
-# - Using algorithms you don't understand (like Sarah's quantile normalization)
-# - Inability to explain your methods in papers or to reviewers
-# - Difficulty defending your implementation choices
-# - Results you can't reproduce or debug when issues arise
-#
-# **Best practice**: Always understand what the AI suggests before using it. In research,
-# you're responsible for every line of code, whether you wrote it or AI did.
+# Execute the simulation
+workflow_def, metadata = simulate_workflow_execution()
 
 # %% [markdown]
-# ## Part 6: Legal, Ethical, and Data Protection Concerns
+# ### Configuration File (config.yaml)
 #
-# ### Copyright and Licensing
+# ```yaml
+# # Configuration for climate analysis workflow
 #
-# **The fundamental problem**: AI models are trained on code from the internet, including
-# open-source code with specific licenses. When AI generates code similar to its training
-# data, who owns the copyright?
+# # Data sources
+# data_sources:
+#   - name: "nasa"
+#     url: "https://data.nasa.gov/api/climate/temperature"
+#     format: "netcdf"
+#   - name: "noaa"
+#     url: "https://www.noaa.gov/api/climate/temp"
+#     format: "csv"
 #
-# **Current legal uncertainty** (as of 2026):
-# - Ongoing lawsuits against GitHub Copilot and Microsoft
-# - Questions about whether AI output is derivative work
-# - Unclear if AI-generated code inherits source licenses
-# - Different jurisdictions may rule differently
+# # Analysis parameters
+# analysis:
+#   start_year: 1980
+#   end_year: 2023
+#   variables: ["temperature", "precipitation"]
+#   quality_threshold: 0.95
 #
-# **GitHub Copilot lawsuit** (filed 2022):
-# - Claims Copilot violates GPL and other open-source licenses
-# - Argues Copilot reproduces licensed code without attribution
-# - Not yet resolved as of 2026
+# # Computational resources
+# resources:
+#   download_threads: 2
+#   analysis_threads: 8
+#   memory_gb: 16
 #
-# **Practical implications for researchers**:
-#
-# 1. **Assume risk**: AI-generated code may have licensing issues
-# 2. **Check suggestions**: If code looks like it's from a library, verify the source
-# 3. **Document AI use**: Note which parts were AI-assisted
-# 4. **Be conservative**: For published research code, favor code you write yourself
-# 5. **Institutional policies**: Check if your university has AI usage guidelines
-#
-# **Safe practices**:
-# - Use AI for inspiration, then write your own implementation
-# - Always check if AI suggestions match existing library code
-# - Include license headers in your files
-# - When in doubt, write it yourself
-
-# %% [markdown]
-# ### Data Protection and Privacy
-#
-# **Critical question**: Where does your code go when you use an AI assistant?
-#
-# **Cloud-based AI (Copilot, ChatGPT, etc.)**:
-# - Your code is sent to external servers
-# - May be used to improve the model (check settings!)
-# - Stored on commercial infrastructure
-# - Subject to the provider's privacy policy
-# - Potential access by company employees or governments
-#
-# **GDPR implications** (European researchers):
-# - Sending code containing personal data to AI services may violate GDPR
-# - Need data processing agreements with providers
-# - May require anonymization before using AI assistance
-#
-# **Research-specific concerns**:
-#
-# **Unpublished research code**:
-# - Pre-publication data and methods might be confidential
-# - Grant-funded research may have data sharing restrictions
-# - Patent considerations if research has commercial potential
-#
-# **Sensitive data domains**:
-# - **Medical research**: Patient data, even in code comments, is protected
-# - **Genomics**: Genetic sequences may be identifiable
-# - **Security research**: Vulnerability code should not be shared
-# - **Industry partnerships**: Proprietary algorithms or data
-#
-# **Best practice**: Never paste confidential research code into public AI services.
-# Use self-hosted alternatives for sensitive work.
-
-# %% [markdown]
-# ### Research Integrity
-#
-# **Attribution and transparency**:
-#
-# Some journals now ask: "Was AI used in writing this paper?"
-# Should you disclose AI assistance in code?
-#
-# **Current practices** (evolving):
-# - Some journals require AI disclosure in methods
-# - Code repositories may include AI usage notes
-# - No universal standard yet (as of 2026)
-#
-# **Reproducibility concerns**:
-# - AI suggestions are non-deterministic
-# - Same prompt → different code on different days
-# - Hard to reproduce AI-assisted development process
-#
-# **Recommendation**: In research software, prioritize reproducibility and understanding
-# over development speed. AI is a tool, not a substitute for expertise.
-
-# %% [markdown]
-# ## Part 7: Self-Hosted Solutions for Privacy-Sensitive Research
-#
-# ### Why Self-Host?
-#
-# For privacy-sensitive research (medical data, unpublished results, proprietary
-# algorithms), you may need AI assistance that doesn't send your code to external
-# servers.
-#
-# **Use cases for self-hosted AI**:
-# - Medical or genomic research code
-# - Unpublished methods in competitive fields
-# - Industry-partnered research with NDAs
-# - Government or defense research
-# - Any code containing sensitive data
-#
-# ### How Self-Hosting Works
-#
-# **Conceptual overview**:
-#
-# 1. **Download a pre-trained code model** (e.g., Code Llama, StarCoder)
-# 2. **Run the model on your local machine** or department server
-# 3. **Use a coding assistant client** that connects to your local model
-# 4. **Your code never leaves your infrastructure**
-#
-# **Key components**:
-# - **Model**: Open-source LLM trained on code (Code Llama 7B/13B/34B, StarCoder, etc.)
-# - **Runtime**: Ollama, llama.cpp, or similar to run the model efficiently
-# - **Client**: Continue.dev, Tabby, or custom integration
-# - **Hardware**: GPU recommended but CPU works (slower)
-#
-# ### Popular Self-Hosted Options
-#
-# **Option 1: Ollama + Continue.dev**
-#
-# Ollama (https://ollama.ai) makes running local LLMs easy:
-# ```bash
-# # Install Ollama (macOS, Linux, Windows)
-# curl -fsSL https://ollama.ai/install.sh | sh
-#
-# # Download Code Llama model
-# ollama pull codellama:7b
-#
-# # Run the model
-# ollama run codellama:7b
+# # Output settings
+# output:
+#   figure_format: "png"
+#   figure_dpi: 300
+#   report_format: "pdf"
 # ```
-#
-# Continue.dev is an open-source Copilot alternative that works with local models.
-# Install as VS Code or JetBrains extension, configure to use Ollama.
-#
-# **Reference**: https://ollama.ai and https://continue.dev/docs
-#
-# **Option 2: Tabby (Self-Hosted)**
-#
-# Tabby (https://tabby.tabbyml.com) is designed specifically for self-hosted code
-# completion. It's optimized for code and has lower hardware requirements than
-# general-purpose LLMs.
-#
-# ```bash
-# # Run with Docker
-# docker run -it \
-#   --gpus all -p 8080:8080 -v $HOME/.tabby:/data \
-#   tabbyml/tabby \
-#   serve --model StarCoder-1B --device cuda
-# ```
-#
-# **Reference**: https://tabby.tabbyml.com
-#
-# ### Trade-offs of Self-Hosting
-#
-# **Advantages**:
-# - ✅ Complete data privacy - code never leaves your infrastructure
-# - ✅ No usage limits or costs (after setup)
-# - ✅ Compliance with institutional policies
-# - ✅ Works offline
-# - ✅ Customizable and transparent
-#
-# **Disadvantages**:
-# - ❌ Requires technical setup
-# - ❌ Lower code quality than state-of-the-art cloud models
-# - ❌ Hardware requirements (GPU ideal, CPU works but slower)
-# - ❌ Models need updates (you manage this)
-# - ❌ No support team (community-based)
-#
-# ### Practical Recommendations
-#
-# **For most research code**:
-# - Public, non-sensitive: Cloud AI (Copilot, ChatGPT) is fine
-# - Always review and understand suggestions
-#
-# **For sensitive research**:
-# - Medical/genomic data: Use self-hosted only
-# - Unpublished methods: Self-hosted or no AI
-# - Industry partnerships: Check NDA, likely self-hosted
-#
-# **Getting started with self-hosting**:
-# 1. Start with Ollama (easiest setup)
-# 2. Try Code Llama 7B (good balance of quality and speed)
-# 3. Use Continue.dev in VS Code (familiar interface)
-# 4. Test with non-sensitive code first
-# 5. Evaluate quality before committing to workflow
-#
-# **References for self-hosted AI**:
-# - Ollama documentation: https://ollama.ai
-# - Continue.dev documentation: https://continue.dev/docs
-# - Tabby documentation: https://tabby.tabbyml.com
-# - Code Llama paper: Rozière et al. (2023), "Code Llama: Open Foundation Models for Code"
-#   https://arxiv.org/abs/2308.12950
 
 # %% [markdown]
-# ## Part 8: Best Practices for AI-Assisted Research Software Development
+# ### Key Takeaways
 #
-# ### The Golden Rules
+# **When to use workflows:**
+# - Pipeline has >3 steps
+# - Steps have complex dependencies
+# - Analysis runs repeatedly
+# - Need to rerun parts after changes
+# - Multiple people collaborate
+# - Results must be reproducible
 #
-# **1. Understand before accepting**
-# - Never use code you don't understand
-# - If AI suggests something complex, learn what it does
-# - In research, you own every line - whether AI wrote it or not
+# **Start simple, scale up:**
+# 1. Begin with shell scripts
+# 2. Move to Make for dependency tracking
+# 3. Adopt Snakemake/Nextflow for complex projects
+# 4. Consider specialized tools for production
 #
-# **2. AI suggests, you decide**
-# - Treat suggestions as proposals, not commands
-# - Consider alternatives the AI didn't suggest
-# - Sometimes the best choice is to write it yourself
-#
-# **3. Test rigorously**
-# - AI-generated code needs MORE testing, not less
-# - Write tests before accepting AI suggestions
-# - Check edge cases AI might miss
-#
-# **4. Verify licensing**
-# - Check if suggestions match existing libraries
-# - Search for similar code online
-# - When in doubt, rewrite in your own words
-#
-# **5. Protect sensitive data**
-# - Never paste confidential code into cloud AI
-# - Use self-hosted solutions for sensitive research
-# - Remove data examples before asking AI for help
-#
-# ### Effective Prompting Strategies
-#
-# **For Copilot (integrated)**:
-# - Write clear comments explaining what you want
-# - Use descriptive variable names
-# - Start with function signatures and docstrings
-# - Let Copilot fill in implementation details
-# - Review each suggestion before accepting (Tab key)
-#
-# **For ChatGPT (conversational)**:
-# - Provide context: "I'm analyzing climate model output..."
-# - Be specific: "Using NumPy, not Pandas"
-# - Ask for explanations: "Explain why this approach..."
-# - Iterate: "What about edge case X?"
-# - Request alternatives: "What other approaches exist?"
-#
-# ### When NOT to Use AI
-#
-# **Situations where AI hinders more than helps**:
-#
-# 1. **Learning new concepts** (first time)
-#    - Write it yourself to learn deeply
-#    - Use AI for review/comparison afterward
-#
-# 2. **Critical algorithms** (core research methods)
-#    - You must understand these completely
-#    - AI might suggest inappropriate methods
-#
-# 3. **Debugging complex logic**
-#    - Understanding the bug teaches you
-#    - AI might suggest band-aids instead of fixes
-#
-# 4. **High-security code**
-#    - Security requires expert review, not AI
-#    - AI may introduce subtle vulnerabilities
-#
-# 5. **Performance-critical code**
-#    - AI optimizes for readability, not speed
-#    - Profiling-guided optimization is better
-#
-# ### Success Stories (When AI Helps)
-#
-# **Positive use cases from research**:
-#
-# **1. Accelerated test writing**
-# - Researcher writes core algorithm
-# - AI generates test fixtures and edge cases
-# - 30% faster test coverage, same quality
-#
-# **2. Documentation improvement**
-# - AI helps write clear docstrings
-# - Generates examples from function signatures
-# - More consistent documentation style
-#
-# **3. Code migration**
-# - Converting MATLAB code to Python
-# - AI provides starting point, researcher refines
-# - Faster migration, researcher stays in control
-#
-# **4. Learning new libraries**
-# - Researcher unfamiliar with library API
-# - ChatGPT explains concepts and examples
-# - Researcher understands before implementing
-#
-# ### Final Recommendations
-#
-# **Developing your AI-assisted workflow**:
-#
-# 1. **Start conservatively**: Use AI for low-risk tasks first
-# 2. **Build expertise**: Learn to quickly evaluate suggestions
-# 3. **Establish boundaries**: Know what you will/won't use AI for
-# 4. **Stay informed**: AI tools and policies evolve rapidly
-# 5. **Share experiences**: Discuss with colleagues what works
-#
-# **For research software specifically**:
-#
-# - Prioritize understanding over speed
-# - Document which code was AI-assisted
-# - Test more thoroughly when using AI
-# - Use self-hosted AI for sensitive work
-# - Keep learning fundamentals - don't let skills atrophy
-#
-# **Remember Sarah's story**: AI can help you code faster, but only you can ensure
-# your code is correct, appropriate for your research question, and scientifically
-# sound. Use AI as a tool to augment your expertise, not replace it.
+# **Workflow antipatterns to avoid:**
+# - Hardcoded file paths
+# - Undocumented parameters
+# - No version control
+# - Missing intermediate files
+# - Unclear execution order
+# - No testing on small datasets
 
 # %% [markdown]
-# ## Summary
+# ## Summary and Conclusion
 #
-# In this lecture, we explored AI-assisted coding for research software:
+# Scientific workflows and automation are essential for:
+# - **Reproducibility**: Others can reproduce your analysis
+# - **Efficiency**: Don't rerun unnecessary steps
+# - **Scalability**: Handle larger datasets and more complex analyses
+# - **Collaboration**: Clear, documented pipelines
+# - **Error reduction**: Automated execution prevents manual mistakes
 #
-# **Key Takeaways**:
+# **Key concepts:**
+# - **Dependency tracking**: Automatically determine what to run
+# - **Parallelization**: Run independent tasks simultaneously
+# - **Modularity**: Break analysis into reusable steps
+# - **Configuration**: Separate parameters from code
+# - **Integration**: Combine with version control, containers, and CI/CD
 #
-# 1. **AI assistants are tools that amplify RSE capabilities, not replacements**
-#    - RSEs bring irreplaceable expertise: domain knowledge, critical thinking, ethics
-#    - AI helps with routine tasks, learning new tools, and documentation
-#    - What remains human: research understanding, scientific correctness, architecture design
+# **Tool selection:**
+# - **Simple pipelines**: Shell scripts or Make
+# - **Python-based research**: Snakemake
+# - **Cloud/genomics**: Nextflow
+# - **Maximum portability**: CWL
+# - **Teaching/non-programmers**: Galaxy
+# - **Production data engineering**: Airflow
 #
-# 2. **AI assistants are powerful but imperfect tools**
-#    - Generate plausible code, not always correct code
-#    - Built on pattern matching, not true understanding
-#    - Require critical evaluation of all suggestions
+# **Next steps:**
+# - Start with Make for your next analysis
+# - Try Snakemake for a complex project
+# - Explore alternatives for your specific domain
+# - Integrate workflows into your reproducibility stack
+# - Share your workflows with publications
 #
-# 3. **Different tools for different tasks**
-#    - Copilot: Integrated, real-time, good for experienced developers
-#    - ChatGPT: Conversational, educational, good for learning
-#    - Use both strategically based on your needs
+# Workflows transform research from a series of manual steps into a reproducible,
+# automated pipeline. As Elena learned, the time invested in creating a workflow
+# pays off immediately and grows more valuable over time.
+
+# %% [markdown]
+# ## Additional Resources
 #
-# 4. **Significant risks exist**
-#    - Technical: hallucinated APIs, subtle bugs, security issues
-#    - Cognitive: over-reliance, skill atrophy, false confidence
-#    - Legal: licensing uncertainty, copyright questions
-#    - Privacy: data protection, GDPR compliance
+# **Documentation:**
+# - GNU Make Manual: https://www.gnu.org/software/make/manual/
+# - Snakemake Documentation: https://snakemake.readthedocs.io/
+# - Nextflow Documentation: https://www.nextflow.io/docs/latest/
+# - CWL User Guide: https://www.commonwl.org/user_guide/
+# - Galaxy Training: https://training.galaxyproject.org/
 #
-# 5. **Self-hosted solutions for sensitive research**
-#    - Ollama + Code Llama for local AI
-#    - Continue.dev or Tabby for privacy-preserving assistance
-#    - Trade-off: privacy vs quality
+# **Tutorials:**
+# - Snakemake Tutorial: https://snakemake.readthedocs.io/en/stable/tutorial/tutorial.html
+# - Nextflow Patterns: https://nextflow-io.github.io/patterns/
 #
-# 6. **Best practices for research software**
-#    - Understand every line of code
-#    - Test AI suggestions rigorously
-#    - Protect sensitive research data
-#    - Document AI usage appropriately
-#    - Keep developing your own expertise
+# **Best Practices:**
+# - Wilson, G., et al. (2017). "Good enough practices in scientific computing".
+#   *PLOS Computational Biology*, 13(6), e1005510. DOI: 10.1371/journal.pcbi.1005510
 #
-# 7. **Skills RSEs need to thrive with AI**
-#    - Critical evaluation of AI outputs
-#    - Prompt engineering for better results
-#    - Deep domain knowledge
-#    - Software engineering fundamentals
-#    - Ethical and legal awareness
-#
-# **The bottom line**: AI coding assistants are valuable tools that can accelerate
-# development, but they're not substitutes for understanding, testing, or critical
-# thinking. In research software, where correctness and reproducibility are paramount,
-# use AI to augment your capabilities while maintaining full responsibility for your code.
-# Your expertise as an RSE—combining scientific knowledge with software skills—remains
-# uniquely valuable and irreplaceable.
-#
-# **Further Learning**:
-# - Try both integrated and chat-based AI tools
-# - Practice evaluating AI suggestions critically
-# - Experiment with self-hosted options
-# - Develop your own guidelines for when to use AI
-# - Stay informed about legal and policy developments
-#
-# **Discussion question**: How will you integrate AI assistants into your research
-# workflow while maintaining scientific rigor and code quality?
+# **Community:**
+# - Snakemake Community: https://snakemake.github.io/
+# - Workflow Hub: https://workflowhub.eu/ (repository of scientific workflows)

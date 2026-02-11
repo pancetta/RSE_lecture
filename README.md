@@ -19,7 +19,8 @@ This lecture series covers fundamental concepts and practices in Research Softwa
 - **Lecture 9**: Containerization and Reproducibility (~90 minutes)
 - **Lecture 10**: Collaboration and Code Review in Research Software (~90 minutes)
 - **Lecture 11**: Working with Research Data - File Formats and Databases (~90 minutes)
-- **Lecture 12**: AI-Assisted Coding for Research Software (~90 minutes)
+- **Lecture 12**: Scientific Workflows and Automation (~90 minutes)
+- **Lecture 13**: AI-Assisted Coding for Research Software (~90 minutes)
 
 ## Structure
 
@@ -93,6 +94,9 @@ make install-lecture11
 
 # Lecture 12
 make install-lecture12
+
+# Lecture 13
+make install-lecture13
 ```
 
 Then activate:
@@ -133,7 +137,8 @@ micromamba activate rse_lecture
 - Lecture 9 has no additional dependencies (containerization tools covered conceptually).
 - Lecture 10 has no additional dependencies (collaboration tools covered conceptually).
 - Lecture 11 adds h5py, netCDF4, and pandas for working with research data formats.
-- Lecture 12 has no additional dependencies (AI coding tools are IDE extensions, not Python packages).
+- Lecture 12 has no additional dependencies (workflow tools are typically installed separately).
+- Lecture 13 has no additional dependencies (AI coding tools are IDE extensions, not Python packages).
 - The `environment-dev.yml` includes all dependencies plus development tools (flake8, nbconvert).
 - Installation pattern is **harmonized**: all lectures follow the same two-step process (base + additions).
 - Lecture 1 introduces the course and essential tools (shell, git, GitHub).
@@ -147,7 +152,8 @@ micromamba activate rse_lecture
 - Lecture 9 covers containerization and reproducibility (Docker, Podman, Apptainer).
 - Lecture 10 covers collaboration and code review in research software teams.
 - Lecture 11 covers working with research data, file formats (HDF5, NetCDF), and databases.
-- Lecture 12 covers AI-assisted coding tools, best practices, and privacy considerations.
+- Lecture 12 covers scientific workflows and automation (Make, Snakemake, Nextflow).
+- Lecture 13 covers AI-assisted coding tools, best practices, and privacy considerations.
 
 ## Usage
 
