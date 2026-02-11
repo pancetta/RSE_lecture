@@ -275,28 +275,6 @@ def generate_lecture02_figures(output_dir):
     print(f"  ✓ Generated 1 figure in {output_dir}")
 
 
-def main():
-    """Generate all lecture figures."""
-    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    
-    # Generate figures for each lecture
-    generate_lecture01_figures(os.path.join(base_dir, 'lecture_01'))
-    generate_lecture02_figures(os.path.join(base_dir, 'lecture_02'))
-    
-    # TODO: Add remaining lectures (6, 8, 9, 10, 11, 12) in next commits
-    
-    print("\n✅ All figures generated successfully!")
-    print("\nGenerated files:")
-    print("  lecture_01/git_three_stage_workflow.png")
-    print("  lecture_01/git_commit_timeline.png")
-    print("  lecture_01/git_local_remote_workflow.png")
-    print("  lecture_02/git_merge_strategies.png")
-
-
-if __name__ == '__main__':
-    main()
-
-
 def generate_lecture06_figures(output_dir):
     """Generate figures for Lecture 6: CI/CD."""
     print("Generating Lecture 6 figures...")
@@ -486,29 +464,6 @@ def generate_lecture12_figures(output_dir):
     print(f"  ✓ Generated 1 figure in {output_dir}")
 
 
-
-def main():
-    """Generate all lecture figures."""
-    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    
-    # Generate figures for each lecture
-    generate_lecture01_figures(os.path.join(base_dir, 'lecture_01'))
-    generate_lecture02_figures(os.path.join(base_dir, 'lecture_02'))
-    generate_lecture06_figures(os.path.join(base_dir, 'lecture_06'))
-    generate_lecture12_figures(os.path.join(base_dir, 'lecture_12'))
-    
-    print("\n✅ All figures generated successfully!")
-    print("\nGenerated files:")
-    print("  lecture_01: git_three_stage_workflow.png, git_commit_timeline.png, git_local_remote_workflow.png")
-    print("  lecture_02: git_merge_strategies.png")
-    print("  lecture_06: ci_pipeline_workflow.png")
-    print("  lecture_12: workflow_dag.png")
-
-
-if __name__ == '__main__':
-    main()
-
-
 def generate_lecture08_figures(output_dir):
     """Generate figures for Lecture 8: Documentation."""
     print("Generating Lecture 8 figures...")
@@ -555,7 +510,7 @@ def generate_lecture08_figures(output_dir):
             [x_left + 0.15, layer['y'] + layer['height']]
         ]
         polygon = Polygon(points, facecolor=layer['color'],
-                         edgecolor='white', linewidth=3, alpha=0.85)
+                          edgecolor='white', linewidth=3, alpha=0.85)
         ax.add_patch(polygon)
         
         ax.text(x_center, layer['y'] + layer['height'] / 2 + 0.15,
@@ -642,7 +597,7 @@ def generate_lecture09_figures(output_dir):
         ax1.text(x + 1.4, 5.55, label, ha='center', va='center',
                  fontsize=9, color='white', fontweight='bold')
         vm_app = Rectangle((x, 6.5), 2.8, 1.2, facecolor=color, edgecolor='black',
-                          linewidth=2, alpha=0.7)
+                           linewidth=2, alpha=0.7)
         ax1.add_patch(vm_app)
         ax1.text(x + 1.4, 7.1, f'App {chr(65+i)}', ha='center', va='center',
                  fontsize=9, color='white', fontweight='bold')
@@ -675,7 +630,7 @@ def generate_lecture09_figures(output_dir):
     for i, (color, label) in enumerate(zip(cont_colors, cont_labels)):
         x = 0.5 + i * 3
         cont = Rectangle((x, 4.8), 2.8, 2.8, facecolor=color, edgecolor='black',
-                        linewidth=2, alpha=0.8)
+                         linewidth=2, alpha=0.8)
         ax2.add_patch(cont)
         ax2.text(x + 1.4, 6.5, label, ha='center', va='center',
                  fontsize=10, color='white', fontweight='bold')
@@ -784,7 +739,7 @@ def generate_lecture10_figures(output_dir):
     
     for step in steps:
         circle = Circle((step['x'] - 0.8, step['y']), 0.25, color=step['color'],
-                       zorder=3, edgecolor='white', linewidth=2)
+                        zorder=3, edgecolor='white', linewidth=2)
         ax.add_patch(circle)
         ax.text(step['x'] - 0.8, step['y'], step['num'], ha='center', va='center',
                 fontsize=10, fontweight='bold', color='white')
@@ -805,14 +760,14 @@ def generate_lecture10_figures(output_dir):
         end = steps[end_idx]
         if start_idx == 4 and end_idx in [5, 6]:
             arrow = FancyArrowPatch((start['x'], start['y'] - 0.4),
-                                   (end['x'], end['y'] + 0.4),
-                                   arrowstyle='->', mutation_scale=15,
-                                   linewidth=1.5, color='#333')
+                                    (end['x'], end['y'] + 0.4),
+                                    arrowstyle='->', mutation_scale=15,
+                                    linewidth=1.5, color='#333')
         else:
             arrow = FancyArrowPatch((start['x'] + 0.6, start['y']),
-                                   (end['x'] - 1.1, end['y']),
-                                   arrowstyle='->', mutation_scale=15,
-                                   linewidth=1.5, color='#333')
+                                    (end['x'] - 1.1, end['y']),
+                                    arrowstyle='->', mutation_scale=15,
+                                    linewidth=1.5, color='#333')
         ax.add_patch(arrow)
     
     decision_x, decision_y = 6.5, 2.8
@@ -820,27 +775,27 @@ def generate_lecture10_figures(output_dir):
             ha='center', fontsize=8, style='italic', color='#666')
     
     feedback_arrow = FancyArrowPatch((decision_y + 0.3, 2.5),
-                                    (9.5, 3.8),
-                                    arrowstyle='->', mutation_scale=12,
-                                    linewidth=1.5, color='#d32f2f',
-                                    linestyle='dashed',
-                                    connectionstyle="arc3,rad=.3")
+                                     (9.5, 3.8),
+                                     arrowstyle='->', mutation_scale=12,
+                                     linewidth=1.5, color='#d32f2f',
+                                     linestyle='dashed',
+                                     connectionstyle="arc3,rad=.3")
     ax.add_patch(feedback_arrow)
     ax.text(9, 3, 'Yes → update', ha='center', fontsize=7,
             style='italic', color='#d32f2f')
     
     feedback_loop = FancyArrowPatch((8.5, 2.3), (9.5, 6.3),
-                                   arrowstyle='->', mutation_scale=12,
-                                   linewidth=1.5, color='#d32f2f',
-                                   linestyle='dashed',
-                                   connectionstyle="arc3,rad=-.3")
+                                    arrowstyle='->', mutation_scale=12,
+                                    linewidth=1.5, color='#d32f2f',
+                                    linestyle='dashed',
+                                    connectionstyle="arc3,rad=-.3")
     ax.add_patch(feedback_loop)
     ax.text(10.5, 4.5, 'Push again\n(Step 4)',
             ha='center', fontsize=7, style='italic', color='#d32f2f')
     
     approved_arrow = FancyArrowPatch((5.5, 3.1), (3, 0.8),
-                                    arrowstyle='->', mutation_scale=15,
-                                    linewidth=2, color='#2e7d32')
+                                     arrowstyle='->', mutation_scale=15,
+                                     linewidth=2, color='#2e7d32')
     ax.add_patch(approved_arrow)
     ax.text(4, 1.8, 'Approved!\nCI passes ✅',
             ha='center', fontsize=8, fontweight='bold', color='#2e7d32')
@@ -896,7 +851,7 @@ def generate_lecture11_figures(output_dir):
         ax.add_patch(box)
         
         circle = Circle((principle['x'], principle['y'] + 1.8), 0.4,
-                       color=principle['color'], zorder=3)
+                        color=principle['color'], zorder=3)
         ax.add_patch(circle)
         ax.text(principle['x'], principle['y'] + 1.8, principle['letter'],
                 ha='center', va='center', fontsize=20,
@@ -949,7 +904,6 @@ def generate_lecture11_figures(output_dir):
     plt.close()
     
     print(f"  ✓ Generated 1 figure in {output_dir}")
-
 
 
 def main():
