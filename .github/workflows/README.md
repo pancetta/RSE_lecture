@@ -80,6 +80,44 @@ For more details, see [dependency management documentation](../../docs/)
 
 ---
 
+### link-checker.yml
+**Link Checker**
+
+Automated link validation for documentation and lecture materials.
+
+**Purpose:**
+- Detect broken or stale links early
+- Maintain high-quality documentation
+- Catch link rot before it becomes a problem
+
+**What it does:**
+1. Scans all markdown files (README, docs, etc.)
+2. Scans all lecture Python files (lecture_*.py)
+3. Validates each link (with retries for robustness)
+4. Saves detailed report as artifact
+5. Fails the workflow if broken links are found
+
+**Trigger:**
+- Push or PR to main/master branches
+- Weekly on Mondays at 10:00 UTC (after dependency updates)
+- Manual workflow dispatch
+
+**Configuration:**
+- Settings in `.lycherc.toml` at repository root
+- Excludes example/placeholder URLs (localhost, github.com/user/*, etc.)
+- Configurable timeouts and retry behavior
+- Custom user agent to avoid being blocked
+
+**Typical results:**
+- ~340 total links checked
+- ~12 seconds execution time (instant with cache)
+- Detailed report available as workflow artifact (30-day retention)
+
+**Customization:**
+To exclude additional URLs, edit `.lycherc.toml` and add patterns to the `exclude` array.
+
+---
+
 ## Optional/Example Workflows
 
 ### ci-with-locks.yml.example
@@ -111,6 +149,7 @@ All workflows use minimal required permissions:
 - **ci.yml**: `contents: read` - Read repository contents
 - **deploy.yml**: `contents: read`, `pages: write`, `id-token: write` - Deploy to Pages
 - **conda-dependency-update.yml**: `contents: write`, `pull-requests: write` - Create PRs
+- **link-checker.yml**: `contents: read` - Read repository contents for link checking
 
 ## Customization
 
