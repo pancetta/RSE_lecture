@@ -293,7 +293,40 @@
 # with a descriptive message. This might seem like extra steps at first, but the staging area 
 # gives you fine control over what goes into each commit, allowing you to create logical, 
 # focused commits even if you've changed multiple files.
-# 
+
+# %% [markdown]
+# #### Visual: Git's Three-Stage Workflow
+#
+# The following diagram illustrates how Git manages changes through three stages:
+#
+# ```
+# Working Directory  →  Staging Area  →  Repository (.git)
+#     (edit files)    git add files    git commit -m "message"
+#        ↓                  ↓                    ↓
+#    Your files      Selected changes     Permanent history
+#    as you edit      ready to commit      in the .git folder
+# ```
+#
+# **Key concepts:**
+# - **Working Directory**: Where you edit files - your actual project folder
+# - **Staging Area** (Index): A preparation zone - select which changes to include in next commit
+# - **Repository**: The `.git` folder - permanent history of all committed changes
+#
+# **Workflow example:**
+# 1. Edit `analysis.py` and `README.md` in your working directory
+# 2. Use `git add analysis.py` to stage just the analysis changes
+# 3. Use `git commit -m "Add new statistical test"` to save to repository
+# 4. Later, use `git add README.md` and commit separately with different message
+#
+# This separation allows you to create focused, logical commits even when you've been 
+# working on multiple things simultaneously.
+#
+# **Reference**: This workflow concept is fundamental to Git and is explained in detail in:
+# - Irving, D. et al. (2022). *Research Software Engineering with Python*. 
+#   https://third-bit.com/py-rse/git-cmdline.html (CC BY 4.0)
+# - Git documentation: https://git-scm.com/book/en/v2/Git-Basics-Recording-Changes-to-the-Repository
+
+# %% [markdown]
 # ```bash
 # # Configure Git (first time only)
 # git config --global user.name "Your Name"
