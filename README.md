@@ -416,7 +416,7 @@ If you use this course material in your teaching, research, or other work, pleas
 ```bibtex
 @misc{speck2026rse,
   author       = {Speck, Robert},
-  title        = {Research Software Engineering Lectures (JuRSE)},
+  title        = {Research Software Engineering Lectures},
   year         = {2026},
   publisher    = {GitHub},
   url          = {https://github.com/pancetta/RSE_course_JuRSE},
