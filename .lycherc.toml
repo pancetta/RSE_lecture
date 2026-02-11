@@ -75,6 +75,8 @@ exclude = [
     
     # URLs that are commonly rate-limited or block bots
     'https://www.linkedin.com/*',
+    'https://the-turing-way.netlify.app/*',  # Frequently has network errors
+    'https://figshare.com/',  # Returns 403 Forbidden for automated checks
 ]
 
 # Exclude specific file patterns from checking
