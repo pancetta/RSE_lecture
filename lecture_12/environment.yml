@@ -3,5 +3,6 @@ channels:
   - conda-forge
 dependencies:
   # Lecture 12 has no additional Python dependencies beyond the base environment
-  # AI coding assistants are IDE extensions/tools, not Python packages
-  # Students will use existing Python, Jupyter, and standard libraries
+  # Workflow tools (Snakemake, Nextflow, etc.) are typically installed separately
+  # and not required to run this lecture notebook
+  # Students learn concepts that work with their existing environment
