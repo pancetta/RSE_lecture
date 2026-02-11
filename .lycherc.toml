@@ -13,7 +13,6 @@ accept = [
     302,  # Found (temporary redirect)
     307,  # Temporary Redirect
     308,  # Permanent Redirect
-    403,  # Forbidden (some sites block bots)
     429,  # Too Many Requests
 ]
 
@@ -36,27 +35,43 @@ exclude = [
     'http://192.168.*',
     'http://10.*',
     
-    # Example/placeholder URLs
+    # Example/placeholder URLs - GitHub
     'https://github.com/username/*',
     'https://github.com/user/*',
     'https://github.com/yourusername/*',
     'https://github.com/original/*',
     'https://github.com/jpark/*',
+    
+    # Example/placeholder URLs - GitLab
+    'https://gitlab.com/username/*',
+    'https://gitlab.com/your-username/*',
+    'https://gitlab.com/original-owner/*',
+    
+    # Example/placeholder URLs - Other
     'http://example.com*',
     'https://your-project.readthedocs.io/*',
     'https://genomeanalyzer.readthedocs.io/*',
+    
+    # Example DOIs
     'https://doi.org/10.5281/zenodo.XXXXXXX',
     'https://doi.org/10.5281/zenodo.1234567',
+    
+    # Example API endpoints
     'https://www.noaa.gov/api/*',
     'https://data.nasa.gov/api/*',
     
     # Docker URLs (not actual web links)
     'docker://*',
     'docker-daemon:/*',
+    'file:///*/docker:*',
+    'file:///*/docker-daemon:*',
     
-    # Known broken external links (to be fixed separately)
+    # Known broken or restricted external links
     'https://www.alexandra-hill.com/2018/06/25/the-art-of-giving-and-receiving-code-reviews/',
     'https://docs.gitlab.com/ee/topics/gitlab_flow.html',
+    'https://docs.gitlab.com/ee/user/project/protected_branches.html',
+    'https://www.unidata.ucar.edu/software/netcdf/*',
+    'https://www.gnu.org/software/make/manual/',  # Frequently times out
     
     # URLs that are commonly rate-limited or block bots
     'https://www.linkedin.com/*',
