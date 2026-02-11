@@ -80,7 +80,173 @@
 # With these lessons in mind, let's learn how to use AI assistants effectively and safely.
 
 # %% [markdown]
-# ## Part 2: What Are AI Coding Assistants?
+# ## Part 2: What AI Means for Research Software Engineers
+#
+# ### AI as Tool, Not Replacement
+#
+# The rise of AI coding assistants has sparked anxiety in the software development
+# community: "Will AI replace programmers?" For Research Software Engineers, this question
+# misses the fundamental nature of our work. **AI doesn't replace RSEs—it changes how we work.**
+#
+# Think of AI assistants like calculators for mathematicians:
+# - Calculators didn't replace mathematicians
+# - They freed mathematicians from tedious arithmetic
+# - Mathematical thinking, proof design, and insight remain uniquely human
+# - The best mathematicians use calculators as tools to amplify their capabilities
+#
+# Similarly, AI coding assistants are tools that amplify RSE capabilities, not replacements
+# for RSE expertise.
+#
+# ### How AI Helps Research Software Engineers
+#
+# AI assistants can genuinely improve RSE productivity when used appropriately:
+#
+# **1. Accelerating Routine Tasks**
+# - Generating boilerplate code (imports, class structures, test fixtures)
+# - Writing standard docstrings following established patterns
+# - Converting data between formats (JSON to CSV, MATLAB to Python)
+# - Implementing well-known algorithms (sorting, searching, basic statistics)
+#
+# **2. Learning New Tools and Libraries**
+# - Getting started with unfamiliar APIs (example: "How do I read NetCDF in Python?")
+# - Understanding error messages and stack traces
+# - Exploring alternative approaches to a problem
+# - Quickly prototyping to test ideas
+#
+# **3. Code Quality Improvements**
+# - Suggesting better variable names
+# - Identifying potential edge cases
+# - Proposing more efficient algorithms
+# - Generating comprehensive test cases
+#
+# **4. Documentation and Communication**
+# - Writing clear README files and user guides
+# - Creating code examples for documentation
+# - Explaining complex code to collaborators
+# - Drafting comments for code review
+#
+# **What AI does well**: Pattern recognition, synthesis from examples, generating
+# variations on known solutions.
+#
+# ### What Remains Uniquely Human (and Why)
+#
+# Despite AI's capabilities, Research Software Engineering expertise remains fundamentally
+# human. Here's what AI cannot do—and why RSEs remain essential:
+#
+# **1. Understanding the Research Question**
+# - **Why AI fails**: AI doesn't understand scientific goals, hypotheses, or domain constraints
+# - **RSE expertise**: Translating research questions into computational approaches
+# - **Example**: Choosing between Monte Carlo and analytical methods for a climate model
+#   requires understanding physics, not just coding patterns
+#
+# **2. Evaluating Scientific Correctness**
+# - **Why AI fails**: AI recognizes code patterns but not scientific validity
+# - **RSE expertise**: Knowing if an algorithm is appropriate for the data and question
+# - **Example**: Sarah's story—AI suggested quantile normalization, but TPM was needed.
+#   Only domain knowledge reveals this mismatch.
+#
+# **3. Designing Software Architecture**
+# - **Why AI fails**: Large-scale design requires understanding trade-offs, scalability,
+#   maintainability over years—not patterns in existing code
+# - **RSE expertise**: Architecting systems that grow with research needs
+# - **Example**: Deciding whether a workflow needs a database, flat files, or HDF5
+#   requires understanding data access patterns, collaboration needs, and future scale
+#
+# **4. Critical Evaluation and Debugging**
+# - **Why AI fails**: AI can suggest fixes but doesn't understand the *why* behind bugs
+# - **RSE expertise**: Diagnosing root causes, not just symptoms
+# - **Example**: A simulation produces unexpected results. AI might fix syntax errors,
+#   but understanding if the physics equations are correct requires domain expertise.
+#
+# **5. Research Ethics and Integrity**
+# - **Why AI fails**: Cannot make ethical judgments about data use, privacy, or research practices
+# - **RSE expertise**: Navigating GDPR, research ethics, data sovereignty, reproducibility
+# - **Example**: Deciding what medical research data can be sent to cloud AI services
+#   requires understanding regulations and institutional policies
+#
+# **6. Collaboration and Mentoring**
+# - **Why AI fails**: Can't build teams, resolve conflicts, or mentor junior researchers
+# - **RSE expertise**: Working with researchers, teaching best practices, building community
+# - **Example**: Helping a PhD student understand not just how to write a function,
+#   but why testing matters and how to think about software design
+#
+# **The irreplaceable RSE**: You bring scientific domain knowledge, critical thinking,
+# ethical judgment, and collaborative skills. AI brings pattern matching and code generation.
+# These are complementary, not competing capabilities.
+#
+# ### Skills RSEs Need to Thrive with AI
+#
+# To make the best use of AI assistants while maintaining your expertise, develop these skills:
+#
+# **1. Critical Evaluation**
+# - **Skill**: Quickly assess if AI-generated code is correct, efficient, and appropriate
+# - **Why essential**: AI generates plausible code, not always correct code
+# - **How to develop**: Practice reviewing AI suggestions with the same rigor as code review
+#   - Does it handle edge cases?
+#   - Is the algorithm appropriate for the data size?
+#   - Are there security implications?
+#
+# **2. Prompt Engineering**
+# - **Skill**: Crafting clear, specific requests that get useful AI responses
+# - **Why essential**: Better prompts → better suggestions → less time debugging
+# - **How to develop**: 
+#   - Be specific: "Generate pytest test for temperature validation with edge cases"
+#     vs "write tests"
+#   - Provide context: "For climate data with possible sensor errors..."
+#   - Iterate: If first response misses the mark, refine your prompt
+#
+# **3. Deep Domain Knowledge**
+# - **Skill**: Understanding the science behind your code
+# - **Why essential**: Only you can judge if the algorithm matches the scientific question
+# - **How to develop**: 
+#   - Collaborate closely with domain scientists
+#   - Read the papers describing methods you implement
+#   - Attend domain-specific conferences, not just software ones
+#
+# **4. Software Engineering Fundamentals**
+# - **Skill**: Testing, version control, design patterns, performance optimization
+# - **Why essential**: AI can write individual functions but can't architect systems
+# - **How to develop**: 
+#   - Study classic software engineering (Clean Code, Design Patterns)
+#   - Practice test-driven development (write tests first, then use AI for implementation)
+#   - Learn to profile and optimize—AI suggestions often prioritize clarity over performance
+#
+# **5. Ethical and Legal Awareness**
+# - **Skill**: Understanding privacy, licensing, research integrity
+# - **Why essential**: AI doesn't understand these constraints
+# - **How to develop**: 
+#   - Learn about research ethics and data protection (GDPR, HIPAA)
+#   - Understand open-source licenses
+#   - Follow institutional policies on data and code
+#
+# **6. Effective Communication**
+# - **Skill**: Explaining technical decisions to non-technical researchers
+# - **Why essential**: AI can't translate between research and software perspectives
+# - **How to develop**: 
+#   - Practice explaining code in terms of scientific impact
+#   - Write documentation for your future self, not just today's you
+#   - Mentor others—teaching clarifies your own understanding
+#
+# ### The Future RSE: Human Expertise + AI Tools
+#
+# The most effective Research Software Engineers in the AI era will be those who:
+#
+# 1. **Use AI for acceleration**: Let AI handle boilerplate while you focus on hard problems
+# 2. **Maintain deep expertise**: Your domain knowledge and critical thinking can't be automated
+# 3. **Stay critical**: Never trust AI output without verification
+# 4. **Keep learning**: Software and AI tools evolve; continuous learning is essential
+# 5. **Collaborate effectively**: Work with both AI tools and human researchers
+#
+# **Bottom line**: AI assistants make good RSEs more productive. They don't make
+# inexperienced developers into RSEs. The expertise—understanding research, evaluating
+# correctness, designing systems, navigating ethics—remains uniquely human.
+#
+# As we explore specific AI tools in the following sections, remember: you're learning
+# to use powerful tools, not training your replacement. Your judgment, expertise, and
+# scientific understanding are what make you valuable. AI just helps you work faster.
+
+# %% [markdown]
+# ## Part 3: What Are AI Coding Assistants?
 #
 # ### The Technology
 #
@@ -120,7 +286,7 @@
 # AI assistant safely, not memorizing today's tool list.
 
 # %% [markdown]
-# ## Part 3: GitHub Copilot vs ChatGPT - Different Tools for Different Tasks
+# ## Part 4: GitHub Copilot vs ChatGPT - Different Tools for Different Tasks
 #
 # ### Understanding the Difference
 #
@@ -416,7 +582,7 @@ print(f"Errors: {result3['errors']}")
 # *understand* what to write. Both are valuable, for different reasons.
 
 # %% [markdown]
-# ## Part 4: Pitfalls, Risks, and Common Failures
+# ## Part 5: Pitfalls, Risks, and Common Failures
 #
 # ### Technical Pitfalls
 #
@@ -635,7 +801,7 @@ except ValueError as e:
 # you're responsible for every line of code, whether you wrote it or AI did.
 
 # %% [markdown]
-# ## Part 5: Legal, Ethical, and Data Protection Concerns
+# ## Part 6: Legal, Ethical, and Data Protection Concerns
 #
 # ### Copyright and Licensing
 #
@@ -723,7 +889,7 @@ except ValueError as e:
 # over development speed. AI is a tool, not a substitute for expertise.
 
 # %% [markdown]
-# ## Part 6: Self-Hosted Solutions for Privacy-Sensitive Research
+# ## Part 7: Self-Hosted Solutions for Privacy-Sensitive Research
 #
 # ### Why Self-Host?
 #
@@ -832,7 +998,7 @@ except ValueError as e:
 #   https://arxiv.org/abs/2308.12950
 
 # %% [markdown]
-# ## Part 7: Best Practices for AI-Assisted Research Software Development
+# ## Part 8: Best Practices for AI-Assisted Research Software Development
 #
 # ### The Golden Rules
 #
@@ -954,38 +1120,52 @@ except ValueError as e:
 #
 # **Key Takeaways**:
 #
-# 1. **AI assistants are powerful but imperfect tools**
+# 1. **AI assistants are tools that amplify RSE capabilities, not replacements**
+#    - RSEs bring irreplaceable expertise: domain knowledge, critical thinking, ethics
+#    - AI helps with routine tasks, learning new tools, and documentation
+#    - What remains human: research understanding, scientific correctness, architecture design
+#
+# 2. **AI assistants are powerful but imperfect tools**
 #    - Generate plausible code, not always correct code
 #    - Built on pattern matching, not true understanding
 #    - Require critical evaluation of all suggestions
 #
-# 2. **Different tools for different tasks**
+# 3. **Different tools for different tasks**
 #    - Copilot: Integrated, real-time, good for experienced developers
 #    - ChatGPT: Conversational, educational, good for learning
 #    - Use both strategically based on your needs
 #
-# 3. **Significant risks exist**
+# 4. **Significant risks exist**
 #    - Technical: hallucinated APIs, subtle bugs, security issues
 #    - Cognitive: over-reliance, skill atrophy, false confidence
 #    - Legal: licensing uncertainty, copyright questions
 #    - Privacy: data protection, GDPR compliance
 #
-# 4. **Self-hosted solutions for sensitive research**
+# 5. **Self-hosted solutions for sensitive research**
 #    - Ollama + Code Llama for local AI
 #    - Continue.dev or Tabby for privacy-preserving assistance
 #    - Trade-off: privacy vs quality
 #
-# 5. **Best practices for research software**
+# 6. **Best practices for research software**
 #    - Understand every line of code
 #    - Test AI suggestions rigorously
 #    - Protect sensitive research data
 #    - Document AI usage appropriately
 #    - Keep developing your own expertise
 #
+# 7. **Skills RSEs need to thrive with AI**
+#    - Critical evaluation of AI outputs
+#    - Prompt engineering for better results
+#    - Deep domain knowledge
+#    - Software engineering fundamentals
+#    - Ethical and legal awareness
+#
 # **The bottom line**: AI coding assistants are valuable tools that can accelerate
 # development, but they're not substitutes for understanding, testing, or critical
 # thinking. In research software, where correctness and reproducibility are paramount,
 # use AI to augment your capabilities while maintaining full responsibility for your code.
+# Your expertise as an RSE—combining scientific knowledge with software skills—remains
+# uniquely valuable and irreplaceable.
 #
 # **Further Learning**:
 # - Try both integrated and chat-based AI tools
