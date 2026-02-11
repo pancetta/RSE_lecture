@@ -368,19 +368,6 @@ def calculate_temperature_anomaly_smelly(temperatures_f, baseline_f):
 # 1. **Duplicated calculation**: `fahrenheit_to_celsius(baseline_f)` is called in every loop 
 #    iteration, but the result never changes! This is wasteful and obscures intent.
 #    
-# %% [markdown]
-# <div style="background-color: #f3e5f5; border-left: 5px solid #9c27b0; padding: 15px; margin: 10px 0; border-radius: 5px;">
-#     <h4 style="color: #7b1fa2; margin-top: 0;">💡 Try It Yourself</h4>
-#     <p>Refactoring smelly code is incredibly satisfying—transform bad into beautiful!</p>
-#     <ul>
-#         <li><strong>Refactor the code smells:</strong> Take the example functions above and refactor them to eliminate all code smells—extract functions, remove duplication, add clear names, and compare before/after readability.</li>
-#         <li><strong>Audit your own code:</strong> Review your current research code for the 5 common smells—make a list of issues found, prioritize by impact, and refactor the worst offenders first.</li>
-#         <li><strong>Practice continuous refactoring:</strong> Next time you write new code, pause every 30 minutes to refactor—experience how incremental cleanup prevents technical debt from accumulating.</li>
-#     </ul>
-# </div>
-
-# %% [markdown]
-# 
 # 2. **Magic number**: The `32` and fractions aren't explained. A comment would help, or better 
 #    yet, named constants like `FAHRENHEIT_OFFSET = 32`.
 #    
@@ -412,6 +399,17 @@ def calculate_temperature_anomaly_clean(temperatures_f, baseline_f):
     return anomalies
 
 # Now the code is clearer and more testable!
+
+# %% [markdown]
+# <div style="background-color: #f3e5f5; border-left: 5px solid #9c27b0; padding: 15px; margin: 10px 0; border-radius: 5px;">
+#     <h4 style="color: #7b1fa2; margin-top: 0;">💡 Try It Yourself</h4>
+#     <p>Refactoring smelly code is incredibly satisfying—transform bad into beautiful!</p>
+#     <ul>
+#         <li><strong>Refactor the code smells:</strong> Take the example functions above and refactor them to eliminate all code smells—extract functions, remove duplication, add clear names, and compare before/after readability.</li>
+#         <li><strong>Audit your own code:</strong> Review your current research code for the 5 common smells—make a list of issues found, prioritize by impact, and refactor the worst offenders first.</li>
+#         <li><strong>Practice continuous refactoring:</strong> Next time you write new code, pause every 30 minutes to refactor—experience how incremental cleanup prevents technical debt from accumulating.</li>
+#     </ul>
+# </div>
 
 # %% [markdown]
 # #### The Testing Connection: Smelly Code is Hard to Test
