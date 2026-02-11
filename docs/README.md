@@ -2,45 +2,69 @@
 
 This directory contains detailed documentation for various aspects of the RSE Course.
 
-## Quick Links
+## For Students
+
+- **[Main README](../README.md)** - Course overview and getting started
+
+## For Contributors and Developers
+
+- **[Contributing Guide](../CONTRIBUTING.md)** - How to contribute to the course
+- **[Developer Guide](DEVELOPER_GUIDE.md)** - Complete development guide
+  - Repository structure
+  - Development workflow
+  - Adding/modifying lectures
+  - CI/CD pipeline details
+  - Make targets reference
+
+## For Course Adopters and Instructors
+
+- **[Publishing Guide](PUBLISHING.md)** - Citation and publishing information
+  - How to cite the course properly
+  - Understanding dual licensing (CC BY 4.0 for content, MIT for code)
+  - How to obtain a DOI through Zenodo
+
+## For Maintainers
 
 ### Dependency Management
-- **[QUICKSTART.md](QUICKSTART.md)** - Quick reference guide for common tasks
-- **[DEPENDENCY_MANAGEMENT.md](DEPENDENCY_MANAGEMENT.md)** - Complete system guide
-- **[TESTING_DEPENDENCIES.md](TESTING_DEPENDENCIES.md)** - Testing procedures
-- **[SOLUTION_SUMMARY.md](SOLUTION_SUMMARY.md)** - Technical overview
+- **[Quick Start](QUICKSTART.md)** - Quick reference for common tasks
+- **[Dependency Management](DEPENDENCY_MANAGEMENT.md)** - Complete system guide
+- **[Testing Dependencies](TESTING_DEPENDENCIES.md)** - Testing procedures
+- **[Solution Summary](SOLUTION_SUMMARY.md)** - Technical overview of the system
 
-### Publishing and Citation
-- **[PUBLISHING.md](PUBLISHING.md)** - Guide for publishing the course and obtaining a DOI
-
-## Getting Started
-
-### For Contributors
-If you're new to the dependency management system, start with [QUICKSTART.md](QUICKSTART.md).
-
-For detailed information on how the system works, see [DEPENDENCY_MANAGEMENT.md](DEPENDENCY_MANAGEMENT.md).
-
-### For Course Adopters
-If you're using this course material, see [PUBLISHING.md](PUBLISHING.md) for:
-- How to cite the course properly
-- Understanding the dual licensing (CC BY 4.0 for content, MIT for code)
-- How we maintain citability through Zenodo
-
-## Overview
-
-### Dependency Management
 The automated dependency management system:
 - Tests dependency updates weekly
 - Creates lock files for reproducible environments  
 - Automatically creates PRs when updates work
 - Maintains current versions when updates fail
-- Works with conda/micromamba (no pip migration needed)
 
-### License and Citation
-The course uses dual licensing:
-- **Educational content**: CC BY 4.0 (Attribution required)
-- **Code examples**: MIT License
+## Quick Links by Task
 
-This ensures the course is open and accessible while requiring proper attribution.
+### I want to...
 
-See the main [README.md](../README.md) for usage examples.
+**...use the course materials:**
+→ Start with the [main README](../README.md)
+
+**...contribute to the course:**
+→ Read [CONTRIBUTING.md](../CONTRIBUTING.md) and [DEVELOPER_GUIDE.md](DEVELOPER_GUIDE.md)
+
+**...cite the course in my work:**
+→ See [PUBLISHING.md](PUBLISHING.md)
+
+**...manage dependencies:**
+→ Check [QUICKSTART.md](QUICKSTART.md) for quick reference
+
+**...understand how things work:**
+→ Read [DEVELOPER_GUIDE.md](DEVELOPER_GUIDE.md) for technical details
+
+**...teach this course:**
+→ Review [main README](../README.md) and [PUBLISHING.md](PUBLISHING.md)
+
+## Documentation Maintenance
+
+When making changes to the repository, update the relevant documentation:
+
+- Code changes → Update [DEVELOPER_GUIDE.md](DEVELOPER_GUIDE.md)
+- Dependency changes → Update [DEPENDENCY_MANAGEMENT.md](DEPENDENCY_MANAGEMENT.md)
+- Installation changes → Update [main README](../README.md) and [QUICKSTART.md](QUICKSTART.md)
+- License/citation changes → Update [PUBLISHING.md](PUBLISHING.md)
+- Contribution process → Update [CONTRIBUTING.md](../CONTRIBUTING.md)
