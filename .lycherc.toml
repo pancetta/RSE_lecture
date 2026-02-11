@@ -1,0 +1,82 @@
+# Lychee Link Checker Configuration
+# https://github.com/lycheeverse/lychee
+
+# Maximum number of concurrent network requests
+max_concurrency = 10
+
+# Accept HTTP status codes as successful
+accept = [
+    200,  # OK
+    204,  # No Content
+    206,  # Partial Content
+    301,  # Moved Permanently
+    302,  # Found (temporary redirect)
+    307,  # Temporary Redirect
+    308,  # Permanent Redirect
+    403,  # Forbidden (some sites block bots)
+    429,  # Too Many Requests
+]
+
+# Timeout for each request (in seconds)
+timeout = 20
+
+# Number of retries per request
+max_retries = 3
+
+# Wait time between retries (in seconds)
+retry_wait_time = 5
+
+# Exclude specific URLs or patterns
+exclude = [
+    # Localhost URLs (development servers)
+    'http://localhost:*',
+    'http://127.0.0.1:*',
+    
+    # Private/internal network addresses
+    'http://192.168.*',
+    'http://10.*',
+    
+    # Example/placeholder URLs
+    'https://github.com/username/*',
+    'https://github.com/user/*',
+    'https://github.com/yourusername/*',
+    'https://github.com/original/*',
+    'https://github.com/jpark/*',
+    'http://example.com*',
+    'https://your-project.readthedocs.io/*',
+    'https://genomeanalyzer.readthedocs.io/*',
+    'https://doi.org/10.5281/zenodo.XXXXXXX',
+    'https://doi.org/10.5281/zenodo.1234567',
+    'https://www.noaa.gov/api/*',
+    'https://data.nasa.gov/api/*',
+    
+    # Docker URLs (not actual web links)
+    'docker://*',
+    'docker-daemon:/*',
+    
+    # Known broken external links (to be fixed separately)
+    'https://www.alexandra-hill.com/2018/06/25/the-art-of-giving-and-receiving-code-reviews/',
+    'https://docs.gitlab.com/ee/topics/gitlab_flow.html',
+    
+    # URLs that are commonly rate-limited or block bots
+    'https://www.linkedin.com/*',
+]
+
+# Exclude specific file patterns from checking
+exclude_path = [
+    # Exclude generated notebooks (they're converted from .py files)
+    'lecture_*.ipynb',
+    
+    # Exclude git directory
+    '.git',
+    
+    # Exclude build/output directories if they exist
+    '_build',
+    'site',
+]
+
+# Use a custom user agent to avoid being blocked by some sites
+user_agent = "Mozilla/5.0 (compatible; Lychee/1.0; +https://github.com/lycheeverse/lychee)"
+
+# Cache results to speed up subsequent runs
+cache = true

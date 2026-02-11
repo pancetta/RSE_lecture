@@ -1,0 +1,52 @@
+name: Link Checker
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  schedule:
+    # Run weekly on Mondays at 10:00 UTC (after dependency updates)
+    - cron: '0 10 * * 1'
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  link-check:
+    name: Check Links
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Check links with Lychee
+      uses: lycheeverse/lychee-action@v1
+      with:
+        # Check all markdown files and Python lecture files
+        args: >-
+          --verbose
+          --no-progress
+          --accept 200,204,206,301,302,307,308,403,429
+          --timeout 20
+          --retry-wait-time 5
+          --max-retries 3
+          --exclude-path ./lecture_*/lecture_*.ipynb
+          --exclude-path ./.git
+          './**/*.md'
+          './**/*.py'
+        # Fail the job on broken links
+        fail: true
+        # Output format
+        format: markdown
+        # Output file
+        output: ./lychee-report.md
+    
+    - name: Upload link check report
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: link-check-report
+        path: ./lychee-report.md
+        retention-days: 30
