@@ -43,6 +43,13 @@ jobs:
       - name: Install additional dependencies
         run: |
           micromamba install -c conda-forge matplotlib>=3.5.0 nbconvert -y
+          # Install lecture-specific dependencies
+          for lecture_env in lecture_*/environment.yml; do
+            if [ -f "$lecture_env" ]; then
+              echo "Installing dependencies from $lecture_env..."
+              micromamba env update -f "$lecture_env" -y
+            fi
+          done
         shell: bash -el {0}
 
       - name: Convert lectures to notebooks
