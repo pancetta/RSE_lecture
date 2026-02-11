@@ -1788,7 +1788,8 @@
 # - Using databases for structured research data
 # - Ensuring data integrity and validation
 # 
-# Good collaboration practices you've learned here will help you work with shared datasets and maintain data quality across your team.
+# Good collaboration practices you've learned here will help you work with shared datasets
+# and maintain data quality across your team.
 # 
 # **Ready to continue? Move on to Lecture 11: Working with Research Data!**
 

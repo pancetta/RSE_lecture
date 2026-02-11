@@ -1462,7 +1462,8 @@ workflow_def, metadata = simulate_workflow_execution()
 # - Navigating legal and ethical considerations
 # - Best practices for AI-assisted research software development
 # 
-# AI tools can help you write workflows faster, but as you'll learn, they require careful oversight and critical evaluation—especially in research contexts.
+# AI tools can help you write workflows faster, but as you'll learn, they require careful
+# oversight and critical evaluation—especially in research contexts.
 # 
 # **Ready to continue? Move on to Lecture 13: AI-Assisted Coding for Research Software!**
 

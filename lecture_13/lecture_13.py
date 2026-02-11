@@ -1252,7 +1252,8 @@ except ValueError as e:
 # - Providing resources for ongoing learning and support
 # - Celebrating your journey from RSE novice to practitioner
 # 
-# You've learned an enormous amount—from basic shell commands to AI-assisted development. Lecture 14 will help you see how it all fits together and chart your path forward.
+# You've learned an enormous amount—from basic shell commands to AI-assisted development.
+# Lecture 14 will help you see how it all fits together and chart your path forward.
 # 
 # **Ready to conclude? Move on to Lecture 14: Course Summary and the RSE Community!**
 #

@@ -1137,7 +1137,8 @@ if result['issues']:
 # - Understanding alternatives like Nextflow and Common Workflow Language (CWL)
 # - Integrating workflows with version control and containers
 # 
-# The data management skills you've learned here become even more powerful when combined with automated workflows that process and analyze your data reproducibly.
+# The data management skills you've learned here become even more powerful when combined
+# with automated workflows that process and analyze your data reproducibly.
 # 
 # **Ready to continue? Move on to Lecture 12: Scientific Workflows and Automation!**
 #
