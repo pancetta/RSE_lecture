@@ -259,7 +259,7 @@ def analyze_humidity_data(humidity):
 def calculate_statistics(data):
     """Calculate mean and standard deviation for any dataset."""
     if not data:
-        return {'mean': 0, 'std': 0}
+        raise ValueError("Cannot calculate statistics for empty dataset")
     
     mean = sum(data) / len(data)
     variance = sum((x - mean) ** 2 for x in data) / len(data)
