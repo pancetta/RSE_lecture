@@ -20,7 +20,8 @@ def generate_qr_codes():
         print("Install with: pip install qrcode[pil]")
         return False
 
-    base_dir = Path(__file__).parent
+    # Get repository root (parent of the scripts directory)
+    base_dir = Path(__file__).parent.parent
     course_url = "https://pancetta.github.io/RSE_course_JuRSE"
 
     # Create QR code for the main course website
@@ -90,8 +91,8 @@ def convert_lecture(lecture_file):
 
 def main():
     """Find and convert all lecture files."""
-    # Get the directory where this script is located
-    base_dir = Path(__file__).parent
+    # Get the repository root (parent of scripts directory where this file is)
+    base_dir = Path(__file__).parent.parent
 
     # Generate QR codes first
     print("Generating QR codes...\n")

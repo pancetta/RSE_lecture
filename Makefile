@@ -158,10 +158,10 @@ install-lecture14:
 convert: notebooks
 
 notebooks:
-	python convert_to_notebooks.py
+	python scripts/convert_to_notebooks.py
 
 generate-qr-codes:
-	python generate_qr_codes.py
+	python scripts/generate_qr_codes.py
 
 build-website: notebooks
 	@echo "Building Jupyter Book v2 static HTML site..."
@@ -182,15 +182,15 @@ clean-website:
 	@echo "Cleaned website build files"
 
 update-deps:
-	python update_dependencies.py
+	python scripts/update_dependencies.py
 	@echo "Dependencies tested and lock files updated"
 
 test-deps:
-	python update_dependencies.py --test-only
+	python scripts/update_dependencies.py --test-only
 	@echo "Dependency testing complete"
 
 create-locks:
-	python update_dependencies.py --create-locks
+	python scripts/update_dependencies.py --create-locks
 	@echo "Lock files created for all platforms"
 
 ci-local:

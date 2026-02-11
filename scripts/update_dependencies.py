@@ -67,7 +67,7 @@ def test_environment(env_file, name="test-env"):
         # Check Python syntax
         print("\n=== Checking Python syntax ===")
         run_command(
-            f"micromamba run -n {name} python -m py_compile convert_to_notebooks.py",
+            f"micromamba run -n {name} python -m py_compile scripts/convert_to_notebooks.py",
             shell=True
         )
         
@@ -82,7 +82,7 @@ def test_environment(env_file, name="test-env"):
         # Convert lectures
         print("\n=== Converting lectures to notebooks ===")
         run_command(
-            f"micromamba run -n {name} python convert_to_notebooks.py",
+            f"micromamba run -n {name} python scripts/convert_to_notebooks.py",
             shell=True
         )
         

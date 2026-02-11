@@ -57,14 +57,14 @@ jobs:
         flake8 . --count --statistics
         
         echo "=== Checking Python syntax ==="
-        python -m py_compile convert_to_notebooks.py
+        python -m py_compile scripts/convert_to_notebooks.py
         for lecture_file in lecture_*/lecture_*.py; do
           echo "Checking syntax: $lecture_file"
           python -m py_compile "$lecture_file"
         done
         
         echo "=== Converting lectures to notebooks ==="
-        python convert_to_notebooks.py
+        python scripts/convert_to_notebooks.py
         
         echo "=== Executing notebooks to verify they run ==="
         for lecture_file in lecture_*/lecture_*.py; do

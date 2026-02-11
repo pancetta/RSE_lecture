@@ -77,7 +77,8 @@ def add_qr_codes_to_lecture(lecture_file, lecture_number):
 
 def main():
     """Add QR codes to all lecture files."""
-    base_dir = Path(__file__).parent
+    # Get repository root (parent of scripts directory)
+    base_dir = Path(__file__).parent.parent
     
     # Find all lecture directories
     lecture_dirs = sorted([d for d in base_dir.glob('lecture_*') if d.is_dir()])
