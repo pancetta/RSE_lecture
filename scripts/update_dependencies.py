@@ -239,8 +239,8 @@ def main():
     
     args = parser.parse_args()
     
-    # Change to repository root
-    repo_root = Path(__file__).parent
+    # Change to repository root (parent of scripts directory)
+    repo_root = Path(__file__).parent.parent
     os.chdir(repo_root)
     
     print("="*60)
