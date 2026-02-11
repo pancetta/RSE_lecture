@@ -33,6 +33,6 @@ micromamba activate rse_lecture
 ## Converting to Notebook
 
 ```bash
-python convert_to_notebooks.py
+python scripts/convert_to_notebooks.py
 jupyter notebook lecture_09/lecture_09.ipynb
 ```

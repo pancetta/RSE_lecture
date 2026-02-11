@@ -233,7 +233,7 @@ make install-dev
 flake8 . --count --statistics
 
 # Test conversion
-python convert_to_notebooks.py
+python scripts/convert_to_notebooks.py
 
 # Test execution
 for notebook in lecture_*/*.ipynb; do

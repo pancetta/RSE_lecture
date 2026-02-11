@@ -114,7 +114,7 @@ micromamba create -n test-from-lock --file environment-dev-linux-64.lock
 
 # Activate and test
 micromamba activate test-from-lock
-python convert_to_notebooks.py
+python scripts/convert_to_notebooks.py
 # ... run other tests ...
 
 # Clean up
@@ -255,7 +255,7 @@ cat environment-dev-linux-64.lock | grep "name:"
 # Create environment for specific lecture
 micromamba create -n lecture4-test --file lecture_04/environment-linux-64.lock
 micromamba activate lecture4-test
-python convert_to_notebooks.py
+python scripts/convert_to_notebooks.py
 jupyter nbconvert --to notebook --execute lecture_04/lecture_04.ipynb
 ```
 

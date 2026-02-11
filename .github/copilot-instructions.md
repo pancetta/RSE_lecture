@@ -39,13 +39,13 @@ Required steps:
    flake8 . --count --statistics
    
    # Check Python syntax
-   python -m py_compile convert_to_notebooks.py
+   python -m py_compile scripts/convert_to_notebooks.py
    for lecture_file in lecture_*/lecture_*.py; do
      python -m py_compile "$lecture_file"
    done
    
    # Convert and test notebooks
-   python convert_to_notebooks.py
+   python scripts/convert_to_notebooks.py
    for notebook in lecture_*/*.ipynb; do
      jupyter nbconvert --to notebook --execute --inplace "$notebook"
    done
@@ -90,7 +90,7 @@ Documentation changes should be part of the same commit as code changes.
 - **Always edit** the `.py` files, never the `.ipynb` files directly
 - Use Jupytext percent format (`# %%`) for cell markers
 - Add markdown cells with `# %% [markdown]`
-- Test conversion works: `python convert_to_notebooks.py`
+- Test conversion works: `python scripts/convert_to_notebooks.py`
 
 ## Code Quality Standards
 
@@ -104,7 +104,7 @@ Documentation changes should be part of the same commit as code changes.
 Before submitting changes:
 1. Syntax check: `python -m py_compile <file>`
 2. Lint check: `flake8 <file>`
-3. Conversion test: `python convert_to_notebooks.py`
+3. Conversion test: `python scripts/convert_to_notebooks.py`
 4. Execution test: `jupyter nbconvert --to notebook --execute --inplace <notebook>`
 
 ## Cross-Platform Compatibility
@@ -163,7 +163,7 @@ The repository uses GitHub Actions with workflows:
 4. Structure content with clear sections
 5. **Ensure content is exactly 90 minutes**
 6. Update `README.md` with new lecture info
-7. Test conversion: `python convert_to_notebooks.py`
+7. Test conversion: `python scripts/convert_to_notebooks.py`
 8. Update `myst.yml` if using Jupyter Book
 9. Run full CI pipeline
 
