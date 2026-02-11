@@ -18,6 +18,7 @@ This lecture series covers fundamental concepts and practices in Research Softwa
 - **Lecture 8**: Documenting and Publishing Research Software (~90 minutes)
 - **Lecture 9**: Containerization and Reproducibility (~90 minutes)
 - **Lecture 10**: Collaboration and Code Review in Research Software (~90 minutes)
+- **Lecture 11**: Working with Research Data - File Formats and Databases (~90 minutes)
 
 ## Structure
 
@@ -85,6 +86,9 @@ make install-lecture9
 
 # Lecture 10
 make install-lecture10
+
+# Lecture 11 (adds h5py, netCDF4, pandas)
+make install-lecture11
 ```
 
 Then activate:
@@ -124,6 +128,7 @@ micromamba activate rse_lecture
 - Lecture 8 has no additional dependencies (documentation tools covered conceptually).
 - Lecture 9 has no additional dependencies (containerization tools covered conceptually).
 - Lecture 10 has no additional dependencies (collaboration tools covered conceptually).
+- Lecture 11 adds h5py, netCDF4, and pandas for working with research data formats.
 - The `environment-dev.yml` includes all dependencies plus development tools (flake8, nbconvert).
 - Installation pattern is **harmonized**: all lectures follow the same two-step process (base + additions).
 - Lecture 1 introduces the course and essential tools (shell, git, GitHub).
