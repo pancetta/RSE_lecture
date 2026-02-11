@@ -426,7 +426,7 @@ If you use this course material in your teaching, research, or other work, pleas
 
 Or in text format:
 
-> Speck, Robert. (2026). Research Software Engineering Lectures (JuRSE). https://github.com/pancetta/RSE_course_JuRSE
+> Speck, Robert. (2026). Research Software Engineering Lectures. https://github.com/pancetta/RSE_course_JuRSE
 
 For automated citation formats, this repository includes a `CITATION.cff` file that can be used with tools like Zotero, Mendeley, and GitHub's "Cite this repository" feature.
 
