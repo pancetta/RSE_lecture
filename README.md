@@ -178,9 +178,6 @@ micromamba activate rse_lecture
 - Lecture 12 covers scientific workflows and automation (Make, Snakemake, Nextflow).
 - Lecture 13 covers AI-assisted coding tools, best practices, and privacy considerations.
 - Lecture 14 summarizes the course and connects students with the RSE community.
-- Lecture 11 covers working with research data, file formats (HDF5, NetCDF), and databases.
-- Lecture 12 covers scientific workflows and automation (Make, Snakemake, Nextflow).
-- Lecture 13 covers AI-assisted coding tools, best practices, and privacy considerations.
 
 ## Usage
 
