@@ -15,6 +15,22 @@
 # %% [markdown]
 # # Lecture 4: Python Project Structure and Scientific Libraries
 # 
+# 
+# ## Quick Access
+# 
+# Scan the QR codes below for quick access to course materials:
+# 
+# <div style="display: flex; gap: 20px; align-items: flex-start;">
+#   <div style="text-align: center;">
+#     <img src="../course_qr_code.png" alt="Course Website QR Code" width="150"/>
+#     <p><strong>Course Website</strong></p>
+#   </div>
+#   <div style="text-align: center;">
+#     <img src="lecture_04_qr_code.png" alt="This Lecture QR Code" width="150"/>
+#     <p><strong>This Lecture</strong></p>
+#   </div>
+# </div>
+# 
 # ## Overview
 # This lecture teaches you how to organize research code into professional projects and
 # introduces essential scientific computing libraries. You'll learn best practices for

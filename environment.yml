@@ -8,3 +8,5 @@ dependencies:
   - notebook>=6.5.0
   - numpy>=1.21.0
   - jupyter-book>=2.0.0
+  - qrcode>=7.0.0
+  - pillow>=9.0.0

@@ -15,6 +15,22 @@
 # %% [markdown]
 # # Lecture 2: Advanced Git, GitHub, GitLab, and Python Basics
 # 
+# 
+# ## Quick Access
+# 
+# Scan the QR codes below for quick access to course materials:
+# 
+# <div style="display: flex; gap: 20px; align-items: flex-start;">
+#   <div style="text-align: center;">
+#     <img src="../course_qr_code.png" alt="Course Website QR Code" width="150"/>
+#     <p><strong>Course Website</strong></p>
+#   </div>
+#   <div style="text-align: center;">
+#     <img src="lecture_02_qr_code.png" alt="This Lecture QR Code" width="150"/>
+#     <p><strong>This Lecture</strong></p>
+#   </div>
+# </div>
+# 
 # ## Overview
 # This lecture builds on Git fundamentals from Lecture 1, introduces collaboration with GitHub and GitLab,
 # and begins our journey into Python programming. We'll learn advanced version control workflows

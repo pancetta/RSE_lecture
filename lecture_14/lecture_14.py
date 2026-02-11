@@ -15,6 +15,22 @@
 # %% [markdown]
 # # Lecture 14: Course Summary and the RSE Community
 #
+# 
+# ## Quick Access
+# 
+# Scan the QR codes below for quick access to course materials:
+# 
+# <div style="display: flex; gap: 20px; align-items: flex-start;">
+#   <div style="text-align: center;">
+#     <img src="../course_qr_code.png" alt="Course Website QR Code" width="150"/>
+#     <p><strong>Course Website</strong></p>
+#   </div>
+#   <div style="text-align: center;">
+#     <img src="lecture_14_qr_code.png" alt="This Lecture QR Code" width="150"/>
+#     <p><strong>This Lecture</strong></p>
+#   </div>
+# </div>
+# 
 # ## Overview
 # This final half-lecture wraps up our Research Software Engineering journey by reviewing
 # what we've learned, exploring important topics we didn't cover, and connecting you with

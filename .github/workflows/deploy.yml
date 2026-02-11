@@ -42,7 +42,7 @@ jobs:
 
       - name: Install additional dependencies
         run: |
-          micromamba install -c conda-forge matplotlib>=3.5.0 nbconvert -y
+          micromamba install -c conda-forge matplotlib>=3.5.0 nbconvert qrcode pillow -y
           # Install lecture-specific dependencies
           for lecture_env in lecture_*/environment.yml; do
             if [ -f "$lecture_env" ]; then
