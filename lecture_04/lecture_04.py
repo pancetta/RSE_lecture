@@ -39,6 +39,16 @@
 # 
 # **Duration**: ~90 minutes
 # 
+# ## Prerequisites
+# 
+# Before starting this lecture, you should be familiar with:
+# - Python fundamentals: functions, classes, and modules (covered in Lectures 2-3)
+# - Error handling with try/except blocks
+# - File I/O operations
+# - Basic understanding of package imports
+# 
+# This lecture assumes you're comfortable writing Python functions and organizing code into files.
+# 
 # ## Learning Objectives
 # - Organize research code into proper Python packages and modules
 # - Understand and use virtual environments

@@ -38,6 +38,15 @@
 # 
 # **Duration**: ~90 minutes
 # 
+# ## Prerequisites
+# 
+# Before starting this lecture, you should be familiar with:
+# - Basic command-line operations (covered in Lecture 1)
+# - Git fundamentals: `git init`, `git add`, `git commit`, `git status`, `git log`
+# - Basic understanding of version control concepts
+# 
+# If you haven't completed Lecture 1, please review it first as we build directly on those concepts.
+# 
 # ## Learning Objectives
 # - Master Git branching and merging workflows
 # - Understand .gitignore patterns and file management

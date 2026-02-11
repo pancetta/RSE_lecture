@@ -46,6 +46,16 @@
 #
 # **Duration**: ~90 minutes
 #
+# ## Prerequisites
+# 
+# Before starting this lecture, you should be familiar with:
+# - Basic shell commands and scripting
+# - Python programming and file I/O (covered in Lectures 2-4)
+# - Understanding of research data workflows
+# - Containerization concepts (covered in Lecture 9, helpful but not required)
+# 
+# This lecture builds on your programming skills and introduces workflow automation tools.
+# 
 # ## Learning Objectives
 # - Understand the challenges of managing complex research pipelines
 # - Recognize when to use scripts, Make, or workflow management systems
@@ -1441,6 +1451,20 @@ workflow_def, metadata = simulate_workflow_execution()
 # Workflows transform research from a series of manual steps into a reproducible,
 # automated pipeline. As Elena learned, the time invested in creating a workflow
 # pays off immediately and grows more valuable over time.
+
+# %% [markdown]
+# ### What's Next?
+# 
+# In **Lecture 13**, we'll explore AI-assisted coding for research software. You'll learn:
+# - What AI coding assistants are and how they work
+# - Using tools like GitHub Copilot and ChatGPT effectively
+# - Understanding the risks and limitations of AI-generated code
+# - Navigating legal and ethical considerations
+# - Best practices for AI-assisted research software development
+# 
+# AI tools can help you write workflows faster, but as you'll learn, they require careful oversight and critical evaluation—especially in research contexts.
+# 
+# **Ready to continue? Move on to Lecture 13: AI-Assisted Coding for Research Software!**
 
 # %% [markdown]
 # ## Additional Resources

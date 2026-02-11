@@ -38,6 +38,16 @@
 # 
 # **Duration**: ~90 minutes
 # 
+# ## Prerequisites
+# 
+# Before starting this lecture, you should be familiar with:
+# - Writing Python functions and classes (covered in Lectures 2-4)
+# - Python project structure and modules
+# - Basic use of the command line for running Python scripts
+# - NumPy arrays and basic scientific computing (covered in Lecture 4)
+# 
+# This lecture builds on your Python programming skills and introduces testing methodologies.
+# 
 # ## Learning Objectives
 # - Understand why testing is critical for research software
 # - Write unit tests using pytest

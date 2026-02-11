@@ -38,6 +38,16 @@
 # 
 # **Duration**: ~90 minutes
 # 
+# ## Prerequisites
+# 
+# Before starting this lecture, you should be familiar with:
+# - Python basics: variables, data types, and operators (covered in Lecture 2)
+# - Basic function syntax and calling functions
+# - Lists, dictionaries, and control flow (if statements, loops)
+# - Git and GitHub basics for version control
+# 
+# This lecture builds directly on the Python fundamentals introduced in Lecture 2.
+# 
 # ## Learning Objectives
 # - Master advanced function concepts and documentation
 # - Handle errors gracefully with try/except blocks

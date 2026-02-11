@@ -39,6 +39,16 @@
 # 
 # **Duration**: ~90 minutes
 # 
+# ## Prerequisites
+# 
+# Before starting this lecture, you should be familiar with:
+# - Writing and running pytest tests (covered in Lecture 5)
+# - Git and GitHub basics (covered in Lectures 1-2)
+# - Python project structure and virtual environments (covered in Lecture 4)
+# - Basic YAML syntax (we'll explain as we go)
+# 
+# This lecture directly builds on Lecture 5's testing concepts and requires a GitHub account.
+# 
 # ## Learning Objectives
 # - Understand what Continuous Integration (CI) is and why it matters
 # - Set up automated testing with GitHub Actions

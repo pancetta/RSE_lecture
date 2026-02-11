@@ -39,6 +39,16 @@
 # 
 # **Duration**: ~90 minutes
 # 
+# ## Prerequisites
+# 
+# Before starting this lecture, you should be familiar with:
+# - Python programming and project structure (covered in Lectures 2-4)
+# - Git and GitHub basics (covered in Lectures 1-2)
+# - Writing functions and docstrings (covered in Lecture 3)
+# - Organizing code into packages and modules
+# 
+# This lecture builds on your programming knowledge by teaching how to document and share it effectively.
+# 
 # ## Learning Objectives
 # - Understand why documentation is critical for research impact
 # - Write effective README files and docstrings

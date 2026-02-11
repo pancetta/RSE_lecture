@@ -41,6 +41,16 @@
 #
 # **Duration**: ~90 minutes
 #
+# ## Prerequisites
+# 
+# Before starting this lecture, you should be familiar with:
+# - Python virtual environments and dependency management (covered in Lecture 4)
+# - Running Python scripts and installing packages
+# - Basic command-line usage
+# - Git basics for version control
+# 
+# This lecture introduces containerization as the next step beyond virtual environments for reproducibility.
+# 
 # ## Learning Objectives
 # - Understand the limitations of virtual environments for reproducibility
 # - Learn what containers are and how they differ from virtual machines
