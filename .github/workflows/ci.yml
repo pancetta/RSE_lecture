@@ -167,3 +167,27 @@ jobs:
         SIZE=$(docker images rse-lecture9-demo:test --format "{{.Size}}")
         echo "Container size: $SIZE"
         echo "✅ Container demo completed successfully"
+  
+  spellcheck:
+    name: Spell Check
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Install Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+    
+    - name: Install cSpell
+      run: npm install -g cspell
+    
+    - name: Run spell check
+      run: |
+        echo "Running spell check on documentation and source files..."
+        cspell "**/*.md" "**/*.py" --config cspell.json --no-progress --show-suggestions
+        echo "✅ Spell check completed successfully"
