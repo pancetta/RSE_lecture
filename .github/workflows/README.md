@@ -86,32 +86,38 @@ For more details, see [dependency management documentation](../../docs/)
 Automated link validation for documentation and lecture materials.
 
 **Purpose:**
-- Detect broken or stale links early
-- Maintain high-quality documentation
-- Catch link rot before it becomes a problem
+- Monitor broken or stale links
+- Provide informational reports about link health
+- Maintain high-quality documentation over time
 
 **What it does:**
 1. Scans all markdown files (README, docs, etc.)
 2. Scans all lecture Python files (lecture_*.py)
 3. Validates each link (with retries for robustness)
 4. Saves detailed report as artifact
-5. Fails the workflow if broken links are found
+5. Reports results without failing the build (informational only)
 
 **Trigger:**
-- Push or PR to main/master branches
 - Weekly on Mondays at 10:00 UTC (after dependency updates)
 - Manual workflow dispatch
 
 **Configuration:**
 - Settings in `.lycherc.toml` at repository root
 - Excludes example/placeholder URLs (localhost, github.com/user/*, etc.)
-- Configurable timeouts and retry behavior
+- Excludes flaky sites that block bots or have intermittent issues
+- 30-second timeout per request (increased for slow sites)
+- 3 retries with 5-second wait time between retries
 - Custom user agent to avoid being blocked
+- Accepts status codes including redirects and rate limiting (429)
 
 **Typical results:**
 - ~340 total links checked
 - ~12 seconds execution time (instant with cache)
 - Detailed report available as workflow artifact (30-day retention)
+
+**Why informational only?**
+Many sites have intermittent issues (rate limiting, temporary downtime, bot blocking) that
+cause false positives. Running as informational allows monitoring without breaking CI/CD.
 
 **Customization:**
 To exclude additional URLs, edit `.lycherc.toml` and add patterns to the `exclude` array.
