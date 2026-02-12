@@ -41,6 +41,16 @@
 #
 # **Duration**: ~90 minutes
 #
+# ## Prerequisites
+# 
+# Before starting this lecture, you should be familiar with:
+# - Python programming (covered in Lectures 2-4)
+# - Writing functions and classes
+# - Basic software development practices
+# - All previous RSE concepts (testing, documentation, version control)
+# 
+# This lecture assumes you're comfortable writing code and introduces AI tools to enhance your workflow.
+# 
 # ## Learning Objectives
 # - Understand what AI coding assistants are and how they work
 # - Compare different types of AI assistance (integrated vs chat-based)
@@ -1232,6 +1242,20 @@ except ValueError as e:
 # use AI to augment your capabilities while maintaining full responsibility for your code.
 # Your expertise as an RSE—combining scientific knowledge with software skills—remains
 # uniquely valuable and irreplaceable.
+#
+# ### What's Next?
+# 
+# In **Lecture 14**, the final lecture, we'll wrap up the course by:
+# - Reviewing and integrating knowledge from all 13 lectures
+# - Exploring advanced topics we didn't cover and where to learn them
+# - Connecting you with the international and German RSE communities
+# - Providing resources for ongoing learning and support
+# - Celebrating your journey from RSE novice to practitioner
+# 
+# You've learned an enormous amount—from basic shell commands to AI-assisted development.
+# Lecture 14 will help you see how it all fits together and chart your path forward.
+# 
+# **Ready to conclude? Move on to Lecture 14: Course Summary and the RSE Community!**
 #
 # **Further Learning**:
 # - Try both integrated and chat-based AI tools

@@ -42,6 +42,16 @@
 # **Note**: This lecture will be augmented later with information about the course exam,
 # further educational offers, and a Q&A session.
 #
+# ## Prerequisites
+# 
+# Before starting this lecture, you should have:
+# - Completed Lectures 1-13
+# - Hands-on experience with the RSE tools and practices covered
+# - A basic understanding of all major topics: version control, Python, testing, CI/CD,
+#   documentation, containers, collaboration, data management, workflows, and AI tools
+# 
+# This final lecture synthesizes everything you've learned into a cohesive whole.
+# 
 # ## Learning Objectives
 # - Review and integrate knowledge from all 13 lectures
 # - Understand advanced topics beyond this course and how to learn them

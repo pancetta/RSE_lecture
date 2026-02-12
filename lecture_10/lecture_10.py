@@ -41,6 +41,16 @@
 #
 # **Duration**: ~90 minutes
 #
+# ## Prerequisites
+# 
+# Before starting this lecture, you should be familiar with:
+# - Git branching and merging (covered in Lecture 2)
+# - GitHub/GitLab basics including pull/merge requests
+# - Writing and testing Python code (covered in Lectures 2-5)
+# - Code review concepts from earlier lectures
+# 
+# This lecture builds on your Git knowledge and introduces systematic collaboration practices.
+# 
 # ## Learning Objectives
 # - Understand why collaboration requires deliberate processes and practices
 # - Master the pull request workflow for collaborative development
@@ -1767,6 +1777,21 @@
 #
 # Your future self - and your future collaborators - will thank you for building
 # good collaboration practices from the start.
+
+# %% [markdown]
+# ### What's Next?
+# 
+# In **Lecture 11**, we'll shift focus to managing research data effectively. You'll learn:
+# - FAIR principles for research data (Findable, Accessible, Interoperable, Reusable)
+# - Choosing appropriate file formats for different types of scientific data
+# - Working with specialized formats like HDF5 and NetCDF
+# - Using databases for structured research data
+# - Ensuring data integrity and validation
+# 
+# Good collaboration practices you've learned here will help you work with shared datasets
+# and maintain data quality across your team.
+# 
+# **Ready to continue? Move on to Lecture 11: Working with Research Data!**
 
 # %% [markdown]
 # ## References and Further Reading

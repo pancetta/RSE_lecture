@@ -39,6 +39,16 @@
 # 
 # **Duration**: ~90 minutes
 # 
+# ## Prerequisites
+# 
+# Before starting this lecture, you should be familiar with:
+# - Python programming and project structure (covered in Lectures 2-4)
+# - Git and GitHub basics (covered in Lectures 1-2)
+# - Writing functions and docstrings (covered in Lecture 3)
+# - Organizing code into packages and modules
+# 
+# This lecture builds on your programming knowledge by teaching how to document and share it effectively.
+# 
 # ## Learning Objectives
 # - Understand why documentation is critical for research impact
 # - Write effective README files and docstrings
@@ -1433,6 +1443,22 @@ print(f"Anomalies: {anomalies}")
 # - Limited impact → field-changing contribution
 # 
 # **Good documentation amplifies your research impact!**
+
+# %% [markdown]
+# ### What's Next?
+# 
+# In **Lecture 9**, we'll explore containerization and reproducibility. You'll learn:
+# - Understanding the limitations of virtual environments for reproducibility
+# - What containers are and how they differ from virtual machines
+# - Writing Dockerfiles to containerize research software
+# - Using Docker, Podman, and Apptainer for reproducible environments
+# - Choosing the right containerization tool for your use case
+# 
+# Documentation is the first step toward making your research reproducible. Containers take
+# it further by capturing the entire computational environment, ensuring your documented
+# software runs identically anywhere.
+# 
+# **Ready to continue? Move on to Lecture 9: Containerization and Reproducibility!**
 
 # %% [markdown]
 # ## Acknowledgements and References

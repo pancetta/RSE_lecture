@@ -38,6 +38,16 @@
 # 
 # **Duration**: ~90 minutes
 # 
+# ## Prerequisites
+# 
+# Before starting this lecture, you should be familiar with:
+# - Python functions and error handling (covered in Lectures 2-3)
+# - Writing and running tests with pytest (covered in Lecture 5)
+# - Basic command-line usage
+# - Scientific computing with NumPy (covered in Lecture 4)
+# 
+# This lecture introduces debugging and profiling tools that work with the code you've been writing.
+# 
 # ## Learning Objectives
 # - Understand systematic approaches to debugging
 # - Use Python's debugger (pdb) to inspect running code

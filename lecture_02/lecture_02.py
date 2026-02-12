@@ -38,6 +38,15 @@
 # 
 # **Duration**: ~90 minutes
 # 
+# ## Prerequisites
+# 
+# Before starting this lecture, you should be familiar with:
+# - Basic command-line operations (covered in Lecture 1)
+# - Git fundamentals: `git init`, `git add`, `git commit`, `git status`, `git log`
+# - Basic understanding of version control concepts
+# 
+# If you haven't completed Lecture 1, please review it first as we build directly on those concepts.
+# 
 # ## Learning Objectives
 # - Master Git branching and merging workflows
 # - Understand .gitignore patterns and file management
@@ -285,6 +294,12 @@
 # 3. **Merge or delete completed branches**: Don't let them pile up
 # 4. **Pull before you push**: Get latest changes from remote
 # 5. **Commit often on branches**: Makes it easier to track progress
+
+# %% [markdown]
+# Now that you understand Git branching and merging workflows, let's explore how GitHub and GitLab 
+# extend Git with powerful collaboration features. These platforms transform Git from a personal 
+# version control tool into a collaborative research environment where teams can work together 
+# effectively.
 
 # %% [markdown]
 # ## Part 2: GitHub Collaboration

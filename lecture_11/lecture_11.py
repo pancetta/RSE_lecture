@@ -41,6 +41,16 @@
 #
 # **Duration**: ~90 minutes
 #
+# ## Prerequisites
+# 
+# Before starting this lecture, you should be familiar with:
+# - Python file I/O operations (covered in Lecture 3)
+# - NumPy for numerical data (covered in Lecture 4)
+# - Basic understanding of data analysis workflows
+# - Pandas basics (helpful but not required)
+# 
+# This lecture introduces research data management best practices and specialized file formats.
+# 
 # ## Learning Objectives
 # - Understand FAIR principles and their application to research data
 # - Learn about Research Data Management (RDM) best practices
@@ -1117,6 +1127,20 @@ if result['issues']:
 # - Only one copy on external drive
 # - Formats that won't exist in 10 years
 # - No migration plan
+#
+# ### What's Next?
+# 
+# In **Lecture 12**, we'll explore scientific workflows and automation. You'll learn:
+# - When to move beyond simple scripts to workflow management systems
+# - Using Make for dependency-based execution
+# - Writing Snakemake workflows for complex data analysis pipelines
+# - Understanding alternatives like Nextflow and Common Workflow Language (CWL)
+# - Integrating workflows with version control and containers
+# 
+# The data management skills you've learned here become even more powerful when combined
+# with automated workflows that process and analyze your data reproducibly.
+# 
+# **Ready to continue? Move on to Lecture 12: Scientific Workflows and Automation!**
 #
 # ### Resources for Further Learning
 #
