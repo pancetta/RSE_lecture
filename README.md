@@ -148,6 +148,10 @@ This course draws on excellent resources from the Research Software Engineering 
 
 For complete bibliographic information, see [references.bib](references.bib).
 
+## PDF Version
+
+A PDF version of the complete course is available from the [latest CI build](https://github.com/pancetta/RSE_course_JuRSE/actions/workflows/ci.yml). Download the `course-pdf` artifact from the most recent successful workflow run.
+
 ## Contact
 
 For questions or suggestions, please [open an issue](https://github.com/pancetta/RSE_course_JuRSE/issues) on GitHub.

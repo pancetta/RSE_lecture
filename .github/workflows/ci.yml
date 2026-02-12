@@ -74,6 +74,59 @@ jobs:
         make clean
       shell: bash -el {0}
   
+  build-pdf:
+    name: Build PDF
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Setup Micromamba
+      uses: mamba-org/setup-micromamba@v1
+      with:
+        micromamba-version: 'latest'
+        environment-file: environment-dev.yml
+        cache-environment: true
+    
+    - name: Install lecture dependencies
+      run: |
+        # Install lecture-specific dependencies
+        for lecture_env in lecture_*/environment.yml; do
+          if [ -f "$lecture_env" ]; then
+            echo "Installing dependencies from $lecture_env..."
+            micromamba env update -f "$lecture_env" -y
+          fi
+        done
+      shell: bash -el {0}
+    
+    - name: Convert lectures to notebooks
+      run: |
+        python scripts/convert_to_notebooks.py
+      shell: bash -el {0}
+    
+    - name: Execute notebooks to generate content
+      run: |
+        for notebook in lecture_*/*.ipynb; do
+          echo "Executing $notebook..."
+          jupyter nbconvert --to notebook --execute --inplace "$notebook"
+        done
+      shell: bash -el {0}
+    
+    - name: Build PDF
+      run: |
+        make build-pdf
+      shell: bash -el {0}
+    
+    - name: Upload PDF artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: course-pdf
+        path: exports/book.pdf
+        retention-days: 90
+  
   container-demo:
     name: Container Demo (Lecture 9)
     runs-on: ubuntu-latest

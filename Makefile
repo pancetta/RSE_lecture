@@ -1,4 +1,4 @@
-.PHONY: help install install-dev install-lecture1 install-lecture2 install-lecture3 install-lecture4 install-lecture5 install-lecture6 install-lecture7 install-lecture8 install-lecture9 install-lecture10 install-lecture11 install-lecture12 install-lecture13 install-lecture14 convert clean notebooks build-website serve-website clean-website update-deps test-deps create-locks ci-local lint generate-qr-codes
+.PHONY: help install install-dev install-lecture1 install-lecture2 install-lecture3 install-lecture4 install-lecture5 install-lecture6 install-lecture7 install-lecture8 install-lecture9 install-lecture10 install-lecture11 install-lecture12 install-lecture13 install-lecture14 convert clean notebooks build-website serve-website clean-website build-pdf clean-pdf update-deps test-deps create-locks ci-local lint generate-qr-codes
 
 help:
 	@echo "Research Software Engineering Lectures - Makefile"
@@ -25,8 +25,10 @@ help:
 	@echo "  generate-qr-codes - Generate QR codes for course website and all lectures"
 	@echo "  build-website    - Build the Jupyter Book website"
 	@echo "  serve-website    - Build and serve the website locally"
+	@echo "  build-pdf        - Build the course as a PDF document"
 	@echo "  clean            - Remove generated notebook files"
 	@echo "  clean-website    - Remove generated website files"
+	@echo "  clean-pdf        - Remove generated PDF files"
 	@echo "  update-deps      - Test and update conda dependencies with lock files"
 	@echo "  test-deps        - Test current dependencies without creating lock files"
 	@echo "  create-locks     - Create conda-lock files for all platforms"
@@ -180,6 +182,16 @@ clean:
 clean-website:
 	jupyter-book clean .
 	@echo "Cleaned website build files"
+
+build-pdf: notebooks
+	@echo "Building PDF version of the course..."
+	@mkdir -p exports
+	@jupyter-book build --pdf
+	@echo "✅ PDF built successfully in exports/book.pdf"
+
+clean-pdf:
+	rm -rf exports
+	@echo "Cleaned PDF export files"
 
 update-deps:
 	python scripts/update_dependencies.py
