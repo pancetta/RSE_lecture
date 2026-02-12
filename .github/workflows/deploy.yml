@@ -84,7 +84,7 @@ jobs:
           if [ -f exports/book.pdf ]; then
             cp exports/book.pdf _build/html/
           else
-            echo "⚠️  PDF was not generated, skipping copy step"
+            echo "⚠️  PDF was not generated (LaTeX tools not available), skipping PDF deployment"
           fi
         shell: bash -el {0}
 

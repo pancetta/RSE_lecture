@@ -191,7 +191,7 @@ build-pdf: notebooks
 	@if [ -f exports/book.pdf ]; then \
 		echo "✅ PDF built successfully in exports/book.pdf"; \
 	else \
-		echo "⚠️  PDF build did not produce the expected output"; \
+		echo "⚠️  PDF build failed (xelatex may not be installed). HTML site will deploy without PDF."; \
 	fi
 
 clean-pdf:
