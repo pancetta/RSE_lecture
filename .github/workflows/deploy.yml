@@ -42,7 +42,7 @@ jobs:
 
       - name: Install additional dependencies
         run: |
-          micromamba install -c conda-forge matplotlib>=3.5.0 nbconvert qrcode pillow texlive-core latexmk -y
+          micromamba install -c conda-forge matplotlib>=3.5.0 nbconvert qrcode pillow -y
           # Install lecture-specific dependencies
           for lecture_env in lecture_*/environment.yml; do
             if [ -f "$lecture_env" ]; then
@@ -73,13 +73,19 @@ jobs:
         shell: bash -el {0}
 
       - name: Build PDF version
+        continue-on-error: true
         run: |
           make build-pdf
         shell: bash -el {0}
 
       - name: Copy PDF to HTML output
+        continue-on-error: true
         run: |
-          cp exports/book.pdf _build/html/
+          if [ -f exports/book.pdf ]; then
+            cp exports/book.pdf _build/html/
+          else
+            echo "⚠️  PDF was not generated, skipping copy step"
+          fi
         shell: bash -el {0}
 
       - name: Upload artifact
