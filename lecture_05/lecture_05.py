@@ -352,7 +352,7 @@ assert calculate_anomaly_good(20, 18) == 2
 # | **Global State** | Reads/writes global variables | Tests interfere with each other | Explicit parameters |
 # | **Poor Naming** | Variables like `x`, `tmp`, `data2` | Hard to write meaningful test names | Descriptive names |
 # 
-# #### Interactive Exercise: Spot the Smells
+# #### Spotting Code Smells in Practice
 # 
 # Let's apply this to our temperature conversion disaster. Look at the original code again:
 

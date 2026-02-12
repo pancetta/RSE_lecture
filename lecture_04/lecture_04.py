@@ -1723,30 +1723,6 @@ print(f"\nOptimal pH: {max(mean_activities, key=mean_activities.get)}")
 # prevent research disasters and give you confidence in your results.
 # 
 # **Ready to continue? Move on to Lecture 5: Testing Research Software!**
-# 
-# ### Practice Exercises
-# 
-# 1. **Project Structure**: Create a research project with proper structure
-#    including src/, tests/, data/, and notebooks/ directories
-# 
-# 2. **NumPy Practice**: Analyze a matrix of experimental data:
-#    - Load or create a 10×5 matrix (10 samples, 5 measurements)
-#    - Calculate statistics per sample and per measurement
-#    - Identify outliers using boolean indexing
-#    - Normalize data to mean=0, std=1
-# 
-# 3. **Matplotlib Practice**: Create a publication-quality figure:
-#    - Generate synthetic data with noise
-#    - Create subplots showing raw data, processed data, and distribution
-#    - Add proper labels, legends, and styling
-#    - Save as both PNG (300 DPI) and PDF
-# 
-# 4. **Integrated Project**: Build a complete analysis pipeline:
-#    - Structure: Organize into proper package
-#    - Data: Generate or load experimental data (NumPy)
-#    - Analysis: Calculate statistics, fit models
-#    - Visualization: Create comprehensive figures (Matplotlib)
-#    - Documentation: Add README and docstrings
 
 # %% [markdown]
 # ## Additional Resources
