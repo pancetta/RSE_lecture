@@ -187,8 +187,14 @@ build-pdf: notebooks
 	@echo "Building PDF version of the course..."
 	@mkdir -p exports
 	@# Build PDF using myst.yml export configuration
-	@jupyter-book build --pdf
-	@echo "✅ PDF built successfully in exports/book.pdf"
+	@set -e; \
+	jupyter-book build --pdf; \
+	if [ -f exports/book.pdf ]; then \
+		echo "✅ PDF built successfully in exports/book.pdf"; \
+	else \
+		echo "❌ PDF build failed - output file not created"; \
+		exit 1; \
+	fi
 
 clean-pdf:
 	rm -rf exports
