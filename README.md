@@ -144,7 +144,7 @@ This course draws on excellent resources from the Research Software Engineering 
 
 - [Research Software Engineering with Python](https://alan-turing-institute.github.io/rse-course/html/) by The Alan Turing Institute
 - [Research Software Engineering with Python](https://third-bit.com/py-rse/) by Irving et al. (2022)
-- Official documentation from Git, GitHub, GitLab, NumPy, Matplotlib, pytest, and Python
+- Official documentation from Git, GitHub, GitLab, NumPy, Matplotlib, pytest, and Python 
 
 For complete bibliographic information, see [references.bib](references.bib).
 
