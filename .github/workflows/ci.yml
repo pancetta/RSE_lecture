@@ -91,6 +91,12 @@ jobs:
         environment-file: environment-dev.yml
         cache-environment: true
     
+    - name: Install LaTeX dependencies
+      run: |
+        # LaTeX is only available on Linux/macOS in conda-forge
+        micromamba install -c conda-forge texlive-core latexmk -y
+      shell: bash -el {0}
+    
     - name: Install lecture dependencies
       run: |
         # Install lecture-specific dependencies

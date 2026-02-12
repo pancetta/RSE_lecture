@@ -18,5 +18,3 @@ dependencies:
   - nbconvert
   - qrcode>=7.0.0
   - pillow>=9.0.0
-  - texlive-core
-  - latexmk
