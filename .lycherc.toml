@@ -17,7 +17,7 @@ accept = [
 ]
 
 # Timeout for each request (in seconds)
-timeout = 20
+timeout = 30
 
 # Number of retries per request
 max_retries = 3
@@ -77,6 +77,11 @@ exclude = [
     'https://www.linkedin.com/*',
     'https://the-turing-way.netlify.app/*',  # Frequently has network errors
     'https://figshare.com*',  # Returns 403 Forbidden for automated checks
+    
+    # Additional flaky or bot-blocking sites
+    'https://www.doxygen.nl/*',  # Returns 403 Forbidden for automated checks
+    'https://docs.conda.io/*',  # Frequently rate-limited (429 Too Many Requests)
+    'https://www.fz-juelich.de/*',  # Occasional 503 Service Unavailable
 ]
 
 # Exclude specific file patterns from checking

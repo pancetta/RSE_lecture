@@ -179,11 +179,16 @@ Weekly automated dependency testing:
 ### Link Checking (`.github/workflows/link-checker.yml`)
 
 Checks all links in markdown and lecture files:
-- On every push and PR
-- Weekly on Mondays at 10:00 UTC
+- Weekly on Mondays at 10:00 UTC (scheduled)
+- Can be manually triggered via workflow_dispatch
 - Uses [Lychee](https://github.com/lycheeverse/lychee)
+- Reports broken links but does not fail the build (informational only)
 
-Configuration in `.lycherc.toml`.
+Configuration in `.lycherc.toml` includes:
+- Excluded URLs for sites that block automated checkers
+- 30-second timeout per request
+- 3 retries with 5-second wait time between retries
+- Accepts status codes including redirects and rate limiting (429)
 
 ## Adding a New Lecture
 
