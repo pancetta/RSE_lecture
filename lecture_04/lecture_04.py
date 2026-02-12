@@ -1708,14 +1708,21 @@ print(f"\nOptimal pH: {max(mean_activities, key=mean_activities.get)}")
 # </div>
 
 # %% [markdown]
-# ## Next Steps
+# ### What's Next?
 # 
-# In **Lecture 5**, we'll explore:
-# - **Pandas** for data manipulation and analysis
-# - **Data cleaning** and transformation workflows
-# - **Advanced file I/O** (CSV, Excel, HDF5, JSON)
-# - **Time series analysis** with real research data
-# - **Combining NumPy, Pandas, and Matplotlib** for complete workflows
+# In **Lecture 5**, we'll explore testing research software. You'll learn:
+# - Why testing is critical for research software reliability
+# - Writing unit tests using pytest
+# - Using assertions for defensive programming
+# - Measuring test coverage
+# - Applying test-driven development (TDD) principles
+# - Building confidence in research results through comprehensive testing
+# 
+# Now that you can organize code into proper projects and use scientific libraries, the next
+# step is ensuring your code is correct and reliable through systematic testing. Good tests
+# prevent research disasters and give you confidence in your results.
+# 
+# **Ready to continue? Move on to Lecture 5: Testing Research Software!**
 # 
 # ### Practice Exercises
 # 
