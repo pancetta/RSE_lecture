@@ -5,6 +5,36 @@
 
 Welcome to the Research Software Engineering (RSE) lecture series! This repository contains materials for learning best practices in developing high-quality research software.
 
+## Course Positioning
+
+This course is:
+
+- A semester-long introduction to Research Software Engineering (RSE)
+- Targeted at late Bachelor / early Master STEM students
+- Designed for students with scientific background but not necessarily prior software engineering training
+
+The course uses Python as an example implementation language, but the principles generalize to other research computing environments.
+
+## Learning Outcomes
+
+After completing this course, students will be able to:
+
+- Design reproducible research software workflows
+- Use version control effectively in collaborative research
+- Structure Python projects for maintainability
+- Write automated tests for scientific code
+- Set up continuous integration for research software
+- Package and document research software professionally
+- Containerize computational environments
+- Critically evaluate AI-assisted coding tools in research contexts
+- Understand sustainability and credit mechanisms in research software
+
+## Course Philosophy
+
+**This is not a classical Software Engineering course.**
+
+The focus is not on large-scale system architecture or formal methods, but on pragmatic, reproducible, sustainable research software practices.
+
 ## Course Overview
 
 This lecture series covers 14 lectures (~90 minutes each) on Research Software Engineering fundamentals:
