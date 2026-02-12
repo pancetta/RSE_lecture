@@ -186,6 +186,7 @@ clean-website:
 build-pdf: notebooks
 	@echo "Building PDF version of the course..."
 	@mkdir -p exports
+	@# Build PDF using myst.yml export configuration
 	@jupyter-book build --pdf
 	@echo "✅ PDF built successfully in exports/book.pdf"
 
