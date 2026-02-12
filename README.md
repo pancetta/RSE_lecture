@@ -1,7 +1,6 @@
 # Research Software Engineering Lectures
 
 [![CI - Lecture Scripts](https://github.com/pancetta/RSE_course_JuRSE/workflows/CI%20-%20Lecture%20Scripts/badge.svg)](https://github.com/pancetta/RSE_course_JuRSE/actions)
-[![Link Checker](https://github.com/pancetta/RSE_course_JuRSE/workflows/Link%20Checker/badge.svg)](https://github.com/pancetta/RSE_course_JuRSE/actions)
 
 Welcome to the Research Software Engineering (RSE) lecture series! This repository contains materials for learning best practices in developing high-quality research software.
 
@@ -147,10 +146,6 @@ This course draws on excellent resources from the Research Software Engineering 
 - Official documentation from Git, GitHub, GitLab, NumPy, Matplotlib, pytest, and Python
 
 For complete bibliographic information, see [references.bib](references.bib).
-
-## PDF Version
-
-A PDF version of the complete course is available for download: [**Download Course PDF**](https://pancetta.github.io/RSE_course_JuRSE/book.pdf)
 
 ## Contact
 
