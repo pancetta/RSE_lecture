@@ -148,6 +148,10 @@ This course draws on excellent resources from the Research Software Engineering 
 
 For complete bibliographic information, see [references.bib](references.bib).
 
+## PDF Version
+
+A PDF version of the complete course is available for download: [**Download Course PDF**](https://pancetta.github.io/RSE_course_JuRSE/book.pdf)
+
 ## Contact
 
 For questions or suggestions, please [open an issue](https://github.com/pancetta/RSE_course_JuRSE/issues) on GitHub.
