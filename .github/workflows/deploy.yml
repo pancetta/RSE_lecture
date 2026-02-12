@@ -42,7 +42,7 @@ jobs:
 
       - name: Install additional dependencies
         run: |
-          micromamba install -c conda-forge matplotlib>=3.5.0 nbconvert qrcode pillow -y
+          micromamba install -c conda-forge matplotlib>=3.5.0 nbconvert qrcode pillow texlive-core latexmk -y
           # Install lecture-specific dependencies
           for lecture_env in lecture_*/environment.yml; do
             if [ -f "$lecture_env" ]; then
@@ -70,6 +70,16 @@ jobs:
           BASE_URL: /RSE_course_JuRSE
         run: |
           jupyter-book build --html
+        shell: bash -el {0}
+
+      - name: Build PDF version
+        run: |
+          make build-pdf
+        shell: bash -el {0}
+
+      - name: Copy PDF to HTML output
+        run: |
+          cp exports/book.pdf _build/html/
         shell: bash -el {0}
 
       - name: Upload artifact

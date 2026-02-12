@@ -150,7 +150,7 @@ For complete bibliographic information, see [references.bib](references.bib).
 
 ## PDF Version
 
-A PDF version of the complete course is available from the [latest CI build](https://github.com/pancetta/RSE_course_JuRSE/actions/workflows/ci.yml). Download the `course-pdf` artifact from the most recent successful workflow run.
+A PDF version of the complete course is available for download: [**Download Course PDF**](https://pancetta.github.io/RSE_course_JuRSE/book.pdf)
 
 ## Contact
 
