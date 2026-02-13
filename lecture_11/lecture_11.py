@@ -108,7 +108,27 @@
 # **Reference**: Wilkinson et al. (2016), "The FAIR Guiding Principles for
 # scientific data management and stewardship", *Scientific Data*, 3:160018.
 # DOI: 10.1038/sdata.2016.18
+
+# %% [markdown]
+# ### Visual: The FAIR Guiding Principles
 #
+# The following figure from the original FAIR principles paper provides a comprehensive
+# overview of all principles and sub-principles:
+#
+# ![The FAIR Guiding Principles](https://media.springernature.com/full/springer-static/image/art%3A10.1038%2Fsdata.2016.18/MediaObjects/41597_2016_Article_BFsdata201618_Fig1_HTML.jpg?as=webp)
+#
+# **Figure**: The FAIR Guiding Principles for scientific data management and stewardship.  
+# **Source**: Wilkinson, M.D., Dumontier, M., Aalbersberg, I.J. et al. (2016). 
+# The FAIR Guiding Principles for scientific data management and stewardship. 
+# *Scientific Data* 3, 160018. https://doi.org/10.1038/sdata.2016.18  
+# **License**: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
+#
+# This figure shows the hierarchical structure of FAIR principles:
+# - Each main principle (F, A, I, R) has multiple sub-principles
+# - The principles are interconnected and mutually reinforcing
+# - All principles apply to both data and metadata
+
+# %% [markdown]
 # ### Research Data Management (RDM)
 #
 # Research Data Management is the active organization and maintenance of data
