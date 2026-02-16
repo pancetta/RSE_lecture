@@ -45,7 +45,14 @@ jobs:
           # Check if environment.yml exists and has non-empty dependencies
           if [ -f "$lecture_dir/environment.yml" ]; then
             # Use Python to check if dependencies list is non-empty
-            has_deps=$(python -c "import yaml; config = yaml.safe_load(open('$lecture_dir/environment.yml')); deps = config.get('dependencies', []); print('yes' if deps and len([d for d in deps if d]) > 0 else 'no')" 2>/dev/null || echo "no")
+            # If the check fails, we'll log a warning and assume no dependencies
+            has_deps=$(python -c "import yaml; config = yaml.safe_load(open('$lecture_dir/environment.yml')); deps = config.get('dependencies', []); print('yes' if deps and len([d for d in deps if d]) > 0 else 'no')" 2>&1)
+            
+            if [ $? -ne 0 ]; then
+              echo "⚠️  Warning: Failed to parse $lecture_dir/environment.yml, assuming no dependencies"
+              echo "   Error: $has_deps"
+              has_deps="no"
+            fi
             
             if [ "$has_deps" = "yes" ]; then
               echo "Processing $lecture_dir (has additional dependencies)..."
