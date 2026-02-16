@@ -1,7 +1,7 @@
 name: rse_lecture
 channels:
   - conda-forge
-dependencies:
+dependencies: []
   # Lecture 12 has no additional Python dependencies beyond the base environment
   # Workflow tools (Snakemake, Nextflow, etc.) are typically installed separately
   # and not required to run this lecture notebook
