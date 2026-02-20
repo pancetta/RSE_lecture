@@ -1,11 +1,12 @@
 # ---
 # jupyter:
 #   jupytext:
+#     formats: ipynb,py:percent
 #     text_representation:
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.14.0
+#       jupytext_version: 1.19.1
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
@@ -14,12 +15,12 @@
 
 # %% [markdown]
 # # Lecture 5: Testing Research Software
-# 
-# 
+#
+#
 # ## Quick Access
-# 
+#
 # Scan the QR codes below for quick access to course materials:
-# 
+#
 # <div style="display: flex; gap: 20px; align-items: flex-start;">
 #   <div style="text-align: center;">
 #     <img src="../course_qr_code.png" alt="Course Website QR Code" width="150"/>
@@ -30,24 +31,24 @@
 #     <p><strong>This Lecture</strong></p>
 #   </div>
 # </div>
-# 
+#
 # ## Overview
 # This lecture introduces software testing practices essential for reliable research software.
 # We'll follow a cautionary tale of a research project that produced incorrect results due to
 # untested code, then learn how to prevent such disasters through systematic testing.
-# 
+#
 # **Duration**: ~90 minutes
-# 
+#
 # ## Prerequisites
-# 
+#
 # Before starting this lecture, you should be familiar with:
 # - Writing Python functions and classes (covered in Lectures 2-4)
 # - Python project structure and modules
 # - Basic use of the command line for running Python scripts
 # - NumPy arrays and basic scientific computing (covered in Lecture 4)
-# 
+#
 # This lecture builds on your Python programming skills and introduces testing methodologies.
-# 
+#
 # ## Learning Objectives
 # - Understand why testing is critical for research software
 # - Write unit tests using pytest
@@ -58,20 +59,20 @@
 
 # %% [markdown]
 # ## Part 1: A Cautionary Tale - The Temperature Conversion Disaster
-# 
+#
 # ### The Story
-# 
+#
 # In 2020, a climate research team published a groundbreaking paper suggesting unexpected warming
 # patterns in the Arctic. The paper received significant media attention and influenced policy
 # discussions. Six months later, another team tried to reproduce the results and discovered a
 # critical bug: **the temperature conversion function had a subtle error**.
-# 
+#
 # The original team had to retract their paper. Years of work were lost. Careers were damaged.
 # Policy decisions made based on the flawed data had to be reversed. All because of a simple,
 # untested function.
-# 
+#
 # ### The Flawed Code
-# 
+#
 # Let's look at the type of code that caused this disaster:
 
 # %%
@@ -123,39 +124,39 @@ print(f"Average anomaly: {sum(anomalies) / len(anomalies):.2f}°C")
 
 # %% [markdown]
 # ### What Went Wrong?
-# 
+#
 # The bug in `fahrenheit_to_celsius` multiplies by 9/5 instead of 5/9. This error:
-# 
+#
 # 1. **Wasn't immediately obvious** - the function still returns numbers
 # 2. **Wasn't caught during development** - no tests were written
 # 3. **Wasn't caught during review** - reviewers didn't verify the formula
 # 4. **Produced plausible-looking results** - the values seemed reasonable at first glance
 # 5. **Compounded through the analysis** - every calculation using this function was wrong
-# 
+#
 # This is exactly the kind of error that **testing prevents**. Let's see how.
 
 # %% [markdown]
 # ### Code Smells: Warning Signs of Design Problems
-# 
+#
 # Before we learn about testing, let's talk about **code smells**—characteristics of code that 
 # suggest deeper problems. The term was coined by Kent Beck and popularized by Martin Fowler in his 
 # book *Refactoring*. A code smell isn't a bug (the code might work perfectly), but it indicates 
 # that the code will be hard to maintain, test, or understand.
-# 
+#
 # **Why this matters for testing**: Code that smells bad is often hard or impossible to test. If 
 # you find yourself struggling to write tests, the problem might not be with your testing approach—
 # it might be that your code has design problems. Learning to recognize code smells helps you write 
 # more testable, maintainable code from the start.
-# 
+#
 # **The connection**: Well-designed code is testable code. If your code is hard to test, it's 
 # probably poorly designed. Code smells are your early warning system.
-# 
+#
 # #### Common Code Smells in Research Software
-# 
+#
 # Let's examine the most common smells in research code, with examples:
-# 
+#
 # **1. God Function (or "Long Function")**
-# 
+#
 # A function that does everything—hundreds of lines, multiple responsibilities, impossible to 
 # understand or test.
 
@@ -184,12 +185,12 @@ def analyze_experiment(data_file, config_file, output_dir):
 # - Hard to debug (bug could be anywhere in 420 lines)
 # - Hard to reuse (all or nothing)
 # - Hard to understand (what's the main logic vs details?)
-# 
+#
 # **The fix**: Break into smaller, focused functions (like we learned in Lecture 4's Single 
 # Responsibility Principle).
-# 
+#
 # **2. Duplicated Code**
-# 
+#
 # Copy-pasted code that appears in multiple places. We saw this in Lecture 4 with DRY principle.
 
 # %%
@@ -225,11 +226,11 @@ def analyze_temperature_2020(temps):
 # - Bug fixes must be applied multiple times
 # - Easy to miss one copy when updating
 # - More code to test and maintain
-# 
+#
 # **The fix**: Extract common logic into a shared function (DRY principle).
-# 
+#
 # **3. Magic Numbers and Unclear Names**
-# 
+#
 # Numbers or strings that appear without explanation, or variables named `x`, `tmp`, `data2`.
 
 # %%
@@ -266,11 +267,11 @@ def convert_temperature_with_bounds(temp_kelvin, fallback_value):
 # - Hard to understand intent
 # - Easy to misuse or misunderstand
 # - Harder to modify (what was 273.15 again?)
-# 
+#
 # **The fix**: Use named constants and descriptive variable names.
-# 
+#
 # **4. Tight Coupling (or "Feature Envy")**
-# 
+#
 # Functions that reach deep into other objects or modules, creating dependencies that make testing 
 # difficult.
 
@@ -304,11 +305,11 @@ def calculate_mean(values):
 # - Hard to test (need to create complex objects)
 # - Fragile (breaks when other code changes)
 # - Hard to reuse (tied to specific data structures)
-# 
+#
 # **The fix**: Depend on abstractions, not implementations. Accept simple parameters.
-# 
+#
 # **5. Global State and Hidden Dependencies**
-# 
+#
 # Functions that read or modify global variables, making behavior unpredictable and testing 
 # difficult.
 
@@ -338,11 +339,11 @@ assert calculate_anomaly_good(20, 18) == 2
 # - Unpredictable behavior (depends on hidden state)
 # - Hard to test (must set up global state)
 # - Causes action-at-a-distance bugs (changing one place breaks another)
-# 
+#
 # **The fix**: Make dependencies explicit through parameters.
-# 
+#
 # #### Code Smell Quick Reference
-# 
+#
 # | Smell | Red Flag | Impact on Testing | Fix |
 # |-------|----------|------------------|-----|
 # | **God Function** | Function > 50 lines, multiple tasks | Setup complex, many tests needed | Split into focused functions |
@@ -351,9 +352,9 @@ assert calculate_anomaly_good(20, 18) == 2
 # | **Tight Coupling** | Function accesses deep internals | Requires complex object setup | Accept simple parameters |
 # | **Global State** | Reads/writes global variables | Tests interfere with each other | Explicit parameters |
 # | **Poor Naming** | Variables like `x`, `tmp`, `data2` | Hard to write meaningful test names | Descriptive names |
-# 
+#
 # #### Spotting Code Smells in Practice
-# 
+#
 # Let's apply this to our temperature conversion disaster. Look at the original code again:
 
 # %%
@@ -374,7 +375,7 @@ def calculate_temperature_anomaly_smelly(temperatures_f, baseline_f):
 
 # %% [markdown]
 # **Smells identified**:
-# 
+#
 # 1. **Duplicated calculation**: `fahrenheit_to_celsius(baseline_f)` is called in every loop 
 #    iteration, but the result never changes! This is wasteful and obscures intent.
 #    
@@ -383,7 +384,7 @@ def calculate_temperature_anomaly_smelly(temperatures_f, baseline_f):
 #    
 # 3. **Not obvious that conversion is wrong**: Without tests, the formula error went unnoticed. 
 #    The function "smells okay" at first glance but has a subtle bug.
-# 
+#
 # **Better version**:
 
 # %%
@@ -428,9 +429,9 @@ def calculate_temperature_anomaly_clean(temperatures_f, baseline_f):
 
 # %% [markdown]
 # #### The Testing Connection: Smelly Code is Hard to Test
-# 
+#
 # Here's the key insight: **If your code is hard to test, it probably has design problems.**
-# 
+#
 # **Signs that code smells are making testing hard**:
 # - "I need to create 5 objects just to test this one function"  
 #   → Probably tight coupling
@@ -442,17 +443,17 @@ def calculate_temperature_anomaly_clean(temperatures_f, baseline_f):
 #   → Probably god function doing too much
 # - "I don't know what to name this test"  
 #   → Probably unclear what the function does (poor naming)
-# 
+#
 # **Good news**: Testable code is well-designed code. When you write tests, you naturally improve 
 # your design because:
 # - You need simple interfaces (avoid coupling)
 # - You need predictable behavior (avoid global state)
 # - You need focused functionality (avoid god functions)
 # - You need clear contracts (good naming and documentation)
-# 
+#
 # **Next step**: Now that we recognize code smells, let's learn how to prevent them through 
 # systematic testing. Tests not only catch bugs—they guide you toward better design!
-# 
+#
 # **Further reading on code smells**:
 # - Martin Fowler, *Refactoring: Improving the Design of Existing Code* (2018) - The definitive guide
 # - Robert C. Martin, *Clean Code* (2008) - Chapters 3, 6, 10 on functions, objects, and classes
@@ -478,55 +479,55 @@ def calculate_temperature_anomaly_clean(temperatures_f, baseline_f):
 
 # %% [markdown]
 # ## Part 2: Introduction to Testing
-# 
+#
 # ### Why Test Research Software?
-# 
+#
 # Research software is often perceived as "write once, run once" code that doesn't need testing. 
 # This is a dangerous misconception. In reality, research code is modified constantly, used with 
 # different datasets, and often reused in future projects. Without tests, every change is a potential 
 # source of bugs that can silently corrupt your results.
-# 
+#
 # **Research is iterative**: You'll run and modify your code many times as you refine your analysis
 # - **Data changes**: New data might expose edge cases your code doesn't handle
 # - **Collaborators need confidence**: Others must trust your results to build on them
 # - **You might be wrong**: Even experts make mistakes (as our story shows)—tests catch them
 # - **Future you needs help**: You'll forget the implementation details in 6 months; tests document behavior
 # - **Journals increasingly require it**: Many publishers now expect code and tests to be available
-# 
+#
 # **Testing mindset**: Think of tests as "documentation that runs." They show how your code is 
 # supposed to work and prove that it does. Good tests make refactoring safe—you can improve your 
 # code's implementation without breaking its behavior.
-# 
+#
 # ### Real-World Research Software Failures
-# 
+#
 # Our story is fictional, but based on real incidents:
-# 
+#
 # 1. **Geoffrey Chang (2006)**: Retracted 5 papers from *Science* due to a data column flip
 # 2. **Reinhart-Rogoff (2010)**: Excel error affected global economic policy
 # 3. **Mars Climate Orbiter (1999)**: $327M loss due to unit conversion error
 # 4. **Ariane 5 (1996)**: $370M rocket destroyed by integer overflow
-# 
+#
 # ### Types of Testing
-# 
+#
 # Testing comes in different forms, each serving a specific purpose:
-# 
+#
 # - **Unit tests**: Test individual functions in isolation—does this one function work correctly?
 # - **Integration tests**: Test how components work together—do these functions interact properly?
 # - **Regression tests**: Ensure bugs don't come back—once fixed, stay fixed
 # - **Acceptance tests**: Verify the software meets requirements—does it solve the right problem?
-# 
+#
 # Today we focus on **unit tests**—the foundation of testing. Unit tests are small, fast, and test 
 # one specific piece of functionality. They're the most common type of test and the easiest to write. 
-# 
+#
 # **Testing pyramid**: Most projects should have many unit tests (fast, easy to write), fewer 
 # integration tests (slower, test interactions), and a few acceptance tests (slowest, test whole 
 # system). Start with unit tests—they give you the most value for the least effort.
 
 # %% [markdown]
 # ## Part 3: Writing Your First Test
-# 
+#
 # ### Manual Testing (What NOT to Do)
-# 
+#
 # Before learning proper testing, let's see what manual testing looks like:
 
 # %%
@@ -546,30 +547,30 @@ else:
 
 # %% [markdown]
 # ### Problems with Manual Testing
-# 
+#
 # 1. **Not automated**: You must run it manually every time—easy to forget or skip
 # 2. **Not organized**: Tests scattered throughout code—hard to maintain
 # 3. **Not comprehensive**: Easy to forget edge cases—what about negative numbers? zero? infinity?
 # 4. **Not persistent**: Tests lost when cells are re-run—no record of what was tested
 # 5. **No clear pass/fail**: Must interpret output yourself—did all tests pass?
-# 
+#
 # **Why this matters**: Manual testing is how bugs slip through. You test the happy path (normal 
 # inputs) but forget edge cases. You test once but don't re-test after changes. You test locally 
 # but not on different systems. Automated testing solves all these problems.
-# 
+#
 # %% [markdown]
 # ### Using pytest - The Right Way
-# 
+#
 # `pytest` is Python's most popular testing framework. It makes testing easy and automatic. Unlike 
 # manual testing, pytest discovers and runs all your tests automatically, provides clear pass/fail 
 # output, and integrates with CI/CD systems.
-# 
+#
 # **Why pytest over alternatives?**:
 # - **Simple**: Just write functions starting with `test_` and use `assert`
 # - **Powerful**: Advanced features like fixtures and parametrization when you need them
 # - **Fast**: Runs tests in parallel and caches results
 # - **Popular**: Huge ecosystem of plugins and community support
-# 
+#
 # **Best practice**: Keep test files separate from source code. Put them in a `tests/` directory with 
 # names like `test_module.py`. This keeps your source code clean and makes tests easy to find.
 
@@ -614,18 +615,18 @@ except AssertionError as e:
 
 # %% [markdown]
 # ### Understanding Assertions
-# 
+#
 # An **assertion** is a statement that must be true. If it's false, Python raises an `AssertionError`.
-# 
+#
 # ```python
 # assert condition, "Optional error message"
 # ```
-# 
+#
 # **Good assertions are:**
 # - Clear: Easy to understand what's being tested
 # - Specific: Test one thing at a time
 # - Meaningful: Include helpful error messages
-# 
+#
 # **Common assertion patterns:**
 
 # %%
@@ -670,7 +671,7 @@ test_assertion_patterns()
 
 # %% [markdown]
 # ## Part 4: Testing the Buggy Code
-# 
+#
 # Now let's write tests for our flawed `fahrenheit_to_celsius` function.
 # **These tests will FAIL** - which is exactly what we want! They'll catch the bug.
 
@@ -717,10 +718,10 @@ for name, test_func in tests:
 
 # %% [markdown]
 # ### The Bug is Exposed!
-# 
+#
 # The tests fail because our `fahrenheit_to_celsius` function is wrong. This is **good**!
 # The tests are doing their job: **catching bugs before they cause problems**.
-# 
+#
 # Now let's fix the bug:
 
 # %%
@@ -772,11 +773,11 @@ for name, test_func in tests_fixed:
 
 # %% [markdown]
 # ## Part 5: Organizing Tests with pytest
-# 
+#
 # ### Test File Structure
-# 
+#
 # In real projects, tests live in separate files following a specific structure:
-# 
+#
 # ```
 # my_project/
 # ├── src/
@@ -786,17 +787,17 @@ for name, test_func in tests_fixed:
 # │   └── test_temperature.py  # Tests
 # └── README.md
 # ```
-# 
+#
 # **Naming conventions:**
 # - Test files: `test_*.py` or `*_test.py`
 # - Test functions: `test_*()`
 # - Test classes: `Test*`
-# 
+#
 # pytest automatically discovers tests following these patterns.
 
 # %% [markdown]
 # ### Creating a Test File
-# 
+#
 # Let's create a proper test file for our temperature module:
 
 # %%
@@ -879,29 +880,29 @@ print(test_file_content)
 
 # %% [markdown]
 # ### Running Tests with pytest
-# 
+#
 # To run tests with pytest, use the command line:
-# 
+#
 # ```bash
 # # Run all tests
 # pytest
-# 
+#
 # # Run tests in a specific file
 # pytest tests/test_temperature.py
-# 
+#
 # # Run tests matching a pattern
 # pytest -k "freezing"
-# 
+#
 # # Run with verbose output
 # pytest -v
-# 
+#
 # # Run and show print statements
 # pytest -s
-# 
+#
 # # Run and stop at first failure
 # pytest -x
 # ```
-# 
+#
 # **Pytest output shows:**
 # - Number of tests run
 # - Which tests passed/failed
@@ -910,18 +911,18 @@ print(test_file_content)
 
 # %% [markdown]
 # ## Part 6: Test-Driven Development (TDD)
-# 
+#
 # ### The TDD Cycle: Red-Green-Refactor
-# 
+#
 # Test-Driven Development follows a simple cycle:
-# 
+#
 # 1. **Red**: Write a test that fails (because feature doesn't exist yet)
 # 2. **Green**: Write minimal code to make the test pass
 # 3. **Refactor**: Improve the code while keeping tests passing
 # 4. **Repeat**: Add next test
-# 
+#
 # ### TDD Example: Temperature Statistics
-# 
+#
 # Let's use TDD to build a function that calculates temperature statistics:
 
 # %%
@@ -997,68 +998,68 @@ except (AssertionError, NameError) as e:
 
 # %% [markdown]
 # ### Benefits of TDD
-# 
+#
 # Test-Driven Development might feel backward at first (write tests before code?!), but it has 
 # profound benefits:
-# 
+#
 # 1. **Clear requirements**: Tests define what the code should do before you write it—no ambiguity
 # 2. **Confidence**: You know your code works because you've tested every feature as you built it
 # 3. **Documentation**: Tests show how to use the code—they're executable examples
 # 4. **Design**: Writing tests first leads to better code design—testable code is usually good code
 # 5. **Regression prevention**: Tests catch bugs when changing code—refactor fearlessly
-# 
+#
 # **When to use TDD**: TDD is especially valuable for algorithmic code, data processing, or any logic-
 # heavy code where correctness is critical. For exploratory research, you might start without TDD 
 # and add tests as your code stabilizes. The key is to eventually have tests, even if you don't 
 # write them first.
-# 
+#
 # **Common misconception**: TDD doesn't mean "write ALL tests first, then ALL code." It means work 
 # in small cycles: one test, just enough code to pass it, repeat. Each cycle takes minutes, not days.
 
 # %% [markdown]
 # ## Part 7: Test Coverage
-# 
+#
 # ### What is Test Coverage?
-# 
+#
 # **Test coverage** measures which lines of code are executed during testing. It's a metric that 
 # tells you how much of your code is actually being tested. Think of it as a quality check for your 
 # test suite.
-# 
+#
 # - **100% coverage**: Every line is tested—but this doesn't mean bug-free!
 # - **<100% coverage**: Some code is untested—potential bugs hiding there
-# 
+#
 # **Important caveat**: High coverage doesn't guarantee correctness. You can have 100% coverage 
 # with terrible tests that don't assert anything meaningful. Coverage tells you what's tested, not 
 # whether it's tested well. It's a necessary but not sufficient condition for quality.
-# 
+#
 # **Coverage targets**: Aim for 80-90% coverage for research software. 100% is often not worth the 
 # effort—some code (like logging or error messages) is hard to test meaningfully. Focus on testing 
 # your core scientific logic comprehensively.
-# 
+#
 # ### Measuring Coverage with pytest-cov
-# 
+#
 # Use `pytest-cov` to measure coverage. This plugin integrates with pytest to track which lines 
 # run during tests and generates reports showing untested code.
-# 
+#
 # ```bash
 # # Run tests with coverage report
 # pytest --cov=src tests/
-# 
+#
 # # Generate HTML coverage report (easier to read, highlights untested lines)
 # pytest --cov=src --cov-report=html tests/
-# 
+#
 # # Set minimum coverage threshold (fails if below 80%)
 # pytest --cov=src --cov-fail-under=80 tests/
 # ```
-# 
+#
 # **Reading coverage reports**: The HTML report shows your code with green (tested) and red (untested) 
 # highlighting. Look for red sections—those are your blind spots. Prioritize testing branches (if/else), 
 # loops, and error handling paths.
-# 
+#
 # **Coverage in CI/CD**: Add coverage checks to your CI pipeline with `--cov-fail-under`. This ensures 
 # coverage doesn't drop over time. Many projects display a coverage badge in their README showing 
 # their coverage percentage—it's a quality signal to users.
-# 
+#
 # ### Coverage Example
 
 # %%
@@ -1147,9 +1148,9 @@ test_classify_temperature_comprehensive()
 
 # %% [markdown]
 # ### Coverage Reports
-# 
+#
 # A typical coverage report looks like:
-# 
+#
 # ```
 # Name                      Stmts   Miss  Cover
 # ---------------------------------------------
@@ -1159,7 +1160,7 @@ test_classify_temperature_comprehensive()
 # ---------------------------------------------
 # TOTAL                       105     19    82%
 # ```
-# 
+#
 # **What to aim for:**
 # - **Critical functions**: 100% coverage
 # - **Overall project**: 80%+ coverage
@@ -1168,9 +1169,9 @@ test_classify_temperature_comprehensive()
 
 # %% [markdown]
 # ## Part 8: Defensive Programming with Assertions
-# 
+#
 # ### Using Assertions in Production Code
-# 
+#
 # Assertions aren't just for tests - use them in your code to catch bugs early!
 
 # %%
@@ -1223,19 +1224,19 @@ except AssertionError as e:
 
 # %% [markdown]
 # ### Preconditions, Postconditions, and Invariants
-# 
+#
 # **Preconditions**: What must be true before function runs
 # ```python
 # assert temperature >= -273.15, "Temperature below absolute zero"
 # assert len(data) > 0, "Data list cannot be empty"
 # ```
-# 
+#
 # **Postconditions**: What must be true after function runs
 # ```python
 # assert result >= 0, "Result must be non-negative"
 # assert len(output) == len(input), "Output size must match input"
 # ```
-# 
+#
 # **Invariants**: What must remain true during execution
 # ```python
 # for item in data:
@@ -1244,7 +1245,7 @@ except AssertionError as e:
 
 # %% [markdown]
 # ## Part 9: Complete Example - From Bug to Full Coverage
-# 
+#
 # ### The Complete Fixed Temperature Module
 
 # %%
@@ -1385,9 +1386,9 @@ print("\n🎉 All tests passed! Code is fully tested and bug-free!")
 
 # %% [markdown]
 # ## Summary: What We Learned
-# 
+#
 # ### The Journey
-# 
+#
 # 1. **Started with disaster**: Untested code with a critical bug
 # 2. **Learned about testing**: Why it matters, especially in research
 # 3. **Wrote our first tests**: Using pytest and assertions
@@ -1396,9 +1397,9 @@ print("\n🎉 All tests passed! Code is fully tested and bug-free!")
 # 6. **Measured coverage**: Ensured all code paths tested
 # 7. **Added defensive programming**: Assertions in production code
 # 8. **Built comprehensive suite**: Full test coverage of corrected code
-# 
+#
 # ### Key Takeaways
-# 
+#
 # ✅ **Always test research software** - your career may depend on it  
 # ✅ **Write tests early** - before bugs cause problems  
 # ✅ **Use pytest** - it makes testing easy and automatic  
@@ -1406,73 +1407,73 @@ print("\n🎉 All tests passed! Code is fully tested and bug-free!")
 # ✅ **Use assertions** - catch bugs at the source  
 # ✅ **TDD works** - write tests first for better design  
 # ✅ **Tests are documentation** - they show how code should work  
-# 
+#
 # ### Testing Best Practices for Research
-# 
+#
 # 1. **Test scientific correctness**: Verify formulas and algorithms
 # 2. **Test edge cases**: Boundary conditions, empty inputs, extreme values
 # 3. **Test with known results**: Use published data or hand-calculated examples
 # 4. **Keep tests simple**: One assertion per test when possible
 # 5. **Run tests often**: Before committing, after changes, in CI
 # 6. **Don't skip testing**: Even "simple" functions can have bugs
-# 
+#
 # ### Testing in Other Programming Languages
-# 
+#
 # While this lecture focused on Python and pytest, **every modern programming language has
 # testing frameworks**. Here's what to look for in other languages you might use for research:
-# 
+#
 # **C/C++**
 # - **Popular frameworks**: Google Test (gtest), Catch2, CppUnit, Boost.Test
 # - **What to look for**: Unit testing with assertions, test fixtures, mocking
 # - **Example**: `ASSERT_EQ(celsius_to_fahrenheit(0), 32);`
 # - **Note**: More manual setup than Python, but same concepts apply
-# 
+#
 # **Java**
 # - **Popular frameworks**: JUnit (most common), TestNG, AssertJ
 # - **What to look for**: Annotations like `@Test`, assertions, test runners
 # - **Example**: `@Test public void testCelsiusToFahrenheit() { assertEquals(32, celsiusToFahrenheit(0)); }`
 # - **Note**: Integrated into most Java IDEs
-# 
+#
 # **Julia**
 # - **Built-in testing**: `Test` standard library (no external install needed)
 # - **What to look for**: `@test` macro, `@testset` for grouping
 # - **Example**: `@test celsius_to_fahrenheit(0) ≈ 32`
 # - **Note**: Very Pythonic feel, easy to get started
-# 
+#
 # **R**
 # - **Popular frameworks**: testthat (most popular), RUnit, tinytest
 # - **What to look for**: `test_that()` function, expectations like `expect_equal()`
 # - **Example**: `test_that("conversion works", { expect_equal(celsius_to_fahrenheit(0), 32) })`
 # - **Note**: Well integrated with RStudio and package development
-# 
+#
 # **JavaScript/TypeScript**
 # - **Popular frameworks**: Jest, Mocha, Jasmine, Vitest
 # - **What to look for**: `describe()` and `it()` blocks, assertions with `expect()`
 # - **Example**: `expect(celsiusToFahrenheit(0)).toBe(32);`
 # - **Note**: Essential for web-based research tools
-# 
+#
 # **Fortran**
 # - **Popular frameworks**: pFUnit, FRUIT, Funit
 # - **What to look for**: Test suites, assertions, fixtures
 # - **Example**: `@assertEqual(32.0, celsius_to_fahrenheit(0.0))`
 # - **Note**: Yes, even Fortran has modern testing frameworks!
-# 
+#
 # **MATLAB**
 # - **Built-in testing**: Unit Testing Framework (no toolbox required in modern versions)
 # - **What to look for**: `matlab.unittest.TestCase`, `verifyEqual()`
 # - **Example**: `testCase.verifyEqual(celsiusToFahrenheit(0), 32)`
 # - **Note**: Integrated with MATLAB IDE
-# 
+#
 # **Rust**
 # - **Built-in testing**: Part of the language itself
 # - **What to look for**: `#[test]` attribute, `assert_eq!()` macro
 # - **Example**: `#[test] fn test_conversion() { assert_eq!(celsius_to_fahrenheit(0.0), 32.0); }`
 # - **Note**: Testing is a first-class citizen in Rust
-# 
+#
 # **Common Patterns Across All Languages**
-# 
+#
 # No matter what language you use, look for these features:
-# 
+#
 # 1. **Assertion functions**: Check expected vs. actual values
 # 2. **Test organization**: Group related tests together
 # 3. **Test discovery**: Automatic finding and running of tests
@@ -1480,87 +1481,87 @@ print("\n🎉 All tests passed! Code is fully tested and bug-free!")
 # 5. **Mocking**: Replace real objects with test doubles
 # 6. **Coverage tools**: Measure which code is tested
 # 7. **CI integration**: Run tests automatically in pipelines
-# 
+#
 # **Key Takeaway**: The language changes, but **the principles remain the same**:
 # - Write tests for your code
 # - Test edge cases and scientific correctness
 # - Run tests frequently
 # - Automate testing in CI
-# 
+#
 # Don't let an unfamiliar language stop you from testing. Every language has tools—find them, learn them, use them!
 
 # %% [markdown]
 # ## Acknowledgements and References
-# 
+#
 # This lecture draws on established testing practices and real-world lessons from research software:
-# 
+#
 # ### Primary Sources
-# 
+#
 # - **Research Software Engineering with Python** by The Alan Turing Institute  
 #   <https://alan-turing-institute.github.io/rse-course/html/>  
 #   Testing philosophy, pytest examples, and test-driven development approaches adapted from this course.
-# 
+#
 # - **Research Software Engineering with Python** by Damien Irving, Kate Hertweck,
 #   Luke Johnston, Joel Ostblom, Charlotte Wickham, and Greg Wilson (2022)
 #   <https://third-bit.com/py-rse/>
 #   Chapter on "Testing Software" provided foundational concepts for defensive
 #   programming and test organization.
-# 
+#
 # ### Testing Framework Documentation
-# 
+#
 # - **pytest Documentation**  
 #   <https://docs.pytest.org/>  
 #   Official pytest framework documentation for test writing, fixtures, and coverage.
 #   - Getting Started: <https://docs.pytest.org/en/stable/getting-started.html>
 #   - Fixtures: <https://docs.pytest.org/en/stable/fixture.html>
 #   - Parametrize: <https://docs.pytest.org/en/stable/parametrize.html>
-# 
+#
 # - **pytest-cov Plugin**  
 #   <https://pytest-cov.readthedocs.io/>  
 #   For test coverage measurement and reporting.
-# 
+#
 # ### Inspirational Sources
-# 
+#
 # The "cautionary tale" in this lecture is inspired by real research software failures documented in:
 # - Merali, Z. (2010). "Computational science: Error, why scientific programming does not compute". Nature 467, 775-777.
 # - Soergel, D.A. (2015). "Rampant software errors may undermine scientific results". F1000Research.
-# 
+#
 # Notable real incidents that motivated our approach:
 # - Geoffrey Chang protein structure retractions (2006)
 # - Reinhart-Rogoff Excel error in economics (2013)
 # - Mars Climate Orbiter loss due to unit conversion (1999)
-# 
+#
 # ### Additional References
-# 
+#
 # - **Software Carpentry: Testing**  
 #   Testing principles and practices for scientific computing.
-# 
+#
 # - **Python Documentation: unittest**  
 #   <https://docs.python.org/3/library/unittest.html>  
 #   Python's built-in testing framework (alternative to pytest).
-# 
+#
 # ### Notes
-# 
+#
 # While inspired by real research software failures, the specific "temperature conversion disaster" story
 # is a composite fictional narrative created for pedagogical purposes. All code examples and tests
 # were developed specifically for this lecture to illustrate testing concepts in research contexts.
 
 # %% [markdown]
 # ### Next Steps
-# 
+#
 # In **Lecture 6**, we'll learn how to:
 # - Automate testing with Continuous Integration (CI)
 # - Use GitHub Actions to run tests automatically
 # - Set up testing workflows in GitLab
 # - Build reproducible analysis pipelines
 # - Ensure every code change is tested before merging
-# 
+#
 # ### Remember the Cautionary Tale
-# 
+#
 # The climate research team's disaster could have been prevented with:
 # - A single test comparing to known conversion values
 # - 5 minutes writing tests vs. 6 months dealing with retraction
 # - Test coverage showing untested functions
 # - Peer review of both code AND tests
-# 
+#
 # **Don't let your research become a cautionary tale - test your code!**

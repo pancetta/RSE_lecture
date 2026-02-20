@@ -1,11 +1,12 @@
 # ---
 # jupyter:
 #   jupytext:
+#     formats: ipynb,py:percent
 #     text_representation:
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.14.0
+#       jupytext_version: 1.19.1
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
@@ -14,12 +15,12 @@
 
 # %% [markdown]
 # # Lecture 4: Python Project Structure and Scientific Libraries
-# 
-# 
+#
+#
 # ## Quick Access
-# 
+#
 # Scan the QR codes below for quick access to course materials:
-# 
+#
 # <div style="display: flex; gap: 20px; align-items: flex-start;">
 #   <div style="text-align: center;">
 #     <img src="../course_qr_code.png" alt="Course Website QR Code" width="150"/>
@@ -30,25 +31,25 @@
 #     <p><strong>This Lecture</strong></p>
 #   </div>
 # </div>
-# 
+#
 # ## Overview
 # This lecture teaches you how to organize research code into professional projects and
 # introduces essential scientific computing libraries. You'll learn best practices for
 # structuring Python projects and gain hands-on experience with NumPy and Matplotlib,
 # the foundational tools for numerical computing and visualization in Python.
-# 
+#
 # **Duration**: ~90 minutes
-# 
+#
 # ## Prerequisites
-# 
+#
 # Before starting this lecture, you should be familiar with:
 # - Python fundamentals: functions, classes, and modules (covered in Lectures 2-3)
 # - Error handling with try/except blocks
 # - File I/O operations
 # - Basic understanding of package imports
-# 
+#
 # This lecture assumes you're comfortable writing Python functions and organizing code into files.
-# 
+#
 # ## Learning Objectives
 # - Organize research code into proper Python packages and modules
 # - Understand and use virtual environments
@@ -58,30 +59,30 @@
 
 # %% [markdown]
 # ## Part 1: Python Project Structure (30 minutes)
-# 
+#
 # ### Why Project Structure Matters
-# 
+#
 # As your research code grows beyond a single script, proper organization becomes critical. What 
 # starts as a simple analysis script often evolves into hundreds or thousands of lines of code. 
 # Without proper structure, this quickly becomes unmaintainable. Good project structure is like 
 # good lab organization—everything has its place, making it easy to find what you need and add 
 # new components.
-# 
+#
 # - **Maintainability**: Easy to find and update code even months later
 # - **Reusability**: Share code across projects and with collaborators without copying files
 # - **Reproducibility**: Others (including future you!) can run and verify your work
 # - **Collaboration**: Team members can navigate and contribute without getting lost
 # - **Testing**: Easier to write and run tests when code is modular
 # - **Distribution**: Package your code for others to install with `pip install`
-# 
+#
 # **Research context**: Many research projects fail to be reproducible not because the science is 
 # wrong, but because the code is poorly organized and documented. Proper structure from the start 
 # prevents this problem.
-# 
+#
 # ### Anatomy of a Research Python Project
-# 
+#
 # A typical research project structure:
-# 
+#
 # ```
 # my_research_project/
 # ├── README.md              # Project description and usage
@@ -111,18 +112,18 @@
 
 # %% [markdown]
 # ### Understanding Modules and Packages
-# 
+#
 # **Module**: A single Python file (`.py`) containing functions, classes, and variables. Think of it 
 # as a toolbox—a collection of related tools (functions) that solve similar problems.
-# 
+#
 # **Package**: A directory containing multiple modules and an `__init__.py` file. Think of it as a 
 # workshop with multiple toolboxes—a larger organizational unit that groups related modules together.
-# 
+#
 # **Why this matters**: When you start out, a single file might be enough. But as your project grows, 
 # splitting code into modules makes each file manageable and lets you import only what you need. 
 # Packages let you organize modules into logical groups (e.g., one package for data processing, 
 # another for visualization).
-# 
+#
 # #### Example Module Structure
 
 # %%
@@ -178,21 +179,21 @@ for key, value in stats.items():
 
 # %% [markdown]
 # ### The __init__.py File
-# 
+#
 # The `__init__.py` file serves several purposes. Historically, it was required to make Python 
 # recognize a directory as a package (Python 3.3+ relaxed this requirement, but it's still best 
 # practice to include one).
-# 
+#
 # 1. **Marks a directory as a Python package**: Without it, older Python versions won't recognize 
 #    the directory as importable
 # 2. **Controls what gets imported** when someone does `import package_name`: You decide what's 
 #    exposed vs. internal
 # 3. **Can contain initialization code** for the package: Run setup code when the package is first 
 #    imported
-# 
+#
 # **Common mistake**: People often leave `__init__.py` empty and wonder why their imports don't work 
 # as expected. Understanding the patterns below helps you choose the right approach for your project.
-# 
+#
 # #### Different __init__.py Patterns
 
 # %%
@@ -226,30 +227,30 @@ print("__init__.py patterns demonstrated above")
 # - **Pattern 2 (expose functions)**: Most research packages—makes the API clean and discoverable
 # - **Pattern 3 (with __all__)**: Libraries you're distributing to others—gives fine control over the 
 #   public API
-# 
+#
 # **Pro tip**: The dot in `from .module` means "from the current package". This is called a relative 
 # import and prevents name collisions if your package name matches a standard library module.
 
 # %% [markdown]
 # ### Design Principles for Maintainable Code
-# 
+#
 # Now that we understand how to structure projects and organize modules, let's discuss the **design 
 # principles** that make code maintainable, reusable, and easy to understand. Good structure is not 
 # just about folders and files—it's about how you design your code within those files.
-# 
+#
 # These principles come from decades of software engineering experience and apply especially well to 
 # research software, where code often lives for years and is modified by multiple people (including 
 # future you!).
-# 
+#
 # #### Principle 1: DRY - Don't Repeat Yourself
-# 
+#
 # **The problem**: Copy-pasting code creates maintenance nightmares. When you find a bug or need to 
 # change behavior, you must remember to update all copies. Miss one, and you have inconsistent 
 # behavior that's hard to track down.
-# 
+#
 # **The solution**: Write code once, reuse it everywhere. If you find yourself copying and pasting, 
 # extract that code into a function or class.
-# 
+#
 # **Bad example - Repetitive code:**
 
 # %%
@@ -310,22 +311,22 @@ print(f"Humidity: {humidity_stats}")
 # - **Update algorithms easily**: Improve your method without hunting for all copies
 # - **Consistency**: The same input always produces the same output
 # - **Testing**: Test the logic once instead of testing every copy
-# 
+#
 # **Warning**: Don't take DRY to extremes. If code *looks* similar but has different *purposes*, 
 # it's okay to keep it separate. DRY applies to logic and behavior, not just appearance.
-# 
+#
 # #### Principle 2: Single Responsibility Principle (SRP)
-# 
+#
 # **The idea**: Each function or module should do **one thing** and do it well. If you can't explain 
 # what a function does in one simple sentence, it's probably doing too much.
-# 
+#
 # **The benefit**: When each component has one job, it's easier to:
 # - Understand what the code does
 # - Find where bugs are
 # - Test each piece independently
 # - Reuse code in different contexts
 # - Modify behavior without breaking unrelated functionality
-# 
+#
 # **Bad example - Too many responsibilities:**
 
 # %%
@@ -407,22 +408,22 @@ print("Each function has ONE clear job! ✓")
 # - Easy to swap implementations (e.g., use pandas instead of manual parsing)
 # - Clear what each function does just from its name
 # - Bugs are easier to locate (if parsing fails, check `parse_temperature_column`)
-# 
+#
 # #### Principle 3: Separation of Concerns
-# 
+#
 # **The idea**: Different aspects of your program should be in different places. Don't mix data 
 # loading with analysis logic, don't mix visualization with calculations, don't mix business logic 
 # with file I/O.
-# 
+#
 # **Why it matters**: Research projects often evolve from a single analysis script to a complex 
 # pipeline. If concerns are separated from the start, you can easily:
 # - Switch data sources (file → database → API)
 # - Change output format (console → file → web)
 # - Reuse analysis logic in different projects
 # - Test each layer independently
-# 
+#
 # **Project structure enforces separation:**
-# 
+#
 # ```
 # src/
 # ├── data_loading.py      # Concern: Getting data into memory
@@ -431,7 +432,7 @@ print("Each function has ONE clear job! ✓")
 # ├── visualization.py     # Concern: Creating plots
 # └── export.py            # Concern: Saving results
 # ```
-# 
+#
 # **Example in practice:**
 
 # %%
@@ -472,26 +473,26 @@ print(report)
 # Later, you get a grant to analyze 10 years of satellite data from a NASA database. If your analysis 
 # logic is mixed with CSV parsing, you'll have to rewrite everything. If concerns are separated, you 
 # just write a new `load_experiment_data()` function and reuse all the analysis code!
-# 
+#
 # #### Key Takeaways: Applying Design Principles
-# 
+#
 # These principles work together:
-# 
+#
 # 1. **DRY** prevents code duplication → easier maintenance
 # 2. **Single Responsibility** keeps functions focused → easier testing and reuse  
 # 3. **Separation of Concerns** organizes code by purpose → easier evolution
-# 
+#
 # **Research software benefits**:
 # - **Reproduce results reliably**: Well-designed code has fewer bugs
 # - **Collaborate effectively**: Team members understand clear, focused code
 # - **Publish with confidence**: Reviewers can verify well-structured code
 # - **Reuse in future projects**: Good design makes code portable
 # - **Evolve as requirements change**: Separated concerns adapt easily
-# 
+#
 # **Start simple**: You don't need perfect design on day one. But as your research code grows beyond 
 # a few hundred lines, applying these principles will save you countless hours of debugging and 
 # refactoring. Future you will thank present you!
-# 
+#
 # **Further reading** on design principles:
 # - Robert C. Martin, *Clean Code: A Handbook of Agile Software Craftsmanship* (2008)
 # - Martin Fowler, *Refactoring: Improving the Design of Existing Code* (2018)
@@ -499,19 +500,19 @@ print(report)
 
 # %% [markdown]
 # ### Managing Dependencies: requirements.txt
-# 
+#
 # The `requirements.txt` file lists all Python packages your project needs. This is crucial for 
 # reproducibility—anyone who wants to run your code can install exactly the right dependencies 
 # with a single command. Think of it as a recipe: just as a cooking recipe lists ingredients, 
 # `requirements.txt` lists your code's "ingredients."
-# 
+#
 # **Why version pinning matters**: The line `numpy>=1.20.0` means "numpy version 1.20.0 or newer." 
 # This gives flexibility for minor updates while ensuring a minimum version with features you need. 
 # For maximum reproducibility, you can pin exact versions: `numpy==1.20.3`. The tradeoff is between 
 # flexibility (allowing updates) and reproducibility (exact versions).
-# 
+#
 # #### Creating requirements.txt
-# 
+#
 # ```bash
 # # Method 1: Manually create
 # # requirements.txt
@@ -519,34 +520,34 @@ print(report)
 # matplotlib>=3.3.0
 # pandas>=1.2.0
 # scipy>=1.6.0
-# 
+#
 # # Method 2: Generate from current environment
 # pip freeze > requirements.txt
-# 
+#
 # # Method 3: Use pipreqs to scan your code (better!)
 # pip install pipreqs
 # pipreqs /path/to/project
 # ```
-# 
+#
 # #### Installing from requirements.txt
-# 
+#
 # ```bash
 # pip install -r requirements.txt
 # ```
-# 
+#
 # #### Best Practices
-# 
+#
 # - **Pin versions** for reproducibility: `numpy==1.21.0`
 # - **Use minimum versions** for flexibility: `numpy>=1.20.0`
 # - **Separate dev dependencies**: Create `requirements-dev.txt` for testing tools
 
 # %% [markdown]
 # ### Conda Environment Files (environment.yml)
-# 
+#
 # For conda users, `environment.yml` is the equivalent of `requirements.txt`.
-# 
+#
 # #### Example environment.yml
-# 
+#
 # ```yaml
 # name: my_research_env
 # channels:
@@ -563,76 +564,76 @@ print(report)
 #   - pip:
 #     - some-pip-only-package
 # ```
-# 
+#
 # #### Using environment.yml
-# 
+#
 # ```bash
 # # Create environment from file
 # conda env create -f environment.yml
-# 
+#
 # # Activate the environment
 # conda activate my_research_env
-# 
+#
 # # Export your current environment
 # conda env export > environment.yml
-# 
+#
 # # Update environment from file
 # conda env update -f environment.yml
 # ```
 
 # %% [markdown]
 # ### Virtual Environments: Why and How
-# 
+#
 # **Virtual environments** isolate project dependencies, preventing conflicts. This is one of the 
 # most important practices for reproducible research software. Without virtual environments, you're 
 # installing all packages globally, and different projects can interfere with each other.
-# 
+#
 # #### Why Use Virtual Environments?
-# 
+#
 # 1. **Isolation**: Each project has its own dependencies—no interference between projects
 # 2. **Reproducibility**: Lock exact versions for your project, ensuring it works the same everywhere
 # 3. **No conflicts**: Project A can use NumPy 1.19, Project B can use 1.21—both work perfectly
 # 4. **Clean system**: Don't clutter global Python installation with dozens of packages
 # 5. **Easy cleanup**: Delete environment to remove all packages—no system-wide pollution
-# 
+#
 # **Real-world scenario**: Imagine you're working on two projects. One requires an older version of 
 # a library (because the newer version changed its API), while another needs the latest version. 
 # Without virtual environments, you're stuck—you can only have one version installed globally. With 
 # virtual environments, each project gets its own isolated set of packages.
-# 
+#
 # #### Creating Virtual Environments
-# 
+#
 # **Option 1: venv (built-in, Python 3.3+)**
-# 
+#
 # ```bash
 # # Create virtual environment
 # python -m venv myenv
-# 
+#
 # # Activate (Linux/Mac)
 # source myenv/bin/activate
-# 
+#
 # # Activate (Windows)
 # myenv\Scripts\activate
-# 
+#
 # # Install packages
 # pip install numpy matplotlib
-# 
+#
 # # Deactivate
 # deactivate
 # ```
-# 
+#
 # **Option 2: conda**
-# 
+#
 # ```bash
 # # Create environment with specific Python version
 # conda create -n myenv python=3.9
-# 
+#
 # # Activate
 # conda activate myenv
-# 
+#
 # # Install packages
 # conda install numpy matplotlib
-# 
+#
 # # Deactivate
 # conda deactivate
 # ```
@@ -662,14 +663,14 @@ check_virtual_env()
 
 # %% [markdown]
 # ### Setup.py Basics
-# 
+#
 # `setup.py` makes your project installable with `pip install .`
-# 
+#
 # #### Minimal setup.py
-# 
+#
 # ```python
 # from setuptools import setup, find_packages
-# 
+#
 # setup(
 #     name='my-research-project',
 #     version='0.1.0',
@@ -685,22 +686,22 @@ check_virtual_env()
 #     python_requires='>=3.7',
 # )
 # ```
-# 
+#
 # #### Installing Your Package
-# 
+#
 # ```bash
 # # Regular install
 # pip install .
-# 
+#
 # # Editable/development install (changes reflected immediately)
 # pip install -e .
-# 
+#
 # # Install with optional dependencies
 # pip install -e ".[dev]"  # if you defined dev extras
 # ```
-# 
+#
 # #### Why Use setup.py?
-# 
+#
 # - Import your code from anywhere: `from my_research_project import analysis`
 # - Share with others: `pip install git+https://github.com/user/repo.git`
 # - Publish to PyPI: `pip install my-research-project`
@@ -721,7 +722,7 @@ print("Your package becomes a proper Python package")
 
 # %% [markdown]
 # ### Best Practices Summary: Project Structure
-# 
+#
 # 1. **Use a clear directory structure** - Separate source, tests, data, notebooks
 # 2. **Always use virtual environments** - One per project
 # 3. **Document dependencies** - requirements.txt or environment.yml
@@ -751,25 +752,25 @@ print("Your package becomes a proper Python package")
 # %% [markdown]
 # ---
 # ## Part 2: Working with NumPy (30 minutes)
-# 
+#
 # ### Why NumPy for Scientific Computing?
-# 
+#
 # NumPy (Numerical Python) is the foundation of scientific computing in Python. While Python lists 
 # are versatile, they're too slow for serious numerical work. NumPy arrays are implemented in C, 
 # making them much faster. Think of Python lists as a filing cabinet (flexible but slow to search), 
 # while NumPy arrays are like a specialized database (optimized for specific operations).
-# 
+#
 # **Advantages:**
 # - **Speed**: 10-100x faster than pure Python lists for numerical operations
 # - **Memory efficient**: Compact storage of numerical data (no Python object overhead per element)
 # - **Vectorization**: Write clean code without loops—let NumPy handle the iteration in C
 # - **Integration**: Works seamlessly with SciPy, Pandas, Matplotlib, and most scientific libraries
 # - **Universal**: The standard in research, industry, and education—everyone knows NumPy
-# 
+#
 # **When to use NumPy vs. lists**:
 # - Use **lists** for: Small collections, mixed types, operations requiring Python flexibility
 # - Use **NumPy** for: Large numerical datasets, mathematical operations, anything performance-critical
-# 
+#
 # **Use NumPy for:**
 # - Numerical arrays and matrices
 # - Mathematical operations on arrays
@@ -806,7 +807,7 @@ print(f"NumPy is {time_python/time_numpy:.1f}x faster!")
 
 # %% [markdown]
 # ### Creating NumPy Arrays
-# 
+#
 # NumPy's fundamental data structure is the **ndarray** (n-dimensional array).
 
 # %%
@@ -867,7 +868,7 @@ print(f"Total bytes: {data.nbytes} bytes")  # Total memory
 
 # %% [markdown]
 # ### Array Operations: Vectorization
-# 
+#
 # NumPy's power comes from **vectorized operations** - operations on entire arrays
 # without explicit loops.
 
@@ -903,7 +904,7 @@ print(f"Power: {data1 ** 2}")
 
 # %% [markdown]
 # ### Indexing and Slicing
-# 
+#
 # NumPy arrays support powerful indexing and slicing operations.
 
 # %%
@@ -932,7 +933,7 @@ print(f"Selected indices {indices}: {measurements[indices]}")
 
 # %% [markdown]
 # ### Boolean Indexing (Filtering)
-# 
+#
 # One of NumPy's most powerful features: filter arrays using conditions.
 
 # %%
@@ -970,7 +971,7 @@ print(f"Number of high results: {n_high}")
 
 # %% [markdown]
 # ### Statistical Operations
-# 
+#
 # NumPy provides comprehensive statistical functions.
 
 # %%
@@ -1019,7 +1020,7 @@ print(f"Quantiles (25%, 50%, 75%): {np.quantile(data, [0.25, 0.5, 0.75])}")
 
 # %% [markdown]
 # ### 2D Arrays and Multi-dimensional Operations
-# 
+#
 # NumPy excels at multi-dimensional arrays (matrices and tensors).
 
 # %%
@@ -1155,7 +1156,7 @@ print(f"Days with average > {threshold}°C: {hot_days}")
 
 # %% [markdown]
 # ### NumPy Best Practices
-# 
+#
 # 1. **Use vectorization** - Avoid Python loops, use NumPy operations
 # 2. **Preallocate arrays** - Use `np.zeros()` or `np.empty()` instead of appending
 # 3. **Use appropriate dtypes** - `float32` vs `float64`, `int32` vs `int64`
@@ -1184,17 +1185,17 @@ print(f"Days with average > {threshold}°C: {hot_days}")
 # %% [markdown]
 # ---
 # ## Part 3: Visualization with Matplotlib (30 minutes)
-# 
+#
 # ### Why Visualization Matters in Research
-# 
+#
 # Visualization is crucial for:
-# 
+#
 # - **Exploration**: Understand your data's structure and patterns
 # - **Communication**: Present findings to colleagues and reviewers
 # - **Validation**: Spot errors, outliers, and unexpected behavior
 # - **Publication**: High-quality figures for papers and presentations
 # - **Interpretation**: Make complex data accessible
-# 
+#
 # Matplotlib is Python's foundational plotting library, used by researchers worldwide.
 
 # %%
@@ -1209,7 +1210,7 @@ print("Matplotlib imported and configured!")
 
 # %% [markdown]
 # ### Basic Line Plots
-# 
+#
 # Line plots are ideal for showing trends over time or continuous variables.
 
 # %%
@@ -1253,7 +1254,7 @@ plt.show()
 
 # %% [markdown]
 # ### Scatter Plots
-# 
+#
 # Scatter plots show relationships between two variables without implying order.
 
 # %%
@@ -1310,7 +1311,7 @@ plt.show()
 
 # %% [markdown]
 # ### Subplots: Multiple Plots in One Figure
-# 
+#
 # Subplots allow you to compare multiple datasets side by side.
 
 # %%
@@ -1471,7 +1472,7 @@ plt.show()
 
 # %% [markdown]
 # ### Saving Figures
-# 
+#
 # Save your figures in various formats for different purposes.
 
 # %%
@@ -1506,35 +1507,35 @@ plt.show()
 
 # %% [markdown]
 # ### Best Practices for Publication-Quality Figures
-# 
+#
 # **1. Resolution and Format**
 # - Use **300+ DPI** for raster images (PNG, JPG)
 # - Prefer **vector formats** (PDF, SVG, EPS) for publications
 # - PNG for web/presentations, PDF/SVG for papers
-# 
+#
 # **2. Fonts and Labels**
 # - Use **clear, readable fonts** (11-14pt)
 # - **Bold axis labels and titles**
 # - Include **units** in axis labels
 # - Use **descriptive titles**
-# 
+#
 # **3. Colors**
 # - Use **colorblind-friendly palettes**
 # - Consider **grayscale printing**
 # - Avoid too many colors (3-5 max)
 # - Use **consistent colors** across figures
-# 
+#
 # **4. Data Presentation**
 # - Always include **error bars** when appropriate
 # - Add **legends** for multiple series
 # - Use **grid lines** sparingly (subtle, alpha < 0.5)
 # - Show **raw data points** when possible
-# 
+#
 # **5. Size and Layout**
 # - Match **journal column width** (typically 3.5" or 7" wide)
 # - Use **aspect ratios** that fit the data (not always square)
 # - `tight_layout()` or `bbox_inches='tight'` to avoid cropping
-# 
+#
 # **6. Accessibility**
 # - Use **markers** and **line styles**, not just colors
 # - Add **annotations** for key features
@@ -1663,26 +1664,26 @@ print(f"\nOptimal pH: {max(mean_activities, key=mean_activities.get)}")
 # %% [markdown]
 # ---
 # ## Summary and Key Takeaways
-# 
+#
 # ### Part 1: Python Project Structure
-# 
+#
 # ✓ **Organization matters** - Use packages, modules, and clear directory structure  
 # ✓ **Virtual environments** - Isolate dependencies per project  
 # ✓ **Document dependencies** - requirements.txt or environment.yml  
 # ✓ **Make it a package** - Use __init__.py and setup.py for reusable code  
 # ✓ **Version control** - .gitignore data files, track code  
-# 
+#
 # ### Part 2: NumPy for Scientific Computing
-# 
+#
 # ✓ **Speed and efficiency** - 10-100x faster than Python lists  
 # ✓ **Array creation** - np.array(), np.arange(), np.linspace(), np.zeros(), np.ones()  
 # ✓ **Vectorization** - Operations on entire arrays, no loops  
 # ✓ **Boolean indexing** - Elegant filtering with conditions  
 # ✓ **Statistics** - mean(), std(), min(), max(), median(), percentile()  
 # ✓ **Multi-dimensional** - Powerful 2D arrays and matrix operations  
-# 
+#
 # ### Part 3: Matplotlib for Visualization
-# 
+#
 # ✓ **Many plot types** - Line, scatter, bar, histogram, heatmap, etc.  
 # ✓ **Customization** - Colors, markers, labels, titles, legends  
 # ✓ **Subplots** - Multiple plots in one figure  
@@ -1709,7 +1710,7 @@ print(f"\nOptimal pH: {max(mean_activities, key=mean_activities.get)}")
 
 # %% [markdown]
 # ### What's Next?
-# 
+#
 # In **Lecture 5**, we'll explore testing research software. You'll learn:
 # - Why testing is critical for research software reliability
 # - Writing unit tests using pytest
@@ -1717,28 +1718,28 @@ print(f"\nOptimal pH: {max(mean_activities, key=mean_activities.get)}")
 # - Measuring test coverage
 # - Applying test-driven development (TDD) principles
 # - Building confidence in research results through comprehensive testing
-# 
+#
 # Now that you can organize code into proper projects and use scientific libraries, the next
 # step is ensuring your code is correct and reliable through systematic testing. Good tests
 # prevent research disasters and give you confidence in your results.
-# 
+#
 # **Ready to continue? Move on to Lecture 5: Testing Research Software!**
 
 # %% [markdown]
 # ## Additional Resources
-# 
+#
 # ### Documentation
 # - [NumPy Documentation](https://numpy.org/doc/)
 # - [NumPy Tutorial](https://numpy.org/doc/stable/user/quickstart.html)
 # - [Matplotlib Documentation](https://matplotlib.org/)
 # - [Matplotlib Gallery](https://matplotlib.org/stable/gallery/index.html)
 # - [Python Packaging Guide](https://packaging.python.org/)
-# 
+#
 # ### Books
 # - "Python for Data Analysis" by Wes McKinney
 # - "Effective Python" by Brett Slatkin
 # - "Research Software Engineering with Python" (online book)
-# 
+#
 # ### Tutorials
 # - [NumPy Tutorial on SciPy Lectures](http://scipy-lectures.org/intro/numpy/)
 # - [Matplotlib Tutorial](https://matplotlib.org/stable/tutorials/index.html)
@@ -1746,48 +1747,48 @@ print(f"\nOptimal pH: {max(mean_activities, key=mean_activities.get)}")
 
 # %% [markdown]
 # ## Acknowledgements and References
-# 
+#
 # This lecture draws from established best practices in scientific Python computing:
-# 
+#
 # ### Primary Sources
-# 
+#
 # - **Research Software Engineering with Python** by The Alan Turing Institute  
 #   <https://alan-turing-institute.github.io/rse-course/html/>  
 #   Project structure patterns, NumPy usage examples, and visualization best practices adapted from this course.
-# 
+#
 # - **Research Software Engineering with Python** by Damien Irving, Kate Hertweck,
 #   Luke Johnston, Joel Ostblom, Charlotte Wickham, and Greg Wilson (2022)
 #   <https://third-bit.com/py-rse/>
 #   Chapter on "Creating Packages" and "Programming Style" informed our project
 #   structure guidance.
-# 
+#
 # ### Library Documentation
-# 
+#
 # - **NumPy Documentation**  
 #   <https://numpy.org/doc/>  
 #   Official NumPy reference for array operations, mathematical functions, and performance tips.
 #   - NumPy Quickstart: <https://numpy.org/doc/stable/user/quickstart.html>
 #   - Array Creation: <https://numpy.org/doc/stable/user/basics.creation.html>
-# 
+#
 # - **Matplotlib Documentation**  
 #   <https://matplotlib.org/stable/>  
 #   Official Matplotlib reference for plotting functions and customization.
 #   - Tutorials: <https://matplotlib.org/stable/tutorials/index.html>
 #   - Gallery: <https://matplotlib.org/stable/gallery/index.html>
-# 
+#
 # - **Python Packaging Guide**  
 #   <https://packaging.python.org/>  
 #   Official Python packaging documentation for project structure and distribution.
-# 
+#
 # ### Additional References
-# 
+#
 # - **NumPy Paper**: Harris, C.R., Millman, K.J., van der Walt, S.J. et al.
 #   (2020). "Array programming with NumPy". Nature 585, 357–362.
 # - **Matplotlib Paper**: Hunter, J. D. (2007). "Matplotlib: A 2D graphics
 #   environment". Computing in Science & Engineering, 9(3), 90-95.
-# 
+#
 # ### Notes
-# 
+#
 # All examples and exercises have been developed specifically for research software engineering education.
 # NumPy and Matplotlib code follows official documentation and community best practices. Project structure
 # recommendations synthesize patterns from multiple sources in the scientific Python ecosystem.

@@ -1,11 +1,12 @@
 # ---
 # jupyter:
 #   jupytext:
+#     formats: ipynb,py:percent
 #     text_representation:
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.14.0
+#       jupytext_version: 1.19.1
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
@@ -14,12 +15,12 @@
 
 # %% [markdown]
 # # Lecture 3: Python Fundamentals and Advanced Concepts
-# 
-# 
+#
+#
 # ## Quick Access
-# 
+#
 # Scan the QR codes below for quick access to course materials:
-# 
+#
 # <div style="display: flex; gap: 20px; align-items: flex-start;">
 #   <div style="text-align: center;">
 #     <img src="../course_qr_code.png" alt="Course Website QR Code" width="150"/>
@@ -30,24 +31,24 @@
 #     <p><strong>This Lecture</strong></p>
 #   </div>
 # </div>
-# 
+#
 # ## Overview
 # This lecture deepens your Python knowledge by covering advanced function concepts,
 # error handling, file I/O, and functional programming techniques. These skills are
 # essential for writing robust, maintainable research software.
-# 
+#
 # **Duration**: ~90 minutes
-# 
+#
 # ## Prerequisites
-# 
+#
 # Before starting this lecture, you should be familiar with:
 # - Python basics: variables, data types, and operators (covered in Lecture 2)
 # - Basic function syntax and calling functions
 # - Lists, dictionaries, and control flow (if statements, loops)
 # - Git and GitHub basics for version control
-# 
+#
 # This lecture builds directly on the Python fundamentals introduced in Lecture 2.
-# 
+#
 # ## Learning Objectives
 # - Master advanced function concepts and documentation
 # - Handle errors gracefully with try/except blocks
@@ -58,7 +59,7 @@
 
 # %% [markdown]
 # ## Part 1: Advanced Functions
-# 
+#
 # ### Function Parameters and Arguments
 
 # %%
@@ -168,7 +169,7 @@ print("Experiment 3:", exp3)
 
 # %% [markdown]
 # ### Lambda Functions
-# 
+#
 # Lambda functions are small, anonymous functions useful for simple operations.
 
 # %%
@@ -207,7 +208,7 @@ for exp in sorted_by_name:
 
 # %% [markdown]
 # ### Documentation Best Practices
-# 
+#
 # Good docstrings follow standard formats like NumPy style.
 
 # %%
@@ -281,15 +282,15 @@ print(calculate_statistics.__doc__)
 
 # %% [markdown]
 # ## Part 2: Error Handling
-# 
+#
 # Errors are inevitable in programming—even experienced developers encounter them daily. The 
 # difference between beginner and professional code is how errors are handled. Good programs 
 # anticipate what can go wrong and handle errors gracefully, providing useful feedback instead 
 # of crashing. This is especially important in research software, where a crash during a long 
 # experiment can waste hours or days of computation time.
-# 
+#
 # ### Common Error Types
-# 
+#
 # Python has many built-in exception types. Understanding the most common ones helps you write 
 # better error handling code and debug problems faster. Each exception type represents a specific 
 # kind of problem.
@@ -324,7 +325,7 @@ print("Error examples shown as comments to prevent execution")
 # - **KeyError**: You tried to access a dictionary key that doesn't exist
 # - **IndexError**: You tried to access a list element that doesn't exist
 # - **FileNotFoundError**: You tried to open a file that doesn't exist
-# 
+#
 # **Common mistake**: Confusing ValueError and TypeError. TypeError means "wrong type entirely" 
 # (e.g., a string when you need a number). ValueError means "right type, wrong value" (e.g., the 
 # string "hello" when converting to an integer—it's a string, which is the right type for `int()`, 
@@ -332,11 +333,11 @@ print("Error examples shown as comments to prevent execution")
 
 # %% [markdown]
 # ### Try-Except Blocks
-# 
+#
 # Use try-except to catch and handle errors. The basic pattern is: try to do something that might 
 # fail, and if it fails, handle the error gracefully instead of crashing. This is similar to 
 # "error checking" in other languages but more powerful and Pythonic.
-# 
+#
 # **When to use try-except**: Use it whenever you're doing something that might fail for reasons 
 # outside your control—reading files, network requests, parsing user input, etc. Don't use it for 
 # logic errors in your own code (like accessing the wrong list index)—those should be fixed, not 
@@ -408,12 +409,12 @@ print(f"Result: {result}")
 
 # %% [markdown]
 # ### Multiple Exception Types
-# 
+#
 # Real-world code often needs to handle multiple types of errors differently. Python allows you 
 # to specify multiple `except` blocks, each handling a specific exception type. The order matters: 
 # Python checks exception types from top to bottom, so put more specific exceptions before more 
 # general ones.
-# 
+#
 # **Exception hierarchy**: Python's exceptions form a hierarchy. `Exception` is a general exception 
 # that catches most errors. More specific exceptions like `ValueError` or `FileNotFoundError` 
 # inherit from it. If you catch `Exception` first, you'll never reach the more specific handlers 
@@ -473,7 +474,7 @@ print("Column 5:", process_data_file("data.csv", 5))  # Out of range
 # syntax gives you access to the exception object, which you can print for debugging. This catch-all 
 # is useful for logging unexpected problems in production code, but during development, it's often 
 # better to let exceptions crash your program so you notice and fix them.
-# 
+#
 # **Common pitfall**: Don't use bare `except:` without specifying the exception type—it will catch 
 # EVERYTHING, including KeyboardInterrupt (Ctrl+C), making your program hard to stop. Always specify 
 # the exception types you're catching, or at minimum use `except Exception:` which excludes system-
@@ -481,12 +482,12 @@ print("Column 5:", process_data_file("data.csv", 5))  # Out of range
 
 # %% [markdown]
 # ### Try-Except-Else-Finally
-# 
+#
 # Beyond the basic try-except, Python provides `else` and `finally` clauses for more sophisticated 
 # error handling. The `else` block runs only if no exception occurred—useful for code that should 
 # only run on success. The `finally` block always runs, whether an exception occurred or not—perfect 
 # for cleanup operations like closing files or network connections.
-# 
+#
 # **When to use what**:
 # - Use `else` for code that should only run if everything succeeded (e.g., success logging)
 # - Use `finally` for cleanup that must happen regardless (e.g., closing files, releasing locks)
@@ -551,14 +552,14 @@ print(f"Analysis result: {analysis}")
 
 # %% [markdown]
 # ### Raising Exceptions
-# 
+#
 # You can raise your own exceptions for error conditions. This is how you enforce rules in your 
 # functions and provide clear error messages when something goes wrong. Raising exceptions is 
 # better than returning error codes or special values (like -1 or None) because:
 # 1. It forces the caller to handle the error (can't accidentally ignore it)
 # 2. It provides a clear error message
 # 3. It automatically stops execution if not handled
-# 
+#
 # **When to raise exceptions**: Raise exceptions when the caller made a mistake (wrong arguments) 
 # or when a precondition isn't met (file doesn't exist, network is down). Use meaningful exception 
 # types (`ValueError` for bad values, `FileNotFoundError` for missing files) so callers can handle 
@@ -627,7 +628,7 @@ except ValueError as e:
 
 # %% [markdown]
 # ## Part 3: File Input/Output
-# 
+#
 # Reading and writing files is essential for research data processing. Whether you're analyzing 
 # experimental results, processing sensor data, or saving analysis outputs, file I/O is a core 
 # skill for research software engineers.
@@ -819,7 +820,7 @@ print(f"Average valid temperature: {sum(valid_temps) / len(valid_temps):.2f}°C"
 
 # %% [markdown]
 # ## Part 4: List Comprehensions
-# 
+#
 # List comprehensions provide elegant, concise ways to create and transform lists. They're not just 
 # syntactic sugar—they're often faster than traditional loops and make your code's intent clearer. 
 # In research contexts, you'll use them constantly for data filtering, transformation, and processing.
@@ -894,7 +895,7 @@ print(f"High temperatures: {high_temp_dict}")
 
 # %% [markdown]
 # ## Part 5: Command-Line Scripts with argparse
-# 
+#
 # Create professional command-line tools with argument parsing.
 
 # %%
@@ -1024,13 +1025,13 @@ print(f"\nFinal results: {results}")
 
 # %% [markdown]
 # ## Part 6: Classes and Object-Oriented Programming
-# 
+#
 # Classes allow you to bundle data and functionality together. They're essential for organizing 
 # complex research code and are heavily used in testing frameworks like pytest (which we'll see 
 # in Lecture 5).
-# 
+#
 # ### Why Use Classes?
-# 
+#
 # - **Organization**: Group related data and functions together
 # - **Reusability**: Create multiple instances with the same behavior
 # - **Clarity**: Model real-world entities (experiments, datasets, instruments)
@@ -1090,7 +1091,7 @@ print(f"Average: {lab_temps.get_average():.2f}°C")
 
 # %% [markdown]
 # ### Understanding `self` and `__init__`
-# 
+#
 # - **`__init__`**: Special method called when creating a new instance (constructor)
 # - **`self`**: Refers to the instance itself (like "this" in other languages)
 # - **Instance variables**: `self.location`, `self.measurements` belong to each instance
@@ -1122,9 +1123,9 @@ for location in [lab_a, lab_b, outdoor]:
 
 # %% [markdown]
 # ### Classes in Testing (Preview of Lecture 5)
-# 
+#
 # In Lecture 5, you'll use test classes with pytest. Here's a preview of what that looks like:
-# 
+#
 # ```python
 # class TestTemperatureConversion:
 #     """Group related temperature conversion tests."""
@@ -1137,47 +1138,47 @@ for location in [lab_a, lab_b, outdoor]:
 #         """Water boils at 100°C = 212°F."""
 #         assert celsius_to_fahrenheit(100) == 212
 # ```
-# 
+#
 # Test classes organize related tests together. Each method starting with `test_` is a separate test case.
 
 # %% [markdown]
 # ### When to Use Classes vs Functions
-# 
+#
 # **Use classes when you need to:**
 # - Store state (data) and behavior (methods) together
 # - Create multiple instances of similar objects
 # - Organize complex code into logical units
 # - Build test suites (test classes)
-# 
+#
 # **Use functions when you:**
 # - Have a simple operation that doesn't need state
 # - Want to transform inputs to outputs
 # - Need something quick and straightforward
-# 
+#
 # **Research example**: A function is good for calculating mean temperature. A class is better 
 # for representing an entire experiment with settings, data, and multiple analysis methods.
 
 # %% [markdown]
 # ## Summary
-# 
+#
 # In this lecture, we covered:
-# 
+#
 # ### Advanced Functions
 # - **Parameters**: Default values, keyword arguments, *args and **kwargs
 # - **Lambda functions**: Anonymous functions for simple operations
 # - **Documentation**: Writing comprehensive docstrings
-# 
+#
 # ### Error Handling
 # - **Exception types**: Common errors in Python
 # - **Try-except blocks**: Catching and handling errors
 # - **Error recovery**: Graceful degradation
 # - **Raising exceptions**: Signaling error conditions
-# 
+#
 # ### File I/O
 # - **Reading files**: Text files and CSV data
 # - **Writing files**: Saving results and reports
 # - **Error handling**: Safe file operations
-# 
+#
 # ### Advanced Python Techniques
 # - **List comprehensions**: Concise list creation and filtering
 # - **Dictionary comprehensions**: Creating dictionaries elegantly
@@ -1186,46 +1187,46 @@ for location in [lab_a, lab_b, outdoor]:
 
 # %% [markdown]
 # ## Acknowledgements and References
-# 
+#
 # This lecture synthesizes best practices from established Python education resources:
-# 
+#
 # ### Primary Sources
-# 
+#
 # - **Research Software Engineering with Python** by The Alan Turing Institute  
 #   <https://alan-turing-institute.github.io/rse-course/html/>  
 #   Advanced Python concepts, error handling patterns, and object-oriented programming approaches adapted from this course.
-# 
+#
 # - **Research Software Engineering with Python** by Damien Irving, Kate Hertweck,
 #   Luke Johnston, Joel Ostblom, Charlotte Wickham, and Greg Wilson (2022)
 #   <https://third-bit.com/py-rse/>
 #   Defensive programming practices, error handling strategies, and file I/O
 #   patterns informed by this textbook.
-# 
+#
 # ### Documentation
-# 
+#
 # - **Python Documentation**  
 #   <https://docs.python.org/3/>  
 #   - Built-in Exceptions: <https://docs.python.org/3/library/exceptions.html>
 #   - File I/O: <https://docs.python.org/3/tutorial/inputoutput.html>
 #   - argparse: <https://docs.python.org/3/library/argparse.html>
 #   - Classes and OOP: <https://docs.python.org/3/tutorial/classes.html>
-# 
+#
 # - **NumPy Docstring Style Guide**  
 #   <https://numpydoc.readthedocs.io/en/latest/format.html>  
 #   Documentation standards used in function docstrings throughout this lecture.
-# 
+#
 # ### Notes
-# 
+#
 # All code examples and exercises have been developed specifically for this course to illustrate
 # key concepts in research software contexts. The pedagogical approach draws on best practices
 # from the sources cited above.
 
 # %% [markdown]
 # ### Next Steps
-# 
+#
 # In Lecture 4, we'll learn how to structure Python projects properly and work with
 # powerful libraries like NumPy and Matplotlib for scientific computing and visualization.
-# 
+#
 # **Ready to continue? Move on to Lecture 4: Python Project Structure and Libraries!**
 
 # %%

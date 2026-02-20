@@ -1,11 +1,12 @@
 # ---
 # jupyter:
 #   jupytext:
+#     formats: ipynb,py:percent
 #     text_representation:
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.14.0
+#       jupytext_version: 1.19.1
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
@@ -15,11 +16,11 @@
 # %% [markdown]
 # # Lecture 9: Containerization and Reproducibility
 #
-# 
+#
 # ## Quick Access
-# 
+#
 # Scan the QR codes below for quick access to course materials:
-# 
+#
 # <div style="display: flex; gap: 20px; align-items: flex-start;">
 #   <div style="text-align: center;">
 #     <img src="../course_qr_code.png" alt="Course Website QR Code" width="150"/>
@@ -30,7 +31,7 @@
 #     <p><strong>This Lecture</strong></p>
 #   </div>
 # </div>
-# 
+#
 # ## Overview
 # This lecture explores how containers enable truly reproducible research by packaging
 # not just your code and Python dependencies, but the entire computational environment.
@@ -42,15 +43,15 @@
 # **Duration**: ~90 minutes
 #
 # ## Prerequisites
-# 
+#
 # Before starting this lecture, you should be familiar with:
 # - Python virtual environments and dependency management (covered in Lecture 4)
 # - Running Python scripts and installing packages
 # - Basic command-line usage
 # - Git basics for version control
-# 
+#
 # This lecture introduces containerization as the next step beyond virtual environments for reproducibility.
-# 
+#
 # ## Learning Objectives
 # - Understand the limitations of virtual environments for reproducibility
 # - Learn what containers are and how they differ from virtual machines
@@ -775,7 +776,7 @@
 #
 # ### HPC Batch Job Example
 # ```bash
-# #!/bin/bash
+# !/bin/bash
 # #SBATCH --job-name=climate-analysis
 # #SBATCH --nodes=4
 # #SBATCH --ntasks-per-node=32

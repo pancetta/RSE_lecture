@@ -1,11 +1,12 @@
 # ---
 # jupyter:
 #   jupytext:
+#     formats: ipynb,py:percent
 #     text_representation:
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.14.0
+#       jupytext_version: 1.19.1
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
@@ -15,11 +16,11 @@
 # %% [markdown]
 # # Lecture 10: Collaboration and Code Review in Research Software
 #
-# 
+#
 # ## Quick Access
-# 
+#
 # Scan the QR codes below for quick access to course materials:
-# 
+#
 # <div style="display: flex; gap: 20px; align-items: flex-start;">
 #   <div style="text-align: center;">
 #     <img src="../course_qr_code.png" alt="Course Website QR Code" width="150"/>
@@ -30,7 +31,7 @@
 #     <p><strong>This Lecture</strong></p>
 #   </div>
 # </div>
-# 
+#
 # ## Overview
 # This lecture explores how to work effectively in research software teams, from code
 # reviews and pull requests to onboarding new collaborators. Research is increasingly
@@ -42,15 +43,15 @@
 # **Duration**: ~90 minutes
 #
 # ## Prerequisites
-# 
+#
 # Before starting this lecture, you should be familiar with:
 # - Git branching and merging (covered in Lecture 2)
 # - GitHub/GitLab basics including pull/merge requests
 # - Writing and testing Python code (covered in Lectures 2-5)
 # - Code review concepts from earlier lectures
-# 
+#
 # This lecture builds on your Git knowledge and introduces systematic collaboration practices.
-# 
+#
 # ## Learning Objectives
 # - Understand why collaboration requires deliberate processes and practices
 # - Master the pull request workflow for collaborative development
@@ -171,7 +172,7 @@
 # # Commit with clear messages
 # git add src/temperature.py tests/test_temperature.py
 # git commit -m "Fix temperature calculation for polar regions
-# 
+#
 # - Correct formula for temperatures below -50°C
 # - Add test cases for Arctic/Antarctic conditions
 # - Resolves issue #42"
@@ -241,34 +242,34 @@
 # **Bad PR description:**
 # ```
 # Title: Fix bug
-# 
+#
 # Description: Fixed the thing
 # ```
 #
 # **Good PR description:**
 # ```
 # Title: Fix temperature calculation for polar regions
-# 
+#
 # ## Problem
 # Temperature calculations were producing incorrect values for regions with
 # temperatures below -50°C. The current formula doesn't account for the
 # non-linear behavior of air at extreme cold.
-# 
+#
 # ## Solution
 # - Updated temperature calculation formula in src/temperature.py
 # - Added special handling for temperatures < -50°C
 # - Implemented the Clausius-Clapeyron relation for polar conditions
-# 
+#
 # ## Testing
 # - Added unit tests for Arctic and Antarctic test cases
 # - Validated against NSIDC observational data
 # - All existing tests still pass
-# 
+#
 # ## References
 # - Fixes #42
 # - Related to climate model validation project
 # - Based on formula from Smith et al. (2023), J. Climate
-# 
+#
 # ## Checklist
 # - [x] Tests added and passing
 # - [x] Documentation updated
@@ -428,13 +429,13 @@
 # ```
 # "This implementation might have issues with negative inputs. 
 #  Could we add input validation?"
-# 
+#
 # "I think we could simplify this by using numpy.clip() here.
 #  What do you think?"
-# 
+#
 # "Great approach! One suggestion: adding a docstring would help
 #  future contributors understand the algorithm."
-# 
+#
 # "I'm not sure I understand the logic here. Could you add a 
 #  comment explaining why we multiply by 2?"
 # ```
@@ -462,10 +463,10 @@
 # ```
 # "Excellent test coverage! The edge cases you covered will prevent
 #  bugs down the line."
-# 
+#
 # "I really like how you documented the assumptions. This makes the
 #  code much easier to understand."
-# 
+#
 # "Smart optimization! Using vectorization here is much cleaner than
 #  the loop we had before."
 # ```
@@ -553,37 +554,37 @@
 
 # %% [markdown]
 # ## Part 5.5: Code Review for Software Architecture
-# 
+#
 # Beyond checking for correctness and style, effective code reviews also evaluate **software 
 # architecture and design quality**. This is especially important in research software, where 
 # code often evolves from a quick prototype to a critical analysis pipeline used by many people.
-# 
+#
 # Reviewing architecture helps prevent technical debt and ensures code remains maintainable as 
 # projects grow. Let's learn how to review code for design quality, not just bugs.
-# 
+#
 # ### Why Architectural Review Matters
-# 
+#
 # **Story**: A research team merged a PR that "worked perfectly." Three months later, they needed 
 # to add a new analysis type. The code was so tightly coupled that adding the feature required 
 # rewriting 40% of the codebase. A 5-minute architectural review during the PR would have caught 
 # the design issue early.
-# 
+#
 # **Architectural problems compound**: A poorly designed function becomes a poorly designed module, 
 # then a poorly designed system. Catching design issues in review prevents expensive refactoring later.
-# 
+#
 # **What architectural review catches**:
 # - Code smells (from Lecture 5): god functions, tight coupling, duplication
 # - Violation of design principles (from Lecture 4): DRY, single responsibility
 # - Technical debt accumulation (from Lecture 7): quick hacks that should be refactored
 # - Missing abstractions or poor API design
 # - Inconsistent patterns across the codebase
-# 
+#
 # ### Architectural Review Checklist
-# 
+#
 # When reviewing a PR, ask these design-focused questions:
-# 
+#
 # #### 1. Design Principles (Lecture 4)
-# 
+#
 # **DRY - Don't Repeat Yourself**
 # ```python
 # # ❌ Code smell in PR:
@@ -591,17 +592,17 @@
 #     mean = sum(data) / len(data)
 #     variance = sum((x - mean)**2 for x in data) / len(data)
 #     return mean, variance
-# 
+#
 # def analyze_temp_2020(data):
 #     mean = sum(data) / len(data)
 #     variance = sum((x - mean)**2 for x in data) / len(data)
 #     return mean, variance
-# 
+#
 # # Review comment:
 # # "These functions duplicate the statistics calculation. Could we extract
 # #  a shared calculate_statistics(data) function and call it from both?"
 # ```
-# 
+#
 # **Single Responsibility Principle**
 # ```python
 # # ❌ Violates SRP:
@@ -613,7 +614,7 @@
 #     # Saves results
 #     # Sends email notification
 #     pass  # 300 lines of mixed concerns
-# 
+#
 # # Review comment:
 # # "This function has too many responsibilities. Consider splitting into:
 # #  - load_data(filename)
@@ -622,7 +623,7 @@
 # #  - save_results(results, output_path)
 # # This would make testing easier and allow reuse of individual steps."
 # ```
-# 
+#
 # **Separation of Concerns**
 # ```python
 # # ❌ Mixes calculation with I/O:
@@ -632,7 +633,7 @@
 #     with open(file2) as f:
 #         data2 = [float(line) for line in f]
 #     # correlation calculation...
-# 
+#
 # # Review comment:
 # # "This function mixes file I/O with calculation logic. Suggest:
 # #  def calculate_correlation(data1, data2):  # Pure calculation
@@ -640,11 +641,11 @@
 # # This makes it testable without creating files and reusable with
 # # data from databases, APIs, or other sources."
 # ```
-# 
+#
 # #### 2. Code Smells (Lecture 5)
-# 
+#
 # **Watch for these red flags in PRs:**
-# 
+#
 # | Smell | What to Look For | Review Comment Example |
 # |-------|------------------|------------------------|
 # | **God Function** | Function > 50 lines, multiple tasks | "Could we split this into smaller functions?" |
@@ -653,42 +654,42 @@
 # | **Global State** | Uses/modifies global variables | "Pass this as a parameter for testability" |
 # | **Poor Naming** | Variables like `tmp`, `x2`, `calc` | "More descriptive names would help readability" |
 # | **Duplication** | Same logic in multiple places | "Extract shared logic to avoid duplication" |
-# 
+#
 # **Example review comment addressing smell:**
 # ```
 # The new process_climate_data() function looks like it's doing a lot. 
 # I count at least 6 different responsibilities (loading, validation, 
 # transformation, analysis, visualization, export). This makes it hard 
 # to test and reuse.
-# 
+#
 # Suggestion: Could we split this into a pipeline of smaller functions?
 # That would also make it easier to profile performance bottlenecks later.
-# 
+#
 # See Lecture 5 code smells section for the "God Function" anti-pattern.
 # ```
-# 
+#
 # #### 3. API Design and Consistency
-# 
+#
 # **Check for consistent patterns across the codebase:**
-# 
+#
 # ```python
 # # ❌ Inconsistent API in PR:
 # # Existing code:
 # def load_temperature_data(filename, units='celsius'):
 #     """Load data with configurable units."""
 #     pass
-# 
+#
 # # New code in PR:
 # def load_pressure_data(filename):
 #     """Load pressure data in pascals only."""
 #     pass
-# 
+#
 # # Review comment:
 # # "For consistency with load_temperature_data(), should we add a units
 # #  parameter here too? Future users might need different pressure units
 # #  (Pa, hPa, bar, etc.). API consistency makes the library easier to learn."
 # ```
-# 
+#
 # **Look for good abstractions:**
 # ```python
 # # ✅ Good abstraction in PR:
@@ -696,17 +697,17 @@
 #     """Generic loader for any scientific data type."""
 #     # Handles temperature, pressure, humidity, etc.
 #     pass
-# 
+#
 # # Review comment:
 # # "Nice abstraction! This unifies our data loading interface and will
 # #  make adding new data types easier. One suggestion: document the
 # #  supported data_type values in the docstring."
 # ```
-# 
+#
 # #### 4. Testability
-# 
+#
 # **Hard-to-test code is often poorly designed code (Lecture 5 connection):**
-# 
+#
 # ```python
 # # ❌ Hard to test (no tests in PR):
 # def analyze_experiment():
@@ -714,7 +715,7 @@
 #     results = complex_analysis(data)
 #     save_to_file('results.csv', results)
 #     return results
-# 
+#
 # # Review comment:
 # # "This function is hard to test because it depends on a database and
 # #  writes to files. Could we refactor to:
@@ -725,143 +726,143 @@
 # #  Then the caller handles I/O, and we can easily test the analysis
 # #  logic with simple test data. This follows separation of concerns."
 # ```
-# 
+#
 # #### 5. Future Maintainability
-# 
+#
 # **Think about code evolution:**
-# 
+#
 # ```python
 # # Review question:
 # # "If we need to support a new instrument type in 6 months, would this
 # #  design make that easy or would we need major refactoring?"
-# 
+#
 # # Review question:
 # # "If we need to parallelize this computation, is the design amenable
 # #  to that? (No global state, pure functions, etc.)"
-# 
+#
 # # Review question:
 # # "When we publish this code, will external users find the API clear
 # #  and intuitive?"
 # ```
-# 
+#
 # ### When to Suggest Refactoring in Review
-# 
+#
 # **The refactoring judgment call:**
-# 
+#
 # ✅ **Do suggest refactoring when:**
 # - Design issue makes code hard to test (blocks quality)
 # - Pattern violates established project standards (consistency)
 # - Change will prevent future bugs (safety)
 # - Refactoring is localized and low-risk (small change)
 # - PR is already touching that code (no extra churn)
-# 
+#
 # ⚠️ **Don't insist on refactoring when:**
 # - Change is purely aesthetic (nitpicking)
 # - Refactoring would expand PR scope significantly (scope creep)
 # - Code is temporary/experimental (premature optimization)
 # - Team has more urgent priorities (time constraints)
 # - Author is new contributor (overwhelming)
-# 
+#
 # **Balance is key**: Focus on architectural issues that matter, not perfection.
-# 
+#
 # ### How to Give Architectural Feedback Constructively
-# 
+#
 # **Bad review comment** (sounds like criticism):
 # ```
 # This design is wrong. You should use the strategy pattern here.
 # ```
-# 
+#
 # **Good review comment** (collaborative and educational):
 # ```
 # This function is doing a lot! I wonder if we could simplify by extracting
 # the file I/O from the calculation logic? That would make it easier to test
 # and reuse. What do you think?
-# 
+#
 # For reference, see Lecture 4's section on Separation of Concerns. Happy
 # to discuss alternatives if you have thoughts on this!
 # ```
-# 
+#
 # **Components of good architectural feedback:**
-# 
+#
 # 1. **Explain the problem**: "This makes testing hard because..."
 # 2. **Suggest a solution**: "Could we extract this into..."
 # 3. **Explain the benefit**: "This would make it easier to..."
 # 4. **Ask, don't demand**: "What do you think?"
 # 5. **Provide references**: "See Lecture 5 on code smells"
 # 6. **Offer to discuss**: "Happy to chat if you want to explore options"
-# 
+#
 # ### Balancing Nitpicking vs. Structural Issues
-# 
+#
 # **Not all review comments are equally important. Prioritize:**
-# 
+#
 # **🔴 Critical (must fix before merge):**
 # - Correctness bugs
 # - Security vulnerabilities  
 # - Breaking changes to public APIs
 # - Major architectural flaws (god functions, tight coupling)
 # - Missing tests for critical functionality
-# 
+#
 # **🟡 Important (should fix, but negotiable):**
 # - Minor design improvements
 # - Inconsistencies with project patterns
 # - Missing documentation
 # - Performance concerns
 # - Code smells that hinder maintenance
-# 
+#
 # **🟢 Nice-to-have (optional suggestions):**
 # - Style preferences
 # - Variable naming improvements
 # - Additional test cases for rare edge cases
 # - Refactoring opportunities
-# 
+#
 # **Mark priority in reviews:**
 # ```
 # [Critical] This function modifies global state, which will cause race
 # conditions in our parallel processing pipeline. We must fix this.
-# 
+#
 # [Important] The duplicated logic here violates DRY. Suggest extracting
 # to a shared function for maintainability.
-# 
+#
 # [Nit] Consider renaming 'tmp' to 'temporary_values' for clarity.
 # ```
-# 
+#
 # ### Spotting Architectural Smells Across PRs
-# 
+#
 # **Watch for patterns across multiple PRs:**
-# 
+#
 # - **All PRs adding similar code** → Missing abstraction
 # - **Many PRs touching same file** → God file/class
 # - **PRs constantly fixing bugs in same area** → Design issue
 # - **PRs blocked on merge conflicts** → Tight coupling
 # - **Hard to review large PRs** → Functions doing too much
-# 
+#
 # **Team-level action:**
 # ```
 # "I've noticed 3 recent PRs all duplicate the same statistics calculation.
 #  Should we refactor to extract a shared stats module? This would prevent
 #  future duplication and make testing centralized."
 # ```
-# 
+#
 # ### Code Review: A Learning Opportunity
-# 
+#
 # **Reviews teach design skills both ways:**
-# 
+#
 # **For reviewers:**
 # - See how others solve similar problems
 # - Learn new patterns and idioms
 # - Practice articulating design principles
-# 
+#
 # **For authors:**
 # - Get feedback on design choices
 # - Learn team standards and expectations
 # - Improve design skills through iteration
-# 
+#
 # **Research software insight**: Many researchers haven't had formal software engineering 
 # training. Code review is how we collectively learn good design. Be patient, be educational, 
 # and remember: we're all learning together.
-# 
+#
 # ### Key Takeaways: Architectural Code Review
-# 
+#
 # 1. **Look beyond correctness** - review for maintainability and design quality
 # 2. **Apply principles from Lectures 4-5** - DRY, SRP, code smells
 # 3. **Think about future evolution** - will this design adapt well?
@@ -869,15 +870,15 @@
 # 5. **Be constructive and educational** - reviews are learning opportunities
 # 6. **Prioritize feedback** - critical vs. important vs. nice-to-have
 # 7. **Catch patterns early** - prevent architectural debt from accumulating
-# 
+#
 # **Connection to earlier lectures:**
 # - **Lecture 4**: Apply design principles in review
 # - **Lecture 5**: Spot code smells in PRs  
 # - **Lecture 7**: Suggest refactoring when profiling reveals issues
-# 
+#
 # **Remember**: The goal is not perfect code—it's code that works correctly, is maintainable, 
 # and enables the team to do great science together!
-# 
+#
 # **Further reading**:
 # - Karl E. Wiegers, *Peer Reviews in Software: A Practical Guide* (2002)
 # - Jeff Atwood, "Code Reviews: Just Do It" (blog post)
@@ -990,7 +991,7 @@
 # ```bash
 # git add src/temperature.py
 # git commit -m "Merge main and resolve temperature function conflict
-# 
+#
 # - Kept function rename from main branch
 # - Added docstring from feature branch"
 # git push origin fix/temperature-calculation
@@ -1632,7 +1633,7 @@
 #  coastal cells. One suggestion: for very small land fractions (<0.01),
 #  we might want to just use ocean temperature to avoid numerical issues.
 #  But that can be a follow-up optimization - this fix is solid."
-# 
+#
 # ✅ Approved
 # ```
 #
@@ -1644,7 +1645,7 @@
 #  Minor suggestion: Could you add a test for the edge cases
 #  (land_fraction = 0 and land_fraction = 1) to ensure we didn't
 #  break the all-land and all-ocean cases?"
-# 
+#
 # 🔄 Request changes
 # ```
 #
@@ -1780,17 +1781,17 @@
 
 # %% [markdown]
 # ### What's Next?
-# 
+#
 # In **Lecture 11**, we'll shift focus to managing research data effectively. You'll learn:
 # - FAIR principles for research data (Findable, Accessible, Interoperable, Reusable)
 # - Choosing appropriate file formats for different types of scientific data
 # - Working with specialized formats like HDF5 and NetCDF
 # - Using databases for structured research data
 # - Ensuring data integrity and validation
-# 
+#
 # Good collaboration practices you've learned here will help you work with shared datasets
 # and maintain data quality across your team.
-# 
+#
 # **Ready to continue? Move on to Lecture 11: Working with Research Data!**
 
 # %% [markdown]

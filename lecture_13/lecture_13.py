@@ -1,11 +1,12 @@
 # ---
 # jupyter:
 #   jupytext:
+#     formats: ipynb,py:percent
 #     text_representation:
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.14.0
+#       jupytext_version: 1.19.1
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
@@ -15,11 +16,11 @@
 # %% [markdown]
 # # Lecture 13: AI-Assisted Coding for Research Software
 #
-# 
+#
 # ## Quick Access
-# 
+#
 # Scan the QR codes below for quick access to course materials:
-# 
+#
 # <div style="display: flex; gap: 20px; align-items: flex-start;">
 #   <div style="text-align: center;">
 #     <img src="../course_qr_code.png" alt="Course Website QR Code" width="150"/>
@@ -30,7 +31,7 @@
 #     <p><strong>This Lecture</strong></p>
 #   </div>
 # </div>
-# 
+#
 # ## Overview
 # Artificial Intelligence coding assistants have rapidly become widespread tools in
 # software development, offering to help write, debug, and document code. For research
@@ -42,15 +43,15 @@
 # **Duration**: ~90 minutes
 #
 # ## Prerequisites
-# 
+#
 # Before starting this lecture, you should be familiar with:
 # - Python programming (covered in Lectures 2-4)
 # - Writing functions and classes
 # - Basic software development practices
 # - All previous RSE concepts (testing, documentation, version control)
-# 
+#
 # This lecture assumes you're comfortable writing code and introduces AI tools to enhance your workflow.
-# 
+#
 # ## Learning Objectives
 # - Understand what AI coding assistants are and how they work
 # - Compare different types of AI assistance (integrated vs chat-based)
@@ -1244,17 +1245,17 @@ except ValueError as e:
 # uniquely valuable and irreplaceable.
 #
 # ### What's Next?
-# 
+#
 # In **Lecture 14**, the final lecture, we'll wrap up the course by:
 # - Reviewing and integrating knowledge from all 13 lectures
 # - Exploring advanced topics we didn't cover and where to learn them
 # - Connecting you with the international and German RSE communities
 # - Providing resources for ongoing learning and support
 # - Celebrating your journey from RSE novice to practitioner
-# 
+#
 # You've learned an enormous amount—from basic shell commands to AI-assisted development.
 # Lecture 14 will help you see how it all fits together and chart your path forward.
-# 
+#
 # **Ready to conclude? Move on to Lecture 14: Course Summary and the RSE Community!**
 #
 # **Further Learning**:

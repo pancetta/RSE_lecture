@@ -1,11 +1,12 @@
 # ---
 # jupyter:
 #   jupytext:
+#     formats: ipynb,py:percent
 #     text_representation:
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.14.0
+#       jupytext_version: 1.19.1
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
@@ -15,11 +16,11 @@
 # %% [markdown]
 # # Lecture 14: Course Summary and the RSE Community
 #
-# 
+#
 # ## Quick Access
-# 
+#
 # Scan the QR codes below for quick access to course materials:
-# 
+#
 # <div style="display: flex; gap: 20px; align-items: flex-start;">
 #   <div style="text-align: center;">
 #     <img src="../course_qr_code.png" alt="Course Website QR Code" width="150"/>
@@ -30,7 +31,7 @@
 #     <p><strong>This Lecture</strong></p>
 #   </div>
 # </div>
-# 
+#
 # ## Overview
 # This final half-lecture wraps up our Research Software Engineering journey by reviewing
 # what we've learned, exploring important topics we didn't cover, and connecting you with
@@ -43,15 +44,15 @@
 # further educational offers, and a Q&A session.
 #
 # ## Prerequisites
-# 
+#
 # Before starting this lecture, you should have:
 # - Completed Lectures 1-13
 # - Hands-on experience with the RSE tools and practices covered
 # - A basic understanding of all major topics: version control, Python, testing, CI/CD,
 #   documentation, containers, collaboration, data management, workflows, and AI tools
-# 
+#
 # This final lecture synthesizes everything you've learned into a cohesive whole.
-# 
+#
 # ## Learning Objectives
 # - Review and integrate knowledge from all 13 lectures
 # - Understand advanced topics beyond this course and how to learn them

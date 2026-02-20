@@ -1,11 +1,12 @@
 # ---
 # jupyter:
 #   jupytext:
+#     formats: ipynb,py:percent
 #     text_representation:
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.14.0
+#       jupytext_version: 1.19.1
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
@@ -15,11 +16,11 @@
 # %% [markdown]
 # # Lecture 12: Scientific Workflows and Automation
 #
-# 
+#
 # ## Quick Access
-# 
+#
 # Scan the QR codes below for quick access to course materials:
-# 
+#
 # <div style="display: flex; gap: 20px; align-items: flex-start;">
 #   <div style="text-align: center;">
 #     <img src="../course_qr_code.png" alt="Course Website QR Code" width="150"/>
@@ -30,7 +31,7 @@
 #     <p><strong>This Lecture</strong></p>
 #   </div>
 # </div>
-# 
+#
 # ## Overview
 # Scientific research often involves complex, multi-step data analysis pipelines:
 # download data, preprocess it, run simulations, analyze results, generate figures,
@@ -47,15 +48,15 @@
 # **Duration**: ~90 minutes
 #
 # ## Prerequisites
-# 
+#
 # Before starting this lecture, you should be familiar with:
 # - Basic shell commands and scripting
 # - Python programming and file I/O (covered in Lectures 2-4)
 # - Understanding of research data workflows
 # - Containerization concepts (covered in Lecture 9, helpful but not required)
-# 
+#
 # This lecture builds on your programming skills and introduces workflow automation tools.
-# 
+#
 # ## Learning Objectives
 # - Understand the challenges of managing complex research pipelines
 # - Recognize when to use scripts, Make, or workflow management systems
@@ -135,7 +136,7 @@
 
 # %% [markdown]
 # ```bash
-# #!/bin/bash
+# !/bin/bash
 # # run_analysis.sh
 #
 # python download_data.py --source nasa
@@ -171,7 +172,7 @@
 
 # %% [markdown]
 # ```bash
-# #!/bin/bash
+# !/bin/bash
 # # run_analysis_smart.sh
 #
 # # Only download if data doesn't exist
@@ -1454,17 +1455,17 @@ workflow_def, metadata = simulate_workflow_execution()
 
 # %% [markdown]
 # ### What's Next?
-# 
+#
 # In **Lecture 13**, we'll explore AI-assisted coding for research software. You'll learn:
 # - What AI coding assistants are and how they work
 # - Using tools like GitHub Copilot and ChatGPT effectively
 # - Understanding the risks and limitations of AI-generated code
 # - Navigating legal and ethical considerations
 # - Best practices for AI-assisted research software development
-# 
+#
 # AI tools can help you write workflows faster, but as you'll learn, they require careful
 # oversight and critical evaluation—especially in research contexts.
-# 
+#
 # **Ready to continue? Move on to Lecture 13: AI-Assisted Coding for Research Software!**
 
 # %% [markdown]

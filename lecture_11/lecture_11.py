@@ -1,11 +1,12 @@
 # ---
 # jupyter:
 #   jupytext:
+#     formats: ipynb,py:percent
 #     text_representation:
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.14.0
+#       jupytext_version: 1.19.1
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
@@ -15,11 +16,11 @@
 # %% [markdown]
 # # Lecture 11: Working with Research Data - File Formats and Databases
 #
-# 
+#
 # ## Quick Access
-# 
+#
 # Scan the QR codes below for quick access to course materials:
-# 
+#
 # <div style="display: flex; gap: 20px; align-items: flex-start;">
 #   <div style="text-align: center;">
 #     <img src="../course_qr_code.png" alt="Course Website QR Code" width="150"/>
@@ -30,7 +31,7 @@
 #     <p><strong>This Lecture</strong></p>
 #   </div>
 # </div>
-# 
+#
 # ## Overview
 # Research data is at the heart of scientific discovery. How you store, access, and
 # share your data can make the difference between reproducible science and lost
@@ -42,15 +43,15 @@
 # **Duration**: ~90 minutes
 #
 # ## Prerequisites
-# 
+#
 # Before starting this lecture, you should be familiar with:
 # - Python file I/O operations (covered in Lecture 3)
 # - NumPy for numerical data (covered in Lecture 4)
 # - Basic understanding of data analysis workflows
 # - Pandas basics (helpful but not required)
-# 
+#
 # This lecture introduces research data management best practices and specialized file formats.
-# 
+#
 # ## Learning Objectives
 # - Understand FAIR principles and their application to research data
 # - Learn about Research Data Management (RDM) best practices
@@ -1129,17 +1130,17 @@ if result['issues']:
 # - No migration plan
 #
 # ### What's Next?
-# 
+#
 # In **Lecture 12**, we'll explore scientific workflows and automation. You'll learn:
 # - When to move beyond simple scripts to workflow management systems
 # - Using Make for dependency-based execution
 # - Writing Snakemake workflows for complex data analysis pipelines
 # - Understanding alternatives like Nextflow and Common Workflow Language (CWL)
 # - Integrating workflows with version control and containers
-# 
+#
 # The data management skills you've learned here become even more powerful when combined
 # with automated workflows that process and analyze your data reproducibly.
-# 
+#
 # **Ready to continue? Move on to Lecture 12: Scientific Workflows and Automation!**
 #
 # ### Resources for Further Learning
