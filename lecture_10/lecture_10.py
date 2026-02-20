@@ -359,12 +359,12 @@
 # # ✅ Better
 # def calculate_energy_joules(mass_kg):
 #     """Calculate energy using E=mc^2.
-#     
+#
 #     Parameters
 #     ----------
 #     mass_kg : float
 #         Mass in kilograms
-#     
+#
 #     Returns
 #     -------
 #     float
@@ -427,7 +427,7 @@
 #
 # **✅ Constructive comments:**
 # ```
-# "This implementation might have issues with negative inputs. 
+# "This implementation might have issues with negative inputs.
 #  Could we add input validation?"
 #
 # "I think we could simplify this by using numpy.clip() here.
@@ -436,7 +436,7 @@
 # "Great approach! One suggestion: adding a docstring would help
 #  future contributors understand the algorithm."
 #
-# "I'm not sure I understand the logic here. Could you add a 
+# "I'm not sure I understand the logic here. Could you add a
 #  comment explaining why we multiply by 2?"
 # ```
 #
@@ -510,7 +510,7 @@
 #
 # "You're right that the docstring was unclear. I've rewritten it."
 #
-# "Interesting suggestion! I chose approach A because of memory 
+# "Interesting suggestion! I chose approach A because of memory
 #  constraints, but let me document that decision in a comment."
 # ```
 #
@@ -555,21 +555,21 @@
 # %% [markdown]
 # ## Part 5.5: Code Review for Software Architecture
 #
-# Beyond checking for correctness and style, effective code reviews also evaluate **software 
-# architecture and design quality**. This is especially important in research software, where 
+# Beyond checking for correctness and style, effective code reviews also evaluate **software
+# architecture and design quality**. This is especially important in research software, where
 # code often evolves from a quick prototype to a critical analysis pipeline used by many people.
 #
-# Reviewing architecture helps prevent technical debt and ensures code remains maintainable as 
+# Reviewing architecture helps prevent technical debt and ensures code remains maintainable as
 # projects grow. Let's learn how to review code for design quality, not just bugs.
 #
 # ### Why Architectural Review Matters
 #
-# **Story**: A research team merged a PR that "worked perfectly." Three months later, they needed 
-# to add a new analysis type. The code was so tightly coupled that adding the feature required 
-# rewriting 40% of the codebase. A 5-minute architectural review during the PR would have caught 
+# **Story**: A research team merged a PR that "worked perfectly." Three months later, they needed
+# to add a new analysis type. The code was so tightly coupled that adding the feature required
+# rewriting 40% of the codebase. A 5-minute architectural review during the PR would have caught
 # the design issue early.
 #
-# **Architectural problems compound**: A poorly designed function becomes a poorly designed module, 
+# **Architectural problems compound**: A poorly designed function becomes a poorly designed module,
 # then a poorly designed system. Catching design issues in review prevents expensive refactoring later.
 #
 # **What architectural review catches**:
@@ -608,7 +608,7 @@
 # # ❌ Violates SRP:
 # def process_experiment(filename):
 #     # Loads data
-#     # Cleans data  
+#     # Cleans data
 #     # Analyzes data
 #     # Generates plots
 #     # Saves results
@@ -657,9 +657,9 @@
 #
 # **Example review comment addressing smell:**
 # ```
-# The new process_climate_data() function looks like it's doing a lot. 
-# I count at least 6 different responsibilities (loading, validation, 
-# transformation, analysis, visualization, export). This makes it hard 
+# The new process_climate_data() function looks like it's doing a lot.
+# I count at least 6 different responsibilities (loading, validation,
+# transformation, analysis, visualization, export). This makes it hard
 # to test and reuse.
 #
 # Suggestion: Could we split this into a pipeline of smaller functions?
@@ -719,10 +719,10 @@
 # # Review comment:
 # # "This function is hard to test because it depends on a database and
 # #  writes to files. Could we refactor to:
-# #  
+# #
 # #  def analyze_experiment(data):
 # #      return complex_analysis(data)
-# #  
+# #
 # #  Then the caller handles I/O, and we can easily test the analysis
 # #  logic with simple test data. This follows separation of concerns."
 # ```
@@ -797,7 +797,7 @@
 #
 # **🔴 Critical (must fix before merge):**
 # - Correctness bugs
-# - Security vulnerabilities  
+# - Security vulnerabilities
 # - Breaking changes to public APIs
 # - Major architectural flaws (god functions, tight coupling)
 # - Missing tests for critical functionality
@@ -857,8 +857,8 @@
 # - Learn team standards and expectations
 # - Improve design skills through iteration
 #
-# **Research software insight**: Many researchers haven't had formal software engineering 
-# training. Code review is how we collectively learn good design. Be patient, be educational, 
+# **Research software insight**: Many researchers haven't had formal software engineering
+# training. Code review is how we collectively learn good design. Be patient, be educational,
 # and remember: we're all learning together.
 #
 # ### Key Takeaways: Architectural Code Review
@@ -873,10 +873,10 @@
 #
 # **Connection to earlier lectures:**
 # - **Lecture 4**: Apply design principles in review
-# - **Lecture 5**: Spot code smells in PRs  
+# - **Lecture 5**: Spot code smells in PRs
 # - **Lecture 7**: Suggest refactoring when profiling reveals issues
 #
-# **Remember**: The goal is not perfect code—it's code that works correctly, is maintainable, 
+# **Remember**: The goal is not perfect code—it's code that works correctly, is maintainable,
 # and enables the team to do great science together!
 #
 # **Further reading**:
@@ -973,12 +973,12 @@
 # # Resolution: Keep rename and add docstring
 # def calculate_temperature_celsius(kelvin):
 #     """Convert temperature from Kelvin to Celsius.
-#     
+#
 #     Parameters
 #     ----------
 #     kelvin : float
 #         Temperature in Kelvin
-#     
+#
 #     Returns
 #     -------
 #     float
@@ -1120,12 +1120,12 @@
 #
 # ```
 # "Welcome! Thanks for your first contribution to the project.
-#  
+#
 #  I see you're working on [feature]. Here are a few tips:
 #  - Our test files are in tests/
 #  - We use pytest for testing
 #  - Check out other test files for examples
-#  
+#
 #  Don't hesitate to ask questions - we're here to help!"
 # ```
 #
@@ -1198,15 +1198,15 @@
 # **✅ Async-friendly:**
 # ```
 # "I'm considering two approaches for the data preprocessing:
-#  
+#
 #  Approach A: Pandas with chunked reading
 #  - Pros: Familiar to team, easy to debug
 #  - Cons: Memory intensive for large files
-#  
+#
 #  Approach B: Dask for out-of-core processing
 #  - Pros: Scales to large datasets
 #  - Cons: More complex, adds dependency
-#  
+#
 #  I'm leaning toward A for now since our datasets are <1GB.
 #  Thoughts? I'll implement A tomorrow unless concerns are raised."
 # ```
@@ -1251,7 +1251,7 @@
 # **Code Review Focus:**
 # ```r
 # # ❌ Hard to review
-# res <- dat %>% filter(x > 0) %>% group_by(grp) %>% 
+# res <- dat %>% filter(x > 0) %>% group_by(grp) %>%
 #        summarize(m = mean(val)) %>% arrange(desc(m))
 #
 # # ✅ Easier to review (one operation per line)
@@ -1369,7 +1369,7 @@
 # subroutine calculate_result(input_x, input_y, result)
 #     real, dimension(:), intent(in) :: input_x, input_y
 #     real, intent(out) :: result
-#     
+#
 #     ! Clear variable roles with intent
 # ```
 #
@@ -1509,9 +1509,9 @@
 #     lat = 37.8
 #     lon = -122.4  # San Francisco Bay
 #     land_fraction = 0.5  # 50% land, 50% water
-#     
+#
 #     temp = calculate_temperature(lat, lon, land_fraction)
-#     
+#
 #     assert not np.isnan(temp), "Temperature should not be NaN for coastal cells"
 #     assert -50 < temp < 50, "Temperature should be physically reasonable"
 # ```
@@ -1558,10 +1558,10 @@
 # def calculate_temperature(lat, lon, land_fraction):
 #     land_temp = calculate_land_temperature(lat, lon)
 #     ocean_temp = calculate_ocean_temperature(lat, lon)
-#     
+#
 #     # BUG: Division by zero when land_fraction is exactly 0.5!
 #     weight = (land_fraction - 0.5) / (land_fraction - 0.5)  # Always 1 or NaN!
-#     
+#
 #     return land_temp * weight + ocean_temp * (1 - weight)
 # ```
 #
@@ -1570,10 +1570,10 @@
 # # In src/temperature.py - AFTER fix
 # def calculate_temperature(lat, lon, land_fraction):
 #     """Calculate temperature for a grid cell.
-#     
+#
 #     For coastal cells (0 < land_fraction < 1), interpolates between
 #     land and ocean temperatures based on land fraction.
-#     
+#
 #     Parameters
 #     ----------
 #     lat : float
@@ -1582,7 +1582,7 @@
 #         Longitude in degrees
 #     land_fraction : float
 #         Fraction of grid cell that is land (0 = all ocean, 1 = all land)
-#     
+#
 #     Returns
 #     -------
 #     float
@@ -1590,7 +1590,7 @@
 #     """
 #     land_temp = calculate_land_temperature(lat, lon)
 #     ocean_temp = calculate_ocean_temperature(lat, lon)
-#     
+#
 #     # Linear interpolation between land and ocean temperatures
 #     return land_temp * land_fraction + ocean_temp * (1 - land_fraction)
 # ```
@@ -1641,7 +1641,7 @@
 # ```
 # Comment on docstring:
 # "Excellent documentation! The formula is now clear.
-#  
+#
 #  Minor suggestion: Could you add a test for the edge cases
 #  (land_fraction = 0 and land_fraction = 1) to ensure we didn't
 #  break the all-land and all-ocean cases?"
@@ -1654,7 +1654,7 @@
 # # Add to tests/test_coastal_temperature.py
 # def test_temperature_all_land():
 #     """All-land cells should use only land temperature."""
-#     temp_land_only = calculate_temperature(lat=40.0, lon=-100.0, 
+#     temp_land_only = calculate_temperature(lat=40.0, lon=-100.0,
 #                                            land_fraction=1.0)
 #     expected = calculate_land_temperature(40.0, -100.0)
 #     assert temp_land_only == expected
@@ -1799,114 +1799,114 @@
 #
 # ### Collaboration and Code Review
 #
-# - **The Turing Way - Guide to Collaboration**  
-#   <https://the-turing-way.netlify.app/collaboration/collaboration.html>  
+# - **The Turing Way - Guide to Collaboration**
+#   <https://the-turing-way.netlify.app/collaboration/collaboration.html>
 #   Comprehensive handbook on collaborative research practices.
 #
-# - **Best Practices for Code Review**  
-#   <https://google.github.io/eng-practices/review/>  
+# - **Best Practices for Code Review**
+#   <https://google.github.io/eng-practices/review/>
 #   Google's engineering practices for code review.
 #
-# - **Thoughtbot Code Review Guide**  
-#   <https://github.com/thoughtbot/guides/tree/main/code-review>  
+# - **Thoughtbot Code Review Guide**
+#   <https://github.com/thoughtbot/guides/tree/main/code-review>
 #   Practical guide to giving and receiving code review feedback.
 #
 # ### Version Control Workflows
 #
-# - **GitHub Flow**  
-#   <https://docs.github.com/en/get-started/quickstart/github-flow>  
+# - **GitHub Flow**
+#   <https://docs.github.com/en/get-started/quickstart/github-flow>
 #   Simple workflow for teams using GitHub.
 #
-# - **GitLab Flow**  
-#   <https://docs.gitlab.com/ee/topics/gitlab_flow.html>  
+# - **GitLab Flow**
+#   <https://docs.gitlab.com/ee/topics/gitlab_flow.html>
 #   GitLab's recommended workflow combining feature branches and environments.
 #
-# - **Atlassian Git Workflows**  
-#   <https://www.atlassian.com/git/tutorials/comparing-workflows>  
+# - **Atlassian Git Workflows**
+#   <https://www.atlassian.com/git/tutorials/comparing-workflows>
 #   Comparison of different Git workflow strategies.
 #
 # ### Pull Request Best Practices
 #
-# - **GitHub Pull Request Documentation**  
-#   <https://docs.github.com/en/pull-requests>  
+# - **GitHub Pull Request Documentation**
+#   <https://docs.github.com/en/pull-requests>
 #   Official GitHub documentation for pull requests.
 #
-# - **GitLab Merge Request Documentation**  
-#   <https://docs.gitlab.com/ee/user/project/merge_requests/>  
+# - **GitLab Merge Request Documentation**
+#   <https://docs.gitlab.com/ee/user/project/merge_requests/>
 #   Official GitLab documentation for merge requests.
 #
 # ### Onboarding and Contribution
 #
-# - **Open Source Guides - How to Contribute**  
-#   <https://opensource.guide/how-to-contribute/>  
+# - **Open Source Guides - How to Contribute**
+#   <https://opensource.guide/how-to-contribute/>
 #   GitHub's guide to contributing to open source projects.
 #
-# - **Contributing.md Template**  
-#   <https://github.com/nayafia/contributing-template>  
+# - **Contributing.md Template**
+#   <https://github.com/nayafia/contributing-template>
 #   Template for creating contribution guidelines.
 #
 # ### Communication and Team Dynamics
 #
-# - **The Art of Giving and Receiving Code Reviews Gracefully**  
-#   <https://www.alexandra-hill.com/2018/06/25/the-art-of-giving-and-receiving-code-reviews/>  
+# - **The Art of Giving and Receiving Code Reviews Gracefully**
+#   <https://www.alexandra-hill.com/2018/06/25/the-art-of-giving-and-receiving-code-reviews/>
 #   Blog post on constructive code review practices.
 #
-# - **How to Make Your Code Reviewer Fall in Love with You**  
-#   <https://mtlynch.io/code-review-love/>  
+# - **How to Make Your Code Reviewer Fall in Love with You**
+#   <https://mtlynch.io/code-review-love/>
 #   Practical tips for submitting reviewable pull requests.
 #
 # ### Language-Specific Resources
 #
 # **R:**
-# - **R Packages Book - Git and GitHub**  
-#   <https://r-pkgs.org/software-development-practices.html>  
+# - **R Packages Book - Git and GitHub**
+#   <https://r-pkgs.org/software-development-practices.html>
 #   Hadley Wickham's guide to collaboration in R packages.
 #
 # **C/C++:**
-# - **clang-format**  
-#   <https://clang.llvm.org/docs/ClangFormat.html>  
+# - **clang-format**
+#   <https://clang.llvm.org/docs/ClangFormat.html>
 #   Automatic code formatting for C/C++.
 #
-# - **Modern CMake for Modular Design**  
-#   <https://cliutils.gitlab.io/modern-cmake/>  
+# - **Modern CMake for Modular Design**
+#   <https://cliutils.gitlab.io/modern-cmake/>
 #   Best practices for C++ project structure and collaboration.
 #
 # **Julia:**
-# - **Julia Community Standards**  
-#   <https://julialang.org/community/standards/>  
+# - **Julia Community Standards**
+#   <https://julialang.org/community/standards/>
 #   Code of conduct and collaboration guidelines for Julia community.
 #
 # **Fortran:**
-# - **Fortran Package Manager (fpm)**  
-#   <https://fpm.fortran-lang.org/>  
+# - **Fortran Package Manager (fpm)**
+#   <https://fpm.fortran-lang.org/>
 #   Modern package manager improving Fortran collaboration.
 #
 # ### Protected Branches and Repository Settings
 #
-# - **GitHub Branch Protection Rules**  
-#   <https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches>  
+# - **GitHub Branch Protection Rules**
+#   <https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches>
 #   Documentation on configuring branch protection.
 #
-# - **GitLab Protected Branches**  
-#   <https://docs.gitlab.com/ee/user/project/protected_branches.html>  
+# - **GitLab Protected Branches**
+#   <https://docs.gitlab.com/ee/user/project/protected_branches.html>
 #   GitLab's branch protection features.
 #
-# - **CODEOWNERS**  
-#   <https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners>  
+# - **CODEOWNERS**
+#   <https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners>
 #   Automatic review requests based on file ownership.
 #
 # ### Research Software Collaboration
 #
-# - **The Turing Way**  
-#   <https://the-turing-way.netlify.app/>  
+# - **The Turing Way**
+#   <https://the-turing-way.netlify.app/>
 #   Handbook for reproducible research, including collaboration practices.
 #
-# - **Software Carpentry - Git for Teams**  
-#   <https://swcarpentry.github.io/git-novice/>  
+# - **Software Carpentry - Git for Teams**
+#   <https://swcarpentry.github.io/git-novice/>
 #   Introductory material on version control for collaborative research.
 #
-# - **FAIR Principles for Research Software**  
-#   <https://doi.org/10.15497/RDA00068>  
+# - **FAIR Principles for Research Software**
+#   <https://doi.org/10.15497/RDA00068>
 #   Findable, Accessible, Interoperable, and Reusable research software.
 #
 # ### Notes

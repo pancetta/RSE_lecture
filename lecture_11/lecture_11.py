@@ -190,13 +190,9 @@ fair_data = {
         "units": "degrees_Celsius",
         "measurement_technique": "PT100 RTD sensor, accuracy ±0.1°C",
         "instrument": "Vaisala HMP155",
-        "related_publication": "10.1234/journal.2026.123"
+        "related_publication": "10.1234/journal.2026.123",
     },
-    "data": {
-        "dates": ["2026-02-01", "2026-02-02", "2026-02-03", 
-                  "2026-02-04", "2026-02-05"],
-        "temperature": temperature_data
-    }
+    "data": {"dates": ["2026-02-01", "2026-02-02", "2026-02-03", "2026-02-04", "2026-02-05"], "temperature": temperature_data},
 }
 
 print("FAIR metadata example:")
@@ -350,7 +346,7 @@ np.random.seed(42)
 
 # Use cross-platform temporary directory
 temp_dir = tempfile.gettempdir()
-hdf5_file = os.path.join(temp_dir, 'climate_simulation.h5')
+hdf5_file = os.path.join(temp_dir, "climate_simulation.h5")
 
 # Simulate temperature data (in Kelvin, typical range 200-320K)
 time_steps = 365
@@ -383,48 +379,47 @@ print(f"Memory size: {temperature.nbytes / 1e6:.1f} MB")
 
 # %%
 # Create HDF5 file with comprehensive metadata
-with h5py.File(hdf5_file, 'w') as f:
+with h5py.File(hdf5_file, "w") as f:
     # Root-level metadata (FAIR principles)
-    f.attrs['title'] = 'Climate Model Simulation - Temperature Data'
-    f.attrs['institution'] = 'Research Software Engineering Course'
-    f.attrs['creator'] = 'Lecture 11 Example'
-    f.attrs['created'] = '2026-02-10'
-    f.attrs['version'] = '1.0'
-    f.attrs['license'] = 'CC-BY-4.0'
-    f.attrs['description'] = ('Daily global temperature simulation from a '
-                              'simplified climate model')
-    f.attrs['conventions'] = 'CF-1.8'  # Climate and Forecast conventions
-    
+    f.attrs["title"] = "Climate Model Simulation - Temperature Data"
+    f.attrs["institution"] = "Research Software Engineering Course"
+    f.attrs["creator"] = "Lecture 11 Example"
+    f.attrs["created"] = "2026-02-10"
+    f.attrs["version"] = "1.0"
+    f.attrs["license"] = "CC-BY-4.0"
+    f.attrs["description"] = "Daily global temperature simulation from a " "simplified climate model"
+    f.attrs["conventions"] = "CF-1.8"  # Climate and Forecast conventions
+
     # Create groups for organization (like directories)
-    model_group = f.create_group('model_output')
-    coord_group = f.create_group('coordinates')
-    
+    model_group = f.create_group("model_output")
+    coord_group = f.create_group("coordinates")
+
     # Store the temperature data with compression
     temp_dataset = model_group.create_dataset(
-        'temperature',
+        "temperature",
         data=temperature,
-        compression='gzip',
+        compression="gzip",
         compression_opts=6,  # Compression level 1-9
-        chunks=(30, 90, 180)  # Chunk size for efficient partial I/O
+        chunks=(30, 90, 180),  # Chunk size for efficient partial I/O
     )
-    
+
     # Dataset-specific metadata
-    temp_dataset.attrs['units'] = 'Kelvin'
-    temp_dataset.attrs['long_name'] = 'Surface Air Temperature'
-    temp_dataset.attrs['standard_name'] = 'air_temperature'
-    temp_dataset.attrs['valid_range'] = [0, 350]
-    temp_dataset.attrs['missing_value'] = -999.0
-    
+    temp_dataset.attrs["units"] = "Kelvin"
+    temp_dataset.attrs["long_name"] = "Surface Air Temperature"
+    temp_dataset.attrs["standard_name"] = "air_temperature"
+    temp_dataset.attrs["valid_range"] = [0, 350]
+    temp_dataset.attrs["missing_value"] = -999.0
+
     # Store coordinate information
-    coord_group.create_dataset('time', data=time)
-    coord_group.create_dataset('latitude', data=lat)
-    coord_group.create_dataset('longitude', data=lon)
-    
+    coord_group.create_dataset("time", data=time)
+    coord_group.create_dataset("latitude", data=lat)
+    coord_group.create_dataset("longitude", data=lon)
+
     # Add coordinate metadata
-    coord_group['time'].attrs['units'] = 'days since 2026-01-01'
-    coord_group['time'].attrs['calendar'] = 'gregorian'
-    coord_group['latitude'].attrs['units'] = 'degrees_north'
-    coord_group['longitude'].attrs['units'] = 'degrees_east'
+    coord_group["time"].attrs["units"] = "days since 2026-01-01"
+    coord_group["time"].attrs["calendar"] = "gregorian"
+    coord_group["latitude"].attrs["units"] = "degrees_north"
+    coord_group["longitude"].attrs["units"] = "degrees_east"
 
 print(f"✅ HDF5 file created: {hdf5_file}")
 
@@ -438,24 +433,24 @@ print(f"Compression ratio: {temperature.nbytes / os.path.getsize(hdf5_file):.1f}
 
 # %%
 # Read the HDF5 file
-with h5py.File(hdf5_file, 'r') as f:
+with h5py.File(hdf5_file, "r") as f:
     # Explore the file structure
     print("File structure:")
     print(f"  Root attributes: {list(f.attrs.keys())}")
     print(f"  Groups: {list(f.keys())}")
-    
+
     # Access metadata (FAIR Findability)
     print(f"\nTitle: {f.attrs['title']}")
     print(f"License: {f.attrs['license']}")
     print(f"Description: {f.attrs['description']}")
-    
+
     # Navigate hierarchy
-    temp = f['model_output/temperature']
+    temp = f["model_output/temperature"]
     print(f"\nTemperature dataset:")
     print(f"  Shape: {temp.shape}")
     print(f"  Units: {temp.attrs['units']}")
     print(f"  Standard name: {temp.attrs['standard_name']}")
-    
+
     # Partial I/O - read only a subset (very efficient for large files!)
     # Get temperature for first week at equator
     subset = temp[0:7, 90, :]  # First 7 days, equator (lat index 90), all longitudes
@@ -680,7 +675,7 @@ import tempfile
 
 # Use cross-platform temporary directory
 temp_dir = tempfile.gettempdir()
-db_file = os.path.join(temp_dir, 'materials_experiments.db')
+db_file = os.path.join(temp_dir, "materials_experiments.db")
 
 # Remove old database if it exists to ensure clean run
 if os.path.exists(db_file):
@@ -691,7 +686,7 @@ conn = sqlite3.connect(db_file)
 cursor = conn.cursor()
 
 # Create tables with proper schema
-cursor.execute('''
+cursor.execute("""
 CREATE TABLE experiments (
     experiment_id INTEGER PRIMARY KEY AUTOINCREMENT,
     experiment_name TEXT NOT NULL,
@@ -703,9 +698,9 @@ CREATE TABLE experiments (
     metadata TEXT,  -- JSON for flexible metadata
     created_at TEXT DEFAULT CURRENT_TIMESTAMP
 )
-''')
+""")
 
-cursor.execute('''
+cursor.execute("""
 CREATE TABLE measurements (
     measurement_id INTEGER PRIMARY KEY AUTOINCREMENT,
     experiment_id INTEGER NOT NULL,
@@ -716,72 +711,89 @@ CREATE TABLE measurements (
     uncertainty REAL,
     FOREIGN KEY (experiment_id) REFERENCES experiments (experiment_id)
 )
-''')
+""")
 
 # Create index for fast queries
-cursor.execute('''
+cursor.execute("""
 CREATE INDEX idx_experiment_date ON experiments(date_conducted)
-''')
+""")
 
-cursor.execute('''
+cursor.execute("""
 CREATE INDEX idx_measurement_property ON measurements(property_name)
-''')
+""")
 
 # Insert sample experiments with FAIR metadata
 experiments = [
     {
-        'experiment_name': 'Graphene_Synthesis_001',
-        'researcher': 'Dr. Chen',
-        'date_conducted': '2026-02-01',
-        'temperature': 1200.0,
-        'pressure': 0.001,
-        'notes': 'Initial synthesis test with optimal parameters',
-        'metadata': json.dumps({
-            'doi': '10.5281/zenodo.experiment001',
-            'protocol': 'CVD_standard_v2.1',
-            'substrate': 'copper_foil',
-            'gas_mixture': {'CH4': 0.05, 'H2': 0.95}
-        })
+        "experiment_name": "Graphene_Synthesis_001",
+        "researcher": "Dr. Chen",
+        "date_conducted": "2026-02-01",
+        "temperature": 1200.0,
+        "pressure": 0.001,
+        "notes": "Initial synthesis test with optimal parameters",
+        "metadata": json.dumps(
+            {
+                "doi": "10.5281/zenodo.experiment001",
+                "protocol": "CVD_standard_v2.1",
+                "substrate": "copper_foil",
+                "gas_mixture": {"CH4": 0.05, "H2": 0.95},
+            }
+        ),
     },
     {
-        'experiment_name': 'Graphene_Synthesis_002',
-        'researcher': 'Dr. Chen',
-        'date_conducted': '2026-02-03',
-        'temperature': 1150.0,
-        'pressure': 0.001,
-        'notes': 'Lower temperature test',
-        'metadata': json.dumps({
-            'doi': '10.5281/zenodo.experiment002',
-            'protocol': 'CVD_standard_v2.1',
-            'substrate': 'copper_foil',
-            'gas_mixture': {'CH4': 0.05, 'H2': 0.95}
-        })
-    }
+        "experiment_name": "Graphene_Synthesis_002",
+        "researcher": "Dr. Chen",
+        "date_conducted": "2026-02-03",
+        "temperature": 1150.0,
+        "pressure": 0.001,
+        "notes": "Lower temperature test",
+        "metadata": json.dumps(
+            {
+                "doi": "10.5281/zenodo.experiment002",
+                "protocol": "CVD_standard_v2.1",
+                "substrate": "copper_foil",
+                "gas_mixture": {"CH4": 0.05, "H2": 0.95},
+            }
+        ),
+    },
 ]
 
 for exp in experiments:
-    cursor.execute('''
+    cursor.execute(
+        """
         INSERT INTO experiments 
         (experiment_name, researcher, date_conducted, temperature, pressure, notes, metadata)
         VALUES (?, ?, ?, ?, ?, ?, ?)
-    ''', (exp['experiment_name'], exp['researcher'], exp['date_conducted'],
-          exp['temperature'], exp['pressure'], exp['notes'], exp['metadata']))
+    """,
+        (
+            exp["experiment_name"],
+            exp["researcher"],
+            exp["date_conducted"],
+            exp["temperature"],
+            exp["pressure"],
+            exp["notes"],
+            exp["metadata"],
+        ),
+    )
 
 # Insert measurements for experiment 1
 measurements_exp1 = [
-    (1, 0.0, 'thickness', 1.2, 'nanometers', 0.1),
-    (1, 0.5, 'thickness', 1.5, 'nanometers', 0.1),
-    (1, 1.0, 'thickness', 2.1, 'nanometers', 0.1),
-    (1, 0.0, 'conductivity', 850, 'S/m', 50),
-    (1, 1.0, 'conductivity', 920, 'S/m', 50),
+    (1, 0.0, "thickness", 1.2, "nanometers", 0.1),
+    (1, 0.5, "thickness", 1.5, "nanometers", 0.1),
+    (1, 1.0, "thickness", 2.1, "nanometers", 0.1),
+    (1, 0.0, "conductivity", 850, "S/m", 50),
+    (1, 1.0, "conductivity", 920, "S/m", 50),
 ]
 
 for meas in measurements_exp1:
-    cursor.execute('''
+    cursor.execute(
+        """
         INSERT INTO measurements 
         (experiment_id, measurement_time, property_name, value, unit, uncertainty)
         VALUES (?, ?, ?, ?, ?, ?)
-    ''', meas)
+    """,
+        meas,
+    )
 
 conn.commit()
 print("✅ Database created with experiments and measurements")
@@ -791,44 +803,44 @@ print("✅ Database created with experiments and measurements")
 
 # %%
 # Query 1: Get all experiments by date
-cursor.execute('''
+cursor.execute("""
     SELECT experiment_name, researcher, date_conducted, temperature
     FROM experiments
     ORDER BY date_conducted
-''')
+""")
 
 print("All experiments:")
 for row in cursor.fetchall():
     print(f"  {row[0]}: {row[2]}, {row[3]}K by {row[1]}")
 
 # Query 2: Get average thickness over time for experiment 1
-cursor.execute('''
+cursor.execute("""
     SELECT measurement_time, AVG(value) as avg_thickness, AVG(uncertainty) as avg_uncertainty
     FROM measurements
     WHERE experiment_id = 1 AND property_name = 'thickness'
     GROUP BY measurement_time
     ORDER BY measurement_time
-''')
+""")
 
 print("\nThickness evolution (Experiment 1):")
 for row in cursor.fetchall():
     print(f"  Time {row[0]:.1f}h: {row[1]:.2f} ± {row[2]:.2f} nm")
 
 # Query 3: Find experiments with temperature above 1175K
-cursor.execute('''
+cursor.execute("""
     SELECT experiment_name, temperature, pressure
     FROM experiments
     WHERE temperature > 1175
-''')
+""")
 
 print("\nHigh-temperature experiments:")
 for row in cursor.fetchall():
     print(f"  {row[0]}: {row[1]}K, {row[2]} Pa")
 
 # Query 4: Get metadata for specific experiment
-cursor.execute('''
+cursor.execute("""
     SELECT metadata FROM experiments WHERE experiment_name = 'Graphene_Synthesis_001'
-''')
+""")
 metadata_json = cursor.fetchone()[0]
 metadata = json.loads(metadata_json)
 print(f"\nExperiment metadata:")
@@ -888,58 +900,55 @@ conn.close()
 #
 # **1. Range Checks**
 
+
 # %%
 def validate_temperature_data(temperature, min_valid=-100, max_valid=60):
     """Validate temperature data is in reasonable range for Earth surface.
-    
+
     Args:
         temperature: Array of temperature values in Celsius
         min_valid: Minimum valid temperature (default: -100°C)
         max_valid: Maximum valid temperature (default: 60°C)
-    
+
     Returns:
         dict with validation results
     """
     import numpy as np
-    
+
     temp_array = np.asarray(temperature)
-    
+
     # Check for NaN/Inf
     n_nan = np.isnan(temp_array).sum()
     n_inf = np.isinf(temp_array).sum()
-    
+
     # Check range
     below_min = (temp_array < min_valid).sum()
     above_max = (temp_array > max_valid).sum()
-    
+
     # Statistics
     if len(temp_array) > 0:
         mean_temp = np.nanmean(temp_array)
         std_temp = np.nanstd(temp_array)
     else:
         mean_temp = std_temp = np.nan
-    
+
     # Check all validity conditions
-    all_conditions = [
-        n_nan == 0,
-        n_inf == 0,
-        below_min == 0,
-        above_max == 0
-    ]
+    all_conditions = [n_nan == 0, n_inf == 0, below_min == 0, above_max == 0]
     valid = all(all_conditions)
-    
+
     return {
-        'valid': valid,
-        'n_points': len(temp_array),
-        'n_nan': n_nan,
-        'n_inf': n_inf,
-        'n_below_min': below_min,
-        'n_above_max': above_max,
-        'mean': mean_temp,
-        'std': std_temp,
-        'min': np.nanmin(temp_array) if len(temp_array) > 0 else np.nan,
-        'max': np.nanmax(temp_array) if len(temp_array) > 0 else np.nan
+        "valid": valid,
+        "n_points": len(temp_array),
+        "n_nan": n_nan,
+        "n_inf": n_inf,
+        "n_below_min": below_min,
+        "n_above_max": above_max,
+        "mean": mean_temp,
+        "std": std_temp,
+        "min": np.nanmin(temp_array) if len(temp_array) > 0 else np.nan,
+        "max": np.nanmax(temp_array) if len(temp_array) > 0 else np.nan,
     }
+
 
 # Test with good and bad data
 good_temps = [15.2, 16.1, 14.8, 15.9, 16.3]
@@ -960,31 +969,33 @@ print(f"  Out of range: {result['n_above_max']}")
 # %% [markdown]
 # **2. Consistency Checks**
 
+
 # %%
 def validate_data_consistency(data_dict):
     """Check that all arrays have consistent lengths.
-    
+
     Important for ensuring aligned time series or spatial data.
     """
     lengths = {key: len(val) for key, val in data_dict.items()}
     unique_lengths = set(lengths.values())
-    
+
     if len(unique_lengths) == 1:
         return True, f"All arrays have length {unique_lengths.pop()}"
     else:
         return False, f"Inconsistent lengths: {lengths}"
 
+
 # Example
 data_good = {
-    'time': [0, 1, 2, 3, 4],
-    'temperature': [15.2, 16.1, 14.8, 15.9, 16.3],
-    'pressure': [1013, 1012, 1014, 1013, 1012]
+    "time": [0, 1, 2, 3, 4],
+    "temperature": [15.2, 16.1, 14.8, 15.9, 16.3],
+    "pressure": [1013, 1012, 1014, 1013, 1012],
 }
 
 data_bad = {
-    'time': [0, 1, 2, 3],  # Missing one point!
-    'temperature': [15.2, 16.1, 14.8, 15.9, 16.3],
-    'pressure': [1013, 1012, 1014, 1013, 1012]
+    "time": [0, 1, 2, 3],  # Missing one point!
+    "temperature": [15.2, 16.1, 14.8, 15.9, 16.3],
+    "pressure": [1013, 1012, 1014, 1013, 1012],
 }
 
 valid, msg = validate_data_consistency(data_good)
@@ -996,57 +1007,52 @@ print(f"Bad data: {valid} - {msg}")
 # %% [markdown]
 # **3. Metadata Validation**
 
+
 # %%
 def validate_fair_metadata(metadata):
     """Check that essential FAIR metadata is present."""
-    required_fields = ['title', 'creator', 'created', 'license']
-    recommended_fields = ['description', 'keywords', 'identifier']
-    
+    required_fields = ["title", "creator", "created", "license"]
+    recommended_fields = ["description", "keywords", "identifier"]
+
     missing_required = [f for f in required_fields if f not in metadata]
     missing_recommended = [f for f in recommended_fields if f not in metadata]
-    
+
     issues = []
     if missing_required:
         issues.append(f"Missing required fields: {missing_required}")
     if missing_recommended:
         issues.append(f"Missing recommended fields: {missing_recommended}")
-    
+
     valid = len(missing_required) == 0
-    
+
     # Calculate completeness score
     total_fields = len(required_fields + recommended_fields)
     missing_fields = len(missing_required) + len(missing_recommended)
     completeness = (total_fields - missing_fields) / total_fields
-    
-    return {
-        'valid': valid,
-        'issues': issues,
-        'completeness': completeness
-    }
+
+    return {"valid": valid, "issues": issues, "completeness": completeness}
+
 
 # Example
 metadata_complete = {
-    'title': 'Temperature Dataset',
-    'creator': 'Dr. Smith',
-    'created': '2026-02-10',
-    'license': 'CC-BY-4.0',
-    'description': 'Daily measurements',
-    'keywords': ['temperature', 'climate'],
-    'identifier': '10.5281/zenodo.12345'
+    "title": "Temperature Dataset",
+    "creator": "Dr. Smith",
+    "created": "2026-02-10",
+    "license": "CC-BY-4.0",
+    "description": "Daily measurements",
+    "keywords": ["temperature", "climate"],
+    "identifier": "10.5281/zenodo.12345",
 }
 
-metadata_incomplete = {
-    'title': 'Temperature Dataset',
-    'creator': 'Dr. Smith'
-}
+metadata_incomplete = {"title": "Temperature Dataset", "creator": "Dr. Smith"}
 
 result = validate_fair_metadata(metadata_complete)
 print(f"Complete metadata: Valid={result['valid']}, Completeness={result['completeness']:.0%}")
 
 result = validate_fair_metadata(metadata_incomplete)
 print(f"Incomplete metadata: Valid={result['valid']}, Completeness={result['completeness']:.0%}")
-if result['issues']:
-    for issue in result['issues']:
+if result["issues"]:
+    for issue in result["issues"]:
         print(f"  - {issue}")
 
 # %% [markdown]
@@ -1091,16 +1097,16 @@ if result['issues']:
 #
 # ### Format Recommendations by Field
 #
-# **Climate Science**: NetCDF with CF conventions  
-# **Genomics**: FASTQ, BAM/SAM, HDF5 for matrices  
-# **Astronomy**: FITS (Flexible Image Transport System)  
-# **Medical Imaging**: DICOM, NIfTI  
-# **Microscopy**: OME-TIFF (Open Microscopy Environment)  
-# **Geospatial**: GeoTIFF, Shapefile, GeoJSON  
-# **General tabular**: CSV for small, Parquet for large  
-# **General arrays**: HDF5  
-# **Time series**: HDF5, InfluxDB, or domain-specific  
-# **Relational**: SQLite for portable, PostgreSQL for server  
+# **Climate Science**: NetCDF with CF conventions
+# **Genomics**: FASTQ, BAM/SAM, HDF5 for matrices
+# **Astronomy**: FITS (Flexible Image Transport System)
+# **Medical Imaging**: DICOM, NIfTI
+# **Microscopy**: OME-TIFF (Open Microscopy Environment)
+# **Geospatial**: GeoTIFF, Shapefile, GeoJSON
+# **General tabular**: CSV for small, Parquet for large
+# **General arrays**: HDF5
+# **Time series**: HDF5, InfluxDB, or domain-specific
+# **Relational**: SQLite for portable, PostgreSQL for server
 #
 # ### Common Pitfalls to Avoid
 #
@@ -1206,8 +1212,8 @@ if result['issues']:
 #
 # ## References
 #
-# - Wilkinson et al. (2016). "The FAIR Guiding Principles for scientific data 
-#   management and stewardship". Scientific Data, 3:160018. 
+# - Wilkinson et al. (2016). "The FAIR Guiding Principles for scientific data
+#   management and stewardship". Scientific Data, 3:160018.
 #   DOI: 10.1038/sdata.2016.18
 #
 # - Barker et al. (2022). "Introducing the FAIR Principles for research software".

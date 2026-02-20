@@ -216,7 +216,7 @@
 # **2. Prompt Engineering**
 # - **Skill**: Crafting clear, specific requests that get useful AI responses
 # - **Why essential**: Better prompts → better suggestions → less time debugging
-# - **How to develop**: 
+# - **How to develop**:
 #   - Be specific: "Generate pytest test for temperature validation with edge cases"
 #     vs "write tests"
 #   - Provide context: "For climate data with possible sensor errors..."
@@ -225,7 +225,7 @@
 # **3. Deep Domain Knowledge**
 # - **Skill**: Understanding the science behind your code
 # - **Why essential**: Only you can judge if the algorithm matches the scientific question
-# - **How to develop**: 
+# - **How to develop**:
 #   - Collaborate closely with domain scientists
 #   - Read the papers describing methods you implement
 #   - Attend domain-specific conferences, not just software ones
@@ -233,7 +233,7 @@
 # **4. Software Engineering Fundamentals**
 # - **Skill**: Testing, version control, design patterns, performance optimization
 # - **Why essential**: AI can write individual functions but can't architect systems
-# - **How to develop**: 
+# - **How to develop**:
 #   - Study classic software engineering (Clean Code, Design Patterns)
 #   - Practice test-driven development (write tests first, then use AI for implementation)
 #   - Learn to profile and optimize—AI suggestions often prioritize clarity over performance
@@ -241,7 +241,7 @@
 # **5. Ethical and Legal Awareness**
 # - **Skill**: Understanding privacy, licensing, research integrity
 # - **Why essential**: AI doesn't understand these constraints
-# - **How to develop**: 
+# - **How to develop**:
 #   - Learn about research ethics and data protection (GDPR, HIPAA)
 #   - Understand open-source licenses
 #   - Follow institutional policies on data and code
@@ -249,7 +249,7 @@
 # **6. Effective Communication**
 # - **Skill**: Explaining technical decisions to non-technical researchers
 # - **Why essential**: AI can't translate between research and software perspectives
-# - **How to develop**: 
+# - **How to develop**:
 #   - Practice explaining code in terms of scientific impact
 #   - Write documentation for your future self, not just today's you
 #   - Mentor others—teaching clarifies your own understanding
@@ -353,14 +353,14 @@
 # ```python
 #     """
 #     Calculate rolling statistics for time series data.
-#     
+#
 #     Parameters
 #     ----------
 #     data : list or np.ndarray
 #         Time series data
 #     window_size : int
 #         Size of the rolling window
-#         
+#
 #     Returns
 #     -------
 #     tuple
@@ -428,17 +428,16 @@
 # - Missing data
 # - Temporal consistency
 
+
 # %%
-def validate_temperature_data(temperatures, timestamps=None,
-                              min_valid=-273.15, max_valid=100,
-                              std_threshold=3.0):
+def validate_temperature_data(temperatures, timestamps=None, min_valid=-273.15, max_valid=100, std_threshold=3.0):
     """
     Validate temperature measurement data for physical and statistical correctness.
-    
+
     This function checks experimental temperature data for common issues that could
     indicate sensor errors, data corruption, or measurement problems. It's designed
     for quality control in research data pipelines.
-    
+
     Parameters
     ----------
     temperatures : list or np.ndarray
@@ -451,7 +450,7 @@ def validate_temperature_data(temperatures, timestamps=None,
         Maximum expected temperature for the application (default: 100°C)
     std_threshold : float, optional
         Number of standard deviations for outlier detection (default: 3.0)
-        
+
     Returns
     -------
     dict
@@ -460,14 +459,14 @@ def validate_temperature_data(temperatures, timestamps=None,
         - 'errors': list of error messages
         - 'warnings': list of warning messages
         - 'statistics': dict of data statistics
-    
+
     Examples
     --------
     >>> temps = [20.5, 21.0, 20.8, 22.1, 21.5]
     >>> result = validate_temperature_data(temps)
     >>> result['valid']
     True
-    
+
     Notes
     -----
     This function is conservative - it will flag potential issues for human review
@@ -475,61 +474,54 @@ def validate_temperature_data(temperatures, timestamps=None,
     investigate outliers than to automatically discard potentially valid measurements.
     """
     import numpy as np
-    
+
     # Convert to numpy array for easier manipulation
     temps = np.array(temperatures)
-    
+
     # Initialize results
     errors = []
     warnings = []
     statistics = {}
-    
+
     # Check for missing data
     if np.any(np.isnan(temps)):
         n_missing = np.sum(np.isnan(temps))
         warnings.append(f"Found {n_missing} missing values ({n_missing/len(temps)*100:.1f}%)")
-    
+
     # Work with non-NaN values for remaining checks
     valid_temps = temps[~np.isnan(temps)]
-    
+
     if len(valid_temps) == 0:
         errors.append("All temperature values are missing")
-        return {
-            'valid': False,
-            'errors': errors,
-            'warnings': warnings,
-            'statistics': {}
-        }
-    
+        return {"valid": False, "errors": errors, "warnings": warnings, "statistics": {}}
+
     # Check for physically impossible values
     if np.any(valid_temps < min_valid):
         impossible_count = np.sum(valid_temps < min_valid)
         min_value = np.min(valid_temps)
         errors.append(
-            f"Found {impossible_count} physically impossible values "
-            f"(minimum: {min_value:.2f}°C, below {min_valid}°C)"
+            f"Found {impossible_count} physically impossible values " f"(minimum: {min_value:.2f}°C, below {min_valid}°C)"
         )
-    
+
     if np.any(valid_temps > max_valid):
         extreme_count = np.sum(valid_temps > max_valid)
         max_value = np.max(valid_temps)
         warnings.append(
-            f"Found {extreme_count} values above expected maximum "
-            f"(maximum: {max_value:.2f}°C, threshold: {max_valid}°C)"
+            f"Found {extreme_count} values above expected maximum " f"(maximum: {max_value:.2f}°C, threshold: {max_valid}°C)"
         )
-    
+
     # Calculate statistics
     mean_temp = np.mean(valid_temps)
     std_temp = np.std(valid_temps)
     statistics = {
-        'count': len(valid_temps),
-        'mean': mean_temp,
-        'std': std_temp,
-        'min': np.min(valid_temps),
-        'max': np.max(valid_temps),
-        'median': np.median(valid_temps)
+        "count": len(valid_temps),
+        "mean": mean_temp,
+        "std": std_temp,
+        "min": np.min(valid_temps),
+        "max": np.max(valid_temps),
+        "median": np.median(valid_temps),
     }
-    
+
     # Check for statistical outliers using z-score
     if std_temp > 0:  # Avoid division by zero
         z_scores = np.abs((valid_temps - mean_temp) / std_temp)
@@ -542,7 +534,7 @@ def validate_temperature_data(temperatures, timestamps=None,
                 f"(>{std_threshold} std devs from mean): "
                 f"[{', '.join(f'{v:.2f}' for v in outlier_values[:5])}...]"
             )
-    
+
     # Temporal consistency check (if timestamps provided)
     if timestamps is not None and len(timestamps) == len(temps):
         # Check for rapid temperature changes that might indicate sensor errors
@@ -555,16 +547,11 @@ def validate_temperature_data(temperatures, timestamps=None,
                     f"Large temperature jump detected: {max_change:.2f}°C "
                     "between consecutive measurements (possible sensor error)"
                 )
-    
+
     # Determine overall validity
     valid = len(errors) == 0
-    
-    return {
-        'valid': valid,
-        'errors': errors,
-        'warnings': warnings,
-        'statistics': statistics
-    }
+
+    return {"valid": valid, "errors": errors, "warnings": warnings, "statistics": statistics}
 
 
 # Test with sample data
@@ -695,6 +682,7 @@ print(f"Type: {type(modern_array)}")
 #
 # **Example - Off-by-One Error**:
 
+
 # %%
 def calculate_differences_buggy(values):
     """Calculate differences between consecutive values (BUGGY VERSION)."""
@@ -744,7 +732,7 @@ import tempfile
 def load_user_file_insecure(filename):
     """
     Load a file from user directory (INSECURE - for demonstration only).
-    
+
     VULNERABILITY: Path traversal attack possible!
     User could provide: "../../../etc/passwd"
     """
@@ -758,22 +746,22 @@ def load_user_file_insecure(filename):
 def load_user_file_secure(filename):
     """
     Load a file from user directory (SECURE VERSION).
-    
+
     Protection: Validates filename has no path components.
     """
     # Only allow simple filenames, no directory traversal
-    if os.path.sep in filename or filename.startswith('.'):
+    if os.path.sep in filename or filename.startswith("."):
         raise ValueError(f"Invalid filename: {filename}")
-    
+
     base_dir = tempfile.gettempdir()
     filepath = os.path.join(base_dir, filename)
-    
+
     # Additional check: ensure final path is still within base_dir
     real_base = os.path.realpath(base_dir)
     real_path = os.path.realpath(filepath)
     if not real_path.startswith(real_base):
         raise ValueError("Path traversal detected")
-    
+
     return filepath
 
 

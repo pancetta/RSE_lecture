@@ -93,8 +93,8 @@
 # %% [markdown]
 # ### Branching Workflow Example
 #
-# Let's walk through a typical workflow. This is the pattern you'll use countless times when 
-# developing software: create a branch for your work, make your changes, and then merge them back. 
+# Let's walk through a typical workflow. This is the pattern you'll use countless times when
+# developing software: create a branch for your work, make your changes, and then merge them back.
 # Working on a branch keeps your main code stable while you experiment or develop new features.
 #
 # ```bash
@@ -120,21 +120,21 @@
 # git log --oneline --graph
 # ```
 #
-# **Pro tip**: Use descriptive branch names like `fix-data-loading-bug` or `add-visualization-feature` 
-# rather than generic names like `test` or `new-branch`. This makes it easier to remember what each 
+# **Pro tip**: Use descriptive branch names like `fix-data-loading-bug` or `add-visualization-feature`
+# rather than generic names like `test` or `new-branch`. This makes it easier to remember what each
 # branch is for, especially when you're working on multiple features simultaneously.
 
 # %% [markdown]
 # ### Merging Branches
 #
-# Once your feature is complete and tested, merge it back into the main branch. Git provides 
-# different types of merges depending on the situation. Understanding these helps you maintain 
+# Once your feature is complete and tested, merge it back into the main branch. Git provides
+# different types of merges depending on the situation. Understanding these helps you maintain
 # a clean, readable Git history.
 #
 # #### Fast-Forward Merge
 #
-# When main hasn't changed since you branched, Git can do a "fast-forward" merge. This simply 
-# moves the main branch pointer forward to include your commits—no merge commit is created. 
+# When main hasn't changed since you branched, Git can do a "fast-forward" merge. This simply
+# moves the main branch pointer forward to include your commits—no merge commit is created.
 # It's the simplest and cleanest type of merge.
 #
 # ```bash
@@ -150,8 +150,8 @@
 #
 # #### Three-Way Merge
 #
-# When both branches have new commits (for example, if someone else pushed changes to main while 
-# you were working on your feature), Git creates a special "merge commit" that combines the changes. 
+# When both branches have new commits (for example, if someone else pushed changes to main while
+# you were working on your feature), Git creates a special "merge commit" that combines the changes.
 # This preserves the full history of both branches.
 #
 # ```bash
@@ -163,16 +163,16 @@
 # # Save and close to complete the merge
 # ```
 #
-# **When does this happen?** This is common in collaborative projects. While you're working on your 
-# feature branch, your colleague merges their changes into main. When you go to merge, Git needs to 
+# **When does this happen?** This is common in collaborative projects. While you're working on your
+# feature branch, your colleague merges their changes into main. When you go to merge, Git needs to
 # reconcile both sets of changes.
 
 # %% [markdown]
 # ### Handling Merge Conflicts
 #
-# Conflicts occur when the same lines are changed in both branches. This is actually quite common 
-# and nothing to be afraid of! Git is smart enough to merge most changes automatically, but when 
-# two people edit the exact same lines, Git needs you to decide which version to keep (or how to 
+# Conflicts occur when the same lines are changed in both branches. This is actually quite common
+# and nothing to be afraid of! Git is smart enough to merge most changes automatically, but when
+# two people edit the exact same lines, Git needs you to decide which version to keep (or how to
 # combine them).
 #
 # ```bash
@@ -203,15 +203,15 @@
 # git commit -m "Merge feature-branch, resolved conflicts"
 # ```
 #
-# **How to resolve conflicts**: Open the file and look for the `<<<<<<<`, `=======`, and `>>>>>>>` 
-# markers. The section between `<<<<<<< HEAD` and `=======` is your current branch's version. The 
-# section between `=======` and `>>>>>>> feature-branch` is the incoming branch's version. Delete 
-# the markers and edit the code to include the changes you want to keep. Sometimes you'll keep one 
-# version, sometimes the other, and sometimes you'll combine both. After editing, save the file, 
+# **How to resolve conflicts**: Open the file and look for the `<<<<<<<`, `=======`, and `>>>>>>>`
+# markers. The section between `<<<<<<< HEAD` and `=======` is your current branch's version. The
+# section between `=======` and `>>>>>>> feature-branch` is the incoming branch's version. Delete
+# the markers and edit the code to include the changes you want to keep. Sometimes you'll keep one
+# version, sometimes the other, and sometimes you'll combine both. After editing, save the file,
 # stage it with `git add`, and complete the merge with `git commit`.
 #
-# **Common mistake**: Forgetting to remove the conflict markers (`<<<<<<<`, etc.) from your code. 
-# If you leave them in, your code won't run! Always check that the final version is valid code 
+# **Common mistake**: Forgetting to remove the conflict markers (`<<<<<<<`, etc.) from your code.
+# If you leave them in, your code won't run! Always check that the final version is valid code
 # before committing.
 
 # %% [markdown]
@@ -232,8 +232,8 @@
 # %% [markdown]
 # ### The .gitignore File
 #
-# Not all files should be tracked by Git. Some files are generated automatically (like compiled code), 
-# some are too large (like data files), and some contain sensitive information (like API keys). The 
+# Not all files should be tracked by Git. Some files are generated automatically (like compiled code),
+# some are too large (like data files), and some contain sensitive information (like API keys). The
 # `.gitignore` file tells Git which files to ignore completely.
 #
 # Use `.gitignore` to exclude:
@@ -243,8 +243,8 @@
 # - **Sensitive data**: Passwords, API keys, tokens – NEVER commit these!
 # - **Large data files**: Git isn't designed for large binary files; use Git LFS or store separately
 #
-# **Why this matters**: Including generated files in Git creates unnecessary noise in your history 
-# and can cause merge conflicts when different machines generate slightly different versions. Worse, 
+# **Why this matters**: Including generated files in Git creates unnecessary noise in your history
+# and can cause merge conflicts when different machines generate slightly different versions. Worse,
 # accidentally committing API keys or passwords can be a serious security breach.
 #
 # #### Common .gitignore Patterns
@@ -297,9 +297,9 @@
 # 5. **Commit often on branches**: Makes it easier to track progress
 
 # %% [markdown]
-# Now that you understand Git branching and merging workflows, let's explore how GitHub and GitLab 
-# extend Git with powerful collaboration features. These platforms transform Git from a personal 
-# version control tool into a collaborative research environment where teams can work together 
+# Now that you understand Git branching and merging workflows, let's explore how GitHub and GitLab
+# extend Git with powerful collaboration features. These platforms transform Git from a personal
+# version control tool into a collaborative research environment where teams can work together
 # effectively.
 
 # %% [markdown]
@@ -531,38 +531,38 @@
 # %% [markdown]
 # ## Part 3: Introduction to Python
 #
-# Python is a versatile, beginner-friendly programming language widely used in research. Now that 
-# we've covered version control, it's time to start writing code! This section introduces Python 
+# Python is a versatile, beginner-friendly programming language widely used in research. Now that
+# we've covered version control, it's time to start writing code! This section introduces Python
 # fundamentals that you'll build on in later lectures.
 #
 # ### Why Python for Research?
 #
 # - **Easy to learn**: Clear, readable syntax that resembles English
-# - **Powerful libraries**: NumPy for numerical computing, pandas for data analysis, matplotlib for 
+# - **Powerful libraries**: NumPy for numerical computing, pandas for data analysis, matplotlib for
 #   visualization, scikit-learn for machine learning, and thousands more
 # - **Interactive**: Jupyter notebooks let you explore data and test ideas interactively
 # - **Community**: Large, helpful community with extensive documentation and Stack Overflow answers
 # - **Cross-platform**: Write once, run anywhere—Windows, macOS, or Linux
 # - **Research-ready**: Used across all scientific domains from genomics to astronomy to economics
 #
-# **Fun fact**: Python is named after Monty Python's Flying Circus, not the snake! The language was 
+# **Fun fact**: Python is named after Monty Python's Flying Circus, not the snake! The language was
 # designed to be fun to use, and you'll often see Monty Python references in Python documentation.
 
 # %% [markdown]
 # ### Python Basics: Variables and Data Types
 #
 # Variables store data. Unlike some languages (like C++ or Java), Python is dynamically typed—
-# you don't need to declare what type of data a variable holds. Python figures it out automatically 
-# based on the value you assign. This makes Python code shorter and easier to read, though you need 
+# you don't need to declare what type of data a variable holds. Python figures it out automatically
+# based on the value you assign. This makes Python code shorter and easier to read, though you need
 # to be careful about what types you're working with.
 
 # %%
 # Basic data types
 project_name = "RNA Analysis"  # String
-sample_count = 42              # Integer
-temperature = 37.5             # Float
-is_complete = True             # Boolean
-nothing = None                 # None type
+sample_count = 42  # Integer
+temperature = 37.5  # Float
+is_complete = True  # Boolean
+nothing = None  # None type
 
 print(f"Project: {project_name}")
 print(f"Samples: {sample_count}")
@@ -578,14 +578,14 @@ print(f"Type of temperature: {type(temperature)}")
 print(f"Type of is_complete: {type(is_complete)}")
 
 # %% [markdown]
-# **Understanding types**: Even though you don't declare types, Python still keeps track of them 
-# internally. This matters when you try to combine values—you can't add a string to a number 
+# **Understanding types**: Even though you don't declare types, Python still keeps track of them
+# internally. This matters when you try to combine values—you can't add a string to a number
 # directly. Use the `type()` function when debugging to check what type a variable actually is.
 
 # %% [markdown]
 # ### Working with Strings
 #
-# Strings are sequences of characters—perfect for text data, DNA sequences, file paths, and more. 
+# Strings are sequences of characters—perfect for text data, DNA sequences, file paths, and more.
 # Python provides powerful string operations that you'll use constantly in research software.
 
 # %%
@@ -604,17 +604,17 @@ print(f"Count of A: {sequence.count('A')}")
 print(f"Replace A with N: {sequence.replace('A', 'N')}")
 
 # %% [markdown]
-# **String indexing**: Python uses zero-based indexing, meaning the first character is at position 
-# 0, not 1. Negative indices count from the end: -1 is the last character, -2 is second-to-last, 
-# etc. The slicing notation `[start:end]` gives you characters from `start` up to (but not including) 
-# `end`. The special slice `[::-1]` reverses a string—useful for getting the reverse complement of 
+# **String indexing**: Python uses zero-based indexing, meaning the first character is at position
+# 0, not 1. Negative indices count from the end: -1 is the last character, -2 is second-to-last,
+# etc. The slicing notation `[start:end]` gives you characters from `start` up to (but not including)
+# `end`. The special slice `[::-1]` reverses a string—useful for getting the reverse complement of
 # DNA sequences!
 
 # %% [markdown]
 # ### Lists: Ordered Collections
 #
-# Lists store multiple values in order. They are mutable (can be changed after creation), making 
-# them perfect for collecting measurements, storing sequences of results, or building up data as 
+# Lists store multiple values in order. They are mutable (can be changed after creation), making
+# them perfect for collecting measurements, storing sequences of results, or building up data as
 # your program runs. Lists are one of Python's most versatile and commonly-used data structures.
 
 # %%
@@ -633,23 +633,23 @@ measurements[0] = 23.6
 print(f"After modification: {measurements}")
 
 # %% [markdown]
-# **Lists are mutable**: Unlike strings, which can't be changed after creation (immutable), lists 
-# can be modified. You can add items with `.append()`, remove items with `.remove()`, or change 
-# individual elements by index. This mutability is powerful but requires care—if you pass a list 
+# **Lists are mutable**: Unlike strings, which can't be changed after creation (immutable), lists
+# can be modified. You can add items with `.append()`, remove items with `.remove()`, or change
+# individual elements by index. This mutability is powerful but requires care—if you pass a list
 # to a function and the function modifies it, the original list changes too!
 
 # %%
 # List operations
-genes = ['BRCA1', 'TP53', 'EGFR']
+genes = ["BRCA1", "TP53", "EGFR"]
 print(f"Genes: {genes}")
 
 # Adding elements
-genes.append('MYC')
-genes.insert(1, 'KRAS')
+genes.append("MYC")
+genes.insert(1, "KRAS")
 print(f"After adding: {genes}")
 
 # Removing elements
-genes.remove('TP53')
+genes.remove("TP53")
 print(f"After removing TP53: {genes}")
 
 last_gene = genes.pop()
@@ -671,13 +671,7 @@ print(f"Reversed: {data[::-1]}")
 
 # %%
 # Creating dictionaries
-experiment = {
-    'name': 'Temperature Study',
-    'duration_days': 30,
-    'sample_size': 150,
-    'temperature': 25.0,
-    'completed': True
-}
+experiment = {"name": "Temperature Study", "duration_days": 30, "sample_size": 150, "temperature": 25.0, "completed": True}
 
 print("Experiment details:")
 for key, value in experiment.items():
@@ -689,11 +683,11 @@ print(f"\nExperiment name: {experiment['name']}")
 print(f"Duration: {experiment['duration_days']} days")
 
 # Adding new keys
-experiment['location'] = 'Lab A'
-experiment['researcher'] = 'Dr. Smith'
+experiment["location"] = "Lab A"
+experiment["researcher"] = "Dr. Smith"
 
 # Modifying values
-experiment['completed'] = False
+experiment["completed"] = False
 
 print(f"\nUpdated experiment: {experiment}")
 
@@ -703,11 +697,11 @@ print(f"Keys: {list(experiment.keys())}")
 print(f"Values: {list(experiment.values())}")
 
 # Safe access with get()
-funding = experiment.get('funding', 'Not specified')
+funding = experiment.get("funding", "Not specified")
 print(f"Funding: {funding}")
 
 # Check if key exists
-if 'location' in experiment:
+if "location" in experiment:
     print(f"Location found: {experiment['location']}")
 
 # %% [markdown]
@@ -734,7 +728,7 @@ humidity = 65
 
 if temp >= 20 and temp <= 30:
     print("Temperature in optimal range")
-    
+
 if humidity < 70 or temp < 22:
     print("At least one parameter is outside ideal range")
 
@@ -747,7 +741,7 @@ if humidity < 70 or temp < 22:
 
 # %%
 # For loop with list
-samples = ['S1', 'S2', 'S3', 'S4']
+samples = ["S1", "S2", "S3", "S4"]
 
 print("Processing samples:")
 for sample in samples:
@@ -765,7 +759,7 @@ for i in range(10, 16):
 
 # %%
 # Enumerate for index and value
-data_files = ['exp1.csv', 'exp2.csv', 'exp3.csv']
+data_files = ["exp1.csv", "exp2.csv", "exp3.csv"]
 
 for index, filename in enumerate(data_files):
     print(f"File {index + 1}: {filename}")
@@ -793,25 +787,28 @@ print(f"Average of {len(measurements)} measurements: {average:.2f}")
 #
 # Functions organize code into reusable blocks.
 
+
 # %%
 def greet(name):
     """Greet a person by name."""
     return f"Hello, {name}!"
 
+
 # Call the function
 message = greet("Researcher")
 print(message)
+
 
 # %%
 def calculate_mean(values):
     """
     Calculate the arithmetic mean of a list of values.
-    
+
     Parameters
     ----------
     values : list
         A list of numeric values
-        
+
     Returns
     -------
     float
@@ -821,41 +818,44 @@ def calculate_mean(values):
         return 0
     return sum(values) / len(values)
 
+
 # Test the function
 data = [10.2, 10.5, 10.3, 10.4, 10.6]
 mean = calculate_mean(data)
 print(f"Mean: {mean:.2f}")
 
+
 # %%
 def analyze_sequence(sequence):
     """
     Analyze a DNA sequence.
-    
+
     Parameters
     ----------
     sequence : str
         DNA sequence string
-        
+
     Returns
     -------
     dict
         Dictionary with sequence statistics
     """
     return {
-        'length': len(sequence),
-        'gc_content': (sequence.count('G') + sequence.count('C')) / len(sequence) * 100,
-        'a_count': sequence.count('A'),
-        't_count': sequence.count('T'),
-        'g_count': sequence.count('G'),
-        'c_count': sequence.count('C')
+        "length": len(sequence),
+        "gc_content": (sequence.count("G") + sequence.count("C")) / len(sequence) * 100,
+        "a_count": sequence.count("A"),
+        "t_count": sequence.count("T"),
+        "g_count": sequence.count("G"),
+        "c_count": sequence.count("C"),
     }
+
 
 # Analyze a sequence
 dna = "ATCGATCGTAGCTAGC"
 stats = analyze_sequence(dna)
 print(f"Sequence analysis for {dna}:")
 for key, value in stats.items():
-    if key == 'gc_content':
+    if key == "gc_content":
         print(f"  {key}: {value:.1f}%")
     else:
         print(f"  {key}: {value}")
@@ -865,18 +865,19 @@ for key, value in stats.items():
 #
 # Let's combine Git, GitHub knowledge, and Python skills.
 
+
 # %%
 def process_experimental_data(data_points, threshold=25.0):
     """
     Process experimental data and filter by threshold.
-    
+
     Parameters
     ----------
     data_points : list
         List of measurements
     threshold : float
         Minimum value to include
-        
+
     Returns
     -------
     dict
@@ -884,7 +885,7 @@ def process_experimental_data(data_points, threshold=25.0):
     """
     # Filter data
     filtered = [x for x in data_points if x >= threshold]
-    
+
     # Calculate statistics
     if len(filtered) > 0:
         mean = sum(filtered) / len(filtered)
@@ -892,15 +893,16 @@ def process_experimental_data(data_points, threshold=25.0):
         max_val = max(filtered)
     else:
         mean = min_val = max_val = 0
-    
+
     return {
-        'original_count': len(data_points),
-        'filtered_count': len(filtered),
-        'mean': mean,
-        'min': min_val,
-        'max': max_val,
-        'filtered_data': filtered
+        "original_count": len(data_points),
+        "filtered_count": len(filtered),
+        "mean": mean,
+        "min": min_val,
+        "max": max_val,
+        "filtered_data": filtered,
     }
+
 
 # Example usage
 experimental_data = [23.5, 24.1, 26.8, 24.3, 27.1, 23.9, 25.5]
@@ -964,8 +966,8 @@ print(f"  Range: {results['min']:.2f} - {results['max']:.2f}")
 #
 # ### Primary Sources
 #
-# - **Research Software Engineering with Python** by The Alan Turing Institute  
-#   <https://alan-turing-institute.github.io/rse-course/html/>  
+# - **Research Software Engineering with Python** by The Alan Turing Institute
+#   <https://alan-turing-institute.github.io/rse-course/html/>
 #   Git branching workflows, collaboration patterns, and Python introduction content adapted from this course.
 #
 # - **Research Software Engineering with Python** by Damien Irving, Kate Hertweck,
@@ -976,32 +978,32 @@ print(f"  Range: {results['min']:.2f} - {results['max']:.2f}")
 #
 # ### Platform Documentation
 #
-# - **GitHub Documentation**  
-#   <https://docs.github.com/>  
+# - **GitHub Documentation**
+#   <https://docs.github.com/>
 #   - Pull Requests: <https://docs.github.com/en/pull-requests>
 #   - Forking Workflow: <https://docs.github.com/en/get-started/quickstart/fork-a-repo>
 #   - Branch Protection:
 #     <https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches>
 #   - GitHub Flow: <https://docs.github.com/en/get-started/quickstart/github-flow>
 #
-# - **GitLab Documentation**  
-#   <https://docs.gitlab.com/>  
+# - **GitLab Documentation**
+#   <https://docs.gitlab.com/>
 #   - Merge Requests: <https://docs.gitlab.com/ee/user/project/merge_requests/>
 #   - GitLab Flow: <https://docs.gitlab.com/ee/topics/gitlab_flow.html>
 #   - Forking Workflow: <https://docs.gitlab.com/ee/user/project/repository/forking_workflow.html>
 #
 # ### Additional Resources
 #
-# - **Pro Git Book** by Scott Chacon and Ben Straub  
-#   <https://git-scm.com/book/en/v2>  
+# - **Pro Git Book** by Scott Chacon and Ben Straub
+#   <https://git-scm.com/book/en/v2>
 #   Advanced Git concepts including branching, merging, and conflict resolution.
 #
-# - **Software Carpentry: Version Control with Git**  
-#   <https://swcarpentry.github.io/git-novice/>  
+# - **Software Carpentry: Version Control with Git**
+#   <https://swcarpentry.github.io/git-novice/>
 #   Collaborative Git workflows and best practices.
 #
-# - **Python Documentation**  
-#   <https://docs.python.org/3/>  
+# - **Python Documentation**
+#   <https://docs.python.org/3/>
 #   Official Python language reference for syntax and built-in types.
 #
 # ### Notes

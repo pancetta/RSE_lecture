@@ -25,37 +25,30 @@ done
 echo "✓ All Python syntax checks passed"
 echo ""
 
-echo "2. Running flake8 linting (strict)..."
-echo "--------------------------------------"
-if ! command -v flake8 &> /dev/null; then
-    echo "❌ flake8 not found. Please install the development environment:"
+echo "2. Checking code formatting with black..."
+echo "-----------------------------------------"
+if ! command -v black &> /dev/null; then
+    echo "❌ black not found. Please install the development environment:"
     echo "   make install-dev"
     echo "   or: micromamba env create -f environment-dev.yml -y"
     exit 1
 fi
-flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-echo "✓ No critical flake8 errors"
-echo ""
-
-echo "3. Running flake8 linting (full)..."
-echo "------------------------------------"
-# Run and capture output
-if flake8 . --count --statistics; then
-    echo "✓ All flake8 checks passed"
+if black --check .; then
+    echo "✓ All black formatting checks passed"
 else
     echo ""
-    echo "❌ Flake8 found issues. Please fix them before committing."
+    echo "❌ black found formatting issues. Run 'make format' or 'black .' to fix them."
     exit 1
 fi
 echo ""
 
-echo "4. Converting lectures to notebooks..."
+echo "3. Converting lectures to notebooks..."
 echo "---------------------------------------"
 python scripts/convert_to_notebooks.py
 echo "✓ Notebooks converted successfully"
 echo ""
 
-echo "5. Verifying notebooks were created..."
+echo "4. Verifying notebooks were created..."
 echo "---------------------------------------"
 for lecture_file in lecture_*/lecture_*.py; do
     notebook_file="${lecture_file%.py}.ipynb"

@@ -62,11 +62,12 @@
 #
 # ### Function Parameters and Arguments
 
+
 # %%
-def analyze_data(data, method='mean', remove_outliers=False):
+def analyze_data(data, method="mean", remove_outliers=False):
     """
     Analyze numerical data with different methods.
-    
+
     Parameters
     ----------
     data : list
@@ -75,12 +76,12 @@ def analyze_data(data, method='mean', remove_outliers=False):
         Analysis method: 'mean', 'median', or 'mode' (default: 'mean')
     remove_outliers : bool, optional
         Whether to remove outliers before analysis (default: False)
-        
+
     Returns
     -------
     float
         Calculated result
-        
+
     Examples
     --------
     >>> analyze_data([1, 2, 3, 4, 5])
@@ -90,19 +91,19 @@ def analyze_data(data, method='mean', remove_outliers=False):
     """
     # Copy data to avoid modifying original
     working_data = data.copy()
-    
+
     # Remove outliers if requested
     if remove_outliers:
         # Simple outlier removal: values more than 2 std devs from mean
         mean = sum(working_data) / len(working_data)
         variance = sum((x - mean) ** 2 for x in working_data) / len(working_data)
-        std = variance ** 0.5
+        std = variance**0.5
         working_data = [x for x in working_data if abs(x - mean) <= 2 * std]
-    
+
     # Calculate based on method
-    if method == 'mean':
+    if method == "mean":
         return sum(working_data) / len(working_data)
-    elif method == 'median':
+    elif method == "median":
         sorted_data = sorted(working_data)
         n = len(sorted_data)
         mid = n // 2
@@ -112,6 +113,7 @@ def analyze_data(data, method='mean', remove_outliers=False):
             return sorted_data[mid]
     else:
         raise ValueError(f"Unknown method: {method}")
+
 
 # Test with different parameters
 data = [10, 12, 13, 11, 50, 12, 13]
@@ -123,11 +125,12 @@ print(f"Mean (outliers removed): {analyze_data(data, method='mean', remove_outli
 # %% [markdown]
 # ### Default Arguments and Keyword Arguments
 
+
 # %%
 def create_experiment(name, duration=7, temperature=25.0, samples=100, **kwargs):
     """
     Create an experiment configuration.
-    
+
     Parameters
     ----------
     name : str
@@ -140,23 +143,19 @@ def create_experiment(name, duration=7, temperature=25.0, samples=100, **kwargs)
         Number of samples (default: 100)
     **kwargs : dict
         Additional experiment parameters
-        
+
     Returns
     -------
     dict
         Experiment configuration
     """
-    config = {
-        'name': name,
-        'duration': duration,
-        'temperature': temperature,
-        'samples': samples
-    }
-    
+    config = {"name": name, "duration": duration, "temperature": temperature, "samples": samples}
+
     # Add any additional parameters
     config.update(kwargs)
-    
+
     return config
+
 
 # Different ways to call the function
 exp1 = create_experiment("Quick Test")
@@ -172,15 +171,16 @@ print("Experiment 3:", exp3)
 #
 # Lambda functions are small, anonymous functions useful for simple operations.
 
+
 # %%
 # Regular function
 def square(x):
-    return x ** 2
+    return x**2
 
 
 # Equivalent lambda function
 def square_lambda(x):
-    return x ** 2
+    return x**2
 
 
 print(f"Regular function: {square(5)}")
@@ -188,20 +188,16 @@ print(f"Lambda function: {square_lambda(5)}")
 
 # %%
 # Lambda functions with sorting
-experiments = [
-    {'name': 'Exp A', 'score': 85},
-    {'name': 'Exp B', 'score': 92},
-    {'name': 'Exp C', 'score': 78}
-]
+experiments = [{"name": "Exp A", "score": 85}, {"name": "Exp B", "score": 92}, {"name": "Exp C", "score": 78}]
 
 # Sort by score
-sorted_by_score = sorted(experiments, key=lambda x: x['score'])
+sorted_by_score = sorted(experiments, key=lambda x: x["score"])
 print("Sorted by score:")
 for exp in sorted_by_score:
     print(f"  {exp['name']}: {exp['score']}")
 
 # Sort by name
-sorted_by_name = sorted(experiments, key=lambda x: x['name'])
+sorted_by_name = sorted(experiments, key=lambda x: x["name"])
 print("\nSorted by name:")
 for exp in sorted_by_name:
     print(f"  {exp['name']}: {exp['score']}")
@@ -211,21 +207,22 @@ for exp in sorted_by_name:
 #
 # Good docstrings follow standard formats like NumPy style.
 
+
 # %%
 def calculate_statistics(values, precision=2):
     """
     Calculate comprehensive statistics for a dataset.
-    
+
     This function computes mean, standard deviation, minimum, maximum,
     and range for a list of numerical values.
-    
+
     Parameters
     ----------
     values : list of float
         Numerical data to analyze
     precision : int, optional
         Number of decimal places for rounding (default: 2)
-        
+
     Returns
     -------
     dict
@@ -240,17 +237,17 @@ def calculate_statistics(values, precision=2):
             Maximum value
         - range : float
             Difference between max and min
-            
+
     Raises
     ------
     ValueError
         If values list is empty
-        
+
     Examples
     --------
     >>> calculate_statistics([1, 2, 3, 4, 5])
     {'mean': 3.0, 'std': 1.41, 'min': 1, 'max': 5, 'range': 4}
-    
+
     Notes
     -----
     Standard deviation uses the population formula (divide by n).
@@ -258,18 +255,19 @@ def calculate_statistics(values, precision=2):
     """
     if len(values) == 0:
         raise ValueError("Cannot calculate statistics for empty list")
-    
+
     mean = sum(values) / len(values)
     variance = sum((x - mean) ** 2 for x in values) / len(values)
-    std = variance ** 0.5
-    
+    std = variance**0.5
+
     return {
-        'mean': round(mean, precision),
-        'std': round(std, precision),
-        'min': min(values),
-        'max': max(values),
-        'range': max(values) - min(values)
+        "mean": round(mean, precision),
+        "std": round(std, precision),
+        "min": min(values),
+        "max": max(values),
+        "range": max(values) - min(values),
     }
+
 
 # Test the function
 data = [23.5, 24.1, 23.8, 24.3, 23.9, 24.0]
@@ -283,16 +281,16 @@ print(calculate_statistics.__doc__)
 # %% [markdown]
 # ## Part 2: Error Handling
 #
-# Errors are inevitable in programming—even experienced developers encounter them daily. The 
-# difference between beginner and professional code is how errors are handled. Good programs 
-# anticipate what can go wrong and handle errors gracefully, providing useful feedback instead 
-# of crashing. This is especially important in research software, where a crash during a long 
+# Errors are inevitable in programming—even experienced developers encounter them daily. The
+# difference between beginner and professional code is how errors are handled. Good programs
+# anticipate what can go wrong and handle errors gracefully, providing useful feedback instead
+# of crashing. This is especially important in research software, where a crash during a long
 # experiment can waste hours or days of computation time.
 #
 # ### Common Error Types
 #
-# Python has many built-in exception types. Understanding the most common ones helps you write 
-# better error handling code and debug problems faster. Each exception type represents a specific 
+# Python has many built-in exception types. Understanding the most common ones helps you write
+# better error handling code and debug problems faster. Each exception type represents a specific
 # kind of problem.
 
 # %%
@@ -326,35 +324,36 @@ print("Error examples shown as comments to prevent execution")
 # - **IndexError**: You tried to access a list element that doesn't exist
 # - **FileNotFoundError**: You tried to open a file that doesn't exist
 #
-# **Common mistake**: Confusing ValueError and TypeError. TypeError means "wrong type entirely" 
-# (e.g., a string when you need a number). ValueError means "right type, wrong value" (e.g., the 
-# string "hello" when converting to an integer—it's a string, which is the right type for `int()`, 
+# **Common mistake**: Confusing ValueError and TypeError. TypeError means "wrong type entirely"
+# (e.g., a string when you need a number). ValueError means "right type, wrong value" (e.g., the
+# string "hello" when converting to an integer—it's a string, which is the right type for `int()`,
 # but the value can't be converted).
 
 # %% [markdown]
 # ### Try-Except Blocks
 #
-# Use try-except to catch and handle errors. The basic pattern is: try to do something that might 
-# fail, and if it fails, handle the error gracefully instead of crashing. This is similar to 
+# Use try-except to catch and handle errors. The basic pattern is: try to do something that might
+# fail, and if it fails, handle the error gracefully instead of crashing. This is similar to
 # "error checking" in other languages but more powerful and Pythonic.
 #
-# **When to use try-except**: Use it whenever you're doing something that might fail for reasons 
-# outside your control—reading files, network requests, parsing user input, etc. Don't use it for 
-# logic errors in your own code (like accessing the wrong list index)—those should be fixed, not 
+# **When to use try-except**: Use it whenever you're doing something that might fail for reasons
+# outside your control—reading files, network requests, parsing user input, etc. Don't use it for
+# logic errors in your own code (like accessing the wrong list index)—those should be fixed, not
 # caught.
+
 
 # %%
 def safe_divide(a, b):
     """
     Safely divide two numbers.
-    
+
     Parameters
     ----------
     a : float
         Numerator
     b : float
         Denominator
-        
+
     Returns
     -------
     float or None
@@ -367,27 +366,29 @@ def safe_divide(a, b):
         print(f"Error: Cannot divide {a} by zero")
         return None
 
+
 # Test the function
 print(f"10 / 2 = {safe_divide(10, 2)}")
 print(f"10 / 0 = {safe_divide(10, 0)}")
 print(f"15 / 3 = {safe_divide(15, 3)}")
 
 # %% [markdown]
-# **Design choice**: Notice that `safe_divide` returns `None` when division by zero occurs instead 
-# of crashing. This allows the program to continue running. However, the caller needs to check for 
-# `None` before using the result. An alternative design would be to let the exception propagate up 
+# **Design choice**: Notice that `safe_divide` returns `None` when division by zero occurs instead
+# of crashing. This allows the program to continue running. However, the caller needs to check for
+# `None` before using the result. An alternative design would be to let the exception propagate up
 # or raise a different exception. Choose based on how you want errors to be handled in your application.
+
 
 # %%
 def read_number_from_user(prompt):
     """
     Safely read a number from user input.
-    
+
     Parameters
     ----------
     prompt : str
         Prompt to display to user
-        
+
     Returns
     -------
     float or None
@@ -395,13 +396,14 @@ def read_number_from_user(prompt):
     """
     # For demonstration, we'll simulate user input
     user_input = "42.5"  # In real code: input(prompt)
-    
+
     try:
         number = float(user_input)
         return number
     except ValueError:
         print(f"Error: '{user_input}' is not a valid number")
         return None
+
 
 # Simulated test
 result = read_number_from_user("Enter a number: ")
@@ -410,28 +412,29 @@ print(f"Result: {result}")
 # %% [markdown]
 # ### Multiple Exception Types
 #
-# Real-world code often needs to handle multiple types of errors differently. Python allows you 
-# to specify multiple `except` blocks, each handling a specific exception type. The order matters: 
-# Python checks exception types from top to bottom, so put more specific exceptions before more 
+# Real-world code often needs to handle multiple types of errors differently. Python allows you
+# to specify multiple `except` blocks, each handling a specific exception type. The order matters:
+# Python checks exception types from top to bottom, so put more specific exceptions before more
 # general ones.
 #
-# **Exception hierarchy**: Python's exceptions form a hierarchy. `Exception` is a general exception 
-# that catches most errors. More specific exceptions like `ValueError` or `FileNotFoundError` 
-# inherit from it. If you catch `Exception` first, you'll never reach the more specific handlers 
+# **Exception hierarchy**: Python's exceptions form a hierarchy. `Exception` is a general exception
+# that catches most errors. More specific exceptions like `ValueError` or `FileNotFoundError`
+# inherit from it. If you catch `Exception` first, you'll never reach the more specific handlers
 # below it. This is why we always put the catch-all `Exception` last.
+
 
 # %%
 def process_data_file(filename, column_index):
     """
     Process a data file and extract a column.
-    
+
     Parameters
     ----------
     filename : str
         Path to data file
     column_index : int
         Index of column to extract
-        
+
     Returns
     -------
     list
@@ -440,17 +443,12 @@ def process_data_file(filename, column_index):
     try:
         # Simulate file reading (in reality, we'd read an actual file)
         # For demo, create fake data
-        data = [
-            ['Sample', 'Value', 'Units'],
-            ['A', '10.5', 'mg'],
-            ['B', '12.3', 'mg'],
-            ['C', '9.8', 'mg']
-        ]
-        
+        data = [["Sample", "Value", "Units"], ["A", "10.5", "mg"], ["B", "12.3", "mg"], ["C", "9.8", "mg"]]
+
         # Extract column
         column = [row[column_index] for row in data]
         return column
-        
+
     except IndexError:
         print(f"Error: Column index {column_index} is out of range")
         return []
@@ -464,28 +462,29 @@ def process_data_file(filename, column_index):
         print(f"Unexpected error: {e}")
         return []
 
+
 # Test with different indices
 print("Column 0:", process_data_file("data.csv", 0))
 print("Column 1:", process_data_file("data.csv", 1))
 print("Column 5:", process_data_file("data.csv", 5))  # Out of range
 
 # %% [markdown]
-# **Best practice**: The final `except Exception as e:` catches any unexpected errors. The `as e` 
-# syntax gives you access to the exception object, which you can print for debugging. This catch-all 
-# is useful for logging unexpected problems in production code, but during development, it's often 
+# **Best practice**: The final `except Exception as e:` catches any unexpected errors. The `as e`
+# syntax gives you access to the exception object, which you can print for debugging. This catch-all
+# is useful for logging unexpected problems in production code, but during development, it's often
 # better to let exceptions crash your program so you notice and fix them.
 #
-# **Common pitfall**: Don't use bare `except:` without specifying the exception type—it will catch 
-# EVERYTHING, including KeyboardInterrupt (Ctrl+C), making your program hard to stop. Always specify 
+# **Common pitfall**: Don't use bare `except:` without specifying the exception type—it will catch
+# EVERYTHING, including KeyboardInterrupt (Ctrl+C), making your program hard to stop. Always specify
 # the exception types you're catching, or at minimum use `except Exception:` which excludes system-
 # level exceptions like KeyboardInterrupt.
 
 # %% [markdown]
 # ### Try-Except-Else-Finally
 #
-# Beyond the basic try-except, Python provides `else` and `finally` clauses for more sophisticated 
-# error handling. The `else` block runs only if no exception occurred—useful for code that should 
-# only run on success. The `finally` block always runs, whether an exception occurred or not—perfect 
+# Beyond the basic try-except, Python provides `else` and `finally` clauses for more sophisticated
+# error handling. The `else` block runs only if no exception occurred—useful for code that should
+# only run on success. The `finally` block always runs, whether an exception occurred or not—perfect
 # for cleanup operations like closing files or network connections.
 #
 # **When to use what**:
@@ -493,83 +492,86 @@ print("Column 5:", process_data_file("data.csv", 5))  # Out of range
 # - Use `finally` for cleanup that must happen regardless (e.g., closing files, releasing locks)
 # - Common pattern: `try` to open/use a resource, `finally` to close it
 
+
 # %%
 def analyze_file_safely(filename):
     """
     Analyze a file with comprehensive error handling.
-    
+
     Parameters
     ----------
     filename : str
         Path to file
-        
+
     Returns
     -------
     dict
         Analysis results
     """
-    result = {'status': 'unknown', 'lines': 0, 'words': 0}
-    
+    result = {"status": "unknown", "lines": 0, "words": 0}
+
     try:
         # Simulate file reading
         content = "This is sample content\nWith multiple lines\nFor testing"
-        
+
         # Process content
-        lines = content.split('\n')
+        lines = content.split("\n")
         words = content.split()
-        
-        result['lines'] = len(lines)
-        result['words'] = len(words)
-        
+
+        result["lines"] = len(lines)
+        result["words"] = len(words)
+
     except FileNotFoundError:
-        result['status'] = 'error: file not found'
+        result["status"] = "error: file not found"
         print(f"Could not find file: {filename}")
-        
+
     except Exception as e:
-        result['status'] = f'error: {str(e)}'
+        result["status"] = f"error: {str(e)}"
         print(f"Error processing file: {e}")
-        
+
     else:
         # Executes if try block succeeds (no exceptions)
-        result['status'] = 'success'
+        result["status"] = "success"
         print(f"Successfully processed {filename}")
-        
+
     finally:
         # Always executes, regardless of errors or success
         print(f"Finished processing attempt for {filename}")
-    
+
     return result
+
 
 # Test the function
 analysis = analyze_file_safely("test.txt")
 print(f"Analysis result: {analysis}")
 
 # %% [markdown]
-# **Flow control**: The flow is: `try` → if error: `except` → if no error: `else` → always: `finally`. 
-# This allows fine-grained control: put risky operations in `try`, error handling in `except`, 
-# success-only operations in `else`, and cleanup in `finally`. In practice, `finally` is most 
+# **Flow control**: The flow is: `try` → if error: `except` → if no error: `else` → always: `finally`.
+# This allows fine-grained control: put risky operations in `try`, error handling in `except`,
+# success-only operations in `else`, and cleanup in `finally`. In practice, `finally` is most
 # commonly used with file I/O to ensure files are closed even if an error occurs.
 
 # %% [markdown]
 # ### Raising Exceptions
 #
-# You can raise your own exceptions for error conditions. This is how you enforce rules in your 
-# functions and provide clear error messages when something goes wrong. Raising exceptions is 
+# You can raise your own exceptions for error conditions. This is how you enforce rules in your
+# functions and provide clear error messages when something goes wrong. Raising exceptions is
 # better than returning error codes or special values (like -1 or None) because:
 # 1. It forces the caller to handle the error (can't accidentally ignore it)
 # 2. It provides a clear error message
 # 3. It automatically stops execution if not handled
 #
-# **When to raise exceptions**: Raise exceptions when the caller made a mistake (wrong arguments) 
-# or when a precondition isn't met (file doesn't exist, network is down). Use meaningful exception 
-# types (`ValueError` for bad values, `FileNotFoundError` for missing files) so callers can handle 
+# **When to raise exceptions**: Raise exceptions when the caller made a mistake (wrong arguments)
+# or when a precondition isn't met (file doesn't exist, network is down). Use meaningful exception
+# types (`ValueError` for bad values, `FileNotFoundError` for missing files) so callers can handle
 # different errors differently.
+
 
 # %%
 def validate_temperature(temp, min_temp=-273.15, max_temp=100):
     """
     Validate a temperature reading.
-    
+
     Parameters
     ----------
     temp : float
@@ -578,12 +580,12 @@ def validate_temperature(temp, min_temp=-273.15, max_temp=100):
         Minimum valid temperature (default: -273.15, absolute zero)
     max_temp : float
         Maximum valid temperature (default: 100)
-        
+
     Returns
     -------
     bool
         True if temperature is valid
-        
+
     Raises
     ------
     ValueError
@@ -595,14 +597,15 @@ def validate_temperature(temp, min_temp=-273.15, max_temp=100):
         raise ValueError(f"Temperature {temp}°C exceeds maximum of {max_temp}°C")
     return True
 
+
 # Test with valid and invalid temperatures
 try:
     validate_temperature(25)
     print("25°C is valid")
-    
+
     validate_temperature(150)
     print("150°C is valid")  # Won't reach here
-    
+
 except ValueError as e:
     print(f"Validation error: {e}")
 
@@ -621,16 +624,16 @@ except ValueError as e:
 # </div>
 
 # %% [markdown]
-# Now that you understand how to handle errors gracefully, let's apply that knowledge to a critical 
-# research task: reading and writing data files. Most research involves processing data from files, 
-# and combining file I/O with proper error handling ensures your data pipelines are robust and 
+# Now that you understand how to handle errors gracefully, let's apply that knowledge to a critical
+# research task: reading and writing data files. Most research involves processing data from files,
+# and combining file I/O with proper error handling ensures your data pipelines are robust and
 # reliable.
 
 # %% [markdown]
 # ## Part 3: File Input/Output
 #
-# Reading and writing files is essential for research data processing. Whether you're analyzing 
-# experimental results, processing sensor data, or saving analysis outputs, file I/O is a core 
+# Reading and writing files is essential for research data processing. Whether you're analyzing
+# experimental results, processing sensor data, or saving analysis outputs, file I/O is a core
 # skill for research software engineers.
 
 # %% [markdown]
@@ -652,25 +655,27 @@ sample_data = """# Sample Data File
 # with open('temperatures.txt', 'w') as f:
 #     f.write(sample_data)
 
+
 # Simulate reading
 def read_temperature_file(content):
     """Read temperatures from file content."""
     temperatures = []
-    
-    for line in content.split('\n'):
+
+    for line in content.split("\n"):
         line = line.strip()
-        
+
         # Skip empty lines and comments
-        if not line or line.startswith('#'):
+        if not line or line.startswith("#"):
             continue
-            
+
         try:
             temp = float(line)
             temperatures.append(temp)
         except ValueError:
             print(f"Warning: Skipping invalid line: {line}")
-    
+
     return temperatures
+
 
 # Process the data
 temps = read_temperature_file(sample_data)
@@ -681,11 +686,12 @@ print(f"Average: {sum(temps) / len(temps):.2f}°C")
 # %% [markdown]
 # ### Writing Files
 
+
 # %%
 def save_results(filename, data, metadata=None):
     """
     Save analysis results to a file.
-    
+
     Parameters
     ----------
     filename : str
@@ -694,7 +700,7 @@ def save_results(filename, data, metadata=None):
         Results to save
     metadata : dict, optional
         Additional metadata to include
-        
+
     Returns
     -------
     bool
@@ -703,44 +709,38 @@ def save_results(filename, data, metadata=None):
     try:
         # In real code, open actual file
         # with open(filename, 'w') as f:
-        
+
         # Simulate file writing
         output = []
-        
+
         # Write metadata
         if metadata:
             output.append("# Metadata")
             for key, value in metadata.items():
                 output.append(f"# {key}: {value}")
             output.append("")
-        
+
         # Write results
         output.append("# Results")
         for key, value in data.items():
             output.append(f"{key}: {value}")
-        
-        content = '\n'.join(output)
+
+        content = "\n".join(output)
         print(f"Would write to {filename}:")
         print(content)
-        
+
         return True
-        
+
     except Exception as e:
         print(f"Error saving to {filename}: {e}")
         return False
 
-# Test
-results = {
-    'mean': 23.93,
-    'std': 0.24,
-    'count': 6
-}
-metadata = {
-    'experiment': 'Temperature Study',
-    'date': '2024-01-15'
-}
 
-save_results('results.txt', results, metadata)
+# Test
+results = {"mean": 23.93, "std": 0.24, "count": 6}
+metadata = {"experiment": "Temperature Study", "date": "2024-01-15"}
+
+save_results("results.txt", results, metadata)
 
 # %% [markdown]
 # ### Working with CSV Data
@@ -758,15 +758,16 @@ D,25.2,63.5,False
 E,23.9,65.8,True
 """
 
+
 def read_csv_data(csv_content):
     """
     Read CSV data and return as list of dictionaries.
-    
+
     Parameters
     ----------
     csv_content : str
         CSV content to parse
-        
+
     Returns
     -------
     list of dict
@@ -775,27 +776,28 @@ def read_csv_data(csv_content):
     data = []
     csv_file = StringIO(csv_content)
     reader = csv.DictReader(csv_file)
-    
+
     for row in reader:
         # Convert numeric fields
         try:
-            row['Temperature'] = float(row['Temperature'])
-            row['Humidity'] = float(row['Humidity'])
-            row['Valid'] = row['Valid'] == 'True'
+            row["Temperature"] = float(row["Temperature"])
+            row["Humidity"] = float(row["Humidity"])
+            row["Valid"] = row["Valid"] == "True"
         except (ValueError, KeyError) as e:
             print(f"Warning: Error processing row: {e}")
             continue
-            
+
         data.append(row)
-    
+
     return data
+
 
 # Parse the data
 measurements = read_csv_data(csv_data)
 print(f"Read {len(measurements)} measurements")
 
 # Filter valid measurements
-valid_temps = [m['Temperature'] for m in measurements if m['Valid']]
+valid_temps = [m["Temperature"] for m in measurements if m["Valid"]]
 print(f"\nValid temperatures: {valid_temps}")
 print(f"Average valid temperature: {sum(valid_temps) / len(valid_temps):.2f}°C")
 
@@ -814,26 +816,26 @@ print(f"Average valid temperature: {sum(valid_temps) / len(valid_temps):.2f}°C"
 # </div>
 
 # %% [markdown]
-# With solid foundations in functions, error handling, and file I/O, let's explore some of Python's 
-# elegant features that make code more concise and readable. List comprehensions are a Pythonic way 
+# With solid foundations in functions, error handling, and file I/O, let's explore some of Python's
+# elegant features that make code more concise and readable. List comprehensions are a Pythonic way
 # to transform and filter data, making your research code both more expressive and often faster.
 
 # %% [markdown]
 # ## Part 4: List Comprehensions
 #
-# List comprehensions provide elegant, concise ways to create and transform lists. They're not just 
-# syntactic sugar—they're often faster than traditional loops and make your code's intent clearer. 
+# List comprehensions provide elegant, concise ways to create and transform lists. They're not just
+# syntactic sugar—they're often faster than traditional loops and make your code's intent clearer.
 # In research contexts, you'll use them constantly for data filtering, transformation, and processing.
 
 # %%
 # Traditional approach
 squares = []
 for i in range(10):
-    squares.append(i ** 2)
+    squares.append(i**2)
 print(f"Traditional: {squares}")
 
 # List comprehension
-squares_comp = [i ** 2 for i in range(10)]
+squares_comp = [i**2 for i in range(10)]
 print(f"Comprehension: {squares_comp}")
 
 # %%
@@ -845,11 +847,11 @@ high_temps = [t for t in temperatures if t > 25]
 print(f"High temperatures: {high_temps}")
 
 # Convert to Fahrenheit
-temps_f = [t * 9/5 + 32 for t in temperatures]
+temps_f = [t * 9 / 5 + 32 for t in temperatures]
 print(f"Fahrenheit: {temps_f}")
 
 # Combined: convert high temps to Fahrenheit
-high_temps_f = [t * 9/5 + 32 for t in temperatures if t > 25]
+high_temps_f = [t * 9 / 5 + 32 for t in temperatures if t > 25]
 print(f"High temps in Fahrenheit: {high_temps_f}")
 
 # %%
@@ -866,7 +868,7 @@ print(f"Diagonal: {diagonal}")
 
 # %%
 # Dictionary comprehensions
-samples = ['A', 'B', 'C', 'D', 'E']
+samples = ["A", "B", "C", "D", "E"]
 temperatures = [23.5, 24.1, 23.8, 24.3, 23.9]
 
 # Create dictionary
@@ -901,37 +903,28 @@ print(f"High temperatures: {high_temp_dict}")
 # %%
 import argparse
 
+
 def create_parser():
     """Create command-line argument parser."""
     parser = argparse.ArgumentParser(
-        description='Analyze experimental data from a file.',
-        epilog='Example: python analyze.py data.txt -o results.txt --threshold 25'
+        description="Analyze experimental data from a file.",
+        epilog="Example: python analyze.py data.txt -o results.txt --threshold 25",
     )
-    
+
     # Positional arguments
-    parser.add_argument('input_file',
-                        help='Input data file path')
-    
+    parser.add_argument("input_file", help="Input data file path")
+
     # Optional arguments
-    parser.add_argument('-o', '--output',
-                        help='Output file path (default: results.txt)',
-                        default='results.txt')
-    
-    parser.add_argument('-t', '--threshold',
-                        type=float,
-                        help='Temperature threshold in Celsius (default: 25.0)',
-                        default=25.0)
-    
-    parser.add_argument('-v', '--verbose',
-                        action='store_true',
-                        help='Print verbose output')
-    
-    parser.add_argument('--method',
-                        choices=['mean', 'median'],
-                        default='mean',
-                        help='Analysis method (default: mean)')
-    
+    parser.add_argument("-o", "--output", help="Output file path (default: results.txt)", default="results.txt")
+
+    parser.add_argument("-t", "--threshold", type=float, help="Temperature threshold in Celsius (default: 25.0)", default=25.0)
+
+    parser.add_argument("-v", "--verbose", action="store_true", help="Print verbose output")
+
+    parser.add_argument("--method", choices=["mean", "median"], default="mean", help="Analysis method (default: mean)")
+
     return parser
+
 
 # Simulate command-line arguments (in real script, argparse reads from sys.argv)
 # Example: python script.py data.txt -o output.txt -t 24.5 -v
@@ -943,14 +936,12 @@ parser.print_help()
 # %% [markdown]
 # ### Complete Command-Line Script Example
 
+
 # %%
-def analyze_temperature_data(
-        input_file, output_file='results.txt',
-        threshold=25.0, method='mean',
-        verbose=False):
+def analyze_temperature_data(input_file, output_file="results.txt", threshold=25.0, method="mean", verbose=False):
     """
     Analyze temperature data from a file.
-    
+
     Parameters
     ----------
     input_file : str
@@ -963,7 +954,7 @@ def analyze_temperature_data(
         Analysis method ('mean' or 'median')
     verbose : bool
         Whether to print detailed output
-        
+
     Returns
     -------
     dict
@@ -971,21 +962,21 @@ def analyze_temperature_data(
     """
     if verbose:
         print(f"Reading data from {input_file}")
-    
+
     # Simulate reading data
     temperatures = [23.5, 24.1, 26.8, 24.3, 27.1, 23.9, 25.5]
-    
+
     if verbose:
         print(f"Loaded {len(temperatures)} temperature readings")
-    
+
     # Filter by threshold
     filtered = [t for t in temperatures if t >= threshold]
-    
+
     if verbose:
         print(f"After filtering (>= {threshold}°C): {len(filtered)} readings")
-    
+
     # Calculate statistic
-    if method == 'mean':
+    if method == "mean":
         result = sum(filtered) / len(filtered) if filtered else 0
     else:  # median
         sorted_temps = sorted(filtered)
@@ -993,32 +984,29 @@ def analyze_temperature_data(
         if n == 0:
             result = 0
         elif n % 2 == 0:
-            result = (sorted_temps[n//2 - 1] + sorted_temps[n//2]) / 2
+            result = (sorted_temps[n // 2 - 1] + sorted_temps[n // 2]) / 2
         else:
-            result = sorted_temps[n//2]
-    
+            result = sorted_temps[n // 2]
+
     # Prepare results
     results = {
-        'method': method,
-        'threshold': threshold,
-        'total_readings': len(temperatures),
-        'filtered_readings': len(filtered),
-        'result': result
+        "method": method,
+        "threshold": threshold,
+        "total_readings": len(temperatures),
+        "filtered_readings": len(filtered),
+        "result": result,
     }
-    
+
     if verbose:
         print(f"Analysis complete: {method} = {result:.2f}°C")
         print(f"Saving results to {output_file}")
-    
+
     return results
+
 
 # Simulated script execution
 results = analyze_temperature_data(
-    'temperatures.txt',
-    output_file='analysis_results.txt',
-    threshold=24.5,
-    method='mean',
-    verbose=True
+    "temperatures.txt", output_file="analysis_results.txt", threshold=24.5, method="mean", verbose=True
 )
 
 print(f"\nFinal results: {results}")
@@ -1026,8 +1014,8 @@ print(f"\nFinal results: {results}")
 # %% [markdown]
 # ## Part 6: Classes and Object-Oriented Programming
 #
-# Classes allow you to bundle data and functionality together. They're essential for organizing 
-# complex research code and are heavily used in testing frameworks like pytest (which we'll see 
+# Classes allow you to bundle data and functionality together. They're essential for organizing
+# complex research code and are heavily used in testing frameworks like pytest (which we'll see
 # in Lecture 5).
 #
 # ### Why Use Classes?
@@ -1040,14 +1028,15 @@ print(f"\nFinal results: {results}")
 # %% [markdown]
 # ### Basic Class Syntax
 
+
 # %%
 class TemperatureData:
     """Store and analyze temperature measurements."""
-    
-    def __init__(self, location, unit='celsius'):
+
+    def __init__(self, location, unit="celsius"):
         """
         Initialize temperature data.
-        
+
         Parameters
         ----------
         location : str
@@ -1058,17 +1047,17 @@ class TemperatureData:
         self.location = location
         self.unit = unit
         self.measurements = []
-    
+
     def add_measurement(self, temperature):
         """Add a temperature reading."""
         self.measurements.append(temperature)
-    
+
     def get_average(self):
         """Calculate average temperature."""
         if not self.measurements:
             return None
         return sum(self.measurements) / len(self.measurements)
-    
+
     def get_summary(self):
         """Return a summary string."""
         avg = self.get_average()
@@ -1078,7 +1067,7 @@ class TemperatureData:
 
 
 # Create an instance of the class
-lab_temps = TemperatureData("Lab A", unit='celsius')
+lab_temps = TemperatureData("Lab A", unit="celsius")
 
 # Add measurements
 lab_temps.add_measurement(23.5)
@@ -1129,11 +1118,11 @@ for location in [lab_a, lab_b, outdoor]:
 # ```python
 # class TestTemperatureConversion:
 #     """Group related temperature conversion tests."""
-#     
+#
 #     def test_freezing_point(self):
 #         """Water freezes at 0°C = 32°F."""
 #         assert celsius_to_fahrenheit(0) == 32
-#     
+#
 #     def test_boiling_point(self):
 #         """Water boils at 100°C = 212°F."""
 #         assert celsius_to_fahrenheit(100) == 212
@@ -1155,7 +1144,7 @@ for location in [lab_a, lab_b, outdoor]:
 # - Want to transform inputs to outputs
 # - Need something quick and straightforward
 #
-# **Research example**: A function is good for calculating mean temperature. A class is better 
+# **Research example**: A function is good for calculating mean temperature. A class is better
 # for representing an entire experiment with settings, data, and multiple analysis methods.
 
 # %% [markdown]
@@ -1192,8 +1181,8 @@ for location in [lab_a, lab_b, outdoor]:
 #
 # ### Primary Sources
 #
-# - **Research Software Engineering with Python** by The Alan Turing Institute  
-#   <https://alan-turing-institute.github.io/rse-course/html/>  
+# - **Research Software Engineering with Python** by The Alan Turing Institute
+#   <https://alan-turing-institute.github.io/rse-course/html/>
 #   Advanced Python concepts, error handling patterns, and object-oriented programming approaches adapted from this course.
 #
 # - **Research Software Engineering with Python** by Damien Irving, Kate Hertweck,
@@ -1204,15 +1193,15 @@ for location in [lab_a, lab_b, outdoor]:
 #
 # ### Documentation
 #
-# - **Python Documentation**  
-#   <https://docs.python.org/3/>  
+# - **Python Documentation**
+#   <https://docs.python.org/3/>
 #   - Built-in Exceptions: <https://docs.python.org/3/library/exceptions.html>
 #   - File I/O: <https://docs.python.org/3/tutorial/inputoutput.html>
 #   - argparse: <https://docs.python.org/3/library/argparse.html>
 #   - Classes and OOP: <https://docs.python.org/3/tutorial/classes.html>
 #
-# - **NumPy Docstring Style Guide**  
-#   <https://numpydoc.readthedocs.io/en/latest/format.html>  
+# - **NumPy Docstring Style Guide**
+#   <https://numpydoc.readthedocs.io/en/latest/format.html>
 #   Documentation standards used in function docstrings throughout this lecture.
 #
 # ### Notes
