@@ -1057,7 +1057,7 @@
 #
 # 1. Fork the repository
 # 2. Clone your fork: `git clone https://github.com/yourusername/climate-sim.git`
-# 3. Set up development environment: `make install-dev`
+# 3. Set up development environment: `make install`
 # 4. Run tests to verify setup: `pytest tests/`
 #
 # ## Development Workflow

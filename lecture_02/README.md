@@ -28,7 +28,7 @@ This lecture uses only the base dependencies (no additional packages required be
 1. Create and activate the environment:
 ```bash
 cd /path/to/RSE_lecture
-make install-lecture2
+make install
 micromamba activate rse_lecture
 ```
 

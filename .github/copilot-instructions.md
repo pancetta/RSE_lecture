@@ -128,8 +128,7 @@ Test on multiple platforms or ensure code is platform-agnostic.
 
 ```bash
 # Environment setup
-make install                 # Create base environment
-make install-lecture[1-4]   # Install specific lecture dependencies
+make install                 # Create environment with all dependencies
 
 # Development
 make convert                 # Convert Python files to notebooks

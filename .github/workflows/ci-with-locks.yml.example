@@ -25,13 +25,13 @@ jobs:
       matrix:
         include:
           - os: ubuntu-latest
-            lock-file: environment-dev-linux-64.lock
+            lock-file: environment-linux-64.lock
           - os: macos-latest
-            lock-file: environment-dev-osx-64.lock
+            lock-file: environment-osx-64.lock
           - os: macos-26
-            lock-file: environment-dev-osx-64.lock
+            lock-file: environment-osx-64.lock
           - os: windows-latest
-            lock-file: environment-dev-win-64.lock
+            lock-file: environment-win-64.lock
     
     steps:
     - name: Checkout repository
@@ -51,8 +51,8 @@ jobs:
           echo "Using lock file: ${{ matrix.lock-file }}"
           micromamba create -n rse_lecture --file ${{ matrix.lock-file }} -y
         else
-          echo "Lock file not found, using environment-dev.yml"
-          micromamba create -n rse_lecture -f environment-dev.yml -y
+          echo "Lock file not found, using environment.yml"
+          micromamba create -n rse_lecture -f environment.yml -y
         fi
       shell: bash -el {0}
     
