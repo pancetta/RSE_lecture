@@ -188,16 +188,16 @@
 #
 # By completing this course, you can now:
 #
-# ✅ **Manage code professionally** with Git and GitHub  
-# ✅ **Write maintainable Python** following best practices  
-# ✅ **Test your code** systematically with pytest  
-# ✅ **Automate workflows** with CI/CD and workflow tools  
-# ✅ **Debug and profile** code effectively  
-# ✅ **Document** software for yourself and others  
-# ✅ **Containerize** applications for reproducibility  
-# ✅ **Collaborate** through code review and version control  
-# ✅ **Handle research data** with appropriate formats and tools  
-# ✅ **Use AI assistants** responsibly and effectively  
+# ✅ **Manage code professionally** with Git and GitHub
+# ✅ **Write maintainable Python** following best practices
+# ✅ **Test your code** systematically with pytest
+# ✅ **Automate workflows** with CI/CD and workflow tools
+# ✅ **Debug and profile** code effectively
+# ✅ **Document** software for yourself and others
+# ✅ **Containerize** applications for reproducibility
+# ✅ **Collaborate** through code review and version control
+# ✅ **Handle research data** with appropriate formats and tools
+# ✅ **Use AI assistants** responsibly and effectively
 #
 # These skills are valuable in:
 # - Academic research (thesis work, publications)

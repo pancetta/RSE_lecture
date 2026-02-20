@@ -68,9 +68,9 @@
 #
 # But there's still a problem: **tests only help if you actually run them!**
 #
-# This seems obvious, but it's the Achilles' heel of testing. You can have a perfect test suite 
-# with 100% coverage, but if someone forgets to run the tests before committing code, bugs still 
-# slip through. Manual processes fail eventually—someone gets busy, forgets, or assumes their 
+# This seems obvious, but it's the Achilles' heel of testing. You can have a perfect test suite
+# with 100% coverage, but if someone forgets to run the tests before committing code, bugs still
+# slip through. Manual processes fail eventually—someone gets busy, forgets, or assumes their
 # small change "couldn't possibly break anything."
 #
 # ### The Human Factor
@@ -84,14 +84,14 @@
 # - **Someone commits code late at night without testing**: Tired developer, honest mistake
 # - **Tests exist but aren't part of the workflow**: No one remembers to run them regularly
 #
-# **The fundamental problem**: Relying on humans to remember manual steps doesn't scale. We're 
+# **The fundamental problem**: Relying on humans to remember manual steps doesn't scale. We're
 # forgetful, we get busy, we take shortcuts. The solution is to remove humans from the loop—
 # automate testing so it happens every time, without exception.
 #
 # ### Enter: Continuous Integration
 #
-# **Continuous Integration (CI)** automates testing every time code changes. It's a practice where 
-# developers integrate their work frequently (daily or more), and each integration is verified by 
+# **Continuous Integration (CI)** automates testing every time code changes. It's a practice where
+# developers integrate their work frequently (daily or more), and each integration is verified by
 # an automated build and test process. This catches problems early, when they're easiest to fix.
 #
 # **How it works:**
@@ -109,8 +109,8 @@
 # - **Documentation**: CI config shows exactly how to run tests—reproducible by anyone
 # - **Faster feedback**: Know within minutes if your change broke something
 #
-# **Research context**: For research software, CI is crucial for reproducibility. Your CI configuration 
-# documents exactly how to build and test your code, making it easy for reviewers and other researchers 
+# **Research context**: For research software, CI is crucial for reproducibility. Your CI configuration
+# documents exactly how to build and test your code, making it easy for reviewers and other researchers
 # to verify your results. Many journals now require CI badges showing tests pass.
 
 # %% [markdown]
@@ -118,8 +118,8 @@
 #
 # ### What is GitHub Actions?
 #
-# **GitHub Actions** is GitHub's built-in CI/CD platform. Unlike earlier CI systems that required 
-# separate services (like Travis CI or CircleCI), GitHub Actions is integrated directly into GitHub, 
+# **GitHub Actions** is GitHub's built-in CI/CD platform. Unlike earlier CI systems that required
+# separate services (like Travis CI or CircleCI), GitHub Actions is integrated directly into GitHub,
 # making it incredibly convenient.
 #
 # **GitHub Actions** is:
@@ -130,9 +130,9 @@
 # - **Supports multiple operating systems**: Linux, Windows, macOS—test on all platforms
 # - **Has a huge marketplace of pre-built actions**: Don't reinvent the wheel
 #
-# **When to use GitHub Actions vs. other CI systems**: For most projects hosted on GitHub, GitHub 
-# Actions is the easiest choice. Use alternatives like GitLab CI if you're on GitLab, Jenkins for 
-# self-hosted enterprise systems, or CircleCI/Travis if you need features GitHub Actions doesn't 
+# **When to use GitHub Actions vs. other CI systems**: For most projects hosted on GitHub, GitHub
+# Actions is the easiest choice. Use alternatives like GitLab CI if you're on GitLab, Jenkins for
+# self-hosted enterprise systems, or CircleCI/Travis if you need features GitHub Actions doesn't
 # provide yet.
 #
 # ### Key Concepts
@@ -146,8 +146,8 @@
 # - **Runner**: Virtual machine that executes jobs—GitHub provides these, or you can host your own
 # - **Trigger**: Event that starts workflow (e.g., push, pull request)—defines when CI runs
 #
-# **Mental model**: Think of a workflow as a script, jobs as functions in that script (that can run 
-# in parallel), and steps as individual commands. Triggers are like "when should this script run?" 
+# **Mental model**: Think of a workflow as a script, jobs as functions in that script (that can run
+# in parallel), and steps as individual commands. Triggers are like "when should this script run?"
 # and runners are the computers that execute it.
 
 # %% [markdown]
@@ -195,7 +195,7 @@
 # %%
 # This represents: .github/workflows/tests.yml
 
-basic_workflow = '''
+basic_workflow = """
 name: Test Suite
 
 # When to run this workflow
@@ -233,7 +233,7 @@ jobs:
       - name: Run tests with coverage
         run: |
           pytest --cov=src --cov-report=term-missing tests/
-'''
+"""
 
 print("GitHub Actions Workflow:")
 print("=" * 70)
@@ -263,7 +263,7 @@ print(basic_workflow)
 # - Same environment for all developers—no "works on my machine" excuses
 # - Catches bugs before they reach main branch—main stays stable and deployable
 #
-# **Common pitfall**: Forgetting to make tests a required check before merging. In your repository 
+# **Common pitfall**: Forgetting to make tests a required check before merging. In your repository
 # settings, enable "Require status checks to pass before merging" to enforce that CI must pass.
 
 # %% [markdown]
@@ -287,7 +287,7 @@ print(basic_workflow)
 # ### Testing on Multiple Python Versions
 
 # %%
-multi_python_workflow = '''
+multi_python_workflow = """
 name: Test Suite
 
 on: [push, pull_request]
@@ -317,7 +317,7 @@ jobs:
       
       - name: Run tests
         run: pytest --cov=src tests/
-'''
+"""
 
 print("Multi-Python Version Testing:")
 print("=" * 70)
@@ -329,7 +329,7 @@ print("✓ Ensures compatibility across Python versions")
 # ### Testing on Multiple Operating Systems
 
 # %%
-multi_os_workflow = '''
+multi_os_workflow = """
 name: Cross-Platform Tests
 
 on: [push, pull_request]
@@ -360,7 +360,7 @@ jobs:
       
       - name: Run tests
         run: pytest --cov=src tests/
-'''
+"""
 
 print("Cross-Platform Testing:")
 print("=" * 70)
@@ -372,7 +372,7 @@ print("✓ Catches platform-specific bugs")
 # ### Code Quality Checks
 
 # %%
-quality_workflow = '''
+quality_workflow = """
 name: Code Quality
 
 on: [push, pull_request]
@@ -430,7 +430,7 @@ jobs:
       - name: Check coverage threshold
         run: |
           coverage report --fail-under=80
-'''
+"""
 
 print("Code Quality Workflow:")
 print("=" * 70)
@@ -446,7 +446,7 @@ print("✓ Fails build if quality standards not met")
 # ### Full Production-Ready Workflow
 
 # %%
-complete_workflow = '''
+complete_workflow = """
 name: Temperature Module CI
 
 on:
@@ -546,7 +546,7 @@ jobs:
       
       - name: Check package
         run: twine check dist/*
-'''
+"""
 
 print("Complete Production CI Workflow:")
 print("=" * 70)
@@ -563,7 +563,7 @@ print("✅ Package build validation")
 # ### Research-Specific Workflow
 
 # %%
-research_workflow = '''
+research_workflow = """
 name: Research Pipeline
 
 on:
@@ -665,7 +665,7 @@ jobs:
         with:
           name: analysis-results
           path: results/
-'''
+"""
 
 print("Research-Specific CI Workflow:")
 print("=" * 70)
@@ -715,7 +715,7 @@ print("✅ Archives results for comparison")
 # ### Basic GitLab CI Example
 
 # %%
-gitlab_basic = '''
+gitlab_basic = """
 # GitLab CI configuration for temperature module
 
 # Define pipeline stages
@@ -758,7 +758,7 @@ build:
   artifacts:
     paths:
       - dist/
-'''
+"""
 
 print("GitLab CI Configuration:")
 print("=" * 70)
@@ -780,7 +780,7 @@ print(gitlab_basic)
 # ### Advanced GitLab CI Features
 
 # %%
-gitlab_advanced = '''
+gitlab_advanced = """
 # Advanced GitLab CI configuration
 
 stages:
@@ -860,7 +860,7 @@ pages:
       - public
   only:
     - main
-'''
+"""
 
 print("Advanced GitLab CI Configuration:")
 print("=" * 70)
@@ -875,7 +875,7 @@ print("✅ Conditional deployment")
 # ### Research-Specific GitLab CI
 
 # %%
-gitlab_research = '''
+gitlab_research = """
 # GitLab CI for research projects
 
 stages:
@@ -955,7 +955,7 @@ nightly-check:
     - python scripts/compare_with_baseline.py
   only:
     - schedules
-'''
+"""
 
 print("Research-Specific GitLab CI:")
 print("=" * 70)
@@ -1010,7 +1010,7 @@ print("✅ Artifact preservation")
 # **Example timing:**
 
 # %%
-test_timing_example = '''
+test_timing_example = """
 # Fast tests (run on every commit)
 fast-tests:
   stage: test
@@ -1033,7 +1033,7 @@ full-analysis:
     - bash scripts/run_full_analysis.sh  # 1+ hours
   only:
     - schedules
-'''
+"""
 
 print("Test Timing Strategy:")
 print("=" * 70)
@@ -1055,10 +1055,10 @@ print(test_timing_example)
 # 4. Require approval from code owners
 #
 # This ensures:
-# ✅ No untested code reaches main  
-# ✅ All changes reviewed  
-# ✅ Tests pass before merge  
-# ✅ Main branch always in good state  
+# ✅ No untested code reaches main
+# ✅ All changes reviewed
+# ✅ Tests pass before merge
+# ✅ Main branch always in good state
 
 # %% [markdown]
 # ### 4. Use Status Badges
@@ -1279,7 +1279,7 @@ print("✅ Could NOT publish with broken code")
 # ### Common Issues and Solutions
 
 # %%
-common_issues = '''
+common_issues = """
 # Issue 1: Tests pass locally but fail in CI
 Cause: Different environment
 Solution: Use same Python version, pin dependencies
@@ -1303,7 +1303,7 @@ Solution: Use GitHub/GitLab secrets, mask sensitive data
 # Issue 6: Coverage dropping
 Cause: New code not tested
 Solution: Enforce coverage threshold, review PRs carefully
-'''
+"""
 
 print("Common CI Issues and Solutions:")
 print("=" * 70)
@@ -1353,14 +1353,14 @@ print(common_issues)
 # %% [markdown]
 # ### Key Takeaways
 #
-# ✅ **CI automates testing** - No human intervention needed  
-# ✅ **Catches bugs early** - Before they cause problems  
-# ✅ **Consistent environment** - Same for everyone  
-# ✅ **Builds confidence** - Know your code works  
-# ✅ **Enables collaboration** - Safe to accept contributions  
-# ✅ **Prevents disasters** - Like our temperature conversion story  
-# ✅ **Works for research** - Can test data, notebooks, pipelines  
-# ✅ **Platform agnostic** - GitHub, GitLab, others all support CI  
+# ✅ **CI automates testing** - No human intervention needed
+# ✅ **Catches bugs early** - Before they cause problems
+# ✅ **Consistent environment** - Same for everyone
+# ✅ **Builds confidence** - Know your code works
+# ✅ **Enables collaboration** - Safe to accept contributions
+# ✅ **Prevents disasters** - Like our temperature conversion story
+# ✅ **Works for research** - Can test data, notebooks, pipelines
+# ✅ **Platform agnostic** - GitHub, GitLab, others all support CI
 #
 # ### Best Practices Checklist
 #
@@ -1424,8 +1424,8 @@ print(common_issues)
 #
 # ### Primary Sources
 #
-# - **Research Software Engineering with Python** by The Alan Turing Institute  
-#   <https://alan-turing-institute.github.io/rse-course/html/>  
+# - **Research Software Engineering with Python** by The Alan Turing Institute
+#   <https://alan-turing-institute.github.io/rse-course/html/>
 #   Continuous integration concepts, workflow patterns, and automation strategies adapted from this course.
 #
 # - **Research Software Engineering with Python** by Damien Irving, Kate Hertweck,
@@ -1436,15 +1436,15 @@ print(common_issues)
 #
 # ### Platform Documentation
 #
-# - **GitHub Actions Documentation**  
-#   <https://docs.github.com/en/actions>  
+# - **GitHub Actions Documentation**
+#   <https://docs.github.com/en/actions>
 #   Official GitHub Actions reference for workflow syntax and features.
 #   - Workflow Syntax: <https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions>
 #   - Events that trigger workflows: <https://docs.github.com/en/actions/reference/events-that-trigger-workflows>
 #   - GitHub Actions Marketplace: <https://github.com/marketplace?type=actions>
 #
-# - **GitLab CI/CD Documentation**  
-#   <https://docs.gitlab.com/ee/ci/>  
+# - **GitLab CI/CD Documentation**
+#   <https://docs.gitlab.com/ee/ci/>
 #   Official GitLab CI/CD reference for pipeline configuration.
 #   - CI/CD YAML syntax: <https://docs.gitlab.com/ee/ci/yaml/>
 #   - GitLab CI/CD examples: <https://docs.gitlab.com/ee/ci/examples/>
@@ -1452,31 +1452,31 @@ print(common_issues)
 #
 # ### Testing Integration
 #
-# - **pytest Documentation**  
-#   <https://docs.pytest.org/>  
+# - **pytest Documentation**
+#   <https://docs.pytest.org/>
 #   For running tests in CI environments.
 #
-# - **pytest-cov Plugin**  
-#   <https://pytest-cov.readthedocs.io/>  
+# - **pytest-cov Plugin**
+#   <https://pytest-cov.readthedocs.io/>
 #   For coverage reporting in CI pipelines.
 #
 # ### Additional CI/CD Resources
 #
-# - **Travis CI Documentation**  
-#   <https://docs.travis-ci.com/>  
+# - **Travis CI Documentation**
+#   <https://docs.travis-ci.com/>
 #   Alternative CI platform (referenced for comparison).
 #
-# - **CircleCI Documentation**  
-#   <https://circleci.com/docs/>  
+# - **CircleCI Documentation**
+#   <https://circleci.com/docs/>
 #   Alternative CI platform (referenced for comparison).
 #
 # ### Best Practices Sources
 #
-# - **The Twelve-Factor App**  
-#   <https://12factor.net/>  
+# - **The Twelve-Factor App**
+#   <https://12factor.net/>
 #   Methodology for building software-as-a-service, influencing CI/CD best practices.
 #
-# - **Software Carpentry**  
+# - **Software Carpentry**
 #   Automation principles for scientific computing.
 #
 # ### Notes

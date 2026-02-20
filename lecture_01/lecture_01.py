@@ -33,8 +33,8 @@
 # </div>
 #
 # ## Overview
-# Welcome to the Research Software Engineering (RSE) lecture series! This introductory 
-# lecture provides an overview of what RSE is, why it matters for modern research, and 
+# Welcome to the Research Software Engineering (RSE) lecture series! This introductory
+# lecture provides an overview of what RSE is, why it matters for modern research, and
 # how to get started with the tools and practices we'll cover throughout this course.
 #
 # **Duration**: ~90 minutes
@@ -89,15 +89,15 @@
 #
 # ### Course Overview
 #
-# This course covers essential Research Software Engineering practices through hands-on lectures. 
-# Each lecture builds on the previous one, introducing new concepts while reinforcing earlier 
+# This course covers essential Research Software Engineering practices through hands-on lectures.
+# Each lecture builds on the previous one, introducing new concepts while reinforcing earlier
 # material. The course is designed to take you from basic command-line skills to writing well-
 # tested, professional-quality research software.
 #
 # - **Lecture 1**:  Introduction to RSE, Shell Basics, and Git Fundamentals
 # - **Lecture 2**: Advanced Git, GitHub Collaboration, and Python Basics
 # - **Lecture 3**: Python Fundamentals and Advanced Concepts
-# - **Lecture 4**: Python Project Structure and Working with Libraries 
+# - **Lecture 4**: Python Project Structure and Working with Libraries
 # - **Lecture 5**: Testing Research Software
 # - **Lecture 6**: Automation and Continuous Integration
 # - **Lecture 7**: Debugging and Profiling
@@ -120,9 +120,9 @@
 # - **Try for Yourself**: Think and play beyond the lecture
 # - **Best practices specific to research software**: Not just programming, but research-focused coding
 #
-# **How to get the most from these lectures**: Don't just read the code—type it out yourself, run it, 
-# modify it, and see what happens. Making mistakes is part of learning. The lectures provide examples, 
-# but you'll learn much more by experimenting and occasionally breaking things (that's what version 
+# **How to get the most from these lectures**: Don't just read the code—type it out yourself, run it,
+# modify it, and see what happens. Making mistakes is part of learning. The lectures provide examples,
+# but you'll learn much more by experimenting and occasionally breaking things (that's what version
 # control is for!).
 #
 # ### Prerequisites
@@ -202,16 +202,16 @@
 # - Working on remote servers such as HPC machines
 # - Version control with Git (but there are GUIs for this, too)
 #
-# **Why learn the command line?** While graphical interfaces are user-friendly, the command line 
-# gives you precise control and allows you to automate repetitive tasks. Many research computing 
-# environments (like high-performance computing clusters) only provide command-line access. 
-# Additionally, most research software tools are designed to be run from the command line, making 
+# **Why learn the command line?** While graphical interfaces are user-friendly, the command line
+# gives you precise control and allows you to automate repetitive tasks. Many research computing
+# environments (like high-performance computing clusters) only provide command-line access.
+# Additionally, most research software tools are designed to be run from the command line, making
 # it an essential skill for any research software engineer.
 #
 # #### Basic Shell Commands
 #
 # Here are the most important commands you'll use. Don't try to memorize all of these at once—
-# you'll naturally remember the ones you use frequently. Keep this as a reference guide and 
+# you'll naturally remember the ones you use frequently. Keep this as a reference guide and
 # focus on practicing the navigation and file operation commands first.
 #
 # ```bash
@@ -251,9 +251,9 @@
 # - **Advanced shells**: use neat frameworks like [Oh-My-ZSH](https://ohmyz.sh/) for a great user experience, see below:
 # ![Oh-My-ZSH](https://ohmyz.sh/img/themes/omz-update.png)
 #
-# **Common Pitfall**: Be very careful with `rm` commands, especially `rm -r`. There is no "undo" 
-# or trash bin—deleted files are gone permanently. Always double-check the file or directory name 
-# before pressing Enter. A good practice is to use `ls` first to verify you're targeting the right 
+# **Common Pitfall**: Be very careful with `rm` commands, especially `rm -r`. There is no "undo"
+# or trash bin—deleted files are gone permanently. Always double-check the file or directory name
+# before pressing Enter. A good practice is to use `ls` first to verify you're targeting the right
 # files.
 
 # %% [markdown]
@@ -276,9 +276,9 @@
 # %% [markdown]
 # ### Introduction to Git
 #
-# Git is a version control system that tracks changes to your code. Think of Git as a sophisticated 
-# "save game" system for your code—it records not just the current state, but every change you've 
-# made along the way, who made it, and why. This makes it incredibly powerful for both individual 
+# Git is a version control system that tracks changes to your code. Think of Git as a sophisticated
+# "save game" system for your code—it records not just the current state, but every change you've
+# made along the way, who made it, and why. This makes it incredibly powerful for both individual
 # work and collaboration. This whole course lives within git and I'm thankful for Past Me to do this.
 #
 # #### Why Use Git?
@@ -289,9 +289,9 @@
 # - **Backup**: Your code is safely stored - combined with GitHub, you have cloud backup
 # - **Experimentation**: Try new ideas without fear - create branches to experiment safely
 #
-# **Real-world scenario**: Imagine you're analyzing research data and make changes to your analysis 
-# script that produce unexpected results. With Git, you can easily compare your current code with 
-# yesterday's version to see exactly what changed. Or if you accidentally delete an important 
+# **Real-world scenario**: Imagine you're analyzing research data and make changes to your analysis
+# script that produce unexpected results. With Git, you can easily compare your current code with
+# yesterday's version to see exactly what changed. Or if you accidentally delete an important
 # function, you can retrieve it from your Git history instead of having to rewrite it from scratch.
 #
 # What you see below is not uncommon (from https://third-bit.com/py-rse):
@@ -299,10 +299,10 @@
 #
 # #### Basic Git Workflow
 #
-# The basic Git workflow has three main stages: (1) modify files in your working directory, 
-# (2) stage the changes you want to commit, and (3) commit those changes to your repository 
-# with a descriptive message. This might seem like extra steps at first, but the staging area 
-# gives you fine control over what goes into each commit, allowing you to create logical, 
+# The basic Git workflow has three main stages: (1) modify files in your working directory,
+# (2) stage the changes you want to commit, and (3) commit those changes to your repository
+# with a descriptive message. This might seem like extra steps at first, but the staging area
+# gives you fine control over what goes into each commit, allowing you to create logical,
 # focused commits even if you've changed multiple files.
 #
 # ```bash
@@ -334,18 +334,18 @@
 #
 # #### Git Best Practices
 #
-# - **Make small, focused commits**: Each commit should represent one logical change. This makes 
+# - **Make small, focused commits**: Each commit should represent one logical change. This makes
 #   it easier to understand your history and revert specific changes if needed.
-# - **Write clear commit messages**: Use the format "Add feature" or "Fix bug" rather than "Changed 
+# - **Write clear commit messages**: Use the format "Add feature" or "Fix bug" rather than "Changed
 #   stuff". Future you (and your collaborators) will thank you.
-# - **Commit often**: Commit whenever you complete a small piece of work. It's better to have many 
+# - **Commit often**: Commit whenever you complete a small piece of work. It's better to have many
 #   small commits than one giant commit with 500 lines changed.
-# - **Don't commit sensitive data**: Never commit passwords, API keys, or private data. Once in Git 
+# - **Don't commit sensitive data**: Never commit passwords, API keys, or private data. Once in Git
 #   history, they're very difficult to remove completely.
 #
-# **When to commit?** A good rule of thumb: commit whenever you've made a change that you might 
-# want to return to later. This could be after fixing a bug, adding a new function, or refactoring 
-# code to be cleaner. If you're about to try something experimental, commit first—then you can 
+# **When to commit?** A good rule of thumb: commit whenever you've made a change that you might
+# want to return to later. This could be after fixing a bug, adding a new function, or refactoring
+# code to be cleaner. If you're about to try something experimental, commit first—then you can
 # always go back if the experiment doesn't work out.
 #
 # **To avoid misunderstandings**: Using Git locally does not replace a proper backup strategy for your data. If you file system fails, you will lose your files, Git or no Git. You can use remote repositories to help with that!
@@ -369,9 +369,9 @@
 # %% [markdown]
 # ### Introduction to GitHub
 #
-# GitHub is a platform for hosting Git repositories and collaborating with others. While Git 
-# manages version control on your local computer, GitHub provides a central location where you 
-# and your collaborators can share code, discuss changes, track issues, and automate workflows. 
+# GitHub is a platform for hosting Git repositories and collaborating with others. While Git
+# manages version control on your local computer, GitHub provides a central location where you
+# and your collaborators can share code, discuss changes, track issues, and automate workflows.
 # Think of Git as the tool and GitHub as the social network built around it.
 #
 # #### Why Use GitHub?
@@ -383,9 +383,9 @@
 # - **Documentation**: README files, wikis, and GitHub Pages for beautiful project websites
 # - **Professional portfolio**: Showcase your coding skills to potential employers or collaborators
 #
-# **For researchers specifically**: GitHub has become one of the standard platforms for sharing research 
-# code. Many journals now require code to be published alongside papers, and GitHub provides a 
-# citable DOI (Digital Object Identifier) through integration with Zenodo. This means your code 
+# **For researchers specifically**: GitHub has become one of the standard platforms for sharing research
+# code. Many journals now require code to be published alongside papers, and GitHub provides a
+# citable DOI (Digital Object Identifier) through integration with Zenodo. This means your code
 # can be cited just like a paper, increasing your research impact.
 #
 #
@@ -398,13 +398,13 @@
 # - **Access barriers**: Corporate firewalls, sanctions, or similar restrictions can limit availability for collaborators
 # - **Sustainability questions**: Free services and features can change over time, affecting long-term research software preservation
 #
-# However, for the sake of simplicity we focus on GitHub here. But fear not, there are alternatives out there such as GitLab (both hosted or on-premise), see Lecture 2. 
+# However, for the sake of simplicity we focus on GitHub here. But fear not, there are alternatives out there such as GitLab (both hosted or on-premise), see Lecture 2.
 #
 # #### Basic GitHub Workflow
 #
-# The basic GitHub workflow connects your local Git repository with a remote repository on GitHub. 
-# After making changes locally and committing them, you "push" those commits to GitHub. When your 
-# collaborators make changes, you "pull" their commits to your local repository. This push-pull 
+# The basic GitHub workflow connects your local Git repository with a remote repository on GitHub.
+# After making changes locally and committing them, you "push" those commits to GitHub. When your
+# collaborators make changes, you "pull" their commits to your local repository. This push-pull
 # cycle keeps everyone synchronized. These two repositories are separate: unless you sync them as described
 # they can evolve independently.
 #
@@ -428,8 +428,8 @@
 # git checkout main
 # ```
 #
-# **Typical workflow**: Before starting work each day, run `git pull` to get the latest changes 
-# from your collaborators. Make your changes, commit them locally with `git commit`, then share 
+# **Typical workflow**: Before starting work each day, run `git pull` to get the latest changes
+# from your collaborators. Make your changes, commit them locally with `git commit`, then share
 # them with `git push`. Always pull before pushing to avoid conflicts.
 #
 # #### GitHub Features
@@ -451,10 +451,10 @@
 # 5. **Push to your fork** on GitHub
 # 6. **Create a Pull Request** (ask the original project to include your changes)
 #
-# **Why this workflow?** You usually don't have direct write access to other people's repositories (for 
-# security reasons). Forking creates your own copy where you have full control. The pull request 
-# system lets the original authors review your changes before accepting them, ensuring code quality 
-# and preventing malicious changes. This same workflow is used by major open-source projects with 
+# **Why this workflow?** You usually don't have direct write access to other people's repositories (for
+# security reasons). Forking creates your own copy where you have full control. The pull request
+# system lets the original authors review your changes before accepting them, ensuring code quality
+# and preventing malicious changes. This same workflow is used by major open-source projects with
 # thousands of contributors.
 
 # %% [markdown]
@@ -521,8 +521,8 @@
 #
 # ### Primary Sources
 #
-# - **Research Software Engineering with Python** by The Alan Turing Institute  
-#   <https://alan-turing-institute.github.io/rse-course/html/>  
+# - **Research Software Engineering with Python** by The Alan Turing Institute
+#   <https://alan-turing-institute.github.io/rse-course/html/>
 #   The structure and pedagogical approach of this course is heavily influenced by this comprehensive RSE course.
 #
 # - **Research Software Engineering with Python** by Damien Irving, Kate Hertweck,
@@ -533,29 +533,29 @@
 #
 # ### Documentation and Learning Resources
 #
-# - **Git Documentation and Pro Git Book** by Scott Chacon and Ben Straub  
-#   <https://git-scm.com/book/en/v2>  
+# - **Git Documentation and Pro Git Book** by Scott Chacon and Ben Straub
+#   <https://git-scm.com/book/en/v2>
 #   For Git fundamentals and version control concepts.
 #
-# - **GitHub Documentation**  
-#   <https://docs.github.com/>  
+# - **GitHub Documentation**
+#   <https://docs.github.com/>
 #   For GitHub-specific features and collaboration workflows.
 #
-# - **Software Carpentry: The Unix Shell**  
-#   <https://swcarpentry.github.io/shell-novice/>  
+# - **Software Carpentry: The Unix Shell**
+#   <https://swcarpentry.github.io/shell-novice/>
 #   For shell/command line basics and best practices.
 #
-# - **Software Carpentry: Version Control with Git**  
-#   <https://swcarpentry.github.io/git-novice/>  
+# - **Software Carpentry: Version Control with Git**
+#   <https://swcarpentry.github.io/git-novice/>
 #   For introductory Git concepts and exercises.
 #
-# - **Society of Research Software Engineering**  
-#   <https://society-rse.org/>  
+# - **Society of Research Software Engineering**
+#   <https://society-rse.org/>
 #   For information about the RSE community and career paths.
 #
 # ### Notes
 #
-# While this lecture incorporates ideas and approaches from these sources, all content has been 
+# While this lecture incorporates ideas and approaches from these sources, all content has been
 # adapted and restructured for this specific course context. Examples have been developed independently for educational purposes.
 
 # %% [markdown]

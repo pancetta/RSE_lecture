@@ -141,45 +141,46 @@
 #
 # Let's create a function that analyzes temperature anomalies but has a subtle bug:
 
+
 # %%
 def calculate_anomalies(temperatures, baseline):
     """
     Calculate temperature anomalies relative to a baseline.
-    
+
     Parameters
     ----------
     temperatures : list
         Temperature readings in Celsius
     baseline : float
         Baseline temperature for comparison
-        
+
     Returns
     -------
     dict
         Statistics about the anomalies
     """
     anomalies = []
-    
+
     for temp in temperatures:
         anomaly = temp - baseline
         anomalies.append(anomaly)
-    
+
     # Calculate statistics
     mean_anomaly = sum(anomalies) / len(anomalies)
     max_anomaly = max(anomalies)
     min_anomaly = min(anomalies)
-    
+
     # BUG: This calculation is wrong when there are negative anomalies
     anomaly_range = max_anomaly - min_anomaly
     positive_anomalies = [a for a in anomalies if a > 0]
     fraction_positive = len(positive_anomalies) / len(anomalies)
-    
+
     return {
-        'mean': mean_anomaly,
-        'max': max_anomaly,
-        'min': min_anomaly,
-        'range': anomaly_range,
-        'positive_fraction': fraction_positive
+        "mean": mean_anomaly,
+        "max": max_anomaly,
+        "min": min_anomaly,
+        "range": anomaly_range,
+        "positive_fraction": fraction_positive,
     }
 
 
@@ -282,18 +283,19 @@ print(f"  Fraction above baseline: {result['positive_fraction']:.1%}")
 # This function processes climate model data, but has a bug that only appears
 # with certain input patterns:
 
+
 # %%
 def analyze_temperature_trends(daily_temps, window_size=7):
     """
     Analyze temperature trends using a moving average.
-    
+
     Parameters
     ----------
     daily_temps : list
         Daily temperature readings
     window_size : int
         Number of days for moving average
-        
+
     Returns
     -------
     dict
@@ -301,36 +303,30 @@ def analyze_temperature_trends(daily_temps, window_size=7):
     """
     if len(daily_temps) < window_size:
         raise ValueError(f"Need at least {window_size} days of data")
-    
+
     # Calculate moving averages
     moving_averages = []
     for i in range(len(daily_temps) - window_size + 1):
-        window = daily_temps[i:i + window_size]
+        window = daily_temps[i : i + window_size]
         avg = sum(window) / window_size
         moving_averages.append(avg)
-    
+
     # Calculate trend (slope of moving averages)
     # BUG: This fails when moving_averages has only 1 element
     n = len(moving_averages)
     if n < 2:
-        return {'trend': 0.0, 'moving_avg': moving_averages[0]}
-    
+        return {"trend": 0.0, "moving_avg": moving_averages[0]}
+
     # Simple linear regression slope
     x_mean = (n - 1) / 2.0
     y_mean = sum(moving_averages) / n
-    
-    numerator = sum((i - x_mean) * (y - y_mean) 
-                    for i, y in enumerate(moving_averages))
+
+    numerator = sum((i - x_mean) * (y - y_mean) for i, y in enumerate(moving_averages))
     denominator = sum((i - x_mean) ** 2 for i in range(n))
-    
+
     trend = numerator / denominator if denominator != 0 else 0.0
-    
-    return {
-        'trend': trend,
-        'moving_avg_start': moving_averages[0],
-        'moving_avg_end': moving_averages[-1],
-        'data_points': n
-    }
+
+    return {"trend": trend, "moving_avg_start": moving_averages[0], "moving_avg_end": moving_averages[-1], "data_points": n}
 
 
 # Test with different datasets
@@ -359,9 +355,9 @@ print(f"  Trend: {result3['trend']:.4f}°C/day")
 # # Add breakpoint before the suspicious calculation
 # def analyze_temperature_trends(daily_temps, window_size=7):
 #     # ... earlier code ...
-#     
+#
 #     breakpoint()  # Pause here
-#     
+#
 #     # Calculate trend
 #     n = len(moving_averages)
 #     # ...
@@ -440,8 +436,8 @@ import logging
 # Configure logging (do this once at program start)
 logging.basicConfig(
     level=logging.INFO,  # Set minimum level to log
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    datefmt='%Y-%m-%d %H:%M:%S'
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
 )
 
 # Create a logger for this module
@@ -491,14 +487,13 @@ logger.critical("This is a CRITICAL message - serious problem")
 import logging
 
 # Configure logger for this example
-logger = logging.getLogger('climate_analysis')
+logger = logging.getLogger("climate_analysis")
 logger.setLevel(logging.DEBUG)
 
 # Create console handler with formatting
 console_handler = logging.StreamHandler()
 console_handler.setLevel(logging.INFO)
-formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s',
-                              datefmt='%H:%M:%S')
+formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s", datefmt="%H:%M:%S")
 console_handler.setFormatter(formatter)
 logger.addHandler(console_handler)
 
@@ -506,68 +501,67 @@ logger.addHandler(console_handler)
 def process_climate_data(station_data, quality_threshold=0.8):
     """
     Process climate station data with comprehensive logging.
-    
+
     Parameters
     ----------
     station_data : dict
         Data from climate stations
     quality_threshold : float
         Minimum quality score to accept data
-        
+
     Returns
     -------
     dict
         Processed results
     """
     logger.info(f"Starting climate data processing for {len(station_data)} stations")
-    
+
     valid_stations = []
     rejected_stations = []
-    
+
     for station_id, data in station_data.items():
         logger.debug(f"Processing station {station_id}")
-        
+
         # Check data quality
-        if 'quality' not in data:
+        if "quality" not in data:
             logger.warning(f"Station {station_id} missing quality metadata, assuming 1.0")
-            data['quality'] = 1.0
-        
-        if data['quality'] < quality_threshold:
+            data["quality"] = 1.0
+
+        if data["quality"] < quality_threshold:
             logger.warning(
-                f"Station {station_id} rejected: quality {data['quality']:.2f} "
-                f"below threshold {quality_threshold:.2f}")
+                f"Station {station_id} rejected: quality {data['quality']:.2f} " f"below threshold {quality_threshold:.2f}"
+            )
             rejected_stations.append(station_id)
             continue
-        
+
         # Check for missing data
-        if 'temperatures' not in data or len(data['temperatures']) == 0:
+        if "temperatures" not in data or len(data["temperatures"]) == 0:
             logger.error(f"Station {station_id} has no temperature data, skipping")
             rejected_stations.append(station_id)
             continue
-        
+
         valid_stations.append(station_id)
         logger.debug(f"Station {station_id} accepted: {len(data['temperatures'])} readings")
-    
-    logger.info(f"Processing complete: {len(valid_stations)} valid, "
-                f"{len(rejected_stations)} rejected")
-    
+
+    logger.info(f"Processing complete: {len(valid_stations)} valid, " f"{len(rejected_stations)} rejected")
+
     if len(valid_stations) == 0:
         logger.critical("No valid stations remaining! Cannot proceed with analysis.")
         raise ValueError("No valid data available for analysis")
-    
+
     return {
-        'valid_stations': valid_stations,
-        'rejected_stations': rejected_stations,
-        'acceptance_rate': len(valid_stations) / len(station_data)
+        "valid_stations": valid_stations,
+        "rejected_stations": rejected_stations,
+        "acceptance_rate": len(valid_stations) / len(station_data),
     }
 
 
 # Test the logging
 test_data = {
-    'station_001': {'temperatures': [20, 21, 22], 'quality': 0.95},
-    'station_002': {'temperatures': [18, 19, 20], 'quality': 0.75},  # Will be rejected
-    'station_003': {'temperatures': [], 'quality': 0.99},  # No data
-    'station_004': {'temperatures': [22, 23, 24]},  # Missing quality field
+    "station_001": {"temperatures": [20, 21, 22], "quality": 0.95},
+    "station_002": {"temperatures": [18, 19, 20], "quality": 0.75},  # Will be rejected
+    "station_003": {"temperatures": [], "quality": 0.99},  # No data
+    "station_004": {"temperatures": [22, 23, 24]},  # Missing quality field
 }
 
 result = process_climate_data(test_data, quality_threshold=0.8)
@@ -736,43 +730,44 @@ from io import StringIO
 def slow_temperature_analysis(temperatures):
     """
     Analyze temperature data (intentionally inefficient version).
-    
+
     This demonstrates common performance issues in research code.
     """
     results = {}
-    
+
     # Inefficient: Recalculating mean multiple times
     def calculate_mean(temps):
         return sum(temps) / len(temps) if temps else 0
-    
+
     # Calculate mean anomalies (inefficient)
     mean_temp = calculate_mean(temperatures)
     anomalies = []
     for temp in temperatures:
         anomaly = temp - mean_temp
         anomalies.append(anomaly)
-    
+
     # Find extreme values (inefficient - recalculating)
-    results['mean'] = calculate_mean(temperatures)
-    results['max'] = max(temperatures)
-    results['min'] = min(temperatures)
-    
+    results["mean"] = calculate_mean(temperatures)
+    results["max"] = max(temperatures)
+    results["min"] = min(temperatures)
+
     # Calculate percentiles (very inefficient)
     sorted_temps = sorted(temperatures)
     n = len(sorted_temps)
-    results['p25'] = sorted_temps[n // 4]
-    results['p50'] = sorted_temps[n // 2]
-    results['p75'] = sorted_temps[3 * n // 4]
-    
+    results["p25"] = sorted_temps[n // 4]
+    results["p50"] = sorted_temps[n // 2]
+    results["p75"] = sorted_temps[3 * n // 4]
+
     # Count days above/below mean (inefficient)
-    above_mean = sum(1 for t in temperatures if t > results['mean'])
-    results['days_above_mean'] = above_mean
-    
+    above_mean = sum(1 for t in temperatures if t > results["mean"])
+    results["days_above_mean"] = above_mean
+
     return results
 
 
 # Create realistic dataset
 import random
+
 random.seed(42)
 large_dataset = [20 + random.gauss(0, 5) for _ in range(10000)]
 
@@ -786,7 +781,7 @@ profiler.disable()
 
 # Print profiling results
 s = StringIO()
-ps = pstats.Stats(profiler, stream=s).sort_stats('cumulative')
+ps = pstats.Stats(profiler, stream=s).sort_stats("cumulative")
 ps.print_stats(10)
 print(s.getvalue())
 
@@ -817,11 +812,12 @@ print(s.getvalue())
 #
 # Based on profiling, here's an optimized version:
 
+
 # %%
 def fast_temperature_analysis(temperatures):
     """
     Analyze temperature data (optimized version).
-    
+
     Improvements based on profiling:
     - Calculate mean once, reuse it
     - Sort once for all percentiles
@@ -829,27 +825,27 @@ def fast_temperature_analysis(temperatures):
     """
     if not temperatures:
         return {}
-    
+
     # Sort once, use for multiple purposes
     sorted_temps = sorted(temperatures)
     n = len(sorted_temps)
-    
+
     # Calculate mean once
     mean_temp = sum(temperatures) / n
-    
+
     # All calculations in one pass where possible
     results = {
-        'mean': mean_temp,
-        'max': sorted_temps[-1],  # Last element of sorted list
-        'min': sorted_temps[0],   # First element of sorted list
-        'p25': sorted_temps[n // 4],
-        'p50': sorted_temps[n // 2],
-        'p75': sorted_temps[3 * n // 4],
+        "mean": mean_temp,
+        "max": sorted_temps[-1],  # Last element of sorted list
+        "min": sorted_temps[0],  # First element of sorted list
+        "p25": sorted_temps[n // 4],
+        "p50": sorted_temps[n // 2],
+        "p75": sorted_temps[3 * n // 4],
     }
-    
+
     # Count above mean (more efficient)
-    results['days_above_mean'] = sum(1 for t in temperatures if t > mean_temp)
-    
+    results["days_above_mean"] = sum(1 for t in temperatures if t > mean_temp)
+
     return results
 
 
@@ -1007,41 +1003,39 @@ def load_climate_data(n_stations=100, days_per_station=365):
     for station in range(n_stations):
         # Simulate temperature readings
         temps = [20 + i * 0.01 for i in range(days_per_station)]
-        data[f'station_{station:03d}'] = temps
+        data[f"station_{station:03d}"] = temps
     return data
 
 
 def naive_correlation_analysis(data):
     """
     Calculate correlations between all station pairs (naive approach).
-    
+
     This is O(n²) in number of stations - very slow for many stations!
     """
     stations = list(data.keys())
     n = len(stations)
-    
+
     correlations = []
     for i in range(n):
         for j in range(i + 1, n):
             # Simple correlation: do temperatures trend together?
             temps_i = data[stations[i]]
             temps_j = data[stations[j]]
-            
+
             # Very naive correlation calculation
             mean_i = sum(temps_i) / len(temps_i)
             mean_j = sum(temps_j) / len(temps_j)
-            
-            cov = sum((temps_i[k] - mean_i)
-                      * (temps_j[k] - mean_j)
-                      for k in range(len(temps_i)))
-            
+
+            cov = sum((temps_i[k] - mean_i) * (temps_j[k] - mean_j) for k in range(len(temps_i)))
+
             var_i = sum((t - mean_i) ** 2 for t in temps_i)
             var_j = sum((t - mean_j) ** 2 for t in temps_j)
-            
+
             if var_i > 0 and var_j > 0:
                 corr = cov / (var_i * var_j) ** 0.5
                 correlations.append((stations[i], stations[j], corr))
-    
+
     return correlations
 
 
@@ -1064,7 +1058,7 @@ print(f"First correlation: {result[0]}")
 # **Key findings:**
 # - The nested loops create O(n²) complexity
 # - For 100 stations: 4,950 pairs to compare
-# - For 1,000 stations: 499,500 pairs to compare! 
+# - For 1,000 stations: 499,500 pairs to compare!
 # - We're recalculating means and variances repeatedly
 # - NumPy would be 100x faster for these operations
 #
@@ -1078,18 +1072,19 @@ print(f"First correlation: {result[0]}")
 #
 # Here's a smarter approach:
 
+
 # %%
 def smart_correlation_analysis(data):
     """
     Calculate correlations more efficiently.
-    
+
     Optimizations:
     - Pre-calculate statistics for each station
     - Only compare geographically nearby stations (simulated)
     - Use more efficient calculations
     """
     stations = list(data.keys())
-    
+
     # Pre-calculate statistics once per station
     stats = {}
     for station in stations:
@@ -1097,13 +1092,8 @@ def smart_correlation_analysis(data):
         n = len(temps)
         mean_temp = sum(temps) / n
         variance = sum((t - mean_temp) ** 2 for t in temps)
-        stats[station] = {
-            'temps': temps,
-            'mean': mean_temp,
-            'variance': variance,
-            'n': n
-        }
-    
+        stats[station] = {"temps": temps, "mean": mean_temp, "variance": variance, "n": n}
+
     # Only calculate correlations for "nearby" stations
     # (in real code, this would use actual geographic distance)
     correlations = []
@@ -1111,19 +1101,17 @@ def smart_correlation_analysis(data):
         # Only check next 10 stations (simulating geographic proximity)
         for j in range(i + 1, min(i + 11, len(stations))):
             station_j = stations[j]
-            
+
             si = stats[station_i]
             sj = stats[station_j]
-            
+
             # Calculate covariance using pre-computed statistics
-            cov = sum((si['temps'][k] - si['mean'])
-                      * (sj['temps'][k] - sj['mean'])
-                      for k in range(si['n']))
-            
-            if si['variance'] > 0 and sj['variance'] > 0:
-                corr = cov / (si['variance'] * sj['variance']) ** 0.5
+            cov = sum((si["temps"][k] - si["mean"]) * (sj["temps"][k] - sj["mean"]) for k in range(si["n"]))
+
+            if si["variance"] > 0 and sj["variance"] > 0:
+                corr = cov / (si["variance"] * sj["variance"]) ** 0.5
                 correlations.append((station_i, station_j, corr))
-    
+
     return correlations
 
 
@@ -1212,15 +1200,15 @@ print(f"(Analyzed fewer pairs by focusing on nearby stations)")
 # %% [markdown]
 # ### Technical Debt and Refactoring Decisions
 #
-# Now that we've learned about profiling and optimization, let's discuss an important question: 
-# **When should you refactor code vs. when should you rewrite it?** This is a critical decision 
-# in research software development, especially when profiling reveals performance issues or when 
+# Now that we've learned about profiling and optimization, let's discuss an important question:
+# **When should you refactor code vs. when should you rewrite it?** This is a critical decision
+# in research software development, especially when profiling reveals performance issues or when
 # debugging exposes design problems.
 #
 # #### What is Technical Debt?
 #
-# **Technical debt** is a metaphor coined by Ward Cunningham. It's the cost of choosing a quick 
-# solution now that will require more work later. Like financial debt, it accumulates "interest" - 
+# **Technical debt** is a metaphor coined by Ward Cunningham. It's the cost of choosing a quick
+# solution now that will require more work later. Like financial debt, it accumulates "interest" -
 # the longer you wait to address it, the harder and more expensive it becomes.
 #
 # **Examples in research code:**
@@ -1230,12 +1218,12 @@ print(f"(Analyzed fewer pairs by focusing on nearby stations)")
 # - Writing unclear code because "I'll clean it up later"
 # - Using inefficient algorithms because "it works for now"
 #
-# **Why debt accumulates**: Research projects evolve. What started as a 100-line script for one 
-# experiment becomes a 10,000-line analysis pipeline used by your whole lab. The quick hacks you 
+# **Why debt accumulates**: Research projects evolve. What started as a 100-line script for one
+# experiment becomes a 10,000-line analysis pipeline used by your whole lab. The quick hacks you
 # made in week 1 now slow down everyone in year 2.
 #
-# **Profiling reveals debt**: When profiling shows that your code is slow, it's often because of 
-# technical debt—inefficient algorithms, duplicated work, poor data structures. The question is: 
+# **Profiling reveals debt**: When profiling shows that your code is slow, it's often because of
+# technical debt—inefficient algorithms, duplicated work, poor data structures. The question is:
 # fix the debt (refactor) or start over (rewrite)?
 #
 # #### Refactor or Rewrite? A Decision Framework
@@ -1246,21 +1234,21 @@ print(f"(Analyzed fewer pairs by focusing on nearby stations)")
 #
 # **When to REFACTOR** (most cases):
 #
-# ✅ Code works but is hard to understand or maintain  
-# ✅ You have tests that verify correctness  
-# ✅ Problems are localized to specific functions/modules  
-# ✅ You want to preserve git history and attribution  
-# ✅ Team is actively using the code  
-# ✅ Changes can be made incrementally  
+# ✅ Code works but is hard to understand or maintain
+# ✅ You have tests that verify correctness
+# ✅ Problems are localized to specific functions/modules
+# ✅ You want to preserve git history and attribution
+# ✅ Team is actively using the code
+# ✅ Changes can be made incrementally
 #
 # **When to REWRITE** (rare):
 #
-# ⚠️ Fundamental architectural problems throughout  
-# ⚠️ Technology stack is obsolete (Python 2 → Python 3)  
-# ⚠️ Requirements changed completely  
-# ⚠️ Code is a prototype, never meant for production  
-# ⚠️ No tests exist and code is too complex to test  
-# ⚠️ Rewrite would be faster than fixing  
+# ⚠️ Fundamental architectural problems throughout
+# ⚠️ Technology stack is obsolete (Python 2 → Python 3)
+# ⚠️ Requirements changed completely
+# ⚠️ Code is a prototype, never meant for production
+# ⚠️ No tests exist and code is too complex to test
+# ⚠️ Rewrite would be faster than fixing
 #
 # **Default choice: REFACTOR**. Rewrites are risky, often fail, and lose accumulated knowledge.
 #
@@ -1274,13 +1262,14 @@ print(f"(Analyzed fewer pairs by focusing on nearby stations)")
 # | > 1000 lines | No tests | High | Write tests first, then refactor |
 # | > 10000 lines | Any | Very High | Never rewrite everything at once |
 #
-# **The "Strangler Fig" pattern**: For large rewrites, create new code alongside old code, 
-# gradually replacing pieces until nothing of the old remains. Named after the fig tree that 
+# **The "Strangler Fig" pattern**: For large rewrites, create new code alongside old code,
+# gradually replacing pieces until nothing of the old remains. Named after the fig tree that
 # grows around and eventually replaces its host tree.
 #
 # #### Profiling-Driven Refactoring: A Case Study
 #
 # Let's apply this to our climate analysis example. Profiling revealed the bottleneck:
+
 
 # %%
 # BEFORE: Slow code with technical debt
@@ -1288,20 +1277,21 @@ def analyze_all_stations_slow(stations):
     """Analyze all station pairs - SLOW due to O(n²) algorithm."""
     results = []
     n = len(stations)
-    
+
     # Technical debt #1: Nested loop (quadratic complexity)
     for i in range(n):
         for j in range(i + 1, n):
             # Technical debt #2: Duplicated distance calculation
-            dx = stations[i]['lon'] - stations[j]['lon']
-            dy = stations[i]['lat'] - stations[j]['lat']
+            dx = stations[i]["lon"] - stations[j]["lon"]
+            dy = stations[i]["lat"] - stations[j]["lat"]
             distance = (dx**2 + dy**2) ** 0.5
-            
+
             # Technical debt #3: Magic number (what is 0.5?)
             if distance < 0.5:
                 results.append((i, j))
-    
+
     return results
+
 
 # Decision: Refactor or rewrite?
 # - Size: ~15 lines - small
@@ -1316,47 +1306,52 @@ def analyze_all_stations_slow(stations):
 # Step 1: Extract magic number (immediate improvement)
 MAX_DISTANCE_DEGREES = 0.5  # Stations within ~50km
 
+
 def analyze_all_stations_v2(stations):
     """Version 2: Extracted constant."""
     results = []
     n = len(stations)
-    
+
     for i in range(n):
         for j in range(i + 1, n):
-            dx = stations[i]['lon'] - stations[j]['lon']
-            dy = stations[i]['lat'] - stations[j]['lat']
+            dx = stations[i]["lon"] - stations[j]["lon"]
+            dy = stations[i]["lat"] - stations[j]["lat"]
             distance = (dx**2 + dy**2) ** 0.5
-            
+
             if distance < MAX_DISTANCE_DEGREES:
                 results.append((i, j))
-    
+
     return results
+
 
 # Test: Still works? ✓
 
 # %% [markdown]
 # Step 2: Extract distance calculation (apply DRY):
 
+
 # %%
 def calculate_distance(station_a, station_b):
     """Calculate approximate distance between two stations."""
-    dx = station_a['lon'] - station_b['lon']
-    dy = station_a['lat'] - station_b['lat']
+    dx = station_a["lon"] - station_b["lon"]
+    dy = station_a["lat"] - station_b["lat"]
     return (dx**2 + dy**2) ** 0.5
+
 
 def analyze_all_stations_v3(stations):
     """Version 3: Extracted distance calculation."""
     results = []
     n = len(stations)
-    
+
     for i in range(n):
         for j in range(i + 1, n):
             distance = calculate_distance(stations[i], stations[j])
-            
+
             if distance < MAX_DISTANCE_DEGREES:
                 results.append((i, j))
-    
+
     return results
+
 
 # Test: Still works? ✓
 # Bonus: Can now test calculate_distance() separately!
@@ -1364,25 +1359,27 @@ def analyze_all_stations_v3(stations):
 # %% [markdown]
 # Step 3: Improve algorithm (the real performance fix):
 
+
 # %%
 def analyze_nearby_stations_only(stations):
     """Version 4: Smarter algorithm - only check nearby stations."""
     results = []
-    
+
     # Sort by longitude for spatial indexing
-    sorted_stations = sorted(enumerate(stations), key=lambda x: x[1]['lon'])
-    
+    sorted_stations = sorted(enumerate(stations), key=lambda x: x[1]["lon"])
+
     for idx, (i, station_i) in enumerate(sorted_stations):
         # Only check stations within MAX_DISTANCE in longitude
-        for j, station_j in sorted_stations[idx + 1:]:
-            if abs(station_i['lon'] - station_j['lon']) > MAX_DISTANCE_DEGREES:
+        for j, station_j in sorted_stations[idx + 1 :]:
+            if abs(station_i["lon"] - station_j["lon"]) > MAX_DISTANCE_DEGREES:
                 break  # No need to check further
-            
+
             distance = calculate_distance(station_i, station_j)
             if distance < MAX_DISTANCE_DEGREES:
                 results.append((i, j))
-    
+
     return results
+
 
 # Test: Still works? ✓
 # Performance: Much faster! (early termination)
@@ -1448,7 +1445,7 @@ def analyze_nearby_stations_only(stations):
 # - Using in production analysis
 # - Building upon it for future work
 #
-# **Research reality**: Your "quick prototype" often becomes the production code your entire 
+# **Research reality**: Your "quick prototype" often becomes the production code your entire
 # paper depends on. Plan accordingly!
 #
 # #### Key Takeaways: Refactoring Mindset
@@ -1726,58 +1723,58 @@ def analyze_nearby_stations_only(stations):
 #
 # ### Primary Sources
 #
-# - **Research Software Engineering with Python** by The Alan Turing Institute  
-#   <https://alan-turing-institute.github.io/rse-course/html/>  
+# - **Research Software Engineering with Python** by The Alan Turing Institute
+#   <https://alan-turing-institute.github.io/rse-course/html/>
 #   Debugging strategies and profiling approaches adapted from this course.
 #
 # - **Research Software Engineering with Python** by Damien Irving, Kate Hertweck,
-#   Luke Johnston, Joel Ostblom, Charlotte Wickham, and Greg Wilson (2022)  
-#   <https://third-bit.com/py-rse/>  
+#   Luke Johnston, Joel Ostblom, Charlotte Wickham, and Greg Wilson (2022)
+#   <https://third-bit.com/py-rse/>
 #   Chapter 11 "Errors and Exceptions" provided insights on debugging practices for research code.
 #
 # ### Python Documentation
 #
-# - **Python Debugger (pdb)**  
-#   <https://docs.python.org/3/library/pdb.html>  
+# - **Python Debugger (pdb)**
+#   <https://docs.python.org/3/library/pdb.html>
 #   Official documentation for Python's built-in debugger.
 #
-# - **Python Logging**  
-#   <https://docs.python.org/3/library/logging.html>  
+# - **Python Logging**
+#   <https://docs.python.org/3/library/logging.html>
 #   Official documentation for Python's logging module.
 #   - Logging HOWTO: <https://docs.python.org/3/howto/logging.html>
 #   - Logging Cookbook: <https://docs.python.org/3/howto/logging-cookbook.html>
 #
-# - **Python Profilers**  
-#   <https://docs.python.org/3/library/profile.html>  
+# - **Python Profilers**
+#   <https://docs.python.org/3/library/profile.html>
 #   Documentation for cProfile and profile modules.
 #
 # ### Profiling Tools
 #
-# - **line_profiler**  
-#   <https://github.com/pyutils/line_profiler>  
+# - **line_profiler**
+#   <https://github.com/pyutils/line_profiler>
 #   Line-by-line profiling for Python code.
 #
-# - **memory_profiler**  
-#   <https://github.com/pythonprofilers/memory_profiler>  
+# - **memory_profiler**
+#   <https://github.com/pythonprofilers/memory_profiler>
 #   Memory usage profiling for Python.
 #
 # ### Classic References
 #
-# - Knuth, Donald E. (1974). "Structured Programming with go to Statements".  
-#   *Computing Surveys* 6 (4): 261–301.  
+# - Knuth, Donald E. (1974). "Structured Programming with go to Statements".
+#   *Computing Surveys* 6 (4): 261–301.
 #   Contains the famous quote: "Premature optimization is the root of all evil."
 #
-# - Zeller, Andreas (2009). *Why Programs Fail: A Guide to Systematic Debugging*.  
-#   Morgan Kaufmann. ISBN 978-0123745156.  
+# - Zeller, Andreas (2009). *Why Programs Fail: A Guide to Systematic Debugging*.
+#   Morgan Kaufmann. ISBN 978-0123745156.
 #   Comprehensive guide to systematic debugging techniques.
 #
 # ### Additional Resources
 #
-# - **Python Debugging With Pdb**  
-#   <https://realpython.com/python-debugging-pdb/>  
+# - **Python Debugging With Pdb**
+#   <https://realpython.com/python-debugging-pdb/>
 #   Practical tutorial on using pdb effectively.
 #
-# - **Software Carpentry**  
+# - **Software Carpentry**
 #   Debugging and testing lessons for scientific computing.
 #
 # ### Notes

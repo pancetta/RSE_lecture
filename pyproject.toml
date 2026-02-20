@@ -1,0 +1,50 @@
+[tool.black]
+line-length = 127
+target-version = ["py37", "py38", "py39", "py310", "py311"]
+exclude = '''
+/(
+    \.git
+  | __pycache__
+  | \.ipynb_checkpoints
+  | venv
+  | env
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+[tool.ruff]
+line-length = 127
+target-version = "py37"
+exclude = [
+    ".git",
+    "__pycache__",
+    ".ipynb_checkpoints",
+    "venv",
+    "env",
+    ".venv",
+    "build",
+    "dist",
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "W"]
+ignore = [
+    # E402: module level import not at top of file (common in notebooks)
+    "E402",
+    # F401: imported but unused (common in notebooks for demonstration)
+    "F401",
+    # F841: assigned but never used (common in notebooks for demonstration)
+    "F841",
+    # E226: missing whitespace around arithmetic operator (style preference)
+    "E226",
+    # F541: f-string without placeholders (style preference)
+    "F541",
+    # E501: line too long (handled by black)
+    "E501",
+    # W291: trailing whitespace (jupytext formatting)
+    "W291",
+    # W293: blank line contains whitespace (jupytext formatting)
+    "W293",
+]

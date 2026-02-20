@@ -812,8 +812,8 @@
 # %% [markdown]
 # ### Nextflow
 #
-# **Language**: Groovy-based DSL  
-# **Strengths**: Cloud computing, containerization, scalability  
+# **Language**: Groovy-based DSL
+# **Strengths**: Cloud computing, containerization, scalability
 # **Common in**: Genomics, bioinformatics
 #
 # **Example Nextflow workflow:**
@@ -825,13 +825,13 @@
 #
 # process qualityControl {
 #     publishDir "${params.outdir}/qc"
-#     
+#
 #     input:
 #     path(reads)
-#     
+#
 #     output:
 #     path("*_qc.html")
-#     
+#
 #     script:
 #     """
 #     fastqc ${reads}
@@ -841,10 +841,10 @@
 # process trimReads {
 #     input:
 #     path(reads)
-#     
+#
 #     output:
 #     path("*_trimmed.fastq")
-#     
+#
 #     script:
 #     """
 #     trimmomatic ${reads} ${reads.baseName}_trimmed.fastq
@@ -871,8 +871,8 @@
 # %% [markdown]
 # ### Common Workflow Language (CWL)
 #
-# **Language**: YAML/JSON specification  
-# **Strengths**: Portability, standardization, tool interoperability  
+# **Language**: YAML/JSON specification
+# **Strengths**: Portability, standardization, tool interoperability
 # **Common in**: Multi-institutional collaborations
 #
 # **Example CWL workflow:**
@@ -887,7 +887,7 @@
 #
 # outputs:
 #   aligned_bam:
-#     type: File
+# type: File
 #     outputSource: align/output_bam
 #
 # steps:
@@ -917,8 +917,8 @@
 # %% [markdown]
 # ### Galaxy
 #
-# **Interface**: Web-based GUI  
-# **Strengths**: User-friendly, no programming required, extensive tool library  
+# **Interface**: Web-based GUI
+# **Strengths**: User-friendly, no programming required, extensive tool library
 # **Common in**: Biomedical research, teaching
 #
 # Galaxy provides a point-and-click interface for building workflows. Users:
@@ -940,8 +940,8 @@
 # %% [markdown]
 # ### Apache Airflow
 #
-# **Language**: Python  
-# **Strengths**: Complex scheduling, monitoring, data engineering  
+# **Language**: Python
+# **Strengths**: Complex scheduling, monitoring, data engineering
 # **Common in**: Data science, production pipelines
 #
 # **Example Airflow DAG:**
@@ -1273,84 +1273,78 @@ def simulate_workflow_execution():
     Demonstrates workflow concepts without requiring actual data files.
     Shows dependency tracking and execution order.
     """
-    
+
     # Define workflow structure as a dictionary
     workflow = {
-        'download_data': {
-            'inputs': [],
-            'outputs': ['data/raw/temperature.csv'],
-            'command': 'download_data.py',
-            'status': 'pending'
+        "download_data": {
+            "inputs": [],
+            "outputs": ["data/raw/temperature.csv"],
+            "command": "download_data.py",
+            "status": "pending",
         },
-        'clean_data': {
-            'inputs': ['data/raw/temperature.csv'],
-            'outputs': ['data/processed/temperature_clean.csv'],
-            'command': 'clean_data.py',
-            'status': 'pending'
+        "clean_data": {
+            "inputs": ["data/raw/temperature.csv"],
+            "outputs": ["data/processed/temperature_clean.csv"],
+            "command": "clean_data.py",
+            "status": "pending",
         },
-        'plot_data': {
-            'inputs': ['data/processed/temperature_clean.csv'],
-            'outputs': ['results/plots.png'],
-            'command': 'plot_data.py',
-            'status': 'pending'
+        "plot_data": {
+            "inputs": ["data/processed/temperature_clean.csv"],
+            "outputs": ["results/plots.png"],
+            "command": "plot_data.py",
+            "status": "pending",
         },
-        'compute_stats': {
-            'inputs': ['data/processed/temperature_clean.csv'],
-            'outputs': ['results/statistics.txt'],
-            'command': 'compute_stats.py',
-            'status': 'pending'
+        "compute_stats": {
+            "inputs": ["data/processed/temperature_clean.csv"],
+            "outputs": ["results/statistics.txt"],
+            "command": "compute_stats.py",
+            "status": "pending",
         },
-        'generate_report': {
-            'inputs': ['results/plots.png', 'results/statistics.txt'],
-            'outputs': ['report.pdf'],
-            'command': 'generate_report.py',
-            'status': 'pending'
-        }
+        "generate_report": {
+            "inputs": ["results/plots.png", "results/statistics.txt"],
+            "outputs": ["report.pdf"],
+            "command": "generate_report.py",
+            "status": "pending",
+        },
     }
-    
+
     print("Workflow Dependency Graph")
     print("=" * 60)
-    
+
     # Build and display dependency graph
     for step, details in workflow.items():
         print(f"\n{step}:")
-        if details['inputs']:
+        if details["inputs"]:
             print(f"  Depends on: {', '.join(details['inputs'])}")
         else:
             print(f"  Depends on: (no dependencies - can start immediately)")
         print(f"  Produces: {', '.join(details['outputs'])}")
         print(f"  Command: {details['command']}")
-    
+
     print("\n" + "=" * 60)
     print("\nExecution Order (respecting dependencies):")
     print("-" * 60)
-    
+
     # Simulate execution order
-    execution_order = [
-        'download_data',
-        'clean_data',
-        'plot_data (parallel)',
-        'compute_stats (parallel)',
-        'generate_report'
-    ]
-    
+    execution_order = ["download_data", "clean_data", "plot_data (parallel)", "compute_stats (parallel)", "generate_report"]
+
     for i, step in enumerate(execution_order, 1):
         print(f"{i}. {step}")
-    
+
     print("\n" + "=" * 60)
     print("\nWorkflow Metadata:")
     print("-" * 60)
-    
+
     metadata = {
-        'workflow_name': 'temperature_analysis',
-        'total_steps': len(workflow),
-        'parallel_capable_steps': ['plot_data', 'compute_stats'],
-        'created': datetime.now().isoformat(),
-        'version': '1.0.0'
+        "workflow_name": "temperature_analysis",
+        "total_steps": len(workflow),
+        "parallel_capable_steps": ["plot_data", "compute_stats"],
+        "created": datetime.now().isoformat(),
+        "version": "1.0.0",
     }
-    
+
     print(json.dumps(metadata, indent=2))
-    
+
     return workflow, metadata
 
 

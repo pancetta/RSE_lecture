@@ -40,11 +40,11 @@ def generate_qr_codes():
         img.save(course_qr_path)
 
     # Find all lecture directories
-    lecture_dirs = sorted([d for d in base_dir.glob('lecture_*') if d.is_dir()])
+    lecture_dirs = sorted([d for d in base_dir.glob("lecture_*") if d.is_dir()])
 
     for lecture_dir in lecture_dirs:
         lecture_name = lecture_dir.name
-        lecture_number = lecture_name.split('_')[1]
+        lecture_number = lecture_name.split("_")[1]
 
         # Generate URL for this lecture
         lecture_url = f"{course_url}/{lecture_name}/lecture_{lecture_number}.html"
@@ -73,12 +73,9 @@ def convert_lecture(lecture_file):
     print(f"Converting {lecture_file}...")
     try:
         result = subprocess.run(
-            ['jupytext', '--to', 'notebook', str(lecture_file)],
-            capture_output=True,
-            text=True,
-            check=True
+            ["jupytext", "--to", "notebook", str(lecture_file)], capture_output=True, text=True, check=True
         )
-        notebook_file = lecture_file.with_suffix('.ipynb')
+        notebook_file = lecture_file.with_suffix(".ipynb")
         print(f"  [OK] Created {notebook_file}")
         return True
     except subprocess.CalledProcessError as e:
@@ -100,7 +97,7 @@ def main():
     print()
 
     # Find all lecture directories
-    lecture_dirs = sorted([d for d in base_dir.glob('lecture_*') if d.is_dir()])
+    lecture_dirs = sorted([d for d in base_dir.glob("lecture_*") if d.is_dir()])
 
     if not lecture_dirs:
         print("No lecture directories found.")
@@ -113,7 +110,7 @@ def main():
 
     for lecture_dir in lecture_dirs:
         # Find Python files in the lecture directory
-        py_files = list(lecture_dir.glob('*.py'))
+        py_files = list(lecture_dir.glob("*.py"))
 
         for py_file in py_files:
             if convert_lecture(py_file):
@@ -128,5 +125,5 @@ def main():
     print(f"{'='*50}")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

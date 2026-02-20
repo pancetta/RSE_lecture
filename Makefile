@@ -1,4 +1,4 @@
-.PHONY: help install install-dev install-lecture1 install-lecture2 install-lecture3 install-lecture4 install-lecture5 install-lecture6 install-lecture7 install-lecture8 install-lecture9 install-lecture10 install-lecture11 install-lecture12 install-lecture13 install-lecture14 convert clean notebooks build-website serve-website clean-website build-pdf clean-pdf update-deps test-deps create-locks ci-local lint generate-qr-codes
+.PHONY: help install install-dev install-lecture1 install-lecture2 install-lecture3 install-lecture4 install-lecture5 install-lecture6 install-lecture7 install-lecture8 install-lecture9 install-lecture10 install-lecture11 install-lecture12 install-lecture13 install-lecture14 convert clean notebooks build-website serve-website clean-website build-pdf clean-pdf update-deps test-deps create-locks ci-local lint format generate-qr-codes
 
 help:
 	@echo "Research Software Engineering Lectures - Makefile"
@@ -33,7 +33,8 @@ help:
 	@echo "  test-deps        - Test current dependencies without creating lock files"
 	@echo "  create-locks     - Create conda-lock files for all platforms"
 	@echo "  ci-local         - Run local CI checks (lint, syntax, convert) before committing"
-	@echo "  lint             - Run flake8 linting on all Python files"
+	@echo "  lint             - Run black formatting check and ruff linting on all Python files"
+	@echo "  format           - Auto-format all Python files with black"
 	@echo "  help             - Show this help message"
 
 install:
@@ -217,12 +218,17 @@ ci-local:
 	@bash scripts/local_ci_check.sh
 
 lint:
-	@echo "Running flake8 linting..."
-	@echo "Checking for critical errors (E9, F63, F7, F82)..."
-	@flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+	@echo "Running black formatting check..."
+	@black --check .
 	@echo ""
-	@echo "Running full flake8 check..."
-	@flake8 . --count --statistics
+	@echo "Running ruff linting..."
+	@ruff check .
 	@echo ""
-	@echo "✓ All flake8 checks passed"
+	@echo "✓ All checks passed"
+
+format:
+	@echo "Auto-formatting all Python files with black..."
+	@black .
+	@echo ""
+	@echo "✓ All Python files formatted"
 

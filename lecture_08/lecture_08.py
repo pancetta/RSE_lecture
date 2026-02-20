@@ -306,17 +306,17 @@ Examples
 def celsius_to_fahrenheit(celsius):
     """
     Convert temperature from Celsius to Fahrenheit.
-    
+
     Parameters
     ----------
     celsius : float or array_like
         Temperature in degrees Celsius.
-        
+
     Returns
     -------
     float or ndarray
         Temperature in degrees Fahrenheit.
-        
+
     Examples
     --------
     >>> celsius_to_fahrenheit(0)
@@ -325,11 +325,11 @@ def celsius_to_fahrenheit(celsius):
     212.0
     >>> celsius_to_fahrenheit(-40)
     -40.0
-    
+
     Notes
     -----
     The conversion formula is: F = C × 9/5 + 32
-    
+
     See Also
     --------
     fahrenheit_to_celsius : Inverse conversion
@@ -337,13 +337,13 @@ def celsius_to_fahrenheit(celsius):
     return celsius * 9 / 5 + 32
 
 
-def calculate_anomaly(temperatures, baseline, method='mean'):
+def calculate_anomaly(temperatures, baseline, method="mean"):
     """
     Calculate temperature anomalies relative to a baseline.
-    
+
     Temperature anomalies represent deviations from a reference temperature,
     commonly used in climate science to track warming or cooling trends.
-    
+
     Parameters
     ----------
     temperatures : array_like
@@ -354,68 +354,68 @@ def calculate_anomaly(temperatures, baseline, method='mean'):
         Must be in same units as temperatures.
     method : {'mean', 'median'}, optional
         Method for calculating baseline anomaly. Default is 'mean'.
-        
+
         - 'mean' : Use arithmetic mean of temperatures
         - 'median' : Use median of temperatures
-        
+
     Returns
     -------
     ndarray
         Temperature anomalies (temperatures - baseline).
         Same shape as input temperatures.
-        
+
     Raises
     ------
     ValueError
         If temperatures is empty or method is invalid.
     TypeError
         If temperatures cannot be converted to array.
-        
+
     Examples
     --------
     >>> import numpy as np
     >>> temps = np.array([32.5, 33.0, 34.2, 35.1])
     >>> calculate_anomaly(temps, 32.0)
     array([0.5, 1. , 2.2, 3.1])
-    
+
     >>> calculate_anomaly(temps, 33.0, method='median')
     array([-0.5,  0. ,  1.2,  2.1])
-    
+
     Notes
     -----
     This function is commonly used in climate analysis to identify
     warming or cooling trends relative to a historical baseline period.
-    
+
     The anomaly is calculated as:
-    
+
     .. math:: A_i = T_i - T_{baseline}
-    
+
     where :math:`A_i` is the anomaly for measurement i, and
     :math:`T_i` is the temperature measurement.
-    
+
     References
     ----------
     .. [1] Jones, P.D., et al. "Surface air temperature and its changes
            over the past 150 years." Reviews of Geophysics, 1999.
-    
+
     See Also
     --------
     numpy.mean : Calculate arithmetic mean
     numpy.median : Calculate median value
     """
     import numpy as np
-    
+
     # Input validation
     temps = np.asarray(temperatures)
     if temps.size == 0:
         raise ValueError("temperatures array cannot be empty")
-    
-    if method not in ['mean', 'median']:
+
+    if method not in ["mean", "median"]:
         raise ValueError(f"method must be 'mean' or 'median', got '{method}'")
-    
+
     # Calculate anomalies
     anomalies = temps - baseline
-    
+
     return anomalies
 
 
@@ -644,7 +644,7 @@ print(f"Anomalies: {anomalies}")
 # .. code-block:: python
 #
 #    from genomeanalyzer import analyze_sequence
-#    
+#
 #    result = analyze_sequence('genome.fasta')
 #    print(f"Found {result.num_variants} variants")
 #
@@ -668,15 +668,15 @@ print(f"Anomalies: {anomalies}")
 # 2. **Create `.readthedocs.yml` in your repository:**
 #    ```yaml
 #    version: 2
-#    
+#
 #    build:
 #      os: ubuntu-22.04
 #      tools:
 #        python: "3.11"
-#    
+#
 #    sphinx:
 #      configuration: docs/source/conf.py
-#    
+#
 #    python:
 #      install:
 #        - requirements: docs/requirements.txt
@@ -1050,7 +1050,7 @@ print(f"Anomalies: {anomalies}")
 #
 # If you use GenomeAnalyzer in your research, please cite:
 #
-# Chen, S. (2024). GenomeAnalyzer: Fast Genomic Sequence Analysis (Version 1.0.0) 
+# Chen, S. (2024). GenomeAnalyzer: Fast Genomic Sequence Analysis (Version 1.0.0)
 # [Computer software]. https://doi.org/10.5281/zenodo.1234567
 #
 # BibTeX:
@@ -1188,20 +1188,20 @@ print(f"Anomalies: {anomalies}")
 #     ```julia
 #     """
 #         celsius_to_fahrenheit(celsius)
-#     
+#
 #     Convert temperature from Celsius to Fahrenheit.
-#     
+#
 #     # Arguments
 #     - `celsius::Real`: Temperature in degrees Celsius
-#     
+#
 #     # Returns
 #     - Temperature in degrees Fahrenheit
-#     
+#
 #     # Examples
 #     ```jldoctest
 #     julia> celsius_to_fahrenheit(0)
 #     32.0
-#     
+#
 #     julia> celsius_to_fahrenheit(100)
 #     212.0
 #     ```
@@ -1237,7 +1237,7 @@ print(f"Anomalies: {anomalies}")
 #     %       ans = 32
 #     %
 #     %   See also FAHRENHEIT_TO_CELSIUS
-#     
+#
 #     fahrenheit = celsius * 9/5 + 32;
 #     end
 #     ```
@@ -1265,7 +1265,7 @@ print(f"Anomalies: {anomalies}")
 #     function celsius_to_fahrenheit(celsius) result(fahrenheit)
 #         real, intent(in) :: celsius
 #         real :: fahrenheit
-#         
+#
 #         fahrenheit = celsius * 9.0 / 5.0 + 32.0
 #     end function celsius_to_fahrenheit
 #     ```
@@ -1469,86 +1469,86 @@ print(f"Anomalies: {anomalies}")
 #
 # ### Primary Sources
 #
-# - **Research Software Engineering with Python** by The Alan Turing Institute  
-#   <https://alan-turing-institute.github.io/rse-course/html/>  
+# - **Research Software Engineering with Python** by The Alan Turing Institute
+#   <https://alan-turing-institute.github.io/rse-course/html/>
 #   Documentation practices, packaging workflows, and community standards.
 #
 # - **Research Software Engineering with Python** by Damien Irving, Kate Hertweck,
-#   Luke Johnston, Joel Ostblom, Charlotte Wickham, and Greg Wilson (2022)  
-#   <https://third-bit.com/py-rse/>  
+#   Luke Johnston, Joel Ostblom, Charlotte Wickham, and Greg Wilson (2022)
+#   <https://third-bit.com/py-rse/>
 #   Chapters on "Publishing" and "Packaging" provided foundational concepts for
 #   making research software reusable.
 #
-# - **Write the Docs**  
-#   <https://www.writethedocs.org/>  
+# - **Write the Docs**
+#   <https://www.writethedocs.org/>
 #   Community resources on technical writing, documentation best practices, and
 #   documentation-driven development. The "Beginner's Guide to Docs" and style
 #   guides informed our approach to research software documentation.
 #
 # ### Documentation Tools
 #
-# - **Sphinx Documentation Generator**  
-#   <https://www.sphinx-doc.org/>  
+# - **Sphinx Documentation Generator**
+#   <https://www.sphinx-doc.org/>
 #   Official documentation for Python's standard documentation tool.
 #
-# - **NumPy Documentation Guide**  
-#   <https://numpydoc.readthedocs.io/>  
+# - **NumPy Documentation Guide**
+#   <https://numpydoc.readthedocs.io/>
 #   Standard for NumPy-style docstrings used throughout scientific Python.
 #
-# - **Read the Docs**  
-#   <https://docs.readthedocs.io/>  
+# - **Read the Docs**
+#   <https://docs.readthedocs.io/>
 #   Documentation hosting platform widely used in research software.
 #
 # ### Packaging and Publishing
 #
-# - **Python Packaging User Guide**  
-#   <https://packaging.python.org/>  
+# - **Python Packaging User Guide**
+#   <https://packaging.python.org/>
 #   Official guide for packaging and distributing Python projects.
 #
-# - **PyPI - Python Package Index**  
-#   <https://pypi.org/>  
+# - **PyPI - Python Package Index**
+#   <https://pypi.org/>
 #   Official repository for Python packages.
 #
-# - **Zenodo**  
-#   <https://zenodo.org/>  
+# - **Zenodo**
+#   <https://zenodo.org/>
 #   Research data repository integrated with GitHub for software archiving.
 #
-# - **Journal of Open Source Software (JOSS)**  
-#   <https://joss.theoj.org/>  
+# - **Journal of Open Source Software (JOSS)**
+#   <https://joss.theoj.org/>
 #   Peer-reviewed journal for research software papers.
 #
 # ### Licensing Resources
 #
-# - **Choose a License**  
-#   <https://choosealicense.com/>  
+# - **Choose a License**
+#   <https://choosealicense.com/>
 #   GitHub's guide to selecting appropriate open source licenses.
 #
-# - **Open Source Initiative (OSI)**  
-#   <https://opensource.org/>  
+# - **Open Source Initiative (OSI)**
+#   <https://opensource.org/>
 #   Definitive resource on open source licenses.
 #
-# - **TL;DR Legal**  
-#   <https://www.tldrlegal.com/>  
+# - **TL;DR Legal**
+#   <https://www.tldrlegal.com/>
 #   Plain-English summaries of software licenses.
 #
 # ### Citation and Metadata
 #
-# - **Citation File Format (CFF)**  
-#   <https://citation-file-format.github.io/>  
+# - **Citation File Format (CFF)**
+#   <https://citation-file-format.github.io/>
 #   Standard format for software citation metadata.
 #
-# - **Software Heritage**  
-#   <https://www.softwareheritage.org/>  
+# - **Software Heritage**
+#   <https://www.softwareheritage.org/>
 #   Universal archive of software source code.
 #
 # ### Community Standards
 #
-# - **The Turing Way**  
-#   <https://the-turing-way.netlify.app/>  
+# - **The Turing Way**
+#   <https://the-turing-way.netlify.app/>
 #   Handbook on reproducible research, including software documentation.
 #
-# - **FORCE11 Software Citation Principles**  
-#   <https://doi.org/10.7717/peerj-cs.86>  
+# - **FORCE11 Software Citation Principles**
+#   <https://doi.org/10.7717/peerj-cs.86>
 #   Smith AM, Katz DS, Niemeyer KE, FORCE11 Software Citation Working Group (2016).
 #   "Software citation principles." PeerJ Computer Science 2:e86.
 #

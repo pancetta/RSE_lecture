@@ -75,6 +75,7 @@
 #
 # Let's look at the type of code that caused this disaster:
 
+
 # %%
 def celsius_to_fahrenheit(celsius):
     """Convert temperature from Celsius to Fahrenheit."""
@@ -90,14 +91,14 @@ def fahrenheit_to_celsius(fahrenheit):
 def calculate_temperature_anomaly(temperatures_f, baseline_f):
     """
     Calculate temperature anomaly relative to baseline.
-    
+
     Parameters
     ----------
     temperatures_f : list
         List of temperatures in Fahrenheit
     baseline_f : float
         Baseline temperature in Fahrenheit
-        
+
     Returns
     -------
     list
@@ -138,17 +139,17 @@ print(f"Average anomaly: {sum(anomalies) / len(anomalies):.2f}°C")
 # %% [markdown]
 # ### Code Smells: Warning Signs of Design Problems
 #
-# Before we learn about testing, let's talk about **code smells**—characteristics of code that 
-# suggest deeper problems. The term was coined by Kent Beck and popularized by Martin Fowler in his 
-# book *Refactoring*. A code smell isn't a bug (the code might work perfectly), but it indicates 
+# Before we learn about testing, let's talk about **code smells**—characteristics of code that
+# suggest deeper problems. The term was coined by Kent Beck and popularized by Martin Fowler in his
+# book *Refactoring*. A code smell isn't a bug (the code might work perfectly), but it indicates
 # that the code will be hard to maintain, test, or understand.
 #
-# **Why this matters for testing**: Code that smells bad is often hard or impossible to test. If 
+# **Why this matters for testing**: Code that smells bad is often hard or impossible to test. If
 # you find yourself struggling to write tests, the problem might not be with your testing approach—
-# it might be that your code has design problems. Learning to recognize code smells helps you write 
+# it might be that your code has design problems. Learning to recognize code smells helps you write
 # more testable, maintainable code from the start.
 #
-# **The connection**: Well-designed code is testable code. If your code is hard to test, it's 
+# **The connection**: Well-designed code is testable code. If your code is hard to test, it's
 # probably poorly designed. Code smells are your early warning system.
 #
 # #### Common Code Smells in Research Software
@@ -157,8 +158,9 @@ print(f"Average anomaly: {sum(anomalies) / len(anomalies):.2f}°C")
 #
 # **1. God Function (or "Long Function")**
 #
-# A function that does everything—hundreds of lines, multiple responsibilities, impossible to 
+# A function that does everything—hundreds of lines, multiple responsibilities, impossible to
 # understand or test.
+
 
 # %%
 # CODE SMELL: God Function ❌
@@ -173,25 +175,27 @@ def analyze_experiment(data_file, config_file, output_dir):
     # Save results (40 lines)
     # Email notification (30 lines)
     # Total: 420 lines in ONE function!
-    
+
     # How do you test this? Where do bugs hide?
     # Can you reuse any part of this?
     # Can you understand what it does 6 months from now?
     pass  # Imagine 420 lines here...
 
+
 # %% [markdown]
-# **Why it smells**: 
+# **Why it smells**:
 # - Hard to test (must set up files, configs, email server...)
 # - Hard to debug (bug could be anywhere in 420 lines)
 # - Hard to reuse (all or nothing)
 # - Hard to understand (what's the main logic vs details?)
 #
-# **The fix**: Break into smaller, focused functions (like we learned in Lecture 4's Single 
+# **The fix**: Break into smaller, focused functions (like we learned in Lecture 4's Single
 # Responsibility Principle).
 #
 # **2. Duplicated Code**
 #
 # Copy-pasted code that appears in multiple places. We saw this in Lecture 4 with DRY principle.
+
 
 # %%
 # CODE SMELL: Duplicated code ❌
@@ -200,24 +204,26 @@ def analyze_temperature_2019(temps):
     for t in temps:
         total += t
     mean = total / len(temps)
-    
+
     squared_diffs = 0
     for t in temps:
         squared_diffs += (t - mean) ** 2
     variance = squared_diffs / len(temps)
-    return {'mean': mean, 'variance': variance}
+    return {"mean": mean, "variance": variance}
+
 
 def analyze_temperature_2020(temps):
     total = 0
     for t in temps:
         total += t
     mean = total / len(temps)
-    
+
     squared_diffs = 0
     for t in temps:
         squared_diffs += (t - mean) ** 2
     variance = squared_diffs / len(temps)
-    return {'mean': mean, 'variance': variance}
+    return {"mean": mean, "variance": variance}
+
 
 # Same logic, copied and pasted! Bug in one = bug in both (probably)
 
@@ -233,6 +239,7 @@ def analyze_temperature_2020(temps):
 #
 # Numbers or strings that appear without explanation, or variables named `x`, `tmp`, `data2`.
 
+
 # %%
 # CODE SMELL: Magic numbers and unclear names ❌
 def process(x, y):
@@ -243,6 +250,7 @@ def process(x, y):
             return z * 0.5  # Why multiply by 0.5?
     return y
 
+
 # What does this function do? Impossible to tell without detective work!
 
 # BETTER: Self-documenting code ✓
@@ -250,15 +258,17 @@ ABSOLUTE_ZERO_KELVIN = 273.15
 EXTREME_TEMP_FAHRENHEIT = 200
 ADJUSTMENT_FACTOR = 0.5
 
+
 def convert_temperature_with_bounds(temp_kelvin, fallback_value):
     """Convert Kelvin to Fahrenheit with bounds checking."""
     if temp_kelvin > ABSOLUTE_ZERO_KELVIN:
         temp_fahrenheit = temp_kelvin * 1.8 + 32
-        
+
         if temp_fahrenheit > EXTREME_TEMP_FAHRENHEIT:
             return temp_fahrenheit * ADJUSTMENT_FACTOR
-    
+
     return fallback_value
+
 
 # Now it's clear what the function does and why!
 
@@ -272,8 +282,9 @@ def convert_temperature_with_bounds(temp_kelvin, fallback_value):
 #
 # **4. Tight Coupling (or "Feature Envy")**
 #
-# Functions that reach deep into other objects or modules, creating dependencies that make testing 
+# Functions that reach deep into other objects or modules, creating dependencies that make testing
 # difficult.
+
 
 # %%
 # CODE SMELL: Tight coupling ❌
@@ -282,20 +293,23 @@ class ExperimentData:
         self.temps = [15.2, 16.8, 14.5]
         self.pressures = [1013, 1015, 1012]
 
+
 def analyze_data_badly(experiment):
     """This function knows too much about ExperimentData's internals."""
     # Directly accessing internal data structures
     mean_temp = sum(experiment.temps) / len(experiment.temps)
     mean_pressure = sum(experiment.pressures) / len(experiment.pressures)
-    
+
     # What if ExperimentData changes how it stores data?
     # This function breaks! Testing requires creating full ExperimentData objects.
     return mean_temp, mean_pressure
+
 
 # BETTER: Loose coupling ✓
 def calculate_mean(values):
     """Generic function, works with any list."""
     return sum(values) / len(values)
+
 
 # Now you can test calculate_mean with simple lists!
 # ExperimentData can change internals without breaking this function.
@@ -310,25 +324,29 @@ def calculate_mean(values):
 #
 # **5. Global State and Hidden Dependencies**
 #
-# Functions that read or modify global variables, making behavior unpredictable and testing 
+# Functions that read or modify global variables, making behavior unpredictable and testing
 # difficult.
 
 # %%
 # CODE SMELL: Global state ❌
 BASELINE_TEMPERATURE = 15.0  # Global variable
 
+
 def calculate_anomaly_bad(temp):
     """Uses global state - hard to test and reason about."""
     return temp - BASELINE_TEMPERATURE
+
 
 # What happens when multiple analyses need different baselines?
 # How do you test this with different baselines?
 # Whoever changes BASELINE_TEMPERATURE affects all code!
 
+
 # BETTER: Explicit dependencies ✓
 def calculate_anomaly_good(temp, baseline):
     """Baseline is explicit parameter - easy to test and reuse."""
     return temp - baseline
+
 
 # Test with any baseline you want!
 assert calculate_anomaly_good(20, 15) == 5
@@ -357,11 +375,13 @@ assert calculate_anomaly_good(20, 18) == 2
 #
 # Let's apply this to our temperature conversion disaster. Look at the original code again:
 
+
 # %%
 # From our cautionary tale - can you spot the code smells?
 def fahrenheit_to_celsius_smelly(fahrenheit):
     """Convert temperature from Fahrenheit to Celsius."""
     return (fahrenheit - 32) * 9 / 5  # Bug: should be 5/9
+
 
 def calculate_temperature_anomaly_smelly(temperatures_f, baseline_f):
     """Calculate temperature anomaly relative to baseline."""
@@ -373,16 +393,17 @@ def calculate_temperature_anomaly_smelly(temperatures_f, baseline_f):
         anomalies.append(anomaly)
     return anomalies
 
+
 # %% [markdown]
 # **Smells identified**:
 #
-# 1. **Duplicated calculation**: `fahrenheit_to_celsius(baseline_f)` is called in every loop 
+# 1. **Duplicated calculation**: `fahrenheit_to_celsius(baseline_f)` is called in every loop
 #    iteration, but the result never changes! This is wasteful and obscures intent.
-#    
-# 2. **Magic number**: The `32` and fractions aren't explained. A comment would help, or better 
+#
+# 2. **Magic number**: The `32` and fractions aren't explained. A comment would help, or better
 #    yet, named constants like `FAHRENHEIT_OFFSET = 32`.
-#    
-# 3. **Not obvious that conversion is wrong**: Without tests, the formula error went unnoticed. 
+#
+# 3. **Not obvious that conversion is wrong**: Without tests, the formula error went unnoticed.
 #    The function "smells okay" at first glance but has a subtle bug.
 #
 # **Better version**:
@@ -392,22 +413,25 @@ def calculate_temperature_anomaly_smelly(temperatures_f, baseline_f):
 FAHRENHEIT_OFFSET = 32
 FAHRENHEIT_TO_CELSIUS_RATIO = 5 / 9
 
+
 def fahrenheit_to_celsius_clean(fahrenheit):
     """Convert temperature from Fahrenheit to Celsius using standard formula."""
     return (fahrenheit - FAHRENHEIT_OFFSET) * FAHRENHEIT_TO_CELSIUS_RATIO
+
 
 def calculate_temperature_anomaly_clean(temperatures_f, baseline_f):
     """Calculate temperature anomalies relative to baseline, all in Celsius."""
     # Calculate baseline once, not in loop!
     baseline_c = fahrenheit_to_celsius_clean(baseline_f)
-    
+
     anomalies = []
     for temp_f in temperatures_f:
         temp_c = fahrenheit_to_celsius_clean(temp_f)
         anomaly = temp_c - baseline_c
         anomalies.append(anomaly)
-    
+
     return anomalies
+
 
 # Now the code is clearer and more testable!
 
@@ -433,25 +457,25 @@ def calculate_temperature_anomaly_clean(temperatures_f, baseline_f):
 # Here's the key insight: **If your code is hard to test, it probably has design problems.**
 #
 # **Signs that code smells are making testing hard**:
-# - "I need to create 5 objects just to test this one function"  
+# - "I need to create 5 objects just to test this one function"
 #   → Probably tight coupling
-# - "I can't test this without reading/writing files"  
+# - "I can't test this without reading/writing files"
 #   → Probably mixing I/O with logic (separation of concerns)
-# - "My test breaks when I change unrelated code"  
+# - "My test breaks when I change unrelated code"
 #   → Probably global state or tight coupling
-# - "I need to mock 10 different things to test this"  
+# - "I need to mock 10 different things to test this"
 #   → Probably god function doing too much
-# - "I don't know what to name this test"  
+# - "I don't know what to name this test"
 #   → Probably unclear what the function does (poor naming)
 #
-# **Good news**: Testable code is well-designed code. When you write tests, you naturally improve 
+# **Good news**: Testable code is well-designed code. When you write tests, you naturally improve
 # your design because:
 # - You need simple interfaces (avoid coupling)
 # - You need predictable behavior (avoid global state)
 # - You need focused functionality (avoid god functions)
 # - You need clear contracts (good naming and documentation)
 #
-# **Next step**: Now that we recognize code smells, let's learn how to prevent them through 
+# **Next step**: Now that we recognize code smells, let's learn how to prevent them through
 # systematic testing. Tests not only catch bugs—they guide you toward better design!
 #
 # **Further reading on code smells**:
@@ -482,9 +506,9 @@ def calculate_temperature_anomaly_clean(temperatures_f, baseline_f):
 #
 # ### Why Test Research Software?
 #
-# Research software is often perceived as "write once, run once" code that doesn't need testing. 
-# This is a dangerous misconception. In reality, research code is modified constantly, used with 
-# different datasets, and often reused in future projects. Without tests, every change is a potential 
+# Research software is often perceived as "write once, run once" code that doesn't need testing.
+# This is a dangerous misconception. In reality, research code is modified constantly, used with
+# different datasets, and often reused in future projects. Without tests, every change is a potential
 # source of bugs that can silently corrupt your results.
 #
 # **Research is iterative**: You'll run and modify your code many times as you refine your analysis
@@ -494,8 +518,8 @@ def calculate_temperature_anomaly_clean(temperatures_f, baseline_f):
 # - **Future you needs help**: You'll forget the implementation details in 6 months; tests document behavior
 # - **Journals increasingly require it**: Many publishers now expect code and tests to be available
 #
-# **Testing mindset**: Think of tests as "documentation that runs." They show how your code is 
-# supposed to work and prove that it does. Good tests make refactoring safe—you can improve your 
+# **Testing mindset**: Think of tests as "documentation that runs." They show how your code is
+# supposed to work and prove that it does. Good tests make refactoring safe—you can improve your
 # code's implementation without breaking its behavior.
 #
 # ### Real-World Research Software Failures
@@ -516,11 +540,11 @@ def calculate_temperature_anomaly_clean(temperatures_f, baseline_f):
 # - **Regression tests**: Ensure bugs don't come back—once fixed, stay fixed
 # - **Acceptance tests**: Verify the software meets requirements—does it solve the right problem?
 #
-# Today we focus on **unit tests**—the foundation of testing. Unit tests are small, fast, and test 
-# one specific piece of functionality. They're the most common type of test and the easiest to write. 
+# Today we focus on **unit tests**—the foundation of testing. Unit tests are small, fast, and test
+# one specific piece of functionality. They're the most common type of test and the easiest to write.
 #
-# **Testing pyramid**: Most projects should have many unit tests (fast, easy to write), fewer 
-# integration tests (slower, test interactions), and a few acceptance tests (slowest, test whole 
+# **Testing pyramid**: Most projects should have many unit tests (fast, easy to write), fewer
+# integration tests (slower, test interactions), and a few acceptance tests (slowest, test whole
 # system). Start with unit tests—they give you the most value for the least effort.
 
 # %% [markdown]
@@ -554,15 +578,15 @@ else:
 # 4. **Not persistent**: Tests lost when cells are re-run—no record of what was tested
 # 5. **No clear pass/fail**: Must interpret output yourself—did all tests pass?
 #
-# **Why this matters**: Manual testing is how bugs slip through. You test the happy path (normal 
-# inputs) but forget edge cases. You test once but don't re-test after changes. You test locally 
+# **Why this matters**: Manual testing is how bugs slip through. You test the happy path (normal
+# inputs) but forget edge cases. You test once but don't re-test after changes. You test locally
 # but not on different systems. Automated testing solves all these problems.
 #
 # %% [markdown]
 # ### Using pytest - The Right Way
 #
-# `pytest` is Python's most popular testing framework. It makes testing easy and automatic. Unlike 
-# manual testing, pytest discovers and runs all your tests automatically, provides clear pass/fail 
+# `pytest` is Python's most popular testing framework. It makes testing easy and automatic. Unlike
+# manual testing, pytest discovers and runs all your tests automatically, provides clear pass/fail
 # output, and integrates with CI/CD systems.
 #
 # **Why pytest over alternatives?**:
@@ -571,12 +595,13 @@ else:
 # - **Fast**: Runs tests in parallel and caches results
 # - **Popular**: Huge ecosystem of plugins and community support
 #
-# **Best practice**: Keep test files separate from source code. Put them in a `tests/` directory with 
+# **Best practice**: Keep test files separate from source code. Put them in a `tests/` directory with
 # names like `test_module.py`. This keeps your source code clean and makes tests easy to find.
 
 # %%
 # First, let's write tests in a format pytest can discover
 # In practice, these would be in a separate file: test_temperature.py
+
 
 def test_celsius_to_fahrenheit_freezing():
     """Test conversion at water freezing point."""
@@ -629,26 +654,27 @@ except AssertionError as e:
 #
 # **Common assertion patterns:**
 
+
 # %%
 def test_assertion_patterns():
     """Demonstrate common assertion patterns."""
-    
+
     # Equality
     assert celsius_to_fahrenheit(0) == 32
-    
+
     # Approximate equality (for floating point)
     result = celsius_to_fahrenheit(37)
     expected = 98.6
     assert abs(result - expected) < 0.01, f"Expected {expected}, got {result}"
-    
+
     # Type checking
     result = celsius_to_fahrenheit(0)
     assert isinstance(result, (int, float)), f"Expected numeric type, got {type(result)}"
-    
+
     # Range checking
     result = celsius_to_fahrenheit(20)
     assert 60 < result < 80, f"Room temperature should be 60-80°F, got {result}"
-    
+
     print("All assertion patterns demonstrated successfully!")
 
 
@@ -675,29 +701,27 @@ test_assertion_patterns()
 # Now let's write tests for our flawed `fahrenheit_to_celsius` function.
 # **These tests will FAIL** - which is exactly what we want! They'll catch the bug.
 
+
 # %%
 def test_fahrenheit_to_celsius_freezing():
     """Test conversion at water freezing point."""
     result = fahrenheit_to_celsius(32)
     expected = 0
-    assert abs(result - expected) < 0.01, \
-        f"32°F should be 0°C, got {result}°C"
+    assert abs(result - expected) < 0.01, f"32°F should be 0°C, got {result}°C"
 
 
 def test_fahrenheit_to_celsius_boiling():
     """Test conversion at water boiling point."""
     result = fahrenheit_to_celsius(212)
     expected = 100
-    assert abs(result - expected) < 0.01, \
-        f"212°F should be 100°C, got {result}°C"
+    assert abs(result - expected) < 0.01, f"212°F should be 100°C, got {result}°C"
 
 
 def test_fahrenheit_to_celsius_negative():
     """Test conversion with negative temperature."""
     result = fahrenheit_to_celsius(-40)
     expected = -40
-    assert abs(result - expected) < 0.01, \
-        f"-40°F should be -40°C, got {result}°C"
+    assert abs(result - expected) < 0.01, f"-40°F should be -40°C, got {result}°C"
 
 
 # Run the tests and see them FAIL (revealing the bug!)
@@ -724,6 +748,7 @@ for name, test_func in tests:
 #
 # Now let's fix the bug:
 
+
 # %%
 def fahrenheit_to_celsius_fixed(fahrenheit):
     """Convert temperature from Fahrenheit to Celsius (CORRECTED)."""
@@ -735,24 +760,21 @@ def test_fahrenheit_to_celsius_fixed_freezing():
     """Test conversion at water freezing point."""
     result = fahrenheit_to_celsius_fixed(32)
     expected = 0
-    assert abs(result - expected) < 0.01, \
-        f"32°F should be 0°C, got {result}°C"
+    assert abs(result - expected) < 0.01, f"32°F should be 0°C, got {result}°C"
 
 
 def test_fahrenheit_to_celsius_fixed_boiling():
     """Test conversion at water boiling point."""
     result = fahrenheit_to_celsius_fixed(212)
     expected = 100
-    assert abs(result - expected) < 0.01, \
-        f"212°F should be 100°C, got {result}°C"
+    assert abs(result - expected) < 0.01, f"212°F should be 100°C, got {result}°C"
 
 
 def test_fahrenheit_to_celsius_fixed_negative():
     """Test conversion with negative temperature."""
     result = fahrenheit_to_celsius_fixed(-40)
     expected = -40
-    assert abs(result - expected) < 0.01, \
-        f"-40°F should be -40°C, got {result}°C"
+    assert abs(result - expected) < 0.01, f"-40°F should be -40°C, got {result}°C"
 
 
 # Run the tests on the FIXED function
@@ -928,20 +950,20 @@ print(test_file_content)
 # %%
 # STEP 1 (RED): Write the test FIRST (it will fail)
 
+
 def test_temperature_statistics_mean():
     """Test mean temperature calculation."""
     temps = [0, 10, 20, 30, 40]
     stats = temperature_statistics(temps)
-    assert abs(stats['mean'] - 20) < 0.01
+    assert abs(stats["mean"] - 20) < 0.01
 
 
 # STEP 2 (GREEN): Write minimal code to pass the test
 
+
 def temperature_statistics(temperatures):
     """Calculate statistics for a list of temperatures."""
-    return {
-        'mean': sum(temperatures) / len(temperatures)
-    }
+    return {"mean": sum(temperatures) / len(temperatures)}
 
 
 # Verify the test passes
@@ -957,27 +979,26 @@ except (AssertionError, NameError) as e:
 # %%
 # STEP 1 (RED): Add test for standard deviation
 
+
 def test_temperature_statistics_std():
     """Test standard deviation calculation."""
     temps = [0, 10, 20, 30, 40]
     stats = temperature_statistics_extended(temps)
     # Expected std ≈ 14.14
-    assert abs(stats['std'] - 14.14) < 0.1
+    assert abs(stats["std"] - 14.14) < 0.1
 
 
 # STEP 2 (GREEN): Extend function to calculate std
+
 
 def temperature_statistics_extended(temperatures):
     """Calculate statistics for a list of temperatures."""
     n = len(temperatures)
     mean = sum(temperatures) / n
     variance = sum((t - mean) ** 2 for t in temperatures) / n
-    std = variance ** 0.5
-    
-    return {
-        'mean': mean,
-        'std': std
-    }
+    std = variance**0.5
+
+    return {"mean": mean, "std": std}
 
 
 # Verify tests pass
@@ -985,7 +1006,7 @@ try:
     # Update to use extended version
     temps = [0, 10, 20, 30, 40]
     stats = temperature_statistics_extended(temps)
-    assert abs(stats['mean'] - 20) < 0.01
+    assert abs(stats["mean"] - 20) < 0.01
     print("✓ Mean temperature test passed")
 except (AssertionError, NameError) as e:
     print(f"✗ Mean temperature test failed: {e}")
@@ -999,7 +1020,7 @@ except (AssertionError, NameError) as e:
 # %% [markdown]
 # ### Benefits of TDD
 #
-# Test-Driven Development might feel backward at first (write tests before code?!), but it has 
+# Test-Driven Development might feel backward at first (write tests before code?!), but it has
 # profound benefits:
 #
 # 1. **Clear requirements**: Tests define what the code should do before you write it—no ambiguity
@@ -1009,11 +1030,11 @@ except (AssertionError, NameError) as e:
 # 5. **Regression prevention**: Tests catch bugs when changing code—refactor fearlessly
 #
 # **When to use TDD**: TDD is especially valuable for algorithmic code, data processing, or any logic-
-# heavy code where correctness is critical. For exploratory research, you might start without TDD 
-# and add tests as your code stabilizes. The key is to eventually have tests, even if you don't 
+# heavy code where correctness is critical. For exploratory research, you might start without TDD
+# and add tests as your code stabilizes. The key is to eventually have tests, even if you don't
 # write them first.
 #
-# **Common misconception**: TDD doesn't mean "write ALL tests first, then ALL code." It means work 
+# **Common misconception**: TDD doesn't mean "write ALL tests first, then ALL code." It means work
 # in small cycles: one test, just enough code to pass it, repeat. Each cycle takes minutes, not days.
 
 # %% [markdown]
@@ -1021,24 +1042,24 @@ except (AssertionError, NameError) as e:
 #
 # ### What is Test Coverage?
 #
-# **Test coverage** measures which lines of code are executed during testing. It's a metric that 
-# tells you how much of your code is actually being tested. Think of it as a quality check for your 
+# **Test coverage** measures which lines of code are executed during testing. It's a metric that
+# tells you how much of your code is actually being tested. Think of it as a quality check for your
 # test suite.
 #
 # - **100% coverage**: Every line is tested—but this doesn't mean bug-free!
 # - **<100% coverage**: Some code is untested—potential bugs hiding there
 #
-# **Important caveat**: High coverage doesn't guarantee correctness. You can have 100% coverage 
-# with terrible tests that don't assert anything meaningful. Coverage tells you what's tested, not 
+# **Important caveat**: High coverage doesn't guarantee correctness. You can have 100% coverage
+# with terrible tests that don't assert anything meaningful. Coverage tells you what's tested, not
 # whether it's tested well. It's a necessary but not sufficient condition for quality.
 #
-# **Coverage targets**: Aim for 80-90% coverage for research software. 100% is often not worth the 
-# effort—some code (like logging or error messages) is hard to test meaningfully. Focus on testing 
+# **Coverage targets**: Aim for 80-90% coverage for research software. 100% is often not worth the
+# effort—some code (like logging or error messages) is hard to test meaningfully. Focus on testing
 # your core scientific logic comprehensively.
 #
 # ### Measuring Coverage with pytest-cov
 #
-# Use `pytest-cov` to measure coverage. This plugin integrates with pytest to track which lines 
+# Use `pytest-cov` to measure coverage. This plugin integrates with pytest to track which lines
 # run during tests and generates reports showing untested code.
 #
 # ```bash
@@ -1052,27 +1073,28 @@ except (AssertionError, NameError) as e:
 # pytest --cov=src --cov-fail-under=80 tests/
 # ```
 #
-# **Reading coverage reports**: The HTML report shows your code with green (tested) and red (untested) 
-# highlighting. Look for red sections—those are your blind spots. Prioritize testing branches (if/else), 
+# **Reading coverage reports**: The HTML report shows your code with green (tested) and red (untested)
+# highlighting. Look for red sections—those are your blind spots. Prioritize testing branches (if/else),
 # loops, and error handling paths.
 #
-# **Coverage in CI/CD**: Add coverage checks to your CI pipeline with `--cov-fail-under`. This ensures 
-# coverage doesn't drop over time. Many projects display a coverage badge in their README showing 
+# **Coverage in CI/CD**: Add coverage checks to your CI pipeline with `--cov-fail-under`. This ensures
+# coverage doesn't drop over time. Many projects display a coverage badge in their README showing
 # their coverage percentage—it's a quality signal to users.
 #
 # ### Coverage Example
+
 
 # %%
 # Function with multiple paths
 def classify_temperature(celsius):
     """
     Classify temperature into categories.
-    
+
     Parameters
     ----------
     celsius : float
         Temperature in Celsius
-        
+
     Returns
     -------
     str
@@ -1124,10 +1146,11 @@ print("\n⚠ Warning: Only 2 of 6 code paths tested (poor coverage)!")
 # %% [markdown]
 # ### Comprehensive Tests (Good Coverage)
 
+
 # %%
 def test_classify_temperature_comprehensive():
     """Comprehensive tests for all temperature classifications."""
-    
+
     # Test all branches
     assert classify_temperature(-50) == "extremely cold"
     assert classify_temperature(-20) == "freezing"
@@ -1135,12 +1158,12 @@ def test_classify_temperature_comprehensive():
     assert classify_temperature(20) == "comfortable"
     assert classify_temperature(30) == "warm"
     assert classify_temperature(40) == "hot"
-    
+
     # Test boundary conditions
     assert classify_temperature(-40) == "freezing"  # Exact boundary
-    assert classify_temperature(0) == "cold"        # Exact boundary
+    assert classify_temperature(0) == "cold"  # Exact boundary
     assert classify_temperature(15) == "comfortable"  # Exact boundary
-    
+
     print("✓ All temperature classifications tested (100% coverage)")
 
 
@@ -1174,39 +1197,35 @@ test_classify_temperature_comprehensive()
 #
 # Assertions aren't just for tests - use them in your code to catch bugs early!
 
+
 # %%
 def calculate_temperature_change(initial, final):
     """
     Calculate temperature change.
-    
+
     Parameters
     ----------
     initial : float
         Initial temperature in Celsius
     final : float
         Final temperature in Celsius
-        
+
     Returns
     -------
     float
         Temperature change
     """
     # Defensive programming: check inputs
-    assert isinstance(initial, (int, float)), \
-        f"Initial temperature must be numeric, got {type(initial)}"
-    assert isinstance(final, (int, float)), \
-        f"Final temperature must be numeric, got {type(final)}"
-    assert initial >= -273.15, \
-        f"Initial temperature {initial}°C below absolute zero!"
-    assert final >= -273.15, \
-        f"Final temperature {final}°C below absolute zero!"
-    
+    assert isinstance(initial, (int, float)), f"Initial temperature must be numeric, got {type(initial)}"
+    assert isinstance(final, (int, float)), f"Final temperature must be numeric, got {type(final)}"
+    assert initial >= -273.15, f"Initial temperature {initial}°C below absolute zero!"
+    assert final >= -273.15, f"Final temperature {final}°C below absolute zero!"
+
     change = final - initial
-    
+
     # Postcondition: verify reasonable result
-    assert abs(change) < 500, \
-        f"Temperature change {change}°C seems unrealistic!"
-    
+    assert abs(change) < 500, f"Temperature change {change}°C seems unrealistic!"
+
     return change
 
 
@@ -1248,16 +1267,17 @@ except AssertionError as e:
 #
 # ### The Complete Fixed Temperature Module
 
+
 # %%
 def celsius_to_fahrenheit_final(celsius):
     """
     Convert temperature from Celsius to Fahrenheit.
-    
+
     Parameters
     ----------
     celsius : float
         Temperature in Celsius
-        
+
     Returns
     -------
     float
@@ -1270,12 +1290,12 @@ def celsius_to_fahrenheit_final(celsius):
 def fahrenheit_to_celsius_final(fahrenheit):
     """
     Convert temperature from Fahrenheit to Celsius.
-    
+
     Parameters
     ----------
     fahrenheit : float
         Temperature in Fahrenheit
-        
+
     Returns
     -------
     float
@@ -1288,14 +1308,14 @@ def fahrenheit_to_celsius_final(fahrenheit):
 def calculate_temperature_anomaly_final(temperatures_f, baseline_f):
     """
     Calculate temperature anomaly relative to baseline.
-    
+
     Parameters
     ----------
     temperatures_f : list
         List of temperatures in Fahrenheit
     baseline_f : float
         Baseline temperature in Fahrenheit
-        
+
     Returns
     -------
     list
@@ -1304,21 +1324,22 @@ def calculate_temperature_anomaly_final(temperatures_f, baseline_f):
     assert isinstance(temperatures_f, list), "temperatures_f must be a list"
     assert len(temperatures_f) > 0, "temperatures_f cannot be empty"
     assert isinstance(baseline_f, (int, float)), "baseline_f must be numeric"
-    
+
     baseline_c = fahrenheit_to_celsius_final(baseline_f)
-    
+
     anomalies = []
     for temp in temperatures_f:
         assert isinstance(temp, (int, float)), f"Temperature {temp} is not numeric"
         temp_c = fahrenheit_to_celsius_final(temp)
         anomaly = temp_c - baseline_c
         anomalies.append(anomaly)
-    
+
     return anomalies
 
 
 # %% [markdown]
 # ### Comprehensive Test Suite
+
 
 # %%
 def test_celsius_to_fahrenheit_final_suite():
@@ -1327,18 +1348,18 @@ def test_celsius_to_fahrenheit_final_suite():
     assert celsius_to_fahrenheit_final(0) == 32
     assert celsius_to_fahrenheit_final(100) == 212
     assert celsius_to_fahrenheit_final(-40) == -40
-    
+
     # Test edge cases
     assert abs(celsius_to_fahrenheit_final(-273.15) - (-459.67)) < 0.1
     assert celsius_to_fahrenheit_final(37) - 98.6 < 0.1
-    
+
     # Test assertions catch invalid input
     try:
         celsius_to_fahrenheit_final(-300)
         assert False, "Should have raised AssertionError"
     except AssertionError:
         pass  # Expected
-    
+
     print("✓ All celsius_to_fahrenheit tests passed")
 
 
@@ -1348,13 +1369,13 @@ def test_fahrenheit_to_celsius_final_suite():
     assert fahrenheit_to_celsius_final(32) == 0
     assert fahrenheit_to_celsius_final(212) == 100
     assert fahrenheit_to_celsius_final(-40) == -40
-    
+
     # Test roundtrip conversion
     for temp in [-40, 0, 25, 37, 100]:
         f = celsius_to_fahrenheit_final(temp)
         c = fahrenheit_to_celsius_final(f)
         assert abs(c - temp) < 0.01
-    
+
     print("✓ All fahrenheit_to_celsius tests passed")
 
 
@@ -1366,14 +1387,14 @@ def test_calculate_temperature_anomaly_final_suite():
     anomalies = calculate_temperature_anomaly_final(temps, baseline)
     assert len(anomalies) == len(temps)
     assert abs(anomalies[0]) < 0.01  # First temp = baseline, anomaly ≈ 0
-    
+
     # Test with known values
     temps = [68, 77]  # 20°C and 25°C
     baseline = 68  # 20°C
     anomalies = calculate_temperature_anomaly_final(temps, baseline)
     assert abs(anomalies[0]) < 0.01  # Should be 0
     assert abs(anomalies[1] - 5) < 0.01  # Should be 5°C
-    
+
     print("✓ All temperature anomaly tests passed")
 
 
@@ -1400,13 +1421,13 @@ print("\n🎉 All tests passed! Code is fully tested and bug-free!")
 #
 # ### Key Takeaways
 #
-# ✅ **Always test research software** - your career may depend on it  
-# ✅ **Write tests early** - before bugs cause problems  
-# ✅ **Use pytest** - it makes testing easy and automatic  
-# ✅ **Aim for high coverage** - test all code paths  
-# ✅ **Use assertions** - catch bugs at the source  
-# ✅ **TDD works** - write tests first for better design  
-# ✅ **Tests are documentation** - they show how code should work  
+# ✅ **Always test research software** - your career may depend on it
+# ✅ **Write tests early** - before bugs cause problems
+# ✅ **Use pytest** - it makes testing easy and automatic
+# ✅ **Aim for high coverage** - test all code paths
+# ✅ **Use assertions** - catch bugs at the source
+# ✅ **TDD works** - write tests first for better design
+# ✅ **Tests are documentation** - they show how code should work
 #
 # ### Testing Best Practices for Research
 #
@@ -1497,8 +1518,8 @@ print("\n🎉 All tests passed! Code is fully tested and bug-free!")
 #
 # ### Primary Sources
 #
-# - **Research Software Engineering with Python** by The Alan Turing Institute  
-#   <https://alan-turing-institute.github.io/rse-course/html/>  
+# - **Research Software Engineering with Python** by The Alan Turing Institute
+#   <https://alan-turing-institute.github.io/rse-course/html/>
 #   Testing philosophy, pytest examples, and test-driven development approaches adapted from this course.
 #
 # - **Research Software Engineering with Python** by Damien Irving, Kate Hertweck,
@@ -1509,15 +1530,15 @@ print("\n🎉 All tests passed! Code is fully tested and bug-free!")
 #
 # ### Testing Framework Documentation
 #
-# - **pytest Documentation**  
-#   <https://docs.pytest.org/>  
+# - **pytest Documentation**
+#   <https://docs.pytest.org/>
 #   Official pytest framework documentation for test writing, fixtures, and coverage.
 #   - Getting Started: <https://docs.pytest.org/en/stable/getting-started.html>
 #   - Fixtures: <https://docs.pytest.org/en/stable/fixture.html>
 #   - Parametrize: <https://docs.pytest.org/en/stable/parametrize.html>
 #
-# - **pytest-cov Plugin**  
-#   <https://pytest-cov.readthedocs.io/>  
+# - **pytest-cov Plugin**
+#   <https://pytest-cov.readthedocs.io/>
 #   For test coverage measurement and reporting.
 #
 # ### Inspirational Sources
@@ -1533,11 +1554,11 @@ print("\n🎉 All tests passed! Code is fully tested and bug-free!")
 #
 # ### Additional References
 #
-# - **Software Carpentry: Testing**  
+# - **Software Carpentry: Testing**
 #   Testing principles and practices for scientific computing.
 #
-# - **Python Documentation: unittest**  
-#   <https://docs.python.org/3/library/unittest.html>  
+# - **Python Documentation: unittest**
+#   <https://docs.python.org/3/library/unittest.html>
 #   Python's built-in testing framework (alternative to pytest).
 #
 # ### Notes

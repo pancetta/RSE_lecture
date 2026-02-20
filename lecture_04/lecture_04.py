@@ -62,10 +62,10 @@
 #
 # ### Why Project Structure Matters
 #
-# As your research code grows beyond a single script, proper organization becomes critical. What 
-# starts as a simple analysis script often evolves into hundreds or thousands of lines of code. 
-# Without proper structure, this quickly becomes unmaintainable. Good project structure is like 
-# good lab organization—everything has its place, making it easy to find what you need and add 
+# As your research code grows beyond a single script, proper organization becomes critical. What
+# starts as a simple analysis script often evolves into hundreds or thousands of lines of code.
+# Without proper structure, this quickly becomes unmaintainable. Good project structure is like
+# good lab organization—everything has its place, making it easy to find what you need and add
 # new components.
 #
 # - **Maintainability**: Easy to find and update code even months later
@@ -75,8 +75,8 @@
 # - **Testing**: Easier to write and run tests when code is modular
 # - **Distribution**: Package your code for others to install with `pip install`
 #
-# **Research context**: Many research projects fail to be reproducible not because the science is 
-# wrong, but because the code is poorly organized and documented. Proper structure from the start 
+# **Research context**: Many research projects fail to be reproducible not because the science is
+# wrong, but because the code is poorly organized and documented. Proper structure from the start
 # prevents this problem.
 #
 # ### Anatomy of a Research Python Project
@@ -113,15 +113,15 @@
 # %% [markdown]
 # ### Understanding Modules and Packages
 #
-# **Module**: A single Python file (`.py`) containing functions, classes, and variables. Think of it 
+# **Module**: A single Python file (`.py`) containing functions, classes, and variables. Think of it
 # as a toolbox—a collection of related tools (functions) that solve similar problems.
 #
-# **Package**: A directory containing multiple modules and an `__init__.py` file. Think of it as a 
+# **Package**: A directory containing multiple modules and an `__init__.py` file. Think of it as a
 # workshop with multiple toolboxes—a larger organizational unit that groups related modules together.
 #
-# **Why this matters**: When you start out, a single file might be enough. But as your project grows, 
-# splitting code into modules makes each file manageable and lets you import only what you need. 
-# Packages let you organize modules into logical groups (e.g., one package for data processing, 
+# **Why this matters**: When you start out, a single file might be enough. But as your project grows,
+# splitting code into modules makes each file manageable and lets you import only what you need.
+# Packages let you organize modules into logical groups (e.g., one package for data processing,
 # another for visualization).
 #
 # #### Example Module Structure
@@ -130,12 +130,14 @@
 # Let's simulate creating a simple package structure
 # In practice, these would be separate files
 
+
 # File: src/data_processing.py
 def load_data(filename):
     """Load experimental data from a file."""
     # Simplified example
     print(f"Loading data from {filename}")
     return [1.2, 2.3, 3.1, 4.5, 2.8]
+
 
 def clean_data(data, threshold=0.0):
     """Remove negative values and outliers."""
@@ -148,15 +150,9 @@ def calculate_statistics(data):
     n = len(data)
     mean = sum(data) / n
     variance = sum((x - mean) ** 2 for x in data) / n
-    std = variance ** 0.5
-    
-    return {
-        'mean': mean,
-        'std': std,
-        'min': min(data),
-        'max': max(data),
-        'n': n
-    }
+    std = variance**0.5
+
+    return {"mean": mean, "std": std, "min": min(data), "max": max(data), "n": n}
 
 
 # File: src/__init__.py (makes src a package)
@@ -180,18 +176,18 @@ for key, value in stats.items():
 # %% [markdown]
 # ### The __init__.py File
 #
-# The `__init__.py` file serves several purposes. Historically, it was required to make Python 
-# recognize a directory as a package (Python 3.3+ relaxed this requirement, but it's still best 
+# The `__init__.py` file serves several purposes. Historically, it was required to make Python
+# recognize a directory as a package (Python 3.3+ relaxed this requirement, but it's still best
 # practice to include one).
 #
-# 1. **Marks a directory as a Python package**: Without it, older Python versions won't recognize 
+# 1. **Marks a directory as a Python package**: Without it, older Python versions won't recognize
 #    the directory as importable
-# 2. **Controls what gets imported** when someone does `import package_name`: You decide what's 
+# 2. **Controls what gets imported** when someone does `import package_name`: You decide what's
 #    exposed vs. internal
-# 3. **Can contain initialization code** for the package: Run setup code when the package is first 
+# 3. **Can contain initialization code** for the package: Run setup code when the package is first
 #    imported
 #
-# **Common mistake**: People often leave `__init__.py` empty and wonder why their imports don't work 
+# **Common mistake**: People often leave `__init__.py` empty and wonder why their imports don't work
 # as expected. Understanding the patterns below helps you choose the right approach for your project.
 #
 # #### Different __init__.py Patterns
@@ -206,7 +202,7 @@ for key, value in stats.items():
 # File: src/__init__.py
 # from .data_processing import load_data, clean_data
 # from .analysis import calculate_statistics
-# 
+#
 # Now users can do:
 # from src import load_data, calculate_statistics
 
@@ -214,9 +210,9 @@ for key, value in stats.items():
 # File: src/__init__.py
 # from .data_processing import load_data, clean_data
 # from .analysis import calculate_statistics
-# 
+#
 # __all__ = ['load_data', 'clean_data', 'calculate_statistics']
-# 
+#
 # This controls what 'from src import *' brings in
 
 print("__init__.py patterns demonstrated above")
@@ -225,33 +221,34 @@ print("__init__.py patterns demonstrated above")
 # **Which pattern to use?**
 # - **Pattern 1 (empty)**: Simple projects, or when you want users to be explicit about imports
 # - **Pattern 2 (expose functions)**: Most research packages—makes the API clean and discoverable
-# - **Pattern 3 (with __all__)**: Libraries you're distributing to others—gives fine control over the 
+# - **Pattern 3 (with __all__)**: Libraries you're distributing to others—gives fine control over the
 #   public API
 #
-# **Pro tip**: The dot in `from .module` means "from the current package". This is called a relative 
+# **Pro tip**: The dot in `from .module` means "from the current package". This is called a relative
 # import and prevents name collisions if your package name matches a standard library module.
 
 # %% [markdown]
 # ### Design Principles for Maintainable Code
 #
-# Now that we understand how to structure projects and organize modules, let's discuss the **design 
-# principles** that make code maintainable, reusable, and easy to understand. Good structure is not 
+# Now that we understand how to structure projects and organize modules, let's discuss the **design
+# principles** that make code maintainable, reusable, and easy to understand. Good structure is not
 # just about folders and files—it's about how you design your code within those files.
 #
-# These principles come from decades of software engineering experience and apply especially well to 
-# research software, where code often lives for years and is modified by multiple people (including 
+# These principles come from decades of software engineering experience and apply especially well to
+# research software, where code often lives for years and is modified by multiple people (including
 # future you!).
 #
 # #### Principle 1: DRY - Don't Repeat Yourself
 #
-# **The problem**: Copy-pasting code creates maintenance nightmares. When you find a bug or need to 
-# change behavior, you must remember to update all copies. Miss one, and you have inconsistent 
+# **The problem**: Copy-pasting code creates maintenance nightmares. When you find a bug or need to
+# change behavior, you must remember to update all copies. Miss one, and you have inconsistent
 # behavior that's hard to track down.
 #
-# **The solution**: Write code once, reuse it everywhere. If you find yourself copying and pasting, 
+# **The solution**: Write code once, reuse it everywhere. If you find yourself copying and pasting,
 # extract that code into a function or class.
 #
 # **Bad example - Repetitive code:**
+
 
 # %%
 # DON'T DO THIS: Repeated calculation logic
@@ -259,27 +256,31 @@ def analyze_temperature_data(temps):
     """Analyze temperature dataset."""
     mean = sum(temps) / len(temps)
     variance = sum((x - mean) ** 2 for x in temps) / len(temps)
-    std_dev = variance ** 0.5
-    return {'mean': mean, 'std': std_dev}
+    std_dev = variance**0.5
+    return {"mean": mean, "std": std_dev}
+
 
 def analyze_pressure_data(pressures):
     """Analyze pressure dataset."""
     mean = sum(pressures) / len(pressures)
     variance = sum((x - mean) ** 2 for x in pressures) / len(pressures)
-    std_dev = variance ** 0.5
-    return {'mean': mean, 'std': std_dev}
+    std_dev = variance**0.5
+    return {"mean": mean, "std": std_dev}
+
 
 def analyze_humidity_data(humidity):
     """Analyze humidity dataset."""
     mean = sum(humidity) / len(humidity)
     variance = sum((x - mean) ** 2 for x in humidity) / len(humidity)
-    std_dev = variance ** 0.5
-    return {'mean': mean, 'std': std_dev}
+    std_dev = variance**0.5
+    return {"mean": mean, "std": std_dev}
+
 
 # Same calculation logic repeated three times! ❌
 
 # %% [markdown]
 # **Good example - DRY principle applied:**
+
 
 # %%
 # DO THIS: Extract common logic
@@ -287,11 +288,12 @@ def calculate_statistics(data):
     """Calculate mean and standard deviation for any dataset."""
     if not data:
         raise ValueError("Cannot calculate statistics for empty dataset")
-    
+
     mean = sum(data) / len(data)
     variance = sum((x - mean) ** 2 for x in data) / len(data)
-    std_dev = variance ** 0.5
-    return {'mean': mean, 'std': std_dev}
+    std_dev = variance**0.5
+    return {"mean": mean, "std": std_dev}
+
 
 # Now reuse it for any type of data
 temp_stats = calculate_statistics([15.2, 16.8, 14.5, 17.3])
@@ -312,12 +314,12 @@ print(f"Humidity: {humidity_stats}")
 # - **Consistency**: The same input always produces the same output
 # - **Testing**: Test the logic once instead of testing every copy
 #
-# **Warning**: Don't take DRY to extremes. If code *looks* similar but has different *purposes*, 
+# **Warning**: Don't take DRY to extremes. If code *looks* similar but has different *purposes*,
 # it's okay to keep it separate. DRY applies to logic and behavior, not just appearance.
 #
 # #### Principle 2: Single Responsibility Principle (SRP)
 #
-# **The idea**: Each function or module should do **one thing** and do it well. If you can't explain 
+# **The idea**: Each function or module should do **one thing** and do it well. If you can't explain
 # what a function does in one simple sentence, it's probably doing too much.
 #
 # **The benefit**: When each component has one job, it's easier to:
@@ -329,6 +331,7 @@ print(f"Humidity: {humidity_stats}")
 #
 # **Bad example - Too many responsibilities:**
 
+
 # %%
 # DON'T DO THIS: Function doing too many things
 def process_climate_data_badly(filename):
@@ -336,27 +339,28 @@ def process_climate_data_badly(filename):
     # Responsibility 1: Read file
     with open(filename) as f:
         lines = f.readlines()
-    
+
     # Responsibility 2: Parse data
     temps = []
     for line in lines[1:]:  # Skip header
-        parts = line.split(',')
+        parts = line.split(",")
         temps.append(float(parts[2]))
-    
+
     # Responsibility 3: Calculate statistics
     mean_temp = sum(temps) / len(temps)
-    
+
     # Responsibility 4: Format output
     output = f"Average temperature: {mean_temp:.1f}°C"
-    
+
     # Responsibility 5: Write result
-    with open('results.txt', 'w') as f:
+    with open("results.txt", "w") as f:
         f.write(output)
-    
+
     # Responsibility 6: Generate plot
     # (imagine plotting code here)
-    
+
     return mean_temp
+
 
 # This function does EVERYTHING. Hard to test, hard to reuse, hard to modify. ❌
 
@@ -366,31 +370,37 @@ def process_climate_data_badly(filename):
 # %%
 # DO THIS: Separate concerns into focused functions
 
+
 def read_csv_file(filename):
     """Read lines from a CSV file."""
     with open(filename) as f:
         return f.readlines()
 
+
 def parse_temperature_column(lines, column_index=2):
     """Extract temperature values from CSV lines."""
     temps = []
     for line in lines[1:]:  # Skip header
-        parts = line.split(',')
+        parts = line.split(",")
         temps.append(float(parts[column_index]))
     return temps
+
 
 def calculate_mean(values):
     """Calculate arithmetic mean of values."""
     return sum(values) / len(values)
 
+
 def format_temperature_result(mean_temp):
     """Format temperature result as a string."""
     return f"Average temperature: {mean_temp:.1f}°C"
 
+
 def write_text_file(filename, content):
     """Write content to a text file."""
-    with open(filename, 'w') as f:
+    with open(filename, "w") as f:
         f.write(content)
+
 
 # Now compose them for the full workflow:
 # lines = read_csv_file('climate_data.csv')
@@ -411,11 +421,11 @@ print("Each function has ONE clear job! ✓")
 #
 # #### Principle 3: Separation of Concerns
 #
-# **The idea**: Different aspects of your program should be in different places. Don't mix data 
-# loading with analysis logic, don't mix visualization with calculations, don't mix business logic 
+# **The idea**: Different aspects of your program should be in different places. Don't mix data
+# loading with analysis logic, don't mix visualization with calculations, don't mix business logic
 # with file I/O.
 #
-# **Why it matters**: Research projects often evolve from a single analysis script to a complex 
+# **Why it matters**: Research projects often evolve from a single analysis script to a complex
 # pipeline. If concerns are separated from the start, you can easily:
 # - Switch data sources (file → database → API)
 # - Change output format (console → file → web)
@@ -438,29 +448,34 @@ print("Each function has ONE clear job! ✓")
 # %%
 # GOOD: Clear separation of concerns
 
+
 # Concern 1: Data access (could switch from files to database)
 def load_experiment_data(source):
     """Load data from source (file, database, API)."""
     # In real code, handle different source types
     return [15.2, 16.8, 14.5, 17.3, 15.9]
 
+
 # Concern 2: Data validation (ensures quality)
 def validate_temperature_data(temps):
     """Check that temperature data is physically reasonable."""
     return [t for t in temps if -100 < t < 100]
+
 
 # Concern 3: Analysis (pure calculation, no I/O)
 def compute_anomaly(temps, baseline):
     """Calculate temperature anomalies from baseline."""
     return [t - baseline for t in temps]
 
+
 # Concern 4: Presentation (formatting for output)
 def format_anomaly_report(anomalies):
     """Create human-readable report of anomalies."""
     return f"Anomalies: {[f'{a:.1f}' for a in anomalies]}"
 
+
 # Workflow: compose the concerns
-data = load_experiment_data('experiment.csv')
+data = load_experiment_data("experiment.csv")
 valid_data = validate_temperature_data(data)
 anomalies = compute_anomaly(valid_data, baseline=16.0)
 report = format_anomaly_report(anomalies)
@@ -469,9 +484,9 @@ print(report)
 # Each layer can be tested and modified independently! ✓
 
 # %% [markdown]
-# **Real research example**: Imagine you wrote a paper analyzing temperature data from CSV files. 
-# Later, you get a grant to analyze 10 years of satellite data from a NASA database. If your analysis 
-# logic is mixed with CSV parsing, you'll have to rewrite everything. If concerns are separated, you 
+# **Real research example**: Imagine you wrote a paper analyzing temperature data from CSV files.
+# Later, you get a grant to analyze 10 years of satellite data from a NASA database. If your analysis
+# logic is mixed with CSV parsing, you'll have to rewrite everything. If concerns are separated, you
 # just write a new `load_experiment_data()` function and reuse all the analysis code!
 #
 # #### Key Takeaways: Applying Design Principles
@@ -479,7 +494,7 @@ print(report)
 # These principles work together:
 #
 # 1. **DRY** prevents code duplication → easier maintenance
-# 2. **Single Responsibility** keeps functions focused → easier testing and reuse  
+# 2. **Single Responsibility** keeps functions focused → easier testing and reuse
 # 3. **Separation of Concerns** organizes code by purpose → easier evolution
 #
 # **Research software benefits**:
@@ -489,8 +504,8 @@ print(report)
 # - **Reuse in future projects**: Good design makes code portable
 # - **Evolve as requirements change**: Separated concerns adapt easily
 #
-# **Start simple**: You don't need perfect design on day one. But as your research code grows beyond 
-# a few hundred lines, applying these principles will save you countless hours of debugging and 
+# **Start simple**: You don't need perfect design on day one. But as your research code grows beyond
+# a few hundred lines, applying these principles will save you countless hours of debugging and
 # refactoring. Future you will thank present you!
 #
 # **Further reading** on design principles:
@@ -501,14 +516,14 @@ print(report)
 # %% [markdown]
 # ### Managing Dependencies: requirements.txt
 #
-# The `requirements.txt` file lists all Python packages your project needs. This is crucial for 
-# reproducibility—anyone who wants to run your code can install exactly the right dependencies 
-# with a single command. Think of it as a recipe: just as a cooking recipe lists ingredients, 
+# The `requirements.txt` file lists all Python packages your project needs. This is crucial for
+# reproducibility—anyone who wants to run your code can install exactly the right dependencies
+# with a single command. Think of it as a recipe: just as a cooking recipe lists ingredients,
 # `requirements.txt` lists your code's "ingredients."
 #
-# **Why version pinning matters**: The line `numpy>=1.20.0` means "numpy version 1.20.0 or newer." 
-# This gives flexibility for minor updates while ensuring a minimum version with features you need. 
-# For maximum reproducibility, you can pin exact versions: `numpy==1.20.3`. The tradeoff is between 
+# **Why version pinning matters**: The line `numpy>=1.20.0` means "numpy version 1.20.0 or newer."
+# This gives flexibility for minor updates while ensuring a minimum version with features you need.
+# For maximum reproducibility, you can pin exact versions: `numpy==1.20.3`. The tradeoff is between
 # flexibility (allowing updates) and reproducibility (exact versions).
 #
 # #### Creating requirements.txt
@@ -584,8 +599,8 @@ print(report)
 # %% [markdown]
 # ### Virtual Environments: Why and How
 #
-# **Virtual environments** isolate project dependencies, preventing conflicts. This is one of the 
-# most important practices for reproducible research software. Without virtual environments, you're 
+# **Virtual environments** isolate project dependencies, preventing conflicts. This is one of the
+# most important practices for reproducible research software. Without virtual environments, you're
 # installing all packages globally, and different projects can interfere with each other.
 #
 # #### Why Use Virtual Environments?
@@ -596,9 +611,9 @@ print(report)
 # 4. **Clean system**: Don't clutter global Python installation with dozens of packages
 # 5. **Easy cleanup**: Delete environment to remove all packages—no system-wide pollution
 #
-# **Real-world scenario**: Imagine you're working on two projects. One requires an older version of 
-# a library (because the newer version changed its API), while another needs the latest version. 
-# Without virtual environments, you're stuck—you can only have one version installed globally. With 
+# **Real-world scenario**: Imagine you're working on two projects. One requires an older version of
+# a library (because the newer version changed its API), while another needs the latest version.
+# Without virtual environments, you're stuck—you can only have one version installed globally. With
 # virtual environments, each project gets its own isolated set of packages.
 #
 # #### Creating Virtual Environments
@@ -643,21 +658,21 @@ print(report)
 import sys
 import os
 
+
 def check_virtual_env():
     """Check if running in a virtual environment."""
-    in_venv = hasattr(sys, 'real_prefix') or (
-        hasattr(sys, 'base_prefix') and sys.base_prefix != sys.prefix
-    )
-    
+    in_venv = hasattr(sys, "real_prefix") or (hasattr(sys, "base_prefix") and sys.base_prefix != sys.prefix)
+
     if in_venv:
         print("✓ Running in a virtual environment")
         print(f"  Environment: {sys.prefix}")
     else:
         print("✗ Not in a virtual environment")
         print(f"  Using system Python: {sys.prefix}")
-    
+
     print(f"  Python version: {sys.version.split()[0]}")
     print(f"  Executable: {sys.executable}")
+
 
 check_virtual_env()
 
@@ -755,9 +770,9 @@ print("Your package becomes a proper Python package")
 #
 # ### Why NumPy for Scientific Computing?
 #
-# NumPy (Numerical Python) is the foundation of scientific computing in Python. While Python lists 
-# are versatile, they're too slow for serious numerical work. NumPy arrays are implemented in C, 
-# making them much faster. Think of Python lists as a filing cabinet (flexible but slow to search), 
+# NumPy (Numerical Python) is the foundation of scientific computing in Python. While Python lists
+# are versatile, they're too slow for serious numerical work. NumPy arrays are implemented in C,
+# making them much faster. Think of Python lists as a filing cabinet (flexible but slow to search),
 # while NumPy arrays are like a specialized database (optimized for specific operations).
 #
 # **Advantages:**
@@ -781,14 +796,17 @@ print("Your package becomes a proper Python package")
 import numpy as np
 import time
 
+
 # Demonstrate NumPy speed advantage
 def python_sum_squares(n):
     """Calculate sum of squares using pure Python."""
     return sum(i**2 for i in range(n))
 
+
 def numpy_sum_squares(n):
     """Calculate sum of squares using NumPy."""
-    return np.sum(np.arange(n)**2)
+    return np.sum(np.arange(n) ** 2)
+
 
 # Benchmark
 n = 1_000_000
@@ -859,10 +877,10 @@ print(f"Empty (random values): {empty}")
 data = np.array([1.5, 2.3, 3.7, 4.2, 5.1, 6.0])
 
 print(f"Array: {data}")
-print(f"Shape: {data.shape}")          # Dimensions
-print(f"Size: {data.size}")            # Total elements
-print(f"Data type: {data.dtype}")      # Element type
-print(f"Dimensions: {data.ndim}")      # Number of dimensions
+print(f"Shape: {data.shape}")  # Dimensions
+print(f"Size: {data.size}")  # Total elements
+print(f"Data type: {data.dtype}")  # Element type
+print(f"Dimensions: {data.ndim}")  # Number of dimensions
 print(f"Item size: {data.itemsize} bytes")  # Size of each element
 print(f"Total bytes: {data.nbytes} bytes")  # Total memory
 
@@ -880,7 +898,7 @@ print()
 
 # Convert to Fahrenheit: F = C * 9/5 + 32
 # No loop needed! Operation applies to every element
-temps_fahrenheit = temps_celsius * 9/5 + 32
+temps_fahrenheit = temps_celsius * 9 / 5 + 32
 print(f"Temperatures (°F): {temps_fahrenheit}")
 print()
 
@@ -1026,12 +1044,14 @@ print(f"Quantiles (25%, 50%, 75%): {np.quantile(data, [0.25, 0.5, 0.75])}")
 # %%
 # Create a 2D array (matrix)
 # Experiment data: 4 trials × 6 time points
-experiment_data = np.array([
-    [10.2, 10.5, 11.1, 11.8, 12.5, 13.1],  # Trial 1
-    [10.1, 10.3, 10.9, 11.5, 12.1, 12.8],  # Trial 2
-    [10.3, 10.7, 11.3, 12.0, 12.7, 13.4],  # Trial 3
-    [10.0, 10.4, 11.0, 11.6, 12.3, 13.0],  # Trial 4
-])
+experiment_data = np.array(
+    [
+        [10.2, 10.5, 11.1, 11.8, 12.5, 13.1],  # Trial 1
+        [10.1, 10.3, 10.9, 11.5, 12.1, 12.8],  # Trial 2
+        [10.3, 10.7, 11.3, 12.0, 12.7, 13.4],  # Trial 3
+        [10.0, 10.4, 11.0, 11.6, 12.3, 13.0],  # Trial 4
+    ]
+)
 
 print(f"Experiment data shape: {experiment_data.shape}")  # (4 trials, 6 time points)
 print(f"Data:\n{experiment_data}")
@@ -1202,9 +1222,9 @@ print(f"Days with average > {threshold}°C: {hot_days}")
 import matplotlib.pyplot as plt
 
 # Configure matplotlib for better-looking plots
-plt.rcParams['figure.figsize'] = (10, 6)
-plt.rcParams['font.size'] = 10
-plt.rcParams['lines.linewidth'] = 2
+plt.rcParams["figure.figsize"] = (10, 6)
+plt.rcParams["font.size"] = 10
+plt.rcParams["lines.linewidth"] = 2
 
 print("Matplotlib imported and configured!")
 
@@ -1221,9 +1241,9 @@ reaction_rates = 0.5 * np.exp(0.03 * temperatures) + np.random.normal(0, 1, size
 # Create the plot
 plt.figure(figsize=(10, 6))
 plt.plot(temperatures, reaction_rates)
-plt.xlabel('Temperature (°C)')
-plt.ylabel('Reaction Rate (mol/L/s)')
-plt.title('Effect of Temperature on Reaction Rate')
+plt.xlabel("Temperature (°C)")
+plt.ylabel("Reaction Rate (mol/L/s)")
+plt.title("Effect of Temperature on Reaction Rate")
 plt.grid(True, alpha=0.3)
 plt.show()
 
@@ -1233,21 +1253,24 @@ plt.show()
 # %%
 # Same data, better presentation
 plt.figure(figsize=(10, 6))
-plt.plot(temperatures, reaction_rates, 
-         marker='o',           # Add circular markers
-         color='steelblue',    # Custom color
-         linestyle='-',        # Line style: '-', '--', '-.', ':'
-         linewidth=2,
-         markersize=8,
-         markerfacecolor='white',
-         markeredgewidth=2,
-         markeredgecolor='steelblue',
-         label='Experimental data')
+plt.plot(
+    temperatures,
+    reaction_rates,
+    marker="o",  # Add circular markers
+    color="steelblue",  # Custom color
+    linestyle="-",  # Line style: '-', '--', '-.', ':'
+    linewidth=2,
+    markersize=8,
+    markerfacecolor="white",
+    markeredgewidth=2,
+    markeredgecolor="steelblue",
+    label="Experimental data",
+)
 
-plt.xlabel('Temperature (°C)', fontsize=12)
-plt.ylabel('Reaction Rate (mol/L/s)', fontsize=12)
-plt.title('Effect of Temperature on Reaction Rate', fontsize=14, fontweight='bold')
-plt.grid(True, alpha=0.3, linestyle='--')
+plt.xlabel("Temperature (°C)", fontsize=12)
+plt.ylabel("Reaction Rate (mol/L/s)", fontsize=12)
+plt.title("Effect of Temperature on Reaction Rate", fontsize=14, fontweight="bold")
+plt.grid(True, alpha=0.3, linestyle="--")
 plt.legend()
 plt.tight_layout()  # Prevent label cutoff
 plt.show()
@@ -1265,22 +1288,24 @@ absorbance = 0.15 * concentrations + 0.05 + np.random.normal(0, 0.05, size=10)
 
 # Create scatter plot
 plt.figure(figsize=(10, 6))
-plt.scatter(concentrations, absorbance,
-            s=100,  # Size of markers
-            c='crimson',  # Color
-            alpha=0.6,  # Transparency
-            edgecolors='black',  # Marker edge color
-            linewidths=1.5)
+plt.scatter(
+    concentrations,
+    absorbance,
+    s=100,  # Size of markers
+    c="crimson",  # Color
+    alpha=0.6,  # Transparency
+    edgecolors="black",  # Marker edge color
+    linewidths=1.5,
+)
 
 # Add best-fit line
 z = np.polyfit(concentrations, absorbance, 1)  # Linear fit
 p = np.poly1d(z)
-plt.plot(concentrations, p(concentrations), 
-         'k--', linewidth=2, alpha=0.5, label=f'Fit: y = {z[0]:.3f}x + {z[1]:.3f}')
+plt.plot(concentrations, p(concentrations), "k--", linewidth=2, alpha=0.5, label=f"Fit: y = {z[0]:.3f}x + {z[1]:.3f}")
 
-plt.xlabel('Concentration (mM)', fontsize=12)
-plt.ylabel('Absorbance (AU)', fontsize=12)
-plt.title('Calibration Curve: Absorbance vs Concentration', fontsize=14, fontweight='bold')
+plt.xlabel("Concentration (mM)", fontsize=12)
+plt.ylabel("Absorbance (AU)", fontsize=12)
+plt.title("Calibration Curve: Absorbance vs Concentration", fontsize=14, fontweight="bold")
 plt.grid(True, alpha=0.3)
 plt.legend(fontsize=11)
 plt.tight_layout()
@@ -1297,14 +1322,14 @@ treatment1 = np.exp(-0.3 * time) + np.random.normal(0, 0.05, 50)
 treatment2 = np.exp(-0.4 * time) + np.random.normal(0, 0.05, 50)
 
 plt.figure(figsize=(10, 6))
-plt.plot(time, control, label='Control', marker='o', markersize=4, linewidth=2)
-plt.plot(time, treatment1, label='Treatment A', marker='s', markersize=4, linewidth=2)
-plt.plot(time, treatment2, label='Treatment B', marker='^', markersize=4, linewidth=2)
+plt.plot(time, control, label="Control", marker="o", markersize=4, linewidth=2)
+plt.plot(time, treatment1, label="Treatment A", marker="s", markersize=4, linewidth=2)
+plt.plot(time, treatment2, label="Treatment B", marker="^", markersize=4, linewidth=2)
 
-plt.xlabel('Time (hours)', fontsize=12)
-plt.ylabel('Concentration (µM)', fontsize=12)
-plt.title('Drug Decay Over Time', fontsize=14, fontweight='bold')
-plt.legend(fontsize=11, loc='upper right')
+plt.xlabel("Time (hours)", fontsize=12)
+plt.ylabel("Concentration (µM)", fontsize=12)
+plt.title("Drug Decay Over Time", fontsize=14, fontweight="bold")
+plt.legend(fontsize=11, loc="upper right")
 plt.grid(True, alpha=0.3)
 plt.tight_layout()
 plt.show()
@@ -1321,36 +1346,36 @@ fig, axes = plt.subplots(2, 2, figsize=(12, 10))
 # Subplot 1: Temperature over time
 time_days = np.arange(1, 31)
 temperature = 20 + 5 * np.sin(2 * np.pi * time_days / 7) + np.random.normal(0, 1, 30)
-axes[0, 0].plot(time_days, temperature, 'o-', color='orangered')
-axes[0, 0].set_xlabel('Day')
-axes[0, 0].set_ylabel('Temperature (°C)')
-axes[0, 0].set_title('Daily Temperature')
+axes[0, 0].plot(time_days, temperature, "o-", color="orangered")
+axes[0, 0].set_xlabel("Day")
+axes[0, 0].set_ylabel("Temperature (°C)")
+axes[0, 0].set_title("Daily Temperature")
 axes[0, 0].grid(True, alpha=0.3)
 
 # Subplot 2: Histogram of temperatures
-axes[0, 1].hist(temperature, bins=15, color='skyblue', edgecolor='black', alpha=0.7)
-axes[0, 1].set_xlabel('Temperature (°C)')
-axes[0, 1].set_ylabel('Frequency')
-axes[0, 1].set_title('Temperature Distribution')
-axes[0, 1].grid(True, alpha=0.3, axis='y')
+axes[0, 1].hist(temperature, bins=15, color="skyblue", edgecolor="black", alpha=0.7)
+axes[0, 1].set_xlabel("Temperature (°C)")
+axes[0, 1].set_ylabel("Frequency")
+axes[0, 1].set_title("Temperature Distribution")
+axes[0, 1].grid(True, alpha=0.3, axis="y")
 
 # Subplot 3: Scatter plot
 x = np.random.normal(0, 1, 100)
 y = 2 * x + np.random.normal(0, 0.5, 100)
-axes[1, 0].scatter(x, y, alpha=0.5, c='green', edgecolors='black')
-axes[1, 0].set_xlabel('X variable')
-axes[1, 0].set_ylabel('Y variable')
-axes[1, 0].set_title('Correlation Analysis')
+axes[1, 0].scatter(x, y, alpha=0.5, c="green", edgecolors="black")
+axes[1, 0].set_xlabel("X variable")
+axes[1, 0].set_ylabel("Y variable")
+axes[1, 0].set_title("Correlation Analysis")
 axes[1, 0].grid(True, alpha=0.3)
 
 # Subplot 4: Bar plot
-categories = ['A', 'B', 'C', 'D', 'E']
+categories = ["A", "B", "C", "D", "E"]
 values = [23, 45, 56, 78, 32]
-axes[1, 1].bar(categories, values, color='mediumpurple', edgecolor='black', alpha=0.7)
-axes[1, 1].set_xlabel('Category')
-axes[1, 1].set_ylabel('Value')
-axes[1, 1].set_title('Categorical Data')
-axes[1, 1].grid(True, alpha=0.3, axis='y')
+axes[1, 1].bar(categories, values, color="mediumpurple", edgecolor="black", alpha=0.7)
+axes[1, 1].set_xlabel("Category")
+axes[1, 1].set_ylabel("Value")
+axes[1, 1].set_title("Categorical Data")
+axes[1, 1].grid(True, alpha=0.3, axis="y")
 
 plt.tight_layout()
 plt.show()
@@ -1368,33 +1393,31 @@ y2 = np.cos(x) + np.random.normal(0, 0.1, 100)
 fig, ax = plt.subplots(figsize=(10, 6))
 
 # Plot data with error bands
-ax.plot(x, np.sin(x), 'b-', linewidth=2.5, label='Theory: sin(x)')
-ax.scatter(x[::5], y1[::5], s=60, c='blue', marker='o', 
-           edgecolors='black', linewidths=1, zorder=3, label='Experimental data')
+ax.plot(x, np.sin(x), "b-", linewidth=2.5, label="Theory: sin(x)")
+ax.scatter(x[::5], y1[::5], s=60, c="blue", marker="o", edgecolors="black", linewidths=1, zorder=3, label="Experimental data")
 
-ax.plot(x, np.cos(x), 'r-', linewidth=2.5, label='Theory: cos(x)')
-ax.scatter(x[::5], y2[::5], s=60, c='red', marker='s', 
-           edgecolors='black', linewidths=1, zorder=3, label='Control data')
+ax.plot(x, np.cos(x), "r-", linewidth=2.5, label="Theory: cos(x)")
+ax.scatter(x[::5], y2[::5], s=60, c="red", marker="s", edgecolors="black", linewidths=1, zorder=3, label="Control data")
 
 # Styling
-ax.set_xlabel('Time (s)', fontsize=14, fontweight='bold')
-ax.set_ylabel('Amplitude', fontsize=14, fontweight='bold')
-ax.set_title('Oscillatory Behavior in Chemical System', fontsize=16, fontweight='bold', pad=20)
+ax.set_xlabel("Time (s)", fontsize=14, fontweight="bold")
+ax.set_ylabel("Amplitude", fontsize=14, fontweight="bold")
+ax.set_title("Oscillatory Behavior in Chemical System", fontsize=16, fontweight="bold", pad=20)
 
 # Grid
-ax.grid(True, alpha=0.3, linestyle='--', linewidth=0.8)
+ax.grid(True, alpha=0.3, linestyle="--", linewidth=0.8)
 
 # Legend
-ax.legend(fontsize=11, frameon=True, shadow=True, loc='upper right')
+ax.legend(fontsize=11, frameon=True, shadow=True, loc="upper right")
 
 # Spines (borders)
-ax.spines['top'].set_visible(False)
-ax.spines['right'].set_visible(False)
-ax.spines['left'].set_linewidth(1.5)
-ax.spines['bottom'].set_linewidth(1.5)
+ax.spines["top"].set_visible(False)
+ax.spines["right"].set_visible(False)
+ax.spines["left"].set_linewidth(1.5)
+ax.spines["bottom"].set_linewidth(1.5)
 
 # Tick parameters
-ax.tick_params(axis='both', which='major', labelsize=11, width=1.5, length=6)
+ax.tick_params(axis="both", which="major", labelsize=11, width=1.5, length=6)
 
 plt.tight_layout()
 plt.show()
@@ -1408,62 +1431,60 @@ fig, axes = plt.subplots(2, 3, figsize=(15, 10))
 
 # 1. Line plot with error bars
 x = np.arange(0, 10)
-y = x ** 1.5
+y = x**1.5
 yerr = y * 0.1  # 10% error
-axes[0, 0].errorbar(x, y, yerr=yerr, fmt='o-', capsize=5, capthick=2,
-                    color='steelblue', ecolor='gray', linewidth=2)
-axes[0, 0].set_title('Error Bars', fontweight='bold')
-axes[0, 0].set_xlabel('X')
-axes[0, 0].set_ylabel('Y')
+axes[0, 0].errorbar(x, y, yerr=yerr, fmt="o-", capsize=5, capthick=2, color="steelblue", ecolor="gray", linewidth=2)
+axes[0, 0].set_title("Error Bars", fontweight="bold")
+axes[0, 0].set_xlabel("X")
+axes[0, 0].set_ylabel("Y")
 axes[0, 0].grid(True, alpha=0.3)
 
 # 2. Bar plot
-categories = ['Method 1', 'Method 2', 'Method 3', 'Method 4']
+categories = ["Method 1", "Method 2", "Method 3", "Method 4"]
 performance = [85, 92, 78, 88]
-colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A']
-axes[0, 1].bar(categories, performance, color=colors, edgecolor='black', alpha=0.8)
-axes[0, 1].set_title('Method Comparison', fontweight='bold')
-axes[0, 1].set_ylabel('Performance (%)')
+colors = ["#FF6B6B", "#4ECDC4", "#45B7D1", "#FFA07A"]
+axes[0, 1].bar(categories, performance, color=colors, edgecolor="black", alpha=0.8)
+axes[0, 1].set_title("Method Comparison", fontweight="bold")
+axes[0, 1].set_ylabel("Performance (%)")
 axes[0, 1].set_ylim(0, 100)
-axes[0, 1].grid(True, alpha=0.3, axis='y')
+axes[0, 1].grid(True, alpha=0.3, axis="y")
 
 # 3. Histogram
 data = np.random.normal(100, 15, 1000)
-axes[0, 2].hist(data, bins=30, color='coral', edgecolor='black', alpha=0.7)
-axes[0, 2].axvline(np.mean(data), color='red', linestyle='--',
-                   linewidth=2, label=f'Mean = {np.mean(data):.1f}')
-axes[0, 2].set_title('Distribution', fontweight='bold')
-axes[0, 2].set_xlabel('Value')
-axes[0, 2].set_ylabel('Frequency')
+axes[0, 2].hist(data, bins=30, color="coral", edgecolor="black", alpha=0.7)
+axes[0, 2].axvline(np.mean(data), color="red", linestyle="--", linewidth=2, label=f"Mean = {np.mean(data):.1f}")
+axes[0, 2].set_title("Distribution", fontweight="bold")
+axes[0, 2].set_xlabel("Value")
+axes[0, 2].set_ylabel("Frequency")
 axes[0, 2].legend()
-axes[0, 2].grid(True, alpha=0.3, axis='y')
+axes[0, 2].grid(True, alpha=0.3, axis="y")
 
 # 4. Box plot
 data1 = np.random.normal(100, 10, 100)
 data2 = np.random.normal(110, 15, 100)
 data3 = np.random.normal(95, 8, 100)
-axes[1, 0].boxplot([data1, data2, data3], labels=['Group A', 'Group B', 'Group C'])
-axes[1, 0].set_title('Box Plot Comparison', fontweight='bold')
-axes[1, 0].set_ylabel('Measurement')
-axes[1, 0].grid(True, alpha=0.3, axis='y')
+axes[1, 0].boxplot([data1, data2, data3], labels=["Group A", "Group B", "Group C"])
+axes[1, 0].set_title("Box Plot Comparison", fontweight="bold")
+axes[1, 0].set_ylabel("Measurement")
+axes[1, 0].grid(True, alpha=0.3, axis="y")
 
 # 5. Heatmap
 matrix = np.random.rand(10, 10)
-im = axes[1, 1].imshow(matrix, cmap='viridis', aspect='auto')
-axes[1, 1].set_title('Heatmap', fontweight='bold')
-axes[1, 1].set_xlabel('X index')
-axes[1, 1].set_ylabel('Y index')
+im = axes[1, 1].imshow(matrix, cmap="viridis", aspect="auto")
+axes[1, 1].set_title("Heatmap", fontweight="bold")
+axes[1, 1].set_xlabel("X index")
+axes[1, 1].set_ylabel("Y index")
 plt.colorbar(im, ax=axes[1, 1])
 
 # 6. Filled plot (area)
 x = np.linspace(0, 10, 100)
 y1 = np.sin(x)
 y2 = np.sin(x) + 0.5
-axes[1, 2].fill_between(x, y1, y2, alpha=0.5, color='lightgreen', label='Range')
-axes[1, 2].plot(x, (y1 + y2) / 2, 'k-', linewidth=2, label='Mean')
-axes[1, 2].set_title('Filled Area', fontweight='bold')
-axes[1, 2].set_xlabel('X')
-axes[1, 2].set_ylabel('Y')
+axes[1, 2].fill_between(x, y1, y2, alpha=0.5, color="lightgreen", label="Range")
+axes[1, 2].plot(x, (y1 + y2) / 2, "k-", linewidth=2, label="Mean")
+axes[1, 2].set_title("Filled Area", fontweight="bold")
+axes[1, 2].set_xlabel("X")
+axes[1, 2].set_ylabel("Y")
 axes[1, 2].legend()
 axes[1, 2].grid(True, alpha=0.3)
 
@@ -1479,24 +1500,24 @@ plt.show()
 # Create a figure to save
 plt.figure(figsize=(10, 6))
 x = np.linspace(0, 10, 100)
-plt.plot(x, np.sin(x), 'b-', linewidth=2, label='sin(x)')
-plt.plot(x, np.cos(x), 'r--', linewidth=2, label='cos(x)')
-plt.xlabel('X', fontsize=12)
-plt.ylabel('Y', fontsize=12)
-plt.title('Trigonometric Functions', fontsize=14, fontweight='bold')
+plt.plot(x, np.sin(x), "b-", linewidth=2, label="sin(x)")
+plt.plot(x, np.cos(x), "r--", linewidth=2, label="cos(x)")
+plt.xlabel("X", fontsize=12)
+plt.ylabel("Y", fontsize=12)
+plt.title("Trigonometric Functions", fontsize=14, fontweight="bold")
 plt.legend()
 plt.grid(True, alpha=0.3)
 plt.tight_layout()
 
 # Save in different formats
 # PNG for presentations and web (raster)
-plt.savefig('figure_example.png', dpi=300, bbox_inches='tight')
+plt.savefig("figure_example.png", dpi=300, bbox_inches="tight")
 
 # PDF for publications (vector, scalable)
-plt.savefig('figure_example.pdf', bbox_inches='tight')
+plt.savefig("figure_example.pdf", bbox_inches="tight")
 
 # SVG for editing in Inkscape/Illustrator (vector)
-plt.savefig('figure_example.svg', bbox_inches='tight')
+plt.savefig("figure_example.svg", bbox_inches="tight")
 
 print("Figure saved as:")
 print("  - figure_example.png (300 DPI, for presentations)")
@@ -1547,7 +1568,7 @@ plt.show()
 fig, ax = plt.subplots(figsize=(7, 5))  # Journal column width
 
 # Colorblind-friendly colors
-colors = ['#0173B2', '#DE8F05', '#029E73']  # Blue, Orange, Green
+colors = ["#0173B2", "#DE8F05", "#029E73"]  # Blue, Orange, Green
 
 # Simulate data with error bars
 np.random.seed(42)
@@ -1561,23 +1582,20 @@ err2 = np.array([0.3, 0.2, 0.4, 0.3, 0.5])
 err3 = np.array([0.2, 0.3, 0.3, 0.3, 0.4])
 
 # Plot with different markers for accessibility
-ax.errorbar(x, y1, yerr=err1, fmt='o-', color=colors[0], linewidth=2.5, 
-            markersize=8, capsize=5, capthick=2, label='Method A')
-ax.errorbar(x, y2, yerr=err2, fmt='s--', color=colors[1], linewidth=2.5, 
-            markersize=8, capsize=5, capthick=2, label='Method B')
-ax.errorbar(x, y3, yerr=err3, fmt='^-.', color=colors[2], linewidth=2.5, 
-            markersize=8, capsize=5, capthick=2, label='Method C')
+ax.errorbar(x, y1, yerr=err1, fmt="o-", color=colors[0], linewidth=2.5, markersize=8, capsize=5, capthick=2, label="Method A")
+ax.errorbar(x, y2, yerr=err2, fmt="s--", color=colors[1], linewidth=2.5, markersize=8, capsize=5, capthick=2, label="Method B")
+ax.errorbar(x, y3, yerr=err3, fmt="^-.", color=colors[2], linewidth=2.5, markersize=8, capsize=5, capthick=2, label="Method C")
 
 # Labels with units
-ax.set_xlabel('Concentration (mM)', fontsize=13, fontweight='bold')
-ax.set_ylabel('Yield (%)', fontsize=13, fontweight='bold')
-ax.set_title('Comparison of Synthesis Methods', fontsize=14, fontweight='bold', pad=15)
+ax.set_xlabel("Concentration (mM)", fontsize=13, fontweight="bold")
+ax.set_ylabel("Yield (%)", fontsize=13, fontweight="bold")
+ax.set_title("Comparison of Synthesis Methods", fontsize=14, fontweight="bold", pad=15)
 
 # Styling
-ax.legend(fontsize=11, frameon=True, loc='upper left')
-ax.grid(True, alpha=0.3, linestyle='--')
-ax.spines['top'].set_visible(False)
-ax.spines['right'].set_visible(False)
+ax.legend(fontsize=11, frameon=True, loc="upper left")
+ax.grid(True, alpha=0.3, linestyle="--")
+ax.spines["top"].set_visible(False)
+ax.spines["right"].set_visible(False)
 ax.tick_params(labelsize=11)
 
 # Set reasonable axis limits
@@ -1585,8 +1603,8 @@ ax.set_ylim(0, 12)
 ax.set_xlim(0.5, 5.5)
 
 plt.tight_layout()
-plt.savefig('publication_figure.pdf', dpi=300, bbox_inches='tight')
-plt.savefig('publication_figure.png', dpi=300, bbox_inches='tight')
+plt.savefig("publication_figure.pdf", dpi=300, bbox_inches="tight")
+plt.savefig("publication_figure.png", dpi=300, bbox_inches="tight")
 print("Publication-quality figure saved!")
 plt.show()
 
@@ -1619,38 +1637,50 @@ fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
 # Plot 1: Time series
 time = np.arange(1, days + 1)
 for i, ph in enumerate(ph_levels):
-    ax1.plot(time, measurements[ph], alpha=0.6, linewidth=1.5, 
-             label=f'pH {ph}', color=plt.cm.viridis(i/len(ph_levels)))
+    ax1.plot(time, measurements[ph], alpha=0.6, linewidth=1.5, label=f"pH {ph}", color=plt.cm.viridis(i / len(ph_levels)))
 
-ax1.set_xlabel('Day', fontsize=12, fontweight='bold')
-ax1.set_ylabel('Enzyme Activity (U/mL)', fontsize=12, fontweight='bold')
-ax1.set_title('Enzyme Activity Over Time', fontsize=13, fontweight='bold')
+ax1.set_xlabel("Day", fontsize=12, fontweight="bold")
+ax1.set_ylabel("Enzyme Activity (U/mL)", fontsize=12, fontweight="bold")
+ax1.set_title("Enzyme Activity Over Time", fontsize=13, fontweight="bold")
 ax1.legend(fontsize=10)
 ax1.grid(True, alpha=0.3)
 
 # Plot 2: Summary bar plot with error bars
-ph_labels = [f'pH {ph}' for ph in ph_levels]
+ph_labels = [f"pH {ph}" for ph in ph_levels]
 means = [mean_activities[ph] for ph in ph_levels]
 stds = [std_activities[ph] for ph in ph_levels]
 
-bars = ax2.bar(ph_labels, means, yerr=stds, capsize=8, 
-               color=plt.cm.viridis(np.linspace(0, 1, len(ph_levels))),
-               edgecolor='black', linewidth=1.5, alpha=0.8)
+bars = ax2.bar(
+    ph_labels,
+    means,
+    yerr=stds,
+    capsize=8,
+    color=plt.cm.viridis(np.linspace(0, 1, len(ph_levels))),
+    edgecolor="black",
+    linewidth=1.5,
+    alpha=0.8,
+)
 
-ax2.set_ylabel('Mean Activity (U/mL)', fontsize=12, fontweight='bold')
-ax2.set_title('pH Dependence of Enzyme Activity', fontsize=13, fontweight='bold')
-ax2.grid(True, alpha=0.3, axis='y')
+ax2.set_ylabel("Mean Activity (U/mL)", fontsize=12, fontweight="bold")
+ax2.set_title("pH Dependence of Enzyme Activity", fontsize=13, fontweight="bold")
+ax2.grid(True, alpha=0.3, axis="y")
 ax2.set_ylim(0, max(means) * 1.3)
 
 # Add value labels on bars
 for i, (bar, mean, std) in enumerate(zip(bars, means, stds)):
     height = bar.get_height()
-    ax2.text(bar.get_x() + bar.get_width()/2., height + std + 2,
-             f'{mean:.1f}±{std:.1f}',
-             ha='center', va='bottom', fontsize=10, fontweight='bold')
+    ax2.text(
+        bar.get_x() + bar.get_width() / 2.0,
+        height + std + 2,
+        f"{mean:.1f}±{std:.1f}",
+        ha="center",
+        va="bottom",
+        fontsize=10,
+        fontweight="bold",
+    )
 
 plt.tight_layout()
-plt.savefig('enzyme_analysis.png', dpi=300, bbox_inches='tight')
+plt.savefig("enzyme_analysis.png", dpi=300, bbox_inches="tight")
 print("Complete analysis figure saved!")
 plt.show()
 
@@ -1667,29 +1697,29 @@ print(f"\nOptimal pH: {max(mean_activities, key=mean_activities.get)}")
 #
 # ### Part 1: Python Project Structure
 #
-# ✓ **Organization matters** - Use packages, modules, and clear directory structure  
-# ✓ **Virtual environments** - Isolate dependencies per project  
-# ✓ **Document dependencies** - requirements.txt or environment.yml  
-# ✓ **Make it a package** - Use __init__.py and setup.py for reusable code  
-# ✓ **Version control** - .gitignore data files, track code  
+# ✓ **Organization matters** - Use packages, modules, and clear directory structure
+# ✓ **Virtual environments** - Isolate dependencies per project
+# ✓ **Document dependencies** - requirements.txt or environment.yml
+# ✓ **Make it a package** - Use __init__.py and setup.py for reusable code
+# ✓ **Version control** - .gitignore data files, track code
 #
 # ### Part 2: NumPy for Scientific Computing
 #
-# ✓ **Speed and efficiency** - 10-100x faster than Python lists  
-# ✓ **Array creation** - np.array(), np.arange(), np.linspace(), np.zeros(), np.ones()  
-# ✓ **Vectorization** - Operations on entire arrays, no loops  
-# ✓ **Boolean indexing** - Elegant filtering with conditions  
-# ✓ **Statistics** - mean(), std(), min(), max(), median(), percentile()  
-# ✓ **Multi-dimensional** - Powerful 2D arrays and matrix operations  
+# ✓ **Speed and efficiency** - 10-100x faster than Python lists
+# ✓ **Array creation** - np.array(), np.arange(), np.linspace(), np.zeros(), np.ones()
+# ✓ **Vectorization** - Operations on entire arrays, no loops
+# ✓ **Boolean indexing** - Elegant filtering with conditions
+# ✓ **Statistics** - mean(), std(), min(), max(), median(), percentile()
+# ✓ **Multi-dimensional** - Powerful 2D arrays and matrix operations
 #
 # ### Part 3: Matplotlib for Visualization
 #
-# ✓ **Many plot types** - Line, scatter, bar, histogram, heatmap, etc.  
-# ✓ **Customization** - Colors, markers, labels, titles, legends  
-# ✓ **Subplots** - Multiple plots in one figure  
-# ✓ **Publication-quality** - DPI, vector formats, accessibility  
-# ✓ **Save figures** - PNG (raster), PDF/SVG (vector)  
-# ✓ **Best practices** - Clear labels, error bars, colorblind-friendly, simple  
+# ✓ **Many plot types** - Line, scatter, bar, histogram, heatmap, etc.
+# ✓ **Customization** - Colors, markers, labels, titles, legends
+# ✓ **Subplots** - Multiple plots in one figure
+# ✓ **Publication-quality** - DPI, vector formats, accessibility
+# ✓ **Save figures** - PNG (raster), PDF/SVG (vector)
+# ✓ **Best practices** - Clear labels, error bars, colorblind-friendly, simple
 
 # %% [markdown]
 # <div style="background-color: #f3e5f5; border-left: 5px solid #9c27b0; padding: 15px; margin: 10px 0; border-radius: 5px;">
@@ -1752,8 +1782,8 @@ print(f"\nOptimal pH: {max(mean_activities, key=mean_activities.get)}")
 #
 # ### Primary Sources
 #
-# - **Research Software Engineering with Python** by The Alan Turing Institute  
-#   <https://alan-turing-institute.github.io/rse-course/html/>  
+# - **Research Software Engineering with Python** by The Alan Turing Institute
+#   <https://alan-turing-institute.github.io/rse-course/html/>
 #   Project structure patterns, NumPy usage examples, and visualization best practices adapted from this course.
 #
 # - **Research Software Engineering with Python** by Damien Irving, Kate Hertweck,
@@ -1764,20 +1794,20 @@ print(f"\nOptimal pH: {max(mean_activities, key=mean_activities.get)}")
 #
 # ### Library Documentation
 #
-# - **NumPy Documentation**  
-#   <https://numpy.org/doc/>  
+# - **NumPy Documentation**
+#   <https://numpy.org/doc/>
 #   Official NumPy reference for array operations, mathematical functions, and performance tips.
 #   - NumPy Quickstart: <https://numpy.org/doc/stable/user/quickstart.html>
 #   - Array Creation: <https://numpy.org/doc/stable/user/basics.creation.html>
 #
-# - **Matplotlib Documentation**  
-#   <https://matplotlib.org/stable/>  
+# - **Matplotlib Documentation**
+#   <https://matplotlib.org/stable/>
 #   Official Matplotlib reference for plotting functions and customization.
 #   - Tutorials: <https://matplotlib.org/stable/tutorials/index.html>
 #   - Gallery: <https://matplotlib.org/stable/gallery/index.html>
 #
-# - **Python Packaging Guide**  
-#   <https://packaging.python.org/>  
+# - **Python Packaging Guide**
+#   <https://packaging.python.org/>
 #   Official Python packaging documentation for project structure and distribution.
 #
 # ### Additional References
@@ -1794,5 +1824,5 @@ print(f"\nOptimal pH: {max(mean_activities, key=mean_activities.get)}")
 # recommendations synthesize patterns from multiple sources in the scientific Python ecosystem.
 
 # %% [markdown]
-# **Great work completing Lecture 4! You now have the tools to organize professional 
+# **Great work completing Lecture 4! You now have the tools to organize professional
 # research code and perform numerical computing with visualization. Keep practicing!** 🎉
