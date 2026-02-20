@@ -33,7 +33,7 @@ help:
 	@echo "  test-deps        - Test current dependencies without creating lock files"
 	@echo "  create-locks     - Create conda-lock files for all platforms"
 	@echo "  ci-local         - Run local CI checks (lint, syntax, convert) before committing"
-	@echo "  lint             - Run black formatting check on all Python files"
+	@echo "  lint             - Run black formatting check and ruff linting on all Python files"
 	@echo "  format           - Auto-format all Python files with black"
 	@echo "  help             - Show this help message"
 
@@ -221,7 +221,10 @@ lint:
 	@echo "Running black formatting check..."
 	@black --check .
 	@echo ""
-	@echo "✓ All black formatting checks passed"
+	@echo "Running ruff linting..."
+	@ruff check .
+	@echo ""
+	@echo "✓ All checks passed"
 
 format:
 	@echo "Auto-formatting all Python files with black..."

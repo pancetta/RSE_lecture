@@ -48,6 +48,10 @@ def test_environment(env_file, name="test-env"):
         print("\n=== Running black formatting check ===")
         run_command(f"micromamba run -n {name} black --check .", shell=True)
 
+        # Run ruff linting
+        print("\n=== Running ruff linting ===")
+        run_command(f"micromamba run -n {name} ruff check .", shell=True)
+
         # Check Python syntax
         print("\n=== Checking Python syntax ===")
         run_command(f"micromamba run -n {name} python -m py_compile scripts/convert_to_notebooks.py", shell=True)

@@ -42,13 +42,30 @@ else
 fi
 echo ""
 
-echo "3. Converting lectures to notebooks..."
+echo "3. Linting with ruff..."
+echo "------------------------"
+if ! command -v ruff &> /dev/null; then
+    echo "❌ ruff not found. Please install the development environment:"
+    echo "   make install-dev"
+    echo "   or: micromamba env create -f environment-dev.yml -y"
+    exit 1
+fi
+if ruff check .; then
+    echo "✓ All ruff linting checks passed"
+else
+    echo ""
+    echo "❌ ruff found issues. Please fix them before committing."
+    exit 1
+fi
+echo ""
+
+echo "4. Converting lectures to notebooks..."
 echo "---------------------------------------"
 python scripts/convert_to_notebooks.py
 echo "✓ Notebooks converted successfully"
 echo ""
 
-echo "4. Verifying notebooks were created..."
+echo "5. Verifying notebooks were created..."
 echo "---------------------------------------"
 for lecture_file in lecture_*/lecture_*.py; do
     notebook_file="${lecture_file%.py}.ipynb"

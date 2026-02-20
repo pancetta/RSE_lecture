@@ -33,6 +33,12 @@ jobs:
         black --check .
       shell: bash -el {0}
     
+    - name: Lint with ruff
+      run: |
+        # Run ruff linter
+        ruff check .
+      shell: bash -el {0}
+    
     - name: Check Python syntax
       run: |
         python -m py_compile scripts/convert_to_notebooks.py
