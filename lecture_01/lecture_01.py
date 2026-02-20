@@ -8,7 +8,7 @@
 #       format_version: '1.3'
 #       jupytext_version: 1.19.1
 #   kernelspec:
-#     display_name: Python 3
+#     display_name: Python 3 (ipykernel)
 #     language: python
 #     name: python3
 # ---
@@ -197,10 +197,10 @@
 # ### The Command Line / Shell
 #
 # The command line (also called terminal, shell, or console) is essential for:
-# - Running research software
+# - Running (most) research software
 # - Automating tasks
-# - Working on remote servers
-# - Version control with Git
+# - Working on remote servers such as HPC machines
+# - Version control with Git (but there are GUIs for this, too)
 #
 # **Why learn the command line?** While graphical interfaces are user-friendly, the command line 
 # gives you precise control and allows you to automate repetitive tasks. Many research computing 
@@ -234,7 +234,7 @@
 # touch file.txt   # Create an empty file
 # cp src dest      # Copy file
 # mv src dest      # Move/rename file
-# rm file.txt      # Remove file (careful!)
+# rm file.txt      # Remove file (careful, it will NOT ask "Are you sure?")
 # rm -r directory  # Remove directory and contents (very careful!)
 #
 # # Getting help
@@ -248,6 +248,8 @@
 # - **Command history**: Use Up/Down arrow keys to recall previous commands
 # - **Copy/Paste**: Ctrl+Shift+C / Ctrl+Shift+V in most terminals
 # - **Clear screen**: Type `clear` or press Ctrl+L
+# - **Advanced shells**: use neat frameworks like [Oh-My-ZSH](https://ohmyz.sh/) for a great user experience, see below:
+# ![Oh-My-ZSH](https://ohmyz.sh/img/themes/omz-update.png)
 #
 # **Common Pitfall**: Be very careful with `rm` commands, especially `rm -r`. There is no "undo" 
 # or trash bin—deleted files are gone permanently. Always double-check the file or directory name 
@@ -267,6 +269,7 @@
 #         <li><strong>Explore your system:</strong> Navigate to different directories on your computer,
 #         use <code>ls -la</code> to see hidden files, and practice using tab completion to speed up
 #         navigation</li>
+#         <li><strong>Try out new shell types such as Oh-My-ZSH:</strong> These can be great for easing the pain of your first (but also advanced) steps</li>
 #     </ul>
 # </div>
 
@@ -276,7 +279,7 @@
 # Git is a version control system that tracks changes to your code. Think of Git as a sophisticated 
 # "save game" system for your code—it records not just the current state, but every change you've 
 # made along the way, who made it, and why. This makes it incredibly powerful for both individual 
-# work and collaboration.
+# work and collaboration. This whole course lives within git and I'm thankful for Past Me to do this.
 #
 # #### Why Use Git?
 #
@@ -290,6 +293,9 @@
 # script that produce unexpected results. With Git, you can easily compare your current code with 
 # yesterday's version to see exactly what changed. Or if you accidentally delete an important 
 # function, you can retrieve it from your Git history instead of having to rewrite it from scratch.
+#
+# What you see below is not uncommon (from https://third-bit.com/py-rse):
+# ![filename versioning](https://third-bit.com/py-rse/figures/git-cmdline/phd-comics.png)
 #
 # #### Basic Git Workflow
 #
@@ -341,6 +347,8 @@
 # want to return to later. This could be after fixing a bug, adding a new function, or refactoring 
 # code to be cleaner. If you're about to try something experimental, commit first—then you can 
 # always go back if the experiment doesn't work out.
+#
+# **To avoid misunderstandings**: Using Git locally does not replace a proper backup strategy for your data. If you file system fails, you will lose your files, Git or no Git. You can use remote repositories to help with that!
 
 # %% [markdown]
 # <div style="background-color: #f3e5f5; border-left: 5px solid #9c27b0; padding: 15px; margin: 10px 0; border-radius: 5px;">
@@ -375,17 +383,30 @@
 # - **Documentation**: README files, wikis, and GitHub Pages for beautiful project websites
 # - **Professional portfolio**: Showcase your coding skills to potential employers or collaborators
 #
-# **For researchers specifically**: GitHub has become the standard platform for sharing research 
+# **For researchers specifically**: GitHub has become one of the standard platforms for sharing research 
 # code. Many journals now require code to be published alongside papers, and GitHub provides a 
 # citable DOI (Digital Object Identifier) through integration with Zenodo. This means your code 
 # can be cited just like a paper, increasing your research impact.
+#
+#
+# #### Why Not Use GitHub?
+#
+# - **Commercial platform**: GitHub is owned by Microsoft
+# - **Data governance concerns**: Repository metadata, usage patterns, and access controls are subject to a third-party provider and its jurisdiction
+# - **Platform lock-in**: Deep integration with GitHub-specific features (Actions, Issues, Pages) can make migration harder
+# - **Compliance restrictions**: Some research projects (e.g., with sensitive data or strict funder rules) may require self-hosted or nationally hosted solutions
+# - **Access barriers**: Corporate firewalls, sanctions, or similar restrictions can limit availability for collaborators
+# - **Sustainability questions**: Free services and features can change over time, affecting long-term research software preservation
+#
+# However, for the sake of simplicity we focus on GitHub here. But fear not, there are alternatives out there such as GitLab (both hosted or on-premise), see Lecture 2. 
 #
 # #### Basic GitHub Workflow
 #
 # The basic GitHub workflow connects your local Git repository with a remote repository on GitHub. 
 # After making changes locally and committing them, you "push" those commits to GitHub. When your 
 # collaborators make changes, you "pull" their commits to your local repository. This push-pull 
-# cycle keeps everyone synchronized.
+# cycle keeps everyone synchronized. These two repositories are separate: unless you sync them as described
+# they can evolve independently.
 #
 # ```bash
 # # Clone an existing repository
@@ -423,14 +444,14 @@
 #
 # To contribute to someone else's project:
 #
-# 1. **Fork** the repository on GitHub (creates your own copy)
+# 1. **Fork** the repository on GitHub (creates your own copy in your own GitHub account)
 # 2. **Clone** your fork locally to your computer
 # 3. **Create a new branch** for your changes (keeps your work organized)
 # 4. **Make changes and commit** (implement your feature or fix)
 # 5. **Push to your fork** on GitHub
 # 6. **Create a Pull Request** (ask the original project to include your changes)
 #
-# **Why this workflow?** You don't have direct write access to other people's repositories (for 
+# **Why this workflow?** You usually don't have direct write access to other people's repositories (for 
 # security reasons). Forking creates your own copy where you have full control. The pull request 
 # system lets the original authors review your changes before accepting them, ensuring code quality 
 # and preventing malicious changes. This same workflow is used by major open-source projects with 
@@ -444,8 +465,7 @@
 #         <li><strong>Fork and explore this course:</strong> Fork the RSE_course_JuRSE repository, clone
 #         your fork locally, and browse the code structure</li>
 #         <li><strong>Practice the PR workflow:</strong> Make a small change (e.g., fix a typo in a
-#         README), commit it, push to your fork, and create a draft pull request (you can close it
-#         without merging)</li>
+#         README), commit it, push to your fork, and create a draft pull request</li>
 #         <li><strong>Explore a real project:</strong> Find an interesting research software project on
 #         GitHub, read its documentation, look at recent pull requests, and understand how the community
 #         collaborates</li>
@@ -536,8 +556,7 @@
 # ### Notes
 #
 # While this lecture incorporates ideas and approaches from these sources, all content has been 
-# adapted and restructured for this specific course context. Examples and exercises have been 
-# developed independently for educational purposes.
+# adapted and restructured for this specific course context. Examples have been developed independently for educational purposes.
 
 # %% [markdown]
 # ### Next Steps
