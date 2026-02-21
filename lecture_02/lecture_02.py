@@ -545,12 +545,12 @@
 #
 # ### Why *Not* Python for Research?
 #
-# - **Performance limitations**: Slower than compiled languages like C or Fortran for compute-intensive tasks without optimization  
-# - **Dependency management headaches**: Version conflicts and environment issues can be frustrating to resolve  
-# - **Memory usage**: Large datasets can quickly consume RAM, especially without careful optimization, no full control over memory  
-# - **Global Interpreter Lock (GIL)**: Limits true multi-threaded CPU-bound parallelism  
-# - **Dynamic typing pitfalls**: Type-related bugs may only appear at runtime  
-# - **Scaling challenges**: May require additional frameworks (e.g., distributed computing tools) for very large-scale workloads  
+# - **Performance limitations**: Slower than compiled languages like C or Fortran for compute-intensive tasks without optimization
+# - **Dependency management headaches**: Version conflicts and environment issues can be frustrating to resolve
+# - **Memory usage**: Large datasets can quickly consume RAM, especially without careful optimization, no full control over memory
+# - **Global Interpreter Lock (GIL)**: Limits true multi-threaded CPU-bound parallelism
+# - **Dynamic typing pitfalls**: Type-related bugs may only appear at runtime
+# - **Scaling challenges**: May require additional frameworks (e.g., distributed computing tools) for very large-scale workloads
 #
 #
 # **Fun fact**: Python is named after Monty Python's Flying Circus, not the snake! The language was
